@@ -1,1 +1,23 @@
+{
+  "name": "F.A.I.S.T. Systems",
+  "short_name": "FAIST",
+  "description": "Forge of Artificial Intelligence, Science & Technology — věda + technologie + systémy. Tady kováme užitečné AI nástroje.",
+  "lang": "cs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111318",
+  "theme_color": "#2B6DF6",
+  "icons": [
+    {
+      "src": "assets/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicon.ico",
+      "sizes": "64x64 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
 
