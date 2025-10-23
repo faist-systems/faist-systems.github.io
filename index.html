@@ -4,35 +4,88 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>F.A.I.S.T. — The Forge of Future Intelligence</title>
 <meta name="description" content="F.A.I.S.T. – Forge of Artificial Intelligence, Science & Technology.">
+
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<!-- Favicons / Social (KROK 3) -->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/android-chrome-512x512.png">
+<meta property="og:title" content="F.A.I.S.T. — The Forge of Future Intelligence">
+<meta property="og:description" content="Science · Technology · Intelligence · Systems — forging the future.">
+<meta property="og:image" content="https://faist.xyz/assets/android-chrome-512x512.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faist.xyz/">
+
 <style>
   :root { --blue:#2B6DF6; --orange:#FF6A00; --carbon:#111318; --steel:#A8B0BD; }
-  html,body{margin:0;height:100%;background:var(--carbon);color:#fff;font-family:Inter,system-ui,sans-serif;text-align:center}
-  .wrap{max-width:880px;margin:0 auto;padding:96px 24px}
-  /* ZJEDNODUŠENÉ LOGO – bez blend-mode, jen jemný glow */
-  .logo{
-    width:clamp(140px,28vw,260px);
-    height:auto;display:block;margin:0 auto 24px;
-    filter:drop-shadow(0 0 18px rgba(43,109,246,.45)) drop-shadow(0 0 30px rgba(255,106,0,.25));
+
+  html, body {
+    margin: 0; height: 100%;
+    background: var(--carbon); color: #fff;
+    font-family: Inter, system-ui, sans-serif; text-align: center;
   }
-  .claim-bar{display:flex;justify-content:center;align-items:center;
-    background:linear-gradient(90deg,rgba(43,109,246,.15),rgba(255,106,0,.15));
-    border:1px solid rgba(255,255,255,.06);border-radius:12px;
-    box-shadow:0 0 16px rgba(43,109,246,.25),0 0 28px rgba(255,106,0,.25);
-    padding:10px 24px;margin:-12px auto 40px;width:fit-content;backdrop-filter:blur(6px);
-    animation:glowFlow 6s ease-in-out infinite}
-  .claim-bar span{font-weight:600;font-size:clamp(14px,2vw,18px);letter-spacing:1.5px;
-    background:linear-gradient(90deg,#2B6DF6,#FF6A00);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  @keyframes glowFlow{0%,100%{box-shadow:0 0 16px rgba(43,109,246,.25),0 0 28px rgba(255,106,0,.25)}
-    50%{box-shadow:0 0 24px rgba(43,109,246,.5),0 0 40px rgba(255,106,0,.4)}}
-  h1{font-size:clamp(32px,6vw,64px);line-height:1.05;margin:0 0 12px;color:var(--blue)}
-  p.lead{color:#dbe2f1;font-size:clamp(16px,2.5vw,22px);margin:0 0 28px}
-  .tag{display:inline-block;background:linear-gradient(90deg,var(--blue),var(--orange));
-    padding:6px 10px;border-radius:6px;font-weight:600;margin-bottom:20px}
-  .card{background:#161a22;border:1px solid #242a36;border-radius:12px;padding:20px;margin-top:24px;text-align:left}
-  a.cta{display:inline-block;margin-top:18px;padding:12px 18px;border-radius:10px;background:var(--blue);color:#fff;text-decoration:none;font-weight:700}
-  footer{opacity:.7;margin-top:40px;font-size:14px;color:var(--steel)}
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 96px 24px; }
+
+  /* LOGO – jemné žhnutí */
+  .logo{
+    width: clamp(140px, 28vw, 260px);
+    height: auto; display: block; margin: 0 auto 24px;
+    filter:
+      drop-shadow(0 0 18px rgba(43,109,246,.45))
+      drop-shadow(0 0 30px rgba(255,106,0,.25));
+    transition: filter .4s ease;
+  }
+  .logo:hover{
+    filter:
+      drop-shadow(0 0 24px rgba(43,109,246,.8))
+      drop-shadow(0 0 40px rgba(255,106,0,.6));
+  }
+
+  /* CLAIM BAR */
+  .claim-bar{
+    display: flex; justify-content: center; align-items: center;
+    background: linear-gradient(90deg, rgba(43,109,246,.15), rgba(255,106,0,.15));
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(43,109,246,.25), 0 0 28px rgba(255,106,0,.25);
+    padding: 10px 24px; margin: -12px auto 40px; width: fit-content;
+    backdrop-filter: blur(6px); animation: glowFlow 6s ease-in-out infinite;
+  }
+  .claim-bar span{
+    font-weight: 600; letter-spacing: 1.5px;
+    font-size: clamp(14px, 2vw, 18px);
+    background: linear-gradient(90deg, #2B6DF6, #FF6A00);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  @keyframes glowFlow{
+    0%,100%{box-shadow:0 0 16px rgba(43,109,246,.25),0 0 28px rgba(255,106,0,.25)}
+    50%{box-shadow:0 0 24px rgba(43,109,246,.5),0 0 40px rgba(255,106,0,.4)}
+  }
+
+  h1{
+    font-size: clamp(32px, 6vw, 64px); line-height: 1.05;
+    margin: 0 0 12px; color: var(--blue);
+  }
+
+  p.lead{
+    color:#dbe2f1; font-size: clamp(16px, 2.5vw, 22px);
+    margin: 0 0 28px;
+  }
+
+  .card{
+    background:#161a22; border:1px solid #242a36; border-radius:12px;
+    padding:20px; margin-top:24px; text-align:left;
+  }
+
+  a.cta{
+    display:inline-block; margin-top:18px; padding:12px 18px; border-radius:10px;
+    background:var(--blue); color:#fff; text-decoration:none; font-weight:700;
+  }
+
+  footer{ opacity:.7; margin-top:40px; font-size:14px; color:var(--steel); }
 </style>
 
 <div class="wrap">
@@ -40,9 +93,10 @@
     <img src="assets/logo.png" alt="F.A.I.S.T. Systems logo" class="logo">
   </a>
 
-  <div class="claim-bar"><span>Science · Intelligence · Technology · Systems</span></div>
+  <div class="claim-bar">
+    <span>Science · Technology · Intelligence · Systems</span>
+  </div>
 
-  <span class="tag">F.A.I.S.T. Systems</span>
   <h1>The Forge of Future Intelligence</h1>
   <p class="lead">Forge of Artificial Intelligence, Science & Technology — věda + technologie + systémy. Tady kováme užitečné AI nástroje.</p>
 
