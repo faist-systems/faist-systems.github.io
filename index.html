@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F.A.I.S.T. — The Forge of Future Intelligence</title>
+<meta name="description" content="F.A.I.S.T. – Forge of Artificial Intelligence, Science & Technology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#2B6DF6;--orange:#FF6A00;--carbon:#111318;--steel:#A8B0BD}
+  html,body{margin:0;height:100%;background:var(--carbon);color:#fff;font-family:Inter,system-ui,sans-serif;text-align:center}
+  .wrap{max-width:880px;margin:0 auto;padding:96px 24px}
+  h1{font-size:clamp(32px,6vw,64px);line-height:1.05;margin:0 0 12px;color:var(--blue)}
+  p.lead{color:#dbe2f1;font-size:clamp(16px,2.5vw,22px);margin:0 0 28px}
+  .tag{display:inline-block;background:linear-gradient(90deg,var(--blue),var(--orange));padding:6px 10px;border-radius:6px;font-weight:600;margin-bottom:20px}
+  .card{background:#161a22;border:1px solid #242a36;border-radius:12px;padding:20px;margin-top:24px;text-align:left}
+  a.cta{display:inline-block;margin-top:18px;padding:12px 18px;border-radius:10px;background:var(--blue);color:#fff;text-decoration:none;font-weight:700}
+  footer{opacity:.7;margin-top:40px;font-size:14px;color:var(--steel)}
+</style>
+<div class="wrap">
+  <span class="tag">F.A.I.S.T. Systems</span>
+  <h1>The Forge of Future Intelligence</h1>
+  <p class="lead">Forge of Artificial Intelligence, Science & Technology — věda + oheň + systémy. Tady kováme užitečné AI nástroje.</p>
+  <div class="card">
+    <strong>Work-in-progress</strong>
+    <p>Probíhá první výheň: voice assistant, on-prem LLM, datové trubky, smart-home integrace.</p>
+    <a class="cta" href="https://github.com/faist-systems" target="_blank" rel="noreferrer">GitHub →</a>
+  </div>
+  <footer>© <span id="y"></span> F.A.I.S.T. — Forge of Artificial Intelligence, Science & Technology</footer>
+</div>
+<script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</html>
