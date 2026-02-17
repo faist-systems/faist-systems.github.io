@@ -4,147 +4,53 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>F.A.I.S.T. — The Forge of Future Intelligence</title>
-<meta name="description" content="F.A.I.S.T. – Forge of Artificial Intelligence, Science & Technology. Věda + technologie + systémy. Tady kováme užitečné AI nástroje.">
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-<!-- Favicons -->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/android-chrome-512x512.png">
-
-<!-- PWA manifest -->
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
 
 <style>
 :root { --blue:#2B6DF6; --orange:#FF6A00; --carbon:#111318; --steel:#A8B0BD; }
-
-html, body {
-  margin:0; height:100%;
-  background:var(--carbon); color:#fff;
-  font-family:Inter,system-ui,sans-serif; text-align:center;
-  scroll-behavior:smooth;
+body {
+  margin:0; font-family:Inter,system-ui,sans-serif;
+  background: var(--carbon); color:#fff; scroll-behavior:smooth;
 }
+.wrap { max-width:880px; margin:0 auto; padding:64px 20px 72px; text-align:center; }
 
-.wrap { max-width:880px; margin:0 auto; padding:64px 20px 72px; }
+/* Logo & Claim */
+.logo{ width:clamp(120px,24vw,220px); height:auto; display:block; margin:0 auto 16px; }
+.claim-bar{ margin:16px auto 28px; display:inline-block; padding:8px 16px; border-radius:12px; background:linear-gradient(90deg,rgba(43,109,246,.12),rgba(255,106,0,.12)); }
 
-/* LOGO */
-.logo{
-  width:clamp(120px,24vw,220px);
-  height:auto; display:block; margin:0 auto 16px;
-  filter:drop-shadow(0 0 12px rgba(43,109,246,.35))
-         drop-shadow(0 0 20px rgba(255,106,0,.18));
-  transition:filter .3s ease;
-}
-.logo:hover{
-  filter:drop-shadow(0 0 18px rgba(43,109,246,.7))
-         drop-shadow(0 0 28px rgba(255,106,0,.45));
-}
+/* Hero */
+h1{ font-size:clamp(28px,5vw,56px); color:var(--blue); margin:0 0 10px;}
+p.lead{ color:#dbe2f1; font-size:clamp(15px,2.2vw,20px); margin-bottom:24px; }
 
-/* CLAIM BAR */
-.claim-bar{
-  display:flex; justify-content:center; align-items:center;
-  background:linear-gradient(90deg,rgba(43,109,246,.12),rgba(255,106,0,.12));
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:12px;
-  box-shadow:0 0 10px rgba(43,109,246,.20), 0 0 16px rgba(255,106,0,.20);
-  padding:8px 16px; margin:8px auto 28px; width:fit-content;
-  backdrop-filter:blur(4px); animation:glowFlow 7s ease-in-out infinite;
-}
-.claim-bar span{
-  font-weight:600; letter-spacing:1.2px;
-  font-size:clamp(13px,1.8vw,16px);
-  background:linear-gradient(90deg,#2B6DF6,#FF6A00);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-}
-@keyframes glowFlow{
-  0%,100%{box-shadow:0 0 10px rgba(43,109,246,.20),0 0 16px rgba(255,106,0,.20)}
-  50%{box-shadow:0 0 16px rgba(43,109,246,.40),0 0 24px rgba(255,106,0,.35)}
-}
-
-h1{
-  font-size:clamp(28px,5vw,56px);  line-height:1.06;
-  margin:0 0 10px; color:var(--blue);
-}
-p.lead{ color:#dbe2f1; font-size:clamp(15px,2.2vw,20px); margin:0 0 20px; }
-
-.card{
-  background:#161a22; border:1px solid #242a36; border-radius:12px;
-  padding:16px; margin-top:18px; text-align:left;
-}
-
-a.cta{
-  display:inline-block; margin-top:14px; padding:10px 16px; border-radius:10px;
-  background:var(--blue); color:#fff; text-decoration:none; font-weight:700;
-}
-
-/* Sekce */
-section{ padding:28px 0; text-align:left; }
-section h2{ font-size:clamp(22px,3.6vw,32px); margin:0 0 8px; color:#dbe2f1 }
-section p{ color:#c7cfdb; line-height:1.6; margin:0; }
-.muted{ color:#9aa3b2 }
-
-footer{ opacity:.7; margin-top:28px; font-size:13px; color:var(--steel); text-align:center; }
-nav a{ color:#c7cfdb; text-decoration:none; margin:0 10px; }
-nav a:hover{ color:#fff; text-decoration:underline }
-
-/* Divize karty */
+/* Karty divizí */
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 20px;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:16px;
 }
 .card-div {
-  background: #161a22;
-  border: 1px solid #242a36;
-  border-radius: 12px;
-  padding: 20px;
-  width: 180px;
-  text-align: center;
-  cursor: pointer;
+  position: relative;
+  background:#161a22; border:1px solid #242a36; border-radius:12px;
+  width:180px; height:120px; text-align:center; cursor:pointer; overflow:hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card-div:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 24px rgba(43,109,246,0.4), 0 12px 36px rgba(255,106,0,0.3);
-}
-.card-div h3 { color: var(--blue); margin-bottom: 6px; }
-.card-div p { color: #c7cfdb; margin:0; font-size:14px; }
+.card-div:hover { transform: translateY(-6px); box-shadow:0 8px 24px rgba(43,109,246,0.4), 0 12px 36px rgba(255,106,0,0.3); }
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left:0; top:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
+/* Hover text overlay */
+.card-overlay {
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.7); color:#dbe2f1;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; transition:opacity 0.25s ease;
+  padding:12px; text-align:center; font-size:14px;
 }
-.modal-content {
-  background: #1b1f28;
-  padding: 24px;
-  border-radius: 12px;
-  max-width: 400px;
-  text-align: center;
-  color: #dbe2f1;
-  position: relative;
-}
-#modal-close {
-  position: absolute;
-  top: 12px; right: 16px;
-  font-size: 24px;
-  cursor: pointer;
-  color: #FF6A00;
-  transition: color 0.2s ease;
-}
-#modal-close:hover { color: var(--blue); }
-section#divize h2 { text-align:center; color:#dbe2f1; font-size:clamp(24px,4vw,32px); margin-bottom:12px; }
+.card-div:hover .card-overlay { opacity:1; }
+
+.card-div h3 { margin:0; color:var(--blue); padding-top:12px; }
+.card-div p { margin:0; color:#c7cfdb; font-size:14px; }
+
+/* Footer & nav */
+footer{ margin-top:28px; font-size:13px; color:var(--steel);}
+nav a{ color:#c7cfdb; text-decoration:none; margin:0 10px; }
+nav a:hover{ color:#fff; text-decoration:underline; }
 
 </style>
 </head>
@@ -161,53 +67,44 @@ section#divize h2 { text-align:center; color:#dbe2f1; font-size:clamp(24px,4vw,3
   <h1>The Forge of Future Intelligence</h1>
   <p class="lead">Forge of Artificial Intelligence, Science & Technology — věda + technologie + systémy. Tady kováme užitečné AI nástroje.</p>
 
-  <div class="card">
-    <strong>Work-in-progress</strong>
-    <p>Probíhá první výheň: voice assistant, on-prem LLM, datové trubky, smart-home integrace.</p>
-    <a class="cta" href="https://github.com/faist-systems" target="_blank" rel="noreferrer">GitHub →</a>
-  </div>
-
-  <!-- Divize F.A.I.S.T. -->
+  <!-- Divize -->
   <section id="divize">
     <h2>Naše divize</h2>
     <div class="cards-container">
-      <div class="card-div" data-title="FAIST Systems" data-content="Smart Home řešení, automatizace, integrace zařízení.">
+      <a class="card-div" href="systems.html">
         <h3>Systems</h3>
         <p>Smart Home & IoT</p>
-      </div>
-      <div class="card-div" data-title="FAIST Lab" data-content="Výzkum, testování a vývoj AI řešení.">
+        <div class="card-overlay">Smart Home řešení, automatizace, integrace zařízení.</div>
+      </a>
+      <a class="card-div" href="lab.html">
         <h3>Lab</h3>
         <p>Výzkum a AI</p>
-      </div>
-      <div class="card-div" data-title="FAIST Digital" data-content="Weby, aplikace a AI služby pro digitální svět.">
+        <div class="card-overlay">Výzkum, testování a vývoj AI řešení.</div>
+      </a>
+      <a class="card-div" href="digital.html">
         <h3>Digital</h3>
         <p>Web & AI Services</p>
-      </div>
-      <div class="card-div" data-title="FAIST Energy" data-content="Chytré energie, solární systémy a monitoring.">
+        <div class="card-overlay">Weby, aplikace a AI služby pro digitální svět.</div>
+      </a>
+      <a class="card-div" href="energy.html">
         <h3>Energy</h3>
         <p>Chytré energie</p>
-      </div>
-      <div class="card-div" data-title="FAIST Security" data-content="Kamery a zabezpečení pro domácnosti i firmy.">
+        <div class="card-overlay">Chytré energie, solární systémy a monitoring.</div>
+      </a>
+      <a class="card-div" href="security.html">
         <h3>Security</h3>
         <p>Zabezpečení</p>
-      </div>
-      <div class="card-div" data-title="FAIST Edu" data-content="Vzdělávání a workshopy pro AI a technologie.">
+        <div class="card-overlay">Kamery a zabezpečení pro domácnosti i firmy.</div>
+      </a>
+      <a class="card-div" href="edu.html">
         <h3>Edu</h3>
         <p>Vzdělávání</p>
-      </div>
+        <div class="card-overlay">Vzdělávání a workshopy pro AI a technologie.</div>
+      </a>
     </div>
   </section>
 
-  <!-- Modal -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span id="modal-close">&times;</span>
-      <h3 id="modal-title"></h3>
-      <p id="modal-text"></p>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
+  <!-- About -->
   <section id="about">
     <h2>About</h2>
     <p>
@@ -217,14 +114,13 @@ section#divize h2 { text-align:center; color:#dbe2f1; font-size:clamp(24px,4vw,3
     </p>
   </section>
 
-  <!-- CONTACT -->
+  <!-- Contact -->
   <section id="contact">
     <h2>Contact</h2>
     <p>Napiš kováři: <a href="mailto:tadeas.hora@faist.xyz">tadeas.hora@faist.xyz</a></p>
   </section>
 
-  <footer>© <span id="y"></span> Teddy Design88 & F.A.I.S.T. — Forge of Artificial Intelligence, Science & Technology</footer>
-
+  <footer>© <span id="y"></span> Teddy Design88 & F.A.I.S.T.</footer>
   <nav aria-label="Sekce">
     <a href="#about">About</a> · <a href="#contact">Contact</a> · <a href="#divize">Divize</a>
   </nav>
@@ -232,25 +128,6 @@ section#divize h2 { text-align:center; color:#dbe2f1; font-size:clamp(24px,4vw,3
 
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
-
-// Modal logika
-const modal = document.getElementById('modal');
-const modalTitle = document.getElementById('modal-title');
-const modalText = document.getElementById('modal-text');
-const modalClose = document.getElementById('modal-close');
-
-document.querySelectorAll('.card-div').forEach(card => {
-  card.addEventListener('click', () => {
-    modalTitle.textContent = card.dataset.title;
-    modalText.textContent = card.dataset.content;
-    modal.style.display = 'flex';
-  });
-});
-
-modalClose.addEventListener('click', () => modal.style.display = 'none');
-window.addEventListener('click', e => {
-  if (e.target === modal) modal.style.display = 'none';
-});
 </script>
 </body>
 </html>
