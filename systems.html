@@ -10,21 +10,33 @@
 <style>
 :root { --blue:#2B6DF6; --orange:#FF6A00; --carbon:#111318; --steel:#A8B0BD; }
 
-body {
-  margin:0; font-family:Inter,system-ui,sans-serif;
-  background: var(--carbon); color:#fff; scroll-behavior:smooth;
-}
+body { margin:0; font-family:Inter,system-ui,sans-serif; background: var(--carbon); color:#fff; scroll-behavior:smooth; }
 .wrap { max-width:880px; margin:0 auto; padding:64px 20px 72px; text-align:center; }
 
 /* Nadpisy a text */
 h1{ font-size:clamp(28px,5vw,56px); color:var(--blue); margin:0 0 16px;}
-h2{ font-size:clamp(22px,4vw,32px); color:var(--blue); margin:32px 0 12px;}
-p, li { line-height:1.6; color:#dbe2f1; font-size:16px; margin-bottom:16px; text-align:left; }
-ul { padding-left:20px; }
+p.lead{ color:#dbe2f1; font-size:clamp(15px,2.2vw,20px); margin-bottom:24px; text-align:center; }
 
 /* CTA zpět */
-a.back { display:inline-block; margin:24px 0; padding:8px 12px; border-radius:8px; background:var(--blue); color:#fff; text-decoration:none; transition: background 0.3s; }
+a.back { display:inline-block; margin:24px 0; padding:10px 16px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none; transition: background 0.3s; }
 a.back:hover { background:var(--orange); }
+
+/* Karty Co děláme */
+.cards-container {
+  display:flex; flex-wrap:wrap; justify-content:center; gap:16px;
+  margin-top:32px;
+}
+.card-div {
+  position: relative;
+  background:#161a22; border:1px solid #242a36; border-radius:12px;
+  width:200px; height:140px; text-align:center; cursor:pointer; overflow:hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding:16px;
+}
+.card-div:hover { transform: translateY(-6px); box-shadow:0 8px 24px rgba(43,109,246,0.4), 0 12px 36px rgba(255,106,0,0.3); }
+
+.card-div h3 { margin-top:0; margin-bottom:8px; color:var(--blue); font-size:18px; }
+.card-div p { margin:0; color:#c7cfdb; font-size:14px; }
 
 /* Footer & nav */
 footer{ margin-top:48px; font-size:13px; color:var(--steel);}
@@ -39,19 +51,34 @@ nav a:hover{ color:#fff; text-decoration:underline; }
   </a>
 
   <h1>FAIST Systems — Smart Home & IoT</h1>
-  <p>Smart Home řešení, automatizace a integrace zařízení pro inteligentní domy a firmy.</p>
+  <p class="lead">Smart Home řešení, automatizace a integrace zařízení pro inteligentní domy a firmy.</p>
 
   <a href="index.html" class="back">← Zpět na hlavní stránku</a>
 
   <section id="co-delame">
     <h2>Co děláme</h2>
-    <ul>
-      <li>Integrace IoT zařízení do domácností a firem</li>
-      <li>Automatizace domácností a firemních procesů</li>
-      <li>Monitorování a optimalizace energie</li>
-      <li>Správa chytré domácnosti a IoT systémů</li>
-      <li>Propojení zařízení pro inteligentní prostředí</li>
-    </ul>
+    <div class="cards-container">
+      <div class="card-div">
+        <h3>Integrace IoT</h3>
+        <p>Propojujeme zařízení a senzory do inteligentního prostředí.</p>
+      </div>
+      <div class="card-div">
+        <h3>Automatizace</h3>
+        <p>Domácnosti i firmy fungují efektivně díky automatizovaným procesům.</p>
+      </div>
+      <div class="card-div">
+        <h3>Monitorování energie</h3>
+        <p>Sledujeme spotřebu a optimalizujeme využití zdrojů.</p>
+      </div>
+      <div class="card-div">
+        <h3>Správa systémů</h3>
+        <p>Udržujeme chytré domácnosti a firemní IoT systémy pod kontrolou.</p>
+      </div>
+      <div class="card-div">
+        <h3>Propojení zařízení</h3>
+        <p>Vytváříme inteligentní ekosystém propojených zařízení.</p>
+      </div>
+    </div>
   </section>
 
   <footer>© <span id="y"></span> Teddy Design88 & F.A.I.S.T.</footer>
