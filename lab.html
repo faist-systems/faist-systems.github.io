@@ -2,42 +2,251 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FAIST Lab — Výzkum a AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAIST Lab | F.A.I.S.T. Holding</title>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="android-chrome-512x512.png">
+
 <style>
-body { margin:0; font-family:Inter,system-ui,sans-serif; background:#111318; color:#fff; }
-.wrap { max-width:880px; margin:0 auto; padding:64px 20px 72px; }
-h1 { color:#2B6DF6; font-size:clamp(28px,5vw,56px); }
-p { line-height:1.6; color:#dbe2f1; }
-a.cta { display:inline-block; margin-top:16px; padding:10px 16px; border-radius:10px; background:#2B6DF6; color:#fff; text-decoration:none; font-weight:700; }
-nav { margin-top:24px; text-align:center; }
-nav a { color:#c7cfdb; text-decoration:none; margin:0 10px; }
-nav a:hover { color:#fff; text-decoration:underline; }
-footer { margin-top:32px; opacity:.7; font-size:13px; color:#A8B0BD; text-align:center; }
+:root {
+  --bg-main:#0f1117;
+  --bg-soft:rgba(255,255,255,0.03);
+  --border-soft:rgba(255,255,255,0.08);
+  --text-main:#ffffff;
+  --text-muted:#a8b0bd;
+  --accent:#7aa2ff; /* jemnější, experimentální */
+}
+
+/* RESET */
+* { box-sizing:border-box; }
+a { text-decoration:none; color:inherit; }
+
+body {
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text-main);
+  background:
+    radial-gradient(circle at 25% 25%, #1a1f33, var(--bg-main)),
+    radial-gradient(circle at 75% 75%, #101423, var(--bg-main));
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+  padding:32px 48px;
+}
+
+header a {
+  font-size:14px;
+  opacity:0.75;
+}
+header a:hover { opacity:1; }
+
+/* =========================
+   HERO
+========================= */
+.hero {
+  max-width:1000px;
+  margin:0 auto;
+  padding:100px 24px 140px;
+}
+
+.hero img {
+  width:180px;
+  margin-bottom:32px;
+}
+
+.hero h1 {
+  font-size:clamp(36px,5vw,64px);
+  margin:0 0 24px;
+}
+
+.hero p {
+  max-width:760px;
+  color:var(--text-muted);
+  font-size:18px;
+  line-height:1.65;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.section {
+  max-width:1000px;
+  margin:0 auto;
+  padding:120px 24px;
+}
+
+.section h2 {
+  font-size:26px;
+  margin:0 0 32px;
+}
+
+.section p {
+  max-width:780px;
+  color:var(--text-muted);
+  line-height:1.7;
+}
+
+/* =========================
+   AREAS (LAB BLOCKS)
+========================= */
+.areas {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
+  margin-top:48px;
+}
+
+.area {
+  padding:32px 30px;
+  border-left:2px solid var(--accent);
+}
+
+.area h3 {
+  margin:0 0 14px;
+  font-size:18px;
+}
+
+.area p {
+  margin:0;
+  font-size:15px;
+  color:var(--text-muted);
+}
+
+/* =========================
+   PHILOSOPHY
+========================= */
+.philosophy {
+  background:rgba(255,255,255,0.015);
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+}
+
+/* =========================
+   CTA
+========================= */
+.cta {
+  text-align:center;
+  padding:140px 24px;
+}
+
+.cta a {
+  display:inline-block;
+  padding:14px 30px;
+  border-radius:32px;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-weight:600;
+  transition:background .25s ease, color .25s ease;
+}
+
+.cta a:hover {
+  background:var(--accent);
+  color:#0f1117;
+}
+
+/* =========================
+   FOOTER – STEJNÝ JAKO INDEX
+========================= */
+footer {
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:64px 24px;
+  text-align:center;
+  font-size:14px;
+  color:var(--text-muted);
+}
+
+.footer-links {
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
+  gap:24px;
+}
+
+.footer-links a {
+  opacity:0.8;
+}
+.footer-links a:hover { opacity:1; }
 </style>
 </head>
+
 <body>
-<div class="wrap">
+
+<header>
+  <a href="index.html">← Zpět na úvodní stránku</a>
+</header>
+
+<section class="hero">
+  <img src="assets/faist-lab.png" alt="FAIST Lab logo">
   <h1>FAIST Lab</h1>
-  <p>Výzkum, testování a vývoj AI řešení. Naše laboratoř se věnuje prototypování, experimentům a inovacím v oblasti umělé inteligence.</p>
-  <a class="cta" href="index.html">← Zpět na hlavní stránku</a>
+  <p>
+    FAIST Lab je experimentální prostor zaměřený na výzkum,
+    testování a prototypování technologií v oblasti umělé inteligence,
+    automatizace a inteligentních systémů.
+  </p>
+</section>
 
-  <section>
-    <h2>Co děláme</h2>
-    <p>- Lokální LLM a AI modely</p>
-    <p>- Testování hlasových asistentů a AI integrací</p>
-    <p>- Experimentální projekty a výzkum</p>
-  </section>
+<section class="section">
+  <h2>Na čem pracujeme</h2>
 
-  <footer>© <span id="y"></span> Teddy Design88 & F.A.I.S.T.</footer>
-  <nav>
-    <a href="systems.html">Systems</a> · <a href="digital.html">Digital</a> · <a href="energy.html">Energy</a> · <a href="security.html">Security</a> · <a href="edu.html">Edu</a>
-  </nav>
-</div>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <div class="areas">
+    <div class="area">
+      <h3>Lokální AI a LLM</h3>
+      <p>
+        Testujeme provoz jazykových modelů v lokálním prostředí,
+        bez závislosti na cloudových službách.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Hlasoví asistenti</h3>
+      <p>
+        Zkoumáme možnosti hlasového ovládání systémů,
+        jejich spolehlivost a použitelnost v praxi.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Experimentální projekty</h3>
+      <p>
+        Prototypy, proof-of-concepty a slepé uličky,
+        které jsou nedílnou součástí vývoje.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Propojení systémů</h3>
+      <p>
+        Hledáme cesty, jak propojit AI s reálnými zařízeními,
+        daty a fyzickým světem.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section philosophy">
+  <h2>Jak k výzkumu přistupujeme</h2>
+  <p>
+    Věříme, že skutečný pokrok vzniká kombinací experimentů,
+    hlubokého porozumění a ochoty selhat.
+    Ne každá myšlenka se stane produktem – ale každá posouvá
+    hranice toho, co je možné.
+  </p>
+</section>
+
+<section class="cta">
+  <a href="contacts.html">Spojte se s námi</a>
+</section>
+
+<footer>
+  © 2025 F.A.I.S.T. Holding
+  <div class="footer-links">
+    <a href="contacts.html">Kontakt</a>
+  </div>
+</footer>
+
 </body>
 </html>
-
