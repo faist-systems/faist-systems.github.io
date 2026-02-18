@@ -10,8 +10,8 @@
 <style>
 :root {
   --bg-main:#0f1117;
-  --bg-soft:rgba(255,255,255,0.035);
-  --border-soft:rgba(255,255,255,0.1);
+  --bg-soft:rgba(255,255,255,0.03);
+  --border-soft:rgba(255,255,255,0.08);
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
   --accent:#2b6df6;
@@ -54,11 +54,10 @@ body {
 }
 
 .hero img {
-  width:380px; /* ZVĚTŠENÉ HLAVNÍ LOGO */
+  width:380px;
   margin-bottom:24px;
 }
 
-/* mission text */
 .hero p {
   font-size:clamp(16px,2.1vw,22px);
   color:var(--text-muted);
@@ -76,23 +75,22 @@ body {
   gap:48px;
 }
 
-/* OUTER – CLICK AREA */
 .division {
   position:relative;
-  cursor:pointer;
   display:flex;
   justify-content:center;
+  cursor:pointer;
 }
 
-/* INNER – FRAME ONLY HERE */
+/* BASE FRAME – SMALLER */
 .division-inner {
   background:var(--bg-soft);
   border:1px solid var(--border-soft);
   border-radius:22px;
-  padding:28px 24px;
-  text-align:center;
+  padding:24px 22px;
   width:100%;
-  max-width:260px;
+  max-width:240px;
+  text-align:center;
   transition:
     transform .45s ease,
     box-shadow .45s ease,
@@ -100,12 +98,11 @@ body {
     border .45s ease;
 }
 
-/* LOGO – SMALLER (-20%) */
+/* LOGO */
 .division-inner img.logo {
-  width:96px; /* původně 120px */
-  margin-bottom:12px;
-  opacity:0.65;
-  filter:drop-shadow(0 0 8px rgba(255,255,255,.04));
+  width:96px;
+  margin-bottom:10px;
+  opacity:0.6;
   transition:transform .45s ease, filter .45s ease, opacity .45s ease;
 }
 
@@ -114,23 +111,28 @@ body {
   margin:0;
   font-weight:600;
   letter-spacing:.4px;
-  color:var(--text-main);
-  opacity:0.7;
+  opacity:0.65;
   transition:opacity .45s ease;
 }
 
-/* OVERLAY */
+/* OVERLAY – MATCHES FRAME */
 .division .overlay {
   position:absolute;
-  inset:0;
-  background:rgba(15,17,23,.94);
+  inset:auto;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(1.22);
+  width:240px;
+  height:100%;
+  background:rgba(15,17,23,0.92);
+  border-radius:22px;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:24px;
+  padding:22px;
   opacity:0;
-  transition:opacity .35s ease;
+  transition:opacity .3s ease;
 }
 
 .division .overlay img {
@@ -144,25 +146,25 @@ body {
   color:var(--text-muted);
   text-align:center;
   line-height:1.45;
-  max-width:220px;
+  max-width:200px;
 }
 
 /* =========================
-   HOVER – ENERGY
+   HOVER STATE
 ========================= */
 .division:hover .division-inner {
   transform:scale(1.22);
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.07);
   border-color:rgba(43,109,246,.45);
   box-shadow:
-    0 0 48px rgba(43,109,246,.45),
-    0 0 90px rgba(43,109,246,.25);
+    0 0 42px rgba(43,109,246,.45),
+    0 0 80px rgba(43,109,246,.25);
 }
 
 .division:hover img.logo {
   opacity:1;
   transform:scale(1.15);
-  filter:drop-shadow(0 0 28px rgba(43,109,246,.6));
+  filter:drop-shadow(0 0 26px rgba(43,109,246,.6));
 }
 
 .division:hover h3 {
@@ -220,7 +222,6 @@ footer {
 
 <section class="main">
 
-  <!-- LEFT -->
   <div class="div-col">
     <a class="division" href="systems.html">
       <div class="division-inner">
@@ -256,7 +257,6 @@ footer {
     </a>
   </div>
 
-  <!-- HERO -->
   <div class="hero">
     <img src="assets/faist-holding.png" alt="F.A.I.S.T. Holding logo">
     <p>
@@ -266,7 +266,6 @@ footer {
     </p>
   </div>
 
-  <!-- RIGHT -->
   <div class="div-col">
     <a class="division" href="energy.html">
       <div class="division-inner">
