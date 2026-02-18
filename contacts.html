@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kontakt | F.A.I.S.T. Holding</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+
+<style>
+:root {
+  --bg-main:#0f1117;
+  --bg-soft:rgba(255,255,255,0.03);
+  --border-soft:rgba(255,255,255,0.08);
+  --text-main:#ffffff;
+  --text-muted:#a8b0bd;
+}
+
+* { box-sizing:border-box; }
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+body {
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text-main);
+  background:
+    radial-gradient(circle at 20% 20%, #161b2a, var(--bg-main)),
+    radial-gradient(circle at 80% 80%, #101423, var(--bg-main));
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+  padding:32px 48px;
+}
+
+header a {
+  font-weight:600;
+  font-size:14px;
+  opacity:0.8;
+}
+
+header a:hover {
+  opacity:1;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.main {
+  max-width:900px;
+  margin:0 auto;
+  padding:120px 24px;
+}
+
+h1 {
+  font-size:clamp(32px,5vw,56px);
+  margin:0 0 32px;
+}
+
+.section {
+  margin-bottom:56px;
+}
+
+.section h2 {
+  font-size:18px;
+  font-weight:600;
+  margin:0 0 12px;
+}
+
+.section p {
+  color:var(--text-muted);
+  line-height:1.6;
+  margin:0;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:64px 24px;
+  text-align:center;
+  font-size:14px;
+  color:var(--text-muted);
+}
+
+.footer-links {
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  flex-wrap:wrap;
+}
+
+.footer-links a {
+  opacity:0.8;
+}
+
+.footer-links a:hover {
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html">← Zpět na úvodní stránku</a>
+</header>
+
+<main class="main">
+
+  <h1>Kontakt</h1>
+
+  <div class="section">
+    <h2>E-mail</h2>
+    <p>
+      <a href="mailto:tadeas.hora@faist.xyz">tadeas.hora@faist.xyz</a>
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Společnost</h2>
+    <p>
+      F.A.I.S.T. Holding<br>
+      Česká republika
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Poznámka</h2>
+    <p>
+      Oficiální údaje společnosti (IČO, sídlo, právní informace)
+      budou doplněny po dokončení formálního založení.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  © 2025 F.A.I.S.T. Holding
+
+  <div class="footer-links">
+    <a href="index.html">Úvod</a>
+    <a href="contacts.html">Kontakt</a>
+  </div>
+</footer>
+
+</body>
+</html>
