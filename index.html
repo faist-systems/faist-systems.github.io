@@ -1,133 +1,184 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>F.A.I.S.T. — The Forge of Future Intelligence</title>
+<title>FAIST Holding</title>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
 
 <style>
-:root { --blue:#2B6DF6; --orange:#FF6A00; --carbon:#111318; --steel:#A8B0BD; }
+:root {
+  --bg-dark: #0f1117;
+  --bg-mid: #111318;
+  --text-main: #ffffff;
+  --text-muted: #a8b0bd;
+  --accent: #2b6df6;
+}
+
+* { box-sizing: border-box; }
+
 body {
-  margin:0; font-family:Inter,system-ui,sans-serif;
-  background: var(--carbon); color:#fff; scroll-behavior:smooth;
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text-main);
+  background: radial-gradient(circle at 20% 20%, #151a24, var(--bg-dark));
+  animation: bgMove 30s ease-in-out infinite alternate;
 }
-.wrap { max-width:880px; margin:0 auto; padding:64px 20px 72px; text-align:center; }
 
-/* Logo & Claim */
-.logo{ width:clamp(120px,24vw,220px); height:auto; display:block; margin:0 auto 16px; }
-.claim-bar{ margin:16px auto 28px; display:inline-block; padding:8px 16px; border-radius:12px; background:linear-gradient(90deg,rgba(43,109,246,.12),rgba(255,106,0,.12)); }
-
-/* Hero */
-h1{ font-size:clamp(28px,5vw,56px); color:var(--blue); margin:0 0 10px;}
-p.lead{ color:#dbe2f1; font-size:clamp(15px,2.2vw,20px); margin-bottom:24px; }
-
-/* Karty divizí */
-.cards-container {
-  display:flex; flex-wrap:wrap; justify-content:center; gap:16px;
+@keyframes bgMove {
+  from { background-position: 0% 0%; }
+  to   { background-position: 100% 100%; }
 }
-.card-div {
-  position: relative;
-  background:#161a22; border:1px solid #242a36; border-radius:12px;
-  width:180px; height:120px; text-align:center; cursor:pointer; overflow:hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+/* FULLSCREEN HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
 }
-.card-div:hover { transform: translateY(-6px); box-shadow:0 8px 24px rgba(43,109,246,0.4), 0 12px 36px rgba(255,106,0,0.3); }
 
-/* Hover text overlay */
-.card-overlay {
-  position:absolute; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.7); color:#dbe2f1;
-  display:flex; align-items:center; justify-content:center;
-  opacity:0; transition:opacity 0.25s ease;
-  padding:12px; text-align:center; font-size:14px;
+.hero img {
+  width: 240px;
+  margin-bottom: 32px;
 }
-.card-div:hover .card-overlay { opacity:1; }
 
-.card-div h3 { margin:0; color:var(--blue); padding-top:12px; }
-.card-div p { margin:0; color:#c7cfdb; font-size:14px; }
+.hero h1 {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 800;
+  margin: 0 0 16px;
+}
 
-/* Footer & nav */
-footer{ margin-top:28px; font-size:13px; color:var(--steel);}
-nav a{ color:#c7cfdb; text-decoration:none; margin:0 10px; }
-nav a:hover{ color:#fff; text-decoration:underline; }
+.hero p {
+  font-size: clamp(16px, 2.2vw, 22px);
+  color: var(--text-muted);
+}
 
+/* SCROLL HINT */
+.scroll {
+  position: absolute;
+  bottom: 32px;
+  font-size: 13px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* SECTIONS */
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 120px 24px;
+}
+
+/* DIVISIONS */
+.divisions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+}
+
+.division {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.division:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 24px rgba(43,109,246,0.35);
+}
+
+.division img {
+  width: 140px;
+  margin-bottom: 16px;
+}
+
+.division h3 {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* TEXT SECTIONS */
+.section {
+  text-align: center;
+}
+
+.section p {
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* FOOTER */
+footer {
+  padding: 48px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-  <a href="/" aria-label="F.A.I.S.T. Systems – home">
-    <img src="assets/logo.png" alt="F.A.I.S.T. Systems logo" class="logo">
+
+<section class="hero">
+  <img src="assets/faist-holding.png" alt="FAIST Holding logo">
+  <h1>FAIST Holding</h1>
+  <p>Technology holding focused on intelligent systems.</p>
+  <div class="scroll">Scroll</div>
+</section>
+
+<section class="wrap divisions">
+  <a class="division" href="systems.html">
+    <img src="assets/faist-systems.png" alt="FAIST Systems">
+    <h3>Systems</h3>
   </a>
+  <a class="division" href="lab.html">
+    <img src="assets/faist-lab.png" alt="FAIST Lab">
+    <h3>Lab</h3>
+  </a>
+  <a class="division" href="digital.html">
+    <img src="assets/faist-digital.png" alt="FAIST Digital">
+    <h3>Digital</h3>
+  </a>
+  <a class="division" href="energy.html">
+    <img src="assets/faist-energy.png" alt="FAIST Energy">
+    <h3>Energy</h3>
+  </a>
+  <a class="division" href="security.html">
+    <img src="assets/faist-security.png" alt="FAIST Security">
+    <h3>Security</h3>
+  </a>
+  <a class="division" href="edu.html">
+    <img src="assets/faist-edu.png" alt="FAIST Edu">
+    <h3>Edu</h3>
+  </a>
+</section>
 
-  <div class="claim-bar">
-    <span>Science · Technology · Intelligence · Systems</span>
-  </div>
+<section class="wrap section">
+  <p>
+    FAIST Holding brings together technology divisions focused on intelligent systems,
+    energy, security, research and education.<br>
+    We build solutions designed to work in the real world.
+  </p>
+</section>
 
-  <h1>The Forge of Future Intelligence</h1>
-  <p class="lead">Forge of Artificial Intelligence, Science & Technology — věda + technologie + systémy. Tady kováme užitečné AI nástroje.</p>
+<section class="wrap section">
+  <p><strong>Contact</strong><br>tadeas.hora@faist.xyz</p>
+</section>
 
-  <!-- Divize -->
-  <section id="divize">
-    <h2>Naše divize</h2>
-    <div class="cards-container">
-      <a class="card-div" href="systems.html">
-        <h3>Systems</h3>
-        <p>Smart Home & IoT</p>
-        <div class="card-overlay">Smart Home řešení, automatizace, integrace zařízení.</div>
-      </a>
-      <a class="card-div" href="lab.html">
-        <h3>Lab</h3>
-        <p>Výzkum a AI</p>
-        <div class="card-overlay">Výzkum, testování a vývoj AI řešení.</div>
-      </a>
-      <a class="card-div" href="digital.html">
-        <h3>Digital</h3>
-        <p>Web & AI Services</p>
-        <div class="card-overlay">Weby, aplikace a AI služby pro digitální svět.</div>
-      </a>
-      <a class="card-div" href="energy.html">
-        <h3>Energy</h3>
-        <p>Chytré energie</p>
-        <div class="card-overlay">Chytré energie, solární systémy a monitoring.</div>
-      </a>
-      <a class="card-div" href="security.html">
-        <h3>Security</h3>
-        <p>Zabezpečení</p>
-        <div class="card-overlay">Kamery a zabezpečení pro domácnosti i firmy.</div>
-      </a>
-      <a class="card-div" href="edu.html">
-        <h3>Edu</h3>
-        <p>Vzdělávání</p>
-        <div class="card-overlay">Vzdělávání a workshopy pro AI a technologie.</div>
-      </a>
-    </div>
-  </section>
+<footer>
+  © 2025 FAIST Holding
+</footer>
 
-  <!-- About -->
-  <section id="about">
-    <h2>About</h2>
-    <p>
-      F.A.I.S.T. Systems je dílna, kde se spojuje věda, technologie a inteligentní systémy.
-      Stavíme praktické AI nástroje: od hlasových asistentů, přes lokální LLM, až po integrace do domácnosti i byznysu.
-      Naším cílem je funkčnost, transparentnost a krásná jednoduchost.
-    </p>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Napiš kováři: <a href="mailto:tadeas.hora@faist.xyz">tadeas.hora@faist.xyz</a></p>
-  </section>
-
-  <footer>© <span id="y"></span> Teddy Design88 & F.A.I.S.T.</footer>
-  <nav aria-label="Sekce">
-    <a href="#about">About</a> · <a href="#contact">Contact</a> · <a href="#divize">Divize</a>
-  </nav>
-</div>
-
-<script>
-document.getElementById('y').textContent = new Date().getFullYear();
-</script>
 </body>
 </html>
