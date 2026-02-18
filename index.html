@@ -15,12 +15,20 @@
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
 
-  /* chladnější modrá – žádná fialová */
+  /* čistá chladná modrá – žádná fialová */
   --accent-glow: rgba(60,140,255,0.45);
   --accent-glow-soft: rgba(60,140,255,0.22);
 }
 
+/* =========================
+   RESET
+========================= */
 * { box-sizing:border-box; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 body {
   margin:0;
@@ -56,9 +64,9 @@ body {
   text-align:center;
 }
 
-/* TRANSPARENT LOGO – NO BOX, NO SHADOW */
+/* hlavní logo – transparentní */
 .hero img {
-  width:400px;
+  width:420px;
   margin-bottom:28px;
   background:none;
   padding:0;
@@ -90,7 +98,7 @@ body {
   cursor:pointer;
 }
 
-/* BASE FRAME */
+/* klidový rámeček */
 .division-inner {
   background:var(--bg-soft);
   border:1px solid var(--border-soft);
@@ -106,7 +114,7 @@ body {
     border .45s ease;
 }
 
-/* LOGO */
+/* logo divize */
 .division-inner img.logo {
   width:96px;
   margin-bottom:10px;
@@ -114,17 +122,18 @@ body {
   transition:transform .45s ease, opacity .45s ease;
 }
 
-/* TITLE – PURE WHITE/GRAY */
+/* název divize – BEZ PODTRŽENÍ */
 .division-inner h3 {
   margin:0;
   font-weight:600;
   letter-spacing:.4px;
   color:var(--text-main);
   opacity:0.65;
+  text-decoration:none;
   transition:opacity .45s ease;
 }
 
-/* OVERLAY – SAME SHAPE */
+/* overlay – tvarově shodný */
 .division .overlay {
   position:absolute;
   top:50%;
@@ -157,7 +166,7 @@ body {
 }
 
 /* =========================
-   HOVER – CLEAN, NO PURPLE
+   HOVER – ENERGIE BEZ FIALOVÉ
 ========================= */
 .division:hover .division-inner {
   transform:scale(1.22);
@@ -182,7 +191,7 @@ body {
 }
 
 /* =========================
-   BELOW
+   BELOW SECTIONS
 ========================= */
 .wrap {
   max-width:1100px;
@@ -198,6 +207,7 @@ body {
   margin:0 auto;
 }
 
+/* FOOTER */
 footer {
   padding:56px 0;
   text-align:center;
@@ -227,6 +237,7 @@ footer {
 
 <section class="main">
 
+  <!-- LEFT -->
   <div class="div-col">
     <a class="division" href="systems.html">
       <div class="division-inner">
@@ -262,6 +273,7 @@ footer {
     </a>
   </div>
 
+  <!-- HERO -->
   <div class="hero">
     <img src="assets/faist-holding.png" alt="F.A.I.S.T. Holding logo">
     <p>
@@ -271,6 +283,7 @@ footer {
     </p>
   </div>
 
+  <!-- RIGHT -->
   <div class="div-col">
     <a class="division" href="energy.html">
       <div class="division-inner">
