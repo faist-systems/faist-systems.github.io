@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,19 +15,17 @@
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
 
-  /* čistá chladná modrá – žádná fialová */
+  /* chladná technická modrá – bez fialové */
   --accent-glow: rgba(60,140,255,0.45);
   --accent-glow-soft: rgba(60,140,255,0.22);
 }
 
-/* =========================
-   RESET
-========================= */
+/* ===== RESET ===== */
 * { box-sizing:border-box; }
 
 a {
-  text-decoration: none;
-  color: inherit;
+  text-decoration:none;
+  color:inherit;
 }
 
 body {
@@ -37,12 +35,6 @@ body {
   background:
     radial-gradient(circle at 20% 20%, #161b2a, var(--bg-main)),
     radial-gradient(circle at 80% 80%, #101423, var(--bg-main));
-  animation:bgFloat 30s ease-in-out infinite alternate;
-}
-
-@keyframes bgFloat {
-  from { background-position:0% 0%; }
-  to   { background-position:100% 100%; }
 }
 
 /* =========================
@@ -64,7 +56,7 @@ body {
   text-align:center;
 }
 
-/* hlavní logo – transparentní */
+/* hlavní logo – TRANSPARENTNÍ */
 .hero img {
   width:420px;
   margin-bottom:28px;
@@ -74,6 +66,7 @@ body {
   filter:none;
 }
 
+/* mission text – zůstává EN */
 .hero p {
   font-size:clamp(16px,2.1vw,22px);
   color:var(--text-muted);
@@ -122,14 +115,13 @@ body {
   transition:transform .45s ease, opacity .45s ease;
 }
 
-/* název divize – BEZ PODTRŽENÍ */
+/* název divize */
 .division-inner h3 {
   margin:0;
   font-weight:600;
   letter-spacing:.4px;
   color:var(--text-main);
   opacity:0.65;
-  text-decoration:none;
   transition:opacity .45s ease;
 }
 
@@ -152,11 +144,6 @@ body {
   transition:opacity .3s ease;
 }
 
-.division .overlay img {
-  width:72px;
-  margin-bottom:12px;
-}
-
 .division .overlay p {
   font-size:14px;
   color:var(--text-muted);
@@ -166,7 +153,7 @@ body {
 }
 
 /* =========================
-   HOVER – ENERGIE BEZ FIALOVÉ
+   HOVER – ENERGIE
 ========================= */
 .division:hover .division-inner {
   transform:scale(1.22);
@@ -207,12 +194,32 @@ body {
   margin:0 auto;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER – CORPORATE ZONE
+========================= */
 footer {
-  padding:56px 0;
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:64px 24px;
   text-align:center;
   font-size:14px;
   color:var(--text-muted);
+}
+
+.footer-links {
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
+  gap:24px;
+  flex-wrap:wrap;
+}
+
+.footer-links a {
+  opacity:0.8;
+}
+
+.footer-links a:hover {
+  opacity:1;
 }
 
 /* =========================
@@ -237,7 +244,7 @@ footer {
 
 <section class="main">
 
-  <!-- LEFT -->
+  <!-- LEVÁ STRANA -->
   <div class="div-col">
     <a class="division" href="systems.html">
       <div class="division-inner">
@@ -245,8 +252,7 @@ footer {
         <h3>Systems</h3>
       </div>
       <div class="overlay">
-        <img src="assets/symbols/systems.png" alt="">
-        <p>Smart home, IoT and intelligent automation.</p>
+        <p>Chytré systémy, IoT a automatizace.</p>
       </div>
     </a>
 
@@ -256,8 +262,7 @@ footer {
         <h3>Lab</h3>
       </div>
       <div class="overlay">
-        <img src="assets/symbols/lab.png" alt="">
-        <p>Research, experimentation and applied AI.</p>
+        <p>Výzkum, experimenty a aplikovaná umělá inteligence.</p>
       </div>
     </a>
 
@@ -267,13 +272,12 @@ footer {
         <h3>Digital</h3>
       </div>
       <div class="overlay">
-        <img src="assets/symbols/digital.png" alt="">
-        <p>Web platforms, software and AI services.</p>
+        <p>Digitální produkty, weby a AI služby.</p>
       </div>
     </a>
   </div>
 
-  <!-- HERO -->
+  <!-- STŘED -->
   <div class="hero">
     <img src="assets/faist-holding.png" alt="F.A.I.S.T. Holding logo">
     <p>
@@ -283,7 +287,7 @@ footer {
     </p>
   </div>
 
-  <!-- RIGHT -->
+  <!-- PRAVÁ STRANA -->
   <div class="div-col">
     <a class="division" href="energy.html">
       <div class="division-inner">
@@ -291,8 +295,7 @@ footer {
         <h3>Energy</h3>
       </div>
       <div class="overlay">
-        <img src="assets/symbols/energy.png" alt="">
-        <p>Smart energy systems and optimization.</p>
+        <p>Chytré řízení, monitoring a optimalizace energií.</p>
       </div>
     </a>
 
@@ -302,8 +305,7 @@ footer {
         <h3>Security</h3>
       </div>
       <div class="overlay">
-        <img src="assets/symbols/security.png" alt="">
-        <p>Surveillance and intelligent protection.</p>
+        <p>Zabezpečení, dohled a ochrana systémů.</p>
       </div>
     </a>
 
@@ -313,28 +315,20 @@ footer {
         <h3>Edu</h3>
       </div>
       <div class="overlay">
-        <img src="assets/symbols/edu.png" alt="">
-        <p>Education and knowledge sharing.</p>
+        <p>Vzdělávání v oblasti technologií a AI.</p>
       </div>
     </a>
   </div>
 
 </section>
 
-<section class="wrap">
-  <p>
-    FAIST Holding was created to connect technology, intelligence and real-world systems
-    into a structured and sustainable ecosystem. We focus on long-term value, clarity
-    and practical innovation.
-  </p>
-</section>
-
-<section class="wrap">
-  <p><strong>Contact</strong><br>tadeas.hora@faist.xyz</p>
-</section>
-
 <footer>
   © 2025 F.A.I.S.T. Holding
+
+  <div class="footer-links">
+    <a href="contacts.html">Kontakt</a>
+    <a href="mailto:tadeas.hora@faist.xyz">tadeas.hora@faist.xyz</a>
+  </div>
 </footer>
 
 </body>
