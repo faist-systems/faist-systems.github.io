@@ -15,18 +15,13 @@
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
 
-  /* chladná technická modrá – bez fialové */
   --accent-glow: rgba(60,140,255,0.45);
   --accent-glow-soft: rgba(60,140,255,0.22);
 }
 
-/* ===== RESET ===== */
+/* RESET */
 * { box-sizing:border-box; }
-
-a {
-  text-decoration:none;
-  color:inherit;
-}
+a { text-decoration:none; color:inherit; }
 
 body {
   margin:0;
@@ -50,23 +45,15 @@ body {
 }
 
 /* =========================
-   HERO CENTER
+   HERO
 ========================= */
-.hero {
-  text-align:center;
-}
+.hero { text-align:center; }
 
-/* hlavní logo – TRANSPARENTNÍ */
 .hero img {
   width:420px;
   margin-bottom:28px;
-  background:none;
-  padding:0;
-  box-shadow:none;
-  filter:none;
 }
 
-/* mission text – zůstává EN */
 .hero p {
   font-size:clamp(16px,2.1vw,22px);
   color:var(--text-muted);
@@ -76,7 +63,7 @@ body {
 }
 
 /* =========================
-   DIVISION COLUMNS
+   DIVISIONS
 ========================= */
 .div-col {
   display:flex;
@@ -91,7 +78,6 @@ body {
   cursor:pointer;
 }
 
-/* klidový rámeček */
 .division-inner {
   background:var(--bg-soft);
   border:1px solid var(--border-soft);
@@ -107,7 +93,6 @@ body {
     border .45s ease;
 }
 
-/* logo divize */
 .division-inner img.logo {
   width:96px;
   margin-bottom:10px;
@@ -115,17 +100,14 @@ body {
   transition:transform .45s ease, opacity .45s ease;
 }
 
-/* název divize */
 .division-inner h3 {
   margin:0;
   font-weight:600;
   letter-spacing:.4px;
-  color:var(--text-main);
   opacity:0.65;
   transition:opacity .45s ease;
 }
 
-/* overlay – tvarově shodný */
 .division .overlay {
   position:absolute;
   top:50%;
@@ -136,7 +118,6 @@ body {
   background:rgba(15,17,23,0.9);
   border-radius:22px;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
   padding:22px;
@@ -152,9 +133,7 @@ body {
   max-width:200px;
 }
 
-/* =========================
-   HOVER – ENERGIE
-========================= */
+/* HOVER */
 .division:hover .division-inner {
   transform:scale(1.22);
   background:rgba(255,255,255,0.07);
@@ -169,33 +148,11 @@ body {
   transform:scale(1.15);
 }
 
-.division:hover h3 {
-  opacity:1;
-}
-
-.division:hover .overlay {
-  opacity:1;
-}
+.division:hover h3 { opacity:1; }
+.division:hover .overlay { opacity:1; }
 
 /* =========================
-   BELOW SECTIONS
-========================= */
-.wrap {
-  max-width:1100px;
-  margin:0 auto;
-  padding:140px 24px;
-  text-align:center;
-}
-
-.wrap p {
-  color:var(--text-muted);
-  line-height:1.65;
-  max-width:780px;
-  margin:0 auto;
-}
-
-/* =========================
-   FOOTER – CORPORATE ZONE
+   FOOTER
 ========================= */
 footer {
   background:#0a0c11;
@@ -211,21 +168,17 @@ footer {
   display:flex;
   justify-content:center;
   gap:24px;
-  flex-wrap:wrap;
 }
 
 .footer-links a {
   opacity:0.8;
 }
-
-.footer-links a:hover {
-  opacity:1;
-}
+.footer-links a:hover { opacity:1; }
 
 /* =========================
    RESPONSIVE
 ========================= */
-@media (max-width: 1100px) {
+@media (max-width:1100px) {
   .main {
     grid-template-columns:1fr;
     gap:80px;
@@ -244,16 +197,14 @@ footer {
 
 <section class="main">
 
-  <!-- LEVÁ STRANA -->
+  <!-- LEFT -->
   <div class="div-col">
     <a class="division" href="systems.html">
       <div class="division-inner">
         <img class="logo" src="assets/faist-systems.png" alt="FAIST Systems">
         <h3>Systems</h3>
       </div>
-      <div class="overlay">
-        <p>Chytré systémy, IoT a automatizace.</p>
-      </div>
+      <div class="overlay"><p>Chytré systémy, IoT a automatizace.</p></div>
     </a>
 
     <a class="division" href="lab.html">
@@ -261,9 +212,7 @@ footer {
         <img class="logo" src="assets/faist-lab.png" alt="FAIST Lab">
         <h3>Lab</h3>
       </div>
-      <div class="overlay">
-        <p>Výzkum, experimenty a aplikovaná umělá inteligence.</p>
-      </div>
+      <div class="overlay"><p>Výzkum a aplikovaná umělá inteligence.</p></div>
     </a>
 
     <a class="division" href="digital.html">
@@ -271,13 +220,11 @@ footer {
         <img class="logo" src="assets/faist-digital.png" alt="FAIST Digital">
         <h3>Digital</h3>
       </div>
-      <div class="overlay">
-        <p>Digitální produkty, weby a AI služby.</p>
-      </div>
+      <div class="overlay"><p>Digitální produkty a AI služby.</p></div>
     </a>
   </div>
 
-  <!-- STŘED -->
+  <!-- CENTER -->
   <div class="hero">
     <img src="assets/faist-holding.png" alt="F.A.I.S.T. Holding logo">
     <p>
@@ -287,16 +234,14 @@ footer {
     </p>
   </div>
 
-  <!-- PRAVÁ STRANA -->
+  <!-- RIGHT -->
   <div class="div-col">
     <a class="division" href="energy.html">
       <div class="division-inner">
         <img class="logo" src="assets/faist-energy.png" alt="FAIST Energy">
         <h3>Energy</h3>
       </div>
-      <div class="overlay">
-        <p>Chytré řízení, monitoring a optimalizace energií.</p>
-      </div>
+      <div class="overlay"><p>Řízení a optimalizace energií.</p></div>
     </a>
 
     <a class="division" href="security.html">
@@ -304,9 +249,7 @@ footer {
         <img class="logo" src="assets/faist-security.png" alt="FAIST Security">
         <h3>Security</h3>
       </div>
-      <div class="overlay">
-        <p>Zabezpečení, dohled a ochrana systémů.</p>
-      </div>
+      <div class="overlay"><p>Zabezpečení a ochrana systémů.</p></div>
     </a>
 
     <a class="division" href="edu.html">
@@ -314,9 +257,7 @@ footer {
         <img class="logo" src="assets/faist-edu.png" alt="FAIST Edu">
         <h3>Edu</h3>
       </div>
-      <div class="overlay">
-        <p>Vzdělávání v oblasti technologií a AI.</p>
-      </div>
+      <div class="overlay"><p>Vzdělávání v oblasti technologií a AI.</p></div>
     </a>
   </div>
 
@@ -324,10 +265,8 @@ footer {
 
 <footer>
   © 2025 F.A.I.S.T. Holding
-
   <div class="footer-links">
     <a href="contacts.html">Kontakt</a>
-    <a href="mailto:tadeas.hora@faist.xyz">tadeas.hora@faist.xyz</a>
   </div>
 </footer>
 
