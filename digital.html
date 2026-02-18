@@ -2,42 +2,254 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FAIST Digital — Web & AI Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAIST Digital | F.A.I.S.T. Holding</title>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="android-chrome-512x512.png">
+
 <style>
-body { margin:0; font-family:Inter,system-ui,sans-serif; background:#111318; color:#fff; }
-.wrap { max-width:880px; margin:0 auto; padding:64px 20px 72px; }
-h1 { color:#2B6DF6; font-size:clamp(28px,5vw,56px); }
-p { line-height:1.6; color:#dbe2f1; }
-a.cta { display:inline-block; margin-top:16px; padding:10px 16px; border-radius:10px; background:#2B6DF6; color:#fff; text-decoration:none; font-weight:700; }
-nav { margin-top:24px; text-align:center; }
-nav a { color:#c7cfdb; text-decoration:none; margin:0 10px; }
-nav a:hover { color:#fff; text-decoration:underline; }
-footer { margin-top:32px; opacity:.7; font-size:13px; color:#A8B0BD; text-align:center; }
+:root {
+  --bg-main:#0f1117;
+  --bg-soft:rgba(255,255,255,0.03);
+  --border-soft:rgba(255,255,255,0.08);
+  --text-main:#ffffff;
+  --text-muted:#a8b0bd;
+  --accent:#4dd2a3; /* digitální, svěží */
+}
+
+/* RESET */
+* { box-sizing:border-box; }
+a { text-decoration:none; color:inherit; }
+
+body {
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text-main);
+  background:
+    radial-gradient(circle at 30% 20%, #13261f, var(--bg-main)),
+    radial-gradient(circle at 70% 80%, #101423, var(--bg-main));
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+  padding:32px 48px;
+}
+
+header a {
+  font-size:14px;
+  opacity:0.75;
+}
+header a:hover { opacity:1; }
+
+/* =========================
+   HERO
+========================= */
+.hero {
+  max-width:1000px;
+  margin:0 auto;
+  padding:100px 24px 140px;
+}
+
+.hero img {
+  width:180px;
+  margin-bottom:32px;
+}
+
+.hero h1 {
+  font-size:clamp(36px,5vw,64px);
+  margin:0 0 24px;
+}
+
+.hero p {
+  max-width:760px;
+  color:var(--text-muted);
+  font-size:18px;
+  line-height:1.65;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.section {
+  max-width:1000px;
+  margin:0 auto;
+  padding:120px 24px;
+}
+
+.section h2 {
+  font-size:26px;
+  margin:0 0 32px;
+}
+
+.section p {
+  max-width:780px;
+  color:var(--text-muted);
+  line-height:1.7;
+}
+
+/* =========================
+   SERVICES
+========================= */
+.services {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
+  margin-top:40px;
+}
+
+.service {
+  background:var(--bg-soft);
+  border:1px solid var(--border-soft);
+  border-radius:20px;
+  padding:30px 28px;
+}
+
+.service h3 {
+  margin:0 0 14px;
+  font-size:18px;
+}
+
+.service p {
+  margin:0;
+  font-size:15px;
+  color:var(--text-muted);
+}
+
+/* =========================
+   APPROACH
+========================= */
+.approach {
+  background:rgba(255,255,255,0.015);
+  border-top:1px solid var(--border-soft);
+  border-bottom:1px solid var(--border-soft);
+}
+
+/* =========================
+   CTA
+========================= */
+.cta {
+  text-align:center;
+  padding:140px 24px;
+}
+
+.cta a {
+  display:inline-block;
+  padding:14px 30px;
+  border-radius:32px;
+  border:1px solid var(--accent);
+  color:var(--accent);
+  font-weight:600;
+  transition:background .25s ease, color .25s ease;
+}
+
+.cta a:hover {
+  background:var(--accent);
+  color:#0f1117;
+}
+
+/* =========================
+   FOOTER – STEJNÝ JAKO INDEX
+========================= */
+footer {
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:64px 24px;
+  text-align:center;
+  font-size:14px;
+  color:var(--text-muted);
+}
+
+.footer-links {
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
+  gap:24px;
+}
+
+.footer-links a {
+  opacity:0.8;
+}
+.footer-links a:hover { opacity:1; }
 </style>
 </head>
+
 <body>
-<div class="wrap">
+
+<header>
+  <a href="index.html">← Zpět na úvodní stránku</a>
+</header>
+
+<section class="hero">
+  <img src="assets/faist-digital.png" alt="FAIST Digital logo">
   <h1>FAIST Digital</h1>
-  <p>Weby, aplikace a AI služby pro digitální svět. Naše divize Digital tvoří moderní software a poskytuje inteligentní digitální služby.</p>
-  <a class="cta" href="index.html">← Zpět na hlavní stránku</a>
+  <p>
+    Vytváříme digitální produkty a rozhraní, která propojují
+    technologii s uživatelem. Zaměřujeme se na funkčnost,
+    jednoduchost a dlouhodobou udržitelnost řešení.
+  </p>
+</section>
 
-  <section>
-    <h2>Co děláme</h2>
-    <p>- Webové stránky a aplikace</p>
-    <p>- AI služby a chatboty</p>
-    <p>- Integrace a digitální řešení pro firmy</p>
-  </section>
+<section class="section">
+  <h2>Co dodáváme</h2>
 
-  <footer>© <span id="y"></span> Teddy Design88 & F.A.I.S.T.</footer>
-  <nav>
-    <a href="systems.html">Systems</a> · <a href="lab.html">Lab</a> · <a href="energy.html">Energy</a> · <a href="security.html">Security</a> · <a href="edu.html">Edu</a>
-  </nav>
-</div>
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <div class="services">
+    <div class="service">
+      <h3>Webové aplikace</h3>
+      <p>
+        Návrh a vývoj moderních webových řešení
+        s důrazem na výkon a přehlednost.
+      </p>
+    </div>
+
+    <div class="service">
+      <h3>AI integrace</h3>
+      <p>
+        Propojení umělé inteligence s existujícími
+        systémy a uživatelskými rozhraními.
+      </p>
+    </div>
+
+    <div class="service">
+      <h3>Interní nástroje</h3>
+      <p>
+        Vývoj nástrojů pro automatizaci procesů,
+        reporting a práci s daty.
+      </p>
+    </div>
+
+    <div class="service">
+      <h3>UX & architektura</h3>
+      <p>
+        Návrh struktury aplikací a uživatelských
+        toků s důrazem na použitelnost.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section approach">
+  <h2>Jak pracujeme</h2>
+  <p>
+    Neoddělujeme design od technologie.
+    Digitální řešení navrhujeme jako celek –
+    od architektury přes rozhraní až po provoz.
+    Důležitá je pro nás čitelnost, jednoduchost
+    a možnost dalšího rozvoje.
+  </p>
+</section>
+
+<section class="cta">
+  <a href="contacts.html">Spojte se s námi</a>
+</section>
+
+<footer>
+  © 2025 F.A.I.S.T. Holding
+  <div class="footer-links">
+    <a href="contacts.html">Kontakt</a>
+  </div>
+</footer>
+
 </body>
 </html>
-
