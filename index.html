@@ -14,7 +14,10 @@
   --border-soft:rgba(255,255,255,0.08);
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
-  --accent:#2b6df6;
+
+  /* chladnější modrá – žádná fialová */
+  --accent-glow: rgba(60,140,255,0.45);
+  --accent-glow-soft: rgba(60,140,255,0.22);
 }
 
 * { box-sizing:border-box; }
@@ -53,9 +56,14 @@ body {
   text-align:center;
 }
 
+/* TRANSPARENT LOGO – NO BOX, NO SHADOW */
 .hero img {
-  width:380px;
-  margin-bottom:24px;
+  width:400px;
+  margin-bottom:28px;
+  background:none;
+  padding:0;
+  box-shadow:none;
+  filter:none;
 }
 
 .hero p {
@@ -82,14 +90,14 @@ body {
   cursor:pointer;
 }
 
-/* BASE FRAME – SMALLER */
+/* BASE FRAME */
 .division-inner {
   background:var(--bg-soft);
   border:1px solid var(--border-soft);
   border-radius:22px;
-  padding:24px 22px;
+  padding:22px 20px;
   width:100%;
-  max-width:240px;
+  max-width:230px;
   text-align:center;
   transition:
     transform .45s ease,
@@ -103,28 +111,28 @@ body {
   width:96px;
   margin-bottom:10px;
   opacity:0.6;
-  transition:transform .45s ease, filter .45s ease, opacity .45s ease;
+  transition:transform .45s ease, opacity .45s ease;
 }
 
-/* TITLE */
+/* TITLE – PURE WHITE/GRAY */
 .division-inner h3 {
   margin:0;
   font-weight:600;
   letter-spacing:.4px;
+  color:var(--text-main);
   opacity:0.65;
   transition:opacity .45s ease;
 }
 
-/* OVERLAY – MATCHES FRAME */
+/* OVERLAY – SAME SHAPE */
 .division .overlay {
   position:absolute;
-  inset:auto;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%) scale(1.22);
-  width:240px;
+  width:230px;
   height:100%;
-  background:rgba(15,17,23,0.92);
+  background:rgba(15,17,23,0.9);
   border-radius:22px;
   display:flex;
   flex-direction:column;
@@ -138,7 +146,6 @@ body {
 .division .overlay img {
   width:72px;
   margin-bottom:12px;
-  opacity:.9;
 }
 
 .division .overlay p {
@@ -150,21 +157,20 @@ body {
 }
 
 /* =========================
-   HOVER STATE
+   HOVER – CLEAN, NO PURPLE
 ========================= */
 .division:hover .division-inner {
   transform:scale(1.22);
   background:rgba(255,255,255,0.07);
-  border-color:rgba(43,109,246,.45);
+  border-color:var(--accent-glow);
   box-shadow:
-    0 0 42px rgba(43,109,246,.45),
-    0 0 80px rgba(43,109,246,.25);
+    0 0 42px var(--accent-glow),
+    0 0 80px var(--accent-glow-soft);
 }
 
 .division:hover img.logo {
   opacity:1;
   transform:scale(1.15);
-  filter:drop-shadow(0 0 26px rgba(43,109,246,.6));
 }
 
 .division:hover h3 {
@@ -176,7 +182,7 @@ body {
 }
 
 /* =========================
-   BELOW SECTIONS
+   BELOW
 ========================= */
 .wrap {
   max-width:1100px;
@@ -192,7 +198,6 @@ body {
   margin:0 auto;
 }
 
-/* FOOTER */
 footer {
   padding:56px 0;
   text-align:center;
