@@ -50,7 +50,22 @@ body {
 
 .hero-center img {
   width:300px;
-  margin-bottom:32px;
+  margin-bottom:24px;
+}
+
+.hero-center h1 {
+  margin:0;
+  font-size:22px;
+  font-weight:600;
+  letter-spacing:0.18em;
+}
+
+.hero-center .hero-claim {
+  margin:8px 0 28px;
+  font-size:13px;
+  letter-spacing:0.12em;
+  color:var(--text-muted);
+  text-transform:uppercase;
 }
 
 .hero-center p {
@@ -158,10 +173,49 @@ body {
 .site-footer {
   background:#0b0d14;
   border-top:1px solid rgba(255,255,255,0.06);
-  padding:48px 24px;
+  padding:72px 32px 40px;
+  color:#a8b0bd;
+  font-size:14px;
+}
+
+.footer-inner {
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:48px;
+}
+
+.footer-col h4 {
+  margin:0 0 16px;
+  font-size:15px;
+  color:#ffffff;
+}
+
+.footer-col ul {
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.footer-col li {
+  margin-bottom:10px;
+}
+
+.footer-col a {
+  color:#a8b0bd;
+}
+.footer-col a:hover {
+  color:#ffffff;
+}
+
+.footer-bottom {
+  margin-top:64px;
+  padding-top:24px;
+  border-top:1px solid rgba(255,255,255,0.06);
   text-align:center;
-  color:#7f8896;
   font-size:13px;
+  color:#7f8896;
 }
 </style>
 </head>
@@ -173,10 +227,9 @@ body {
   <!-- LEFT -->
   <div class="divisions">
     <a class="division" href="systems.html">
-      <img src="assets/logos/faist-systems.png" alt="F.A.I.S.T. Systems">
+      <img src="assets/logos/faist-systems.png">
       <span class="division-title">F.A.I.S.T. Systems</span>
       <span class="division-subtitle">Smart systems & IoT</span>
-
       <div class="division-overlay">
         <strong>Smart systems & IoT</strong>
         <p>Automatizace a integrace zařízení pro chytré prostředí.</p>
@@ -184,31 +237,31 @@ body {
     </a>
 
     <a class="division" href="lab.html">
-      <img src="assets/logos/faist-lab.png" alt="F.A.I.S.T. Lab">
+      <img src="assets/logos/faist-lab.png">
       <span class="division-title">F.A.I.S.T. Lab</span>
       <span class="division-subtitle">AI research & prototyping</span>
-
       <div class="division-overlay">
         <strong>AI Research</strong>
-        <p>Výzkum, prototypování a experimenty s umělou inteligencí.</p>
+        <p>Výzkum a experimenty s umělou inteligencí.</p>
       </div>
     </a>
 
     <a class="division" href="digital.html">
-      <img src="assets/logos/faist-digital.png" alt="F.A.I.S.T. Digital">
+      <img src="assets/logos/faist-digital.png">
       <span class="division-title">F.A.I.S.T. Digital</span>
-      <span class="division-subtitle">Digital products & AI services</span>
-
+      <span class="division-subtitle">Digital products & AI</span>
       <div class="division-overlay">
         <strong>Digital Products</strong>
-        <p>Weby, aplikace a AI integrace pro reálné použití.</p>
+        <p>Weby, aplikace a AI služby.</p>
       </div>
     </a>
   </div>
 
   <!-- CENTER -->
   <div class="hero-center">
-    <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
+    <img src="assets/logos/faist-holding.png">
+    <h1>F.A.I.S.T. HOLDING</h1>
+    <div class="hero-claim">Technology · Intelligence · Systems</div>
     <p>
       F.A.I.S.T. Holding sdružuje technologické divize zaměřené
       na inteligentní systémy, energii, bezpečnost, výzkum
@@ -219,35 +272,32 @@ body {
   <!-- RIGHT -->
   <div class="divisions">
     <a class="division" href="energy.html">
-      <img src="assets/logos/faist-energy.png" alt="F.A.I.S.T. Energy">
+      <img src="assets/logos/faist-energy.png">
       <span class="division-title">F.A.I.S.T. Energy</span>
       <span class="division-subtitle">Energy management</span>
-
       <div class="division-overlay">
         <strong>Energy Management</strong>
-        <p>Monitoring, optimalizace a řízení energetických systémů.</p>
+        <p>Optimalizace a monitoring energií.</p>
       </div>
     </a>
 
     <a class="division" href="security.html">
-      <img src="assets/logos/faist-security.png" alt="F.A.I.S.T. Security">
+      <img src="assets/logos/faist-security.png">
       <span class="division-title">F.A.I.S.T. Security</span>
       <span class="division-subtitle">Security systems</span>
-
       <div class="division-overlay">
         <strong>Security Systems</strong>
-        <p>Zabezpečení prostor, systémů a dat.</p>
+        <p>Zabezpečení systémů a prostor.</p>
       </div>
     </a>
 
     <a class="division" href="edu.html">
-      <img src="assets/logos/faist-edu.png" alt="F.A.I.S.T. Edu">
+      <img src="assets/logos/faist-edu.png">
       <span class="division-title">F.A.I.S.T. Edu</span>
       <span class="division-subtitle">Education & training</span>
-
       <div class="division-overlay">
         <strong>Education</strong>
-        <p>Vzdělávání v oblasti technologií a umělé inteligence.</p>
+        <p>Vzdělávání v oblasti technologií.</p>
       </div>
     </a>
   </div>
@@ -255,7 +305,48 @@ body {
 </section>
 
 <footer class="site-footer">
-  © 2025 F.A.I.S.T. Holding
+  <div class="footer-inner">
+
+    <div class="footer-col">
+      <h4>O nás</h4>
+      <ul>
+        <li><a href="#">F.A.I.S.T. Holding</a></li>
+        <li><a href="#">Naše vize</a></li>
+        <li><a href="#">Jak pracujeme</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Divize</h4>
+      <ul>
+        <li><a href="systems.html">Systems</a></li>
+        <li><a href="lab.html">Lab</a></li>
+        <li><a href="digital.html">Digital</a></li>
+        <li><a href="energy.html">Energy</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="edu.html">Edu</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Podpora</h4>
+      <ul>
+        <li><a href="contacts.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Pojmy</h4>
+      <ul>
+        <li><a href="#">Atlas technologií</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 F.A.I.S.T. Holding
+  </div>
 </footer>
 
 </body>
