@@ -1,235 +1,112 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <!-- Základní kódování znaků -->
-  <meta charset="utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Responsivní chování na mobilech -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F.A.I.S.T. Holding</title>
 
-  <!-- Titulek stránky -->
-  <title>F.A.I.S.T. Holding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Optimalizace načítání Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+:root{
+  --bg:#0f1117;
+  --card-bg:rgba(255,255,255,.08);
+  --card-border:rgba(255,255,255,.15);
+  --text:#fff;
+  --muted:#a8b0bd;
+}
 
-  <!-- Font Inter – moderní, čitelný -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+*{box-sizing:border-box}
 
-  <style>
-    /* =========================
-       DESIGNOVÉ PROMĚNNÉ
-       (jedno místo, kde ladíš celý web)
-    ========================= */
-    :root{
-      --bg-main:#0f1117;                  /* Hlavní tmavé pozadí */
-      --bg-soft:rgba(255,255,255,0.08);   /* Skleněné karty */
-      --border-soft:rgba(255,255,255,0.15);
-      --text-main:#ffffff;
-      --text-muted:#a8b0bd;
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
+    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
+  color:var(--text);
+}
 
-      --orbit-radius:320px;               /* Vzdálenost karet od středu */
-      --card-size:180px;                  /* Velikost čtvercových karet */
-    }
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-    /* =========================
-       RESET ZÁKLADŮ
-    ========================= */
-    *{
-      box-sizing:border-box;              /* Šířka = obsah + padding + border */
-    }
+.scene{
+  position:relative;
+  width:800px;
+  height:800px;
+  max-width:90vmin;
+  max-height:90vmin;
+}
 
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:Inter,system-ui,sans-serif;
-      color:var(--text-main);
+.center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
+  text-align:center;
+}
 
-      /* Jemné futuristické pozadí */
-      background:
-        radial-gradient(circle at 20% 20%, #1b2035, var(--bg-main)),
-        radial-gradient(circle at 80% 80%, #12162a, var(--bg-main));
-    }
+.center img{width:240px;margin-bottom:16px}
 
-    a{
-      text-decoration:none;               /* Žádné podtržení */
-      color:inherit;                      /* Barvu dědí z rodiče */
-    }
+.orbit{
+  position:absolute;
+  inset:0;
+}
 
-    /* =========================
-       HERO SEKCE
-    ========================= */
-    .hero{
-      min-height:100vh;                   /* Na výšku celé obrazovky */
-      display:flex;
-      align-items:center;                 /* Vertikální centrování */
-      justify-content:center;             /* Horizontální centrování */
-      padding:64px 24px;
-    }
+.card{
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:24px;
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  will-change:transform;
+}
 
-    /* =========================
-       ORBITÁLNÍ KONTEJNER
-    ========================= */
-    .orbit{
-      position:relative;                  /* Referenční bod pro absolutní děti */
-      width:min(90vmin,900px);
-      height:min(90vmin,900px);
-    }
+.card-inner{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  pointer-events:none; /* klik patří celé kartě */
+}
 
-    /* =========================
-       STŘED – LOGO + NÁZEV
-    ========================= */
-    .center{
-      position:absolute;
-      inset:0;                            /* Vyplní celý orbit */
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      z-index:5;                          /* Nad kartami */
-    }
-
-    .center img{
-      width:240px;
-      margin-bottom:16px;
-    }
-
-    .center h1{
-      margin:0;
-      letter-spacing:3px;
-      font-size:22px;
-    }
-
-    /* =========================
-       ROTUJÍCÍ VRSTVA (POZICE)
-    ========================= */
-    .orbit-rotator{
-      position:absolute;
-      inset:0;
-
-      /* 25 % zpomalení → 80s → 100s */
-      animation:spin 100s linear infinite;
-
-      /* Uloží aktuální úhel do proměnné */
-      --spin-angle:0deg;
-    }
-
-    /* =========================
-       KARTY (POZICE NA ORBITĚ)
-    ========================= */
-    .card{
-      position:absolute;
-
-      width:var(--card-size);
-      height:var(--card-size);
-
-      top:50%;
-      left:50%;
-
-      /* Skleněný efekt */
-      background:var(--bg-soft);
-      border:1px solid var(--border-soft);
-      border-radius:24px;
-
-      /* Přesun do středu + orbitální posun */
-      transform-origin:center;
-    }
-
-    /* =========================
-       MATEMATICKÁ SYMETRIE
-       (6 prvků po 60°)
-    ========================= */
-    .p1{transform:rotate(0deg)   translateY(calc(-1 * var(--orbit-radius)));}
-    .p2{transform:rotate(60deg)  translateY(calc(-1 * var(--orbit-radius)));}
-    .p3{transform:rotate(120deg) translateY(calc(-1 * var(--orbit-radius)));}
-    .p4{transform:rotate(180deg) translateY(calc(-1 * var(--orbit-radius)));}
-    .p5{transform:rotate(240deg) translateY(calc(-1 * var(--orbit-radius)));}
-    .p6{transform:rotate(300deg) translateY(calc(-1 * var(--orbit-radius)));}
-
-    /* =========================
-       VNITŘEK KARTY
-       (PROTIROTACE OBSAHU)
-    ========================= */
-    .card-inner{
-      width:100%;
-      height:100%;
-
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-
-      /* KLÍČOVÝ TRIK:
-         obsah se otáčí OPAČNĚ než orbit */
-      transform:rotate(calc(var(--spin-angle) * -1));
-    }
-
-    .card-inner img{
-      width:72px;
-      margin-bottom:10px;
-    }
-
-    .card-inner strong{
-      font-size:14px;
-      letter-spacing:1px;
-    }
-
-    .card-inner span{
-      margin-top:4px;
-      font-size:13px;
-      color:var(--text-muted);
-    }
-
-    /* =========================
-       ANIMACE ROTACE
-    ========================= */
-    @keyframes spin{
-      from{
-        transform:rotate(0deg);
-        --spin-angle:0deg;
-      }
-      to{
-        transform:rotate(360deg);
-        --spin-angle:360deg;
-      }
-    }
-
-    /* =========================
-       MOBIL – BEZ ROTACE
-    ========================= */
-    @media (max-width:900px){
-      .orbit-rotator{
-        animation:none;                   /* Žádná rotace na mobilu */
-      }
-
-      .card{
-        position:static;
-        margin:16px auto;
-        transform:none;
-      }
-    }
-  </style>
+.card-inner img{width:72px;margin-bottom:8px}
+.card-inner strong{font-size:14px;letter-spacing:1px}
+.card-inner span{font-size:13px;color:var(--muted)}
+</style>
 </head>
 
 <body>
 
 <section class="hero">
+  <div class="scene">
 
-  <div class="orbit">
-
-    <!-- STŘED -->
     <div class="center">
-      <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
+      <img src="assets/logos/faist-holding.png" alt="">
       <h1>F.A.I.S.T. HOLDING</h1>
     </div>
 
-    <!-- ORBIT -->
-    <div class="orbit-rotator">
-
-      <a href="systems.html" class="card p1">
+    <div class="orbit" id="orbit">
+      <a class="card" href="systems.html">
         <div class="card-inner">
           <img src="assets/logos/faist-systems.png">
           <strong>Systems</strong>
@@ -237,7 +114,7 @@
         </div>
       </a>
 
-      <a href="lab.html" class="card p2">
+      <a class="card" href="lab.html">
         <div class="card-inner">
           <img src="assets/logos/faist-lab.png">
           <strong>Lab</strong>
@@ -245,7 +122,7 @@
         </div>
       </a>
 
-      <a href="digital.html" class="card p3">
+      <a class="card" href="digital.html">
         <div class="card-inner">
           <img src="assets/logos/faist-digital.png">
           <strong>Digital</strong>
@@ -253,7 +130,7 @@
         </div>
       </a>
 
-      <a href="energy.html" class="card p4">
+      <a class="card" href="energy.html">
         <div class="card-inner">
           <img src="assets/logos/faist-energy.png">
           <strong>Energy</strong>
@@ -261,7 +138,7 @@
         </div>
       </a>
 
-      <a href="security.html" class="card p5">
+      <a class="card" href="security.html">
         <div class="card-inner">
           <img src="assets/logos/faist-security.png">
           <strong>Security</strong>
@@ -269,18 +146,85 @@
         </div>
       </a>
 
-      <a href="edu.html" class="card p6">
+      <a class="card" href="edu.html">
         <div class="card-inner">
           <img src="assets/logos/faist-edu.png">
           <strong>Edu</strong>
           <span>Education</span>
         </div>
       </a>
-
     </div>
-  </div>
 
+  </div>
 </section>
 
+<script>
+/* =========================
+   ORBIT ENGINE (JS)
+========================= */
+
+const cards = document.querySelectorAll('.card');
+const radius = 320;             // poloměr kruhu
+const speed = 0.0000625;        // zpomalení o 25 % (původně 0.000083)
+const count = cards.length;
+
+function animate(time){
+  const angleBase = time * speed;
+
+  cards.forEach((card, i) => {
+    const angle = angleBase + (i * (Math.PI * 2 / count));
+
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+
+    card.style.transform =
+      `translate(-50%, -50%) translate(${x}px, ${y}px)`;
+
+    // protirotace obsahu → vždy rovně dolů
+    card.querySelector('.card-inner').style.transform =
+      `rotate(${-angle}rad)`;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+</script>
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div class="footer-col">
+      <h4>O nás</h4>
+      <ul>
+        <li><a href="#">F.A.I.S.T. Holding</a></li>
+        <li><a href="#">Vize & přístup</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Divize</h4>
+      <ul>
+        <li><a href="systems.html">Systems</a></li>
+        <li><a href="lab.html">Lab</a></li>
+        <li><a href="digital.html">Digital</a></li>
+        <li><a href="energy.html">Energy</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="edu.html">Edu</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Podpora</h4>
+      <ul>
+        <li><a href="contacts.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 F.A.I.S.T. Holding
+  </div>
+</footer>
 </body>
 </html>
