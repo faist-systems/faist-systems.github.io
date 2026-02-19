@@ -10,8 +10,8 @@
 <style>
 :root {
   --bg-main:#0f1117;
-  --bg-soft:rgba(255,255,255,0.03);
-  --border-soft:rgba(255,255,255,0.08);
+  --bg-soft:rgba(255,255,255,0.04);
+  --border-soft:rgba(255,255,255,0.1);
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
 }
@@ -25,8 +25,8 @@ body {
   font-family:Inter,system-ui,sans-serif;
   color:var(--text-main);
   background:
-    radial-gradient(circle at 25% 25%, #161b2a, var(--bg-main)),
-    radial-gradient(circle at 75% 75%, #101423, var(--bg-main));
+    radial-gradient(circle at 20% 20%, #1b2035, var(--bg-main)),
+    radial-gradient(circle at 80% 80%, #12162a, var(--bg-main));
 }
 
 /* =========================
@@ -81,9 +81,9 @@ body {
   opacity:0.45;
   transform:scale(0.85);
   transition:
-    transform .3s ease,
-    opacity .3s ease,
-    box-shadow .3s ease;
+    transform .35s ease,
+    opacity .35s ease,
+    box-shadow .35s ease;
 }
 
 .division img {
@@ -100,8 +100,8 @@ body {
 .division:hover {
   opacity:1;
   transform:scale(1.18);
-  box-shadow:0 20px 56px rgba(0,0,0,0.6);
-  z-index:5;
+  box-shadow:0 22px 60px rgba(0,0,0,0.65);
+  z-index:10;
 }
 
 /* =========================
@@ -110,7 +110,7 @@ body {
 .division-overlay {
   position:absolute;
   inset:0;
-  background:rgba(10,12,17,0.92);
+  background:rgba(10,12,20,0.88);
   border-radius:20px;
   padding:24px;
 
@@ -120,8 +120,8 @@ body {
   text-align:center;
 
   opacity:0;
-  transform:scale(0.9);
-  transition:opacity .3s ease, transform .3s ease;
+  transform:scale(0.92);
+  transition:opacity .35s ease, transform .35s ease;
 }
 
 .division:hover .division-overlay {
@@ -198,10 +198,10 @@ body {
 
 <section class="hero-layout">
 
-  <!-- LEFT -->
+  <!-- LEFT DIVISIONS -->
   <div class="divisions">
     <a class="division" href="systems.html">
-      <img src="assets/faist-systems.png">
+      <img src="assets/logos/faist-systems.png" alt="F.A.I.S.T. Systems">
       <h3>Systems</h3>
       <div class="division-overlay">
         <strong>Smart systems & IoT</strong>
@@ -210,7 +210,7 @@ body {
     </a>
 
     <a class="division" href="lab.html">
-      <img src="assets/faist-lab.png">
+      <img src="assets/logos/faist-lab.png" alt="F.A.I.S.T. Lab">
       <h3>Lab</h3>
       <div class="division-overlay">
         <strong>AI Research</strong>
@@ -219,7 +219,7 @@ body {
     </a>
 
     <a class="division" href="digital.html">
-      <img src="assets/faist-digital.png">
+      <img src="assets/logos/faist-digital.png" alt="F.A.I.S.T. Digital">
       <h3>Digital</h3>
       <div class="division-overlay">
         <strong>Digital Products</strong>
@@ -230,18 +230,18 @@ body {
 
   <!-- CENTER -->
   <div class="hero-center">
-    <img src="assets/faist-holding.png" alt="F.A.I.S.T. Holding">
+    <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
     <p>
       F.A.I.S.T. Holding sdružuje technologické divize zaměřené
       na inteligentní systémy, energii, bezpečnost, výzkum
-      a vzdělávání.
+      a vzdělávání. Stavíme řešení, která fungují v reálném světě.
     </p>
   </div>
 
-  <!-- RIGHT -->
+  <!-- RIGHT DIVISIONS -->
   <div class="divisions">
     <a class="division" href="energy.html">
-      <img src="assets/faist-energy.png">
+      <img src="assets/logos/faist-energy.png" alt="F.A.I.S.T. Energy">
       <h3>Energy</h3>
       <div class="division-overlay">
         <strong>Energy Management</strong>
@@ -250,7 +250,7 @@ body {
     </a>
 
     <a class="division" href="security.html">
-      <img src="assets/faist-security.png">
+      <img src="assets/logos/faist-security.png" alt="F.A.I.S.T. Security">
       <h3>Security</h3>
       <div class="division-overlay">
         <strong>Security Systems</strong>
@@ -259,7 +259,7 @@ body {
     </a>
 
     <a class="division" href="edu.html">
-      <img src="assets/faist-edu.png">
+      <img src="assets/logos/faist-edu.png" alt="F.A.I.S.T. Edu">
       <h3>Edu</h3>
       <div class="division-overlay">
         <strong>Education</strong>
@@ -272,6 +272,7 @@ body {
 
 <footer class="site-footer">
   <div class="footer-inner">
+
     <div class="footer-col">
       <h4>O nás</h4>
       <ul>
@@ -306,6 +307,7 @@ body {
         <li><a href="#">Atlas technologií</a></li>
       </ul>
     </div>
+
   </div>
 
   <div class="footer-bottom">
