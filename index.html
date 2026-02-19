@@ -1,349 +1,286 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Základní kódování znaků -->
+  <meta charset="utf-8">
 
-<title>F.A.I.S.T. Holding</title>
+  <!-- Responsivní chování na mobilech -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Titulek stránky -->
+  <title>F.A.I.S.T. Holding</title>
 
-<style>
-:root{
-  --bg-main:#0f1117;
-  --bg-soft:rgba(255,255,255,0.07);
-  --border-soft:rgba(255,255,255,0.14);
-  --text-main:#ffffff;
-  --text-muted:#a8b0bd;
-}
+  <!-- Optimalizace načítání Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-/* RESET */
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,system-ui,sans-serif;
-  color:var(--text-main);
-  background:
-    radial-gradient(circle at 20% 20%, #1b2035, var(--bg-main)),
-    radial-gradient(circle at 80% 80%, #12162a, var(--bg-main));
-}
-a{text-decoration:none;color:inherit}
+  <!-- Font Inter – moderní, čitelný -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-/* =========================
-   HERO
-========================= */
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:64px 24px;
-}
+  <style>
+    /* =========================
+       DESIGNOVÉ PROMĚNNÉ
+       (jedno místo, kde ladíš celý web)
+    ========================= */
+    :root{
+      --bg-main:#0f1117;                  /* Hlavní tmavé pozadí */
+      --bg-soft:rgba(255,255,255,0.08);   /* Skleněné karty */
+      --border-soft:rgba(255,255,255,0.15);
+      --text-main:#ffffff;
+      --text-muted:#a8b0bd;
 
-.hex-container{
-  position:relative;
-  width:min(90vmin, 900px);
-  height:min(90vmin, 900px);
-}
+      --orbit-radius:320px;               /* Vzdálenost karet od středu */
+      --card-size:180px;                  /* Velikost čtvercových karet */
+    }
 
-/* =========================
-   CENTER
-========================= */
-.hex-center{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  z-index:3;
-}
-.hex-center img{
-  width:260px;
-  margin-bottom:16px;
-}
-.hex-center h1{
-  margin:0;
-  font-size:22px;
-  letter-spacing:3px;
-}
+    /* =========================
+       RESET ZÁKLADŮ
+    ========================= */
+    *{
+      box-sizing:border-box;              /* Šířka = obsah + padding + border */
+    }
 
-/* =========================
-   ROTATION LAYER
-========================= */
-.hex-ring{
-  position:absolute;
-  inset:0;
-}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--text-main);
 
-.hex-rotator{
-  position:absolute;
-  inset:0;
-  animation:spin 90s linear infinite;
-  will-change:transform;
-}
+      /* Jemné futuristické pozadí */
+      background:
+        radial-gradient(circle at 20% 20%, #1b2035, var(--bg-main)),
+        radial-gradient(circle at 80% 80%, #12162a, var(--bg-main));
+    }
 
-/* pause rotation when hovering container */
-.hex-container:hover .hex-rotator{
-  animation-play-state:paused;
-}
+    a{
+      text-decoration:none;               /* Žádné podtržení */
+      color:inherit;                      /* Barvu dědí z rodiče */
+    }
 
-/* =========================
-   HEX ITEM
-========================= */
-.hex-item{
-  position:absolute;
-  width:220px;
-  height:160px;
-  padding:22px;
-  background:var(--bg-soft);
-  border:1px solid var(--border-soft);
-  border-radius:22px;
+    /* =========================
+       HERO SEKCE
+    ========================= */
+    .hero{
+      min-height:100vh;                   /* Na výšku celé obrazovky */
+      display:flex;
+      align-items:center;                 /* Vertikální centrování */
+      justify-content:center;             /* Horizontální centrování */
+      padding:64px 24px;
+    }
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+    /* =========================
+       ORBITÁLNÍ KONTEJNER
+    ========================= */
+    .orbit{
+      position:relative;                  /* Referenční bod pro absolutní děti */
+      width:min(90vmin,900px);
+      height:min(90vmin,900px);
+    }
 
-  transform:translate(-50%,-50%);
-  transition:
-    transform .35s ease,
-    box-shadow .35s ease,
-    background .35s ease;
-  z-index:1;
-}
+    /* =========================
+       STŘED – LOGO + NÁZEV
+    ========================= */
+    .center{
+      position:absolute;
+      inset:0;                            /* Vyplní celý orbit */
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      z-index:5;                          /* Nad kartami */
+    }
 
-.hex-item img{
-  width:120px;
-  margin-bottom:8px;
-}
+    .center img{
+      width:240px;
+      margin-bottom:16px;
+    }
 
-.hex-item strong{
-  font-size:14px;
-  letter-spacing:1px;
-}
+    .center h1{
+      margin:0;
+      letter-spacing:3px;
+      font-size:22px;
+    }
 
-/* DESCRIPTION */
-.hex-desc{
-  margin-top:6px;
-  font-size:13px;
-  color:var(--text-muted);
-  opacity:0;
-  max-height:0;
-  overflow:hidden;
-  transition:opacity .25s ease, max-height .25s ease;
-}
+    /* =========================
+       ROTUJÍCÍ VRSTVA (POZICE)
+    ========================= */
+    .orbit-rotator{
+      position:absolute;
+      inset:0;
 
-/* HOVER */
-.hex-item:hover{
-  transform:translate(-50%,-50%) scale(1.12);
-  background:rgba(255,255,255,0.12);
-  box-shadow:0 28px 70px rgba(0,0,0,0.7);
-  z-index:10;
-}
-.hex-item:hover .hex-desc{
-  opacity:1;
-  max-height:40px;
-}
+      /* 25 % zpomalení → 80s → 100s */
+      animation:spin 100s linear infinite;
 
-/* POSITIONS */
-.h1{top:5%;   left:50%;}
-.h2{top:25%;  left:80%;}
-.h3{top:75%;  left:80%;}
-.h4{top:95%;  left:50%;}
-.h5{top:75%;  left:20%;}
-.h6{top:25%;  left:20%;}
+      /* Uloží aktuální úhel do proměnné */
+      --spin-angle:0deg;
+    }
 
-/* =========================
-   FOOTER
-========================= */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,0.06);
-  padding:64px 24px 40px;
-  font-size:14px;
-  color:#a8b0bd;
-}
-.footer-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:48px;
-}
-.footer-col h4{
-  margin:0 0 16px;
-  font-size:15px;
-  color:#fff;
-}
-.footer-col ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-.footer-col li{margin-bottom:10px}
-.footer-col a:hover{color:#fff}
-.footer-bottom{
-  margin-top:48px;
-  padding-top:24px;
-  border-top:1px solid rgba(255,255,255,0.06);
-  text-align:center;
-  font-size:13px;
-  color:#7f8896;
-}
+    /* =========================
+       KARTY (POZICE NA ORBITĚ)
+    ========================= */
+    .card{
+      position:absolute;
 
-/* =========================
-   ANIMATION
-========================= */
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
+      width:var(--card-size);
+      height:var(--card-size);
 
-/* =========================
-   ACCESSIBILITY
-========================= */
-.hex-item:focus-visible{
-  outline:2px solid #fff;
-  outline-offset:4px;
-}
+      top:50%;
+      left:50%;
 
-@media (prefers-reduced-motion: reduce){
-  .hex-rotator{animation:none;}
-}
+      /* Skleněný efekt */
+      background:var(--bg-soft);
+      border:1px solid var(--border-soft);
+      border-radius:24px;
 
-/* =========================
-   MOBILE
-========================= */
-@media (max-width:900px){
-  .hex-rotator{animation:none;}
+      /* Přesun do středu + orbitální posun */
+      transform-origin:center;
+    }
 
-  .hex-container{
-    width:100%;
-    height:auto;
-  }
+    /* =========================
+       MATEMATICKÁ SYMETRIE
+       (6 prvků po 60°)
+    ========================= */
+    .p1{transform:rotate(0deg)   translateY(calc(-1 * var(--orbit-radius)));}
+    .p2{transform:rotate(60deg)  translateY(calc(-1 * var(--orbit-radius)));}
+    .p3{transform:rotate(120deg) translateY(calc(-1 * var(--orbit-radius)));}
+    .p4{transform:rotate(180deg) translateY(calc(-1 * var(--orbit-radius)));}
+    .p5{transform:rotate(240deg) translateY(calc(-1 * var(--orbit-radius)));}
+    .p6{transform:rotate(300deg) translateY(calc(-1 * var(--orbit-radius)));}
 
-  .hex-ring,
-  .hex-rotator{
-    position:static;
-  }
+    /* =========================
+       VNITŘEK KARTY
+       (PROTIROTACE OBSAHU)
+    ========================= */
+    .card-inner{
+      width:100%;
+      height:100%;
 
-  .hex-item{
-    position:static;
-    transform:none;
-    width:100%;
-    max-width:360px;
-    height:auto;
-    margin:16px auto;
-  }
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
 
-  .hex-item:hover{
-    transform:scale(1.04);
-  }
-}
-</style>
+      /* KLÍČOVÝ TRIK:
+         obsah se otáčí OPAČNĚ než orbit */
+      transform:rotate(calc(var(--spin-angle) * -1));
+    }
+
+    .card-inner img{
+      width:72px;
+      margin-bottom:10px;
+    }
+
+    .card-inner strong{
+      font-size:14px;
+      letter-spacing:1px;
+    }
+
+    .card-inner span{
+      margin-top:4px;
+      font-size:13px;
+      color:var(--text-muted);
+    }
+
+    /* =========================
+       ANIMACE ROTACE
+    ========================= */
+    @keyframes spin{
+      from{
+        transform:rotate(0deg);
+        --spin-angle:0deg;
+      }
+      to{
+        transform:rotate(360deg);
+        --spin-angle:360deg;
+      }
+    }
+
+    /* =========================
+       MOBIL – BEZ ROTACE
+    ========================= */
+    @media (max-width:900px){
+      .orbit-rotator{
+        animation:none;                   /* Žádná rotace na mobilu */
+      }
+
+      .card{
+        position:static;
+        margin:16px auto;
+        transform:none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <section class="hero">
-  <div class="hex-container">
 
-    <div class="hex-center">
-      <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding logo" loading="lazy">
+  <div class="orbit">
+
+    <!-- STŘED -->
+    <div class="center">
+      <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
       <h1>F.A.I.S.T. HOLDING</h1>
     </div>
 
-    <nav class="hex-ring" aria-label="Divize FAIST">
-      <div class="hex-rotator">
+    <!-- ORBIT -->
+    <div class="orbit-rotator">
 
-        <a href="systems.html" class="hex-item h1">
-          <img src="assets/logos/faist-systems.png" alt="FAIST Systems" loading="lazy">
+      <a href="systems.html" class="card p1">
+        <div class="card-inner">
+          <img src="assets/logos/faist-systems.png">
           <strong>Systems</strong>
-          <span class="hex-desc">Smart systems & IoT</span>
-        </a>
+          <span>Smart systems & IoT</span>
+        </div>
+      </a>
 
-        <a href="lab.html" class="hex-item h2">
-          <img src="assets/logos/faist-lab.png" alt="FAIST Lab" loading="lazy">
+      <a href="lab.html" class="card p2">
+        <div class="card-inner">
+          <img src="assets/logos/faist-lab.png">
           <strong>Lab</strong>
-          <span class="hex-desc">AI research & prototyping</span>
-        </a>
+          <span>AI research</span>
+        </div>
+      </a>
 
-        <a href="digital.html" class="hex-item h3">
-          <img src="assets/logos/faist-digital.png" alt="FAIST Digital" loading="lazy">
+      <a href="digital.html" class="card p3">
+        <div class="card-inner">
+          <img src="assets/logos/faist-digital.png">
           <strong>Digital</strong>
-          <span class="hex-desc">Digital products & services</span>
-        </a>
+          <span>Digital products</span>
+        </div>
+      </a>
 
-        <a href="energy.html" class="hex-item h4">
-          <img src="assets/logos/faist-energy.png" alt="FAIST Energy" loading="lazy">
+      <a href="energy.html" class="card p4">
+        <div class="card-inner">
+          <img src="assets/logos/faist-energy.png">
           <strong>Energy</strong>
-          <span class="hex-desc">Energy management</span>
-        </a>
+          <span>Energy systems</span>
+        </div>
+      </a>
 
-        <a href="security.html" class="hex-item h5">
-          <img src="assets/logos/faist-security.png" alt="FAIST Security" loading="lazy">
+      <a href="security.html" class="card p5">
+        <div class="card-inner">
+          <img src="assets/logos/faist-security.png">
           <strong>Security</strong>
-          <span class="hex-desc">Security systems</span>
-        </a>
+          <span>Security tech</span>
+        </div>
+      </a>
 
-        <a href="edu.html" class="hex-item h6">
-          <img src="assets/logos/faist-edu.png" alt="FAIST Edu" loading="lazy">
+      <a href="edu.html" class="card p6">
+        <div class="card-inner">
+          <img src="assets/logos/faist-edu.png">
           <strong>Edu</strong>
-          <span class="hex-desc">Education & training</span>
-        </a>
+          <span>Education</span>
+        </div>
+      </a>
 
-      </div>
-    </nav>
-
+    </div>
   </div>
+
 </section>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>O nás</h4>
-      <ul>
-        <li><a href="#">F.A.I.S.T. Holding</a></li>
-        <li><a href="#">Vize & přístup</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Divize</h4>
-      <ul>
-        <li><a href="systems.html">Systems</a></li>
-        <li><a href="lab.html">Lab</a></li>
-        <li><a href="digital.html">Digital</a></li>
-        <li><a href="energy.html">Energy</a></li>
-        <li><a href="security.html">Security</a></li>
-        <li><a href="edu.html">Edu</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="contacts.html">Kontakt</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Pojmy</h4>
-      <ul>
-        <li><a href="#">Atlas technologií</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    © 2025 F.A.I.S.T. Holding
-  </div>
-</footer>
 
 </body>
 </html>
