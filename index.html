@@ -15,7 +15,7 @@
   --card-bg:rgba(255,255,255,.08);
   --card-border:rgba(255,255,255,.15);
   --text:#ffffff;
-  --muted:#a8b0bd;
+  --muted:#b6bcc6;
 }
 
 *{box-sizing:border-box}
@@ -32,41 +32,52 @@ body{
 /* ================= HERO ================= */
 .hero{
   min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ================= LEFT INFO ================= */
+.brand-info{
+  position:absolute;
+  top:40px;
+  left:40px;
+  max-width:320px;
+  z-index:10;
+}
+
+.brand-info h1{
+  margin:0 0 12px;
+  font-size:20px;
+  letter-spacing:3px;
+}
+
+.brand-info p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
 }
 
 /* ================= SCENE ================= */
 .scene{
-  position:relative;
-  width:900px;
-  height:900px;
-  max-width:90vmin;
-  max-height:90vmin;
-}
-
-/* ================= CENTER ================= */
-.center{
   position:absolute;
   inset:0;
   display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
+}
+
+/* ================= CENTER LOGO ================= */
+.center{
+  position:absolute;
   z-index:5;
 }
 
-.center img{width:240px}
-
-.center h1{
-  margin-top:14px;
-  font-size:22px;
-  letter-spacing:3px;
+.center img{
+  width:240px;
 }
 
-/* ===== INNER TEXT ORBIT ===== */
+/* ================= INNER TEXT ORBIT ================= */
 .inner-orbit{
   position:absolute;
   inset:0;
@@ -77,19 +88,15 @@ body{
   position:absolute;
   top:50%;
   left:50%;
-  width:420px;
-  height:420px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:360px;
+  height:360px;
   transform:translate(-50%,-50%);
 }
 
 .inner-text span{
   position:absolute;
   white-space:nowrap;
-  font-size:14px;
+  font-size:13px;
   letter-spacing:2px;
   color:var(--muted);
 }
@@ -105,9 +112,9 @@ body{
   position:absolute;
   top:50%;
   left:50%;
-  width:180px;
-  height:180px;
-  border-radius:24px;
+  width:170px;
+  height:170px;
+  border-radius:22px;
   background:var(--card-bg);
   border:1px solid var(--card-border);
   display:flex;
@@ -117,12 +124,9 @@ body{
   cursor:pointer;
 }
 
-.card:hover{
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
-}
-
 .card.hovered{
-  transform:scale(1.25);
+  transform:scale(1.22);
+  box-shadow:0 28px 70px rgba(0,0,0,.6);
   z-index:10;
 }
 
@@ -137,8 +141,16 @@ body{
   pointer-events:none;
 }
 
-.card-inner img{width:72px;margin-bottom:8px}
-.card-inner strong{font-size:14px;letter-spacing:1px}
+.card-inner img{
+  width:68px;
+  margin-bottom:8px;
+}
+
+.card-inner strong{
+  font-size:14px;
+  letter-spacing:1px;
+  color:#fff;
+}
 
 .card-inner span{
   margin-top:6px;
@@ -153,132 +165,68 @@ body{
   opacity:1;
   max-height:40px;
 }
-
-/* ================= FOOTER ================= */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding:64px 24px 40px;
-}
-
-.footer-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:48px;
-}
-
-.footer-col h4{
-  margin:0 0 16px;
-  font-size:15px;
-  color:#fff;
-}
-
-.footer-col ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-.footer-col li{margin-bottom:10px}
-
-.footer-col a{
-  color:#a8b0bd;
-  text-decoration:none;
-}
-
-.footer-col a:hover{color:#fff}
-
-.footer-bottom{
-  margin-top:48px;
-  padding-top:24px;
-  border-top:1px solid rgba(255,255,255,0.08);
-  text-align:center;
-  font-size:13px;
-  color:#7f8896;
-}
 </style>
 </head>
 
 <body>
 
 <section class="hero">
+
+  <!-- LEFT BRAND INFO -->
+  <div class="brand-info">
+    <h1>F.A.I.S.T. Holding</h1>
+    <p>
+      We design and build intelligent systems at the intersection of artificial intelligence,
+      science and modern technology. FAIST connects research, engineering and digital innovation
+      into practical solutions that scale.
+    </p>
+  </div>
+
   <div class="scene">
 
-    <!-- CENTER -->
+    <!-- CENTER LOGO -->
     <div class="center">
-      <img src="assets/logos/faist-holding.png" alt="">
-      <h1>F.A.I.S.T. HOLDING</h1>
+      <img src="assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
 
-    <!-- INNER ORBIT TEXT -->
-    <div class="inner-orbit" id="innerOrbit">
+    <!-- INNER ROTATING TEXT -->
+    <div class="inner-orbit">
       <div class="inner-text" id="innerText"></div>
     </div>
 
     <!-- OUTER ORBIT -->
     <div class="orbit" id="orbit">
       <a class="card" href="systems.html"><div class="card-inner"><img src="assets/logos/faist-systems.png"><strong>Systems</strong><span>Smart systems & IoT</span></div></a>
-      <a class="card" href="lab.html"><div class="card-inner"><img src="assets/logos/faist-lab.png"><strong>Lab</strong><span>AI research</span></div></a>
-      <a class="card" href="digital.html"><div class="card-inner"><img src="assets/logos/faist-digital.png"><strong>Digital</strong><span>Digital products</span></div></a>
-      <a class="card" href="energy.html"><div class="card-inner"><img src="assets/logos/faist-energy.png"><strong>Energy</strong><span>Energy systems</span></div></a>
-      <a class="card" href="security.html"><div class="card-inner"><img src="assets/logos/faist-security.png"><strong>Security</strong><span>Security tech</span></div></a>
-      <a class="card" href="edu.html"><div class="card-inner"><img src="assets/logos/faist-edu.png"><strong>Edu</strong><span>Education</span></div></a>
+      <a class="card" href="lab.html"><div class="card-inner"><img src="assets/logos/faist-lab.png"><strong>Lab</strong><span>AI research & prototyping</span></div></a>
+      <a class="card" href="digital.html"><div class="card-inner"><img src="assets/logos/faist-digital.png"><strong>Digital</strong><span>Digital products & services</span></div></a>
+      <a class="card" href="energy.html"><div class="card-inner"><img src="assets/logos/faist-energy.png"><strong>Energy</strong><span>Energy management</span></div></a>
+      <a class="card" href="security.html"><div class="card-inner"><img src="assets/logos/faist-security.png"><strong>Security</strong><span>Security systems</span></div></a>
+      <a class="card" href="edu.html"><div class="card-inner"><img src="assets/logos/faist-edu.png"><strong>Edu</strong><span>Education & training</span></div></a>
     </div>
 
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>O nás</h4>
-      <ul>
-        <li><a href="#">F.A.I.S.T. Holding</a></li>
-        <li><a href="#">Vize & přístup</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Divize</h4>
-      <ul>
-        <li><a href="systems.html">Systems</a></li>
-        <li><a href="lab.html">Lab</a></li>
-        <li><a href="digital.html">Digital</a></li>
-        <li><a href="energy.html">Energy</a></li>
-        <li><a href="security.html">Security</a></li>
-        <li><a href="edu.html">Edu</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="contacts.html">Kontakt</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">© 2025 F.A.I.S.T. Holding</div>
-</footer>
-
 <script>
-/* ========= INNER TEXT ========= */
+/* ===== INNER ROTATING TEXT ===== */
 const text = "Forge of Artificial Intelligence, Science & Technology";
 const inner = document.getElementById("innerText");
-const radiusInner = 210;
+const innerRadius = 160;
+let innerAngle = 0;
 
 text.split("").forEach((char,i)=>{
   const span=document.createElement("span");
-  const angle=i*(360/text.length);
+  const a=i*(360/text.length);
   span.textContent=char;
   span.style.transform=
-    `rotate(${angle}deg) translateY(-${radiusInner}px) rotate(-${angle}deg)`;
+    `rotate(${a}deg) translateY(-${innerRadius}px) rotate(-${a}deg)`;
   inner.appendChild(span);
 });
 
-/* ========= OUTER ORBIT ========= */
+/* ===== OUTER ORBIT ===== */
 const cards=document.querySelectorAll(".card");
-const radius=360;
-const speed=0.000025;
+const radius=300;                 // BLÍŽ KE STŘEDU
+const speed=0.00002;              // POMALEJŠÍ
 const count=cards.length;
 let paused=false;
 
@@ -296,11 +244,16 @@ cards.forEach(card=>{
 function animate(time){
   if(!paused){
     const base=time*speed;
+
     cards.forEach((card,i)=>{
       const a=base+i*(Math.PI*2/count);
       card.style.transform=
         `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
     });
+
+    innerAngle += 0.02;
+    inner.style.transform =
+      `translate(-50%,-50%) rotate(${innerAngle}deg)`;
   }
   requestAnimationFrame(animate);
 }
