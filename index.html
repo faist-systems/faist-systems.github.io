@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>F.A.I.S.T. Holding</title>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -29,7 +32,7 @@ body{
 a{text-decoration:none;color:inherit}
 
 /* =========================
-   HERO / HEX
+   HERO
 ========================= */
 .hero{
   min-height:100vh;
@@ -39,15 +42,15 @@ a{text-decoration:none;color:inherit}
   padding:64px 24px;
 }
 
-/* HEX CONTAINER */
 .hex-container{
   position:relative;
   width:min(90vmin, 900px);
   height:min(90vmin, 900px);
-  overflow:hidden;
 }
 
-/* CENTER */
+/* =========================
+   CENTER
+========================= */
 .hex-center{
   position:absolute;
   inset:0;
@@ -68,19 +71,29 @@ a{text-decoration:none;color:inherit}
   letter-spacing:3px;
 }
 
-/* HEX RING */
+/* =========================
+   ROTATION LAYER
+========================= */
 .hex-ring{
+  position:absolute;
+  inset:0;
+}
+
+.hex-rotator{
   position:absolute;
   inset:0;
   animation:spin 90s linear infinite;
   will-change:transform;
-  pointer-events:none;
 }
-.hex-ring:hover{
+
+/* pause rotation when hovering container */
+.hex-container:hover .hex-rotator{
   animation-play-state:paused;
 }
 
-/* HEX ITEM */
+/* =========================
+   HEX ITEM
+========================= */
 .hex-item{
   position:absolute;
   width:220px;
@@ -101,8 +114,7 @@ a{text-decoration:none;color:inherit}
     transform .35s ease,
     box-shadow .35s ease,
     background .35s ease;
-  pointer-events:auto;
-  will-change:transform;
+  z-index:1;
 }
 
 .hex-item img{
@@ -115,14 +127,15 @@ a{text-decoration:none;color:inherit}
   letter-spacing:1px;
 }
 
-/* POPISEK */
+/* DESCRIPTION */
 .hex-desc{
-  margin-top:4px;
+  margin-top:6px;
   font-size:13px;
   color:var(--text-muted);
   opacity:0;
-  transform:translateY(6px);
-  transition:opacity .25s ease, transform .25s ease;
+  max-height:0;
+  overflow:hidden;
+  transition:opacity .25s ease, max-height .25s ease;
 }
 
 /* HOVER */
@@ -134,22 +147,16 @@ a{text-decoration:none;color:inherit}
 }
 .hex-item:hover .hex-desc{
   opacity:1;
-  transform:translateY(0);
+  max-height:40px;
 }
 
-/* POSITIONS – HEX */
+/* POSITIONS */
 .h1{top:5%;   left:50%;}
 .h2{top:25%;  left:80%;}
 .h3{top:75%;  left:80%;}
 .h4{top:95%;  left:50%;}
 .h5{top:75%;  left:20%;}
 .h6{top:25%;  left:20%;}
-
-/* ANIMATION */
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
 
 /* =========================
    FOOTER
@@ -190,18 +197,52 @@ a{text-decoration:none;color:inherit}
 }
 
 /* =========================
+   ANIMATION
+========================= */
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+.hex-item:focus-visible{
+  outline:2px solid #fff;
+  outline-offset:4px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .hex-rotator{animation:none;}
+}
+
+/* =========================
    MOBILE
 ========================= */
 @media (max-width:900px){
-  .hex-ring{animation:none}
+  .hex-rotator{animation:none;}
+
   .hex-container{
     width:100%;
     height:auto;
   }
+
+  .hex-ring,
+  .hex-rotator{
+    position:static;
+  }
+
   .hex-item{
     position:static;
     transform:none;
+    width:100%;
+    max-width:360px;
+    height:auto;
     margin:16px auto;
+  }
+
+  .hex-item:hover{
+    transform:scale(1.04);
   }
 }
 </style>
@@ -213,49 +254,52 @@ a{text-decoration:none;color:inherit}
   <div class="hex-container">
 
     <div class="hex-center">
-      <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
+      <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding logo" loading="lazy">
       <h1>F.A.I.S.T. HOLDING</h1>
     </div>
 
-    <div class="hex-ring">
+    <nav class="hex-ring" aria-label="Divize FAIST">
+      <div class="hex-rotator">
 
-      <a href="systems.html" class="hex-item h1">
-        <img src="assets/logos/faist-systems.png">
-        <strong>Systems</strong>
-        <span class="hex-desc">Smart systems & IoT</span>
-      </a>
+        <a href="systems.html" class="hex-item h1">
+          <img src="assets/logos/faist-systems.png" alt="FAIST Systems" loading="lazy">
+          <strong>Systems</strong>
+          <span class="hex-desc">Smart systems & IoT</span>
+        </a>
 
-      <a href="lab.html" class="hex-item h2">
-        <img src="assets/logos/faist-lab.png">
-        <strong>Lab</strong>
-        <span class="hex-desc">AI research & prototyping</span>
-      </a>
+        <a href="lab.html" class="hex-item h2">
+          <img src="assets/logos/faist-lab.png" alt="FAIST Lab" loading="lazy">
+          <strong>Lab</strong>
+          <span class="hex-desc">AI research & prototyping</span>
+        </a>
 
-      <a href="digital.html" class="hex-item h3">
-        <img src="assets/logos/faist-digital.png">
-        <strong>Digital</strong>
-        <span class="hex-desc">Digital products & services</span>
-      </a>
+        <a href="digital.html" class="hex-item h3">
+          <img src="assets/logos/faist-digital.png" alt="FAIST Digital" loading="lazy">
+          <strong>Digital</strong>
+          <span class="hex-desc">Digital products & services</span>
+        </a>
 
-      <a href="energy.html" class="hex-item h4">
-        <img src="assets/logos/faist-energy.png">
-        <strong>Energy</strong>
-        <span class="hex-desc">Energy management</span>
-      </a>
+        <a href="energy.html" class="hex-item h4">
+          <img src="assets/logos/faist-energy.png" alt="FAIST Energy" loading="lazy">
+          <strong>Energy</strong>
+          <span class="hex-desc">Energy management</span>
+        </a>
 
-      <a href="security.html" class="hex-item h5">
-        <img src="assets/logos/faist-security.png">
-        <strong>Security</strong>
-        <span class="hex-desc">Security systems</span>
-      </a>
+        <a href="security.html" class="hex-item h5">
+          <img src="assets/logos/faist-security.png" alt="FAIST Security" loading="lazy">
+          <strong>Security</strong>
+          <span class="hex-desc">Security systems</span>
+        </a>
 
-      <a href="edu.html" class="hex-item h6">
-        <img src="assets/logos/faist-edu.png">
-        <strong>Edu</strong>
-        <span class="hex-desc">Education & training</span>
-      </a>
+        <a href="edu.html" class="hex-item h6">
+          <img src="assets/logos/faist-edu.png" alt="FAIST Edu" loading="lazy">
+          <strong>Edu</strong>
+          <span class="hex-desc">Education & training</span>
+        </a>
 
-    </div>
+      </div>
+    </nav>
+
   </div>
 </section>
 
@@ -268,6 +312,7 @@ a{text-decoration:none;color:inherit}
         <li><a href="#">Vize & přístup</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>Divize</h4>
       <ul>
@@ -279,12 +324,14 @@ a{text-decoration:none;color:inherit}
         <li><a href="edu.html">Edu</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>Podpora</h4>
       <ul>
         <li><a href="contacts.html">Kontakt</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>Pojmy</h4>
       <ul>
@@ -292,6 +339,7 @@ a{text-decoration:none;color:inherit}
       </ul>
     </div>
   </div>
+
   <div class="footer-bottom">
     © 2025 F.A.I.S.T. Holding
   </div>
