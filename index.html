@@ -12,8 +12,6 @@
 <style>
 :root{
   --bg:#0f1117;
-  --card-bg:rgba(255,255,255,.08);
-  --card-border:rgba(255,255,255,.15);
   --text:#ffffff;
   --muted:#b6bcc6;
 }
@@ -33,7 +31,7 @@ body{
 .hero{
   min-height:100vh;
   position:relative;
-  padding-bottom:140px; /* rezerva proti footeru */
+  padding-bottom:140px;
 }
 
 /* ================= LEFT INFO ================= */
@@ -76,14 +74,14 @@ body{
 }
 
 .center img{
-  width:220px;
+  width:240px;
 }
 
 /* ================= INNER COIN TEXT ================= */
 .inner-orbit{
   position:absolute;
-  width:280px;
-  height:280px;
+  width:300px;
+  height:300px;
   border-radius:50%;
   pointer-events:none;
 }
@@ -99,68 +97,36 @@ body{
   color:var(--muted);
 }
 
-/* ================= OUTER ORBIT ================= */
+/* ================= ORBIT ITEMS ================= */
 .orbit{
   position:absolute;
   inset:0;
 }
 
-/* ================= CARD ================= */
-.card{
+.orbit-item{
   position:absolute;
   top:50%;
   left:50%;
-  width:160px;
-  height:160px;
-  border-radius:20px;
-  background:var(--card-bg);
-  border:1px solid var(--card-border);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform .3s ease, box-shadow .3s ease;
-  cursor:pointer;
-}
-
-.card.hovered{
-  transform:scale(1.18);
-  box-shadow:0 24px 60px rgba(0,0,0,.6);
-  z-index:10;
-}
-
-.card-inner{
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
   text-align:center;
-  pointer-events:none;
+  cursor:pointer;
+  transition:transform .3s ease, filter .3s ease;
 }
 
-.card-inner img{
-  width:64px;
+.orbit-item img{
+  width:90px; /* ZVĚTŠENÉ LOGO */
   margin-bottom:6px;
 }
 
-.card-inner strong{
+.orbit-item span{
+  display:block;
   font-size:14px;
   letter-spacing:1px;
+  color:#ffffff;
 }
 
-.card-inner span{
-  margin-top:6px;
-  font-size:13px;
-  color:var(--muted);
-  opacity:0;
-  max-height:0;
-  transition:opacity .25s ease, max-height .25s ease;
-}
-
-.card.hovered span{
-  opacity:1;
-  max-height:40px;
+.orbit-item:hover{
+  transform:scale(1.25);
+  filter:drop-shadow(0 0 20px rgba(255,255,255,.25));
 }
 
 /* ================= FOOTER ================= */
@@ -214,34 +180,47 @@ body{
 
 <section class="hero">
 
-  <!-- LEFT INFO -->
   <div class="brand-info">
     <h1>F.A.I.S.T. Holding</h1>
     <p>
-      We design intelligent systems that connect artificial intelligence,
+      We design intelligent systems connecting artificial intelligence,
       science and advanced technology into practical, scalable solutions.
     </p>
   </div>
 
-  <!-- SCENE -->
   <div class="scene">
 
-    <!-- CENTER LOGO -->
     <div class="center">
       <img src="assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
 
-    <!-- INNER COIN TEXT -->
     <div class="inner-orbit" id="innerOrbit"></div>
 
-    <!-- OUTER ORBIT -->
     <div class="orbit" id="orbit">
-      <a class="card" href="systems.html"><div class="card-inner"><img src="assets/logos/faist-systems.png"><strong>Systems</strong><span>Smart systems & IoT</span></div></a>
-      <a class="card" href="lab.html"><div class="card-inner"><img src="assets/logos/faist-lab.png"><strong>Lab</strong><span>AI research & prototyping</span></div></a>
-      <a class="card" href="digital.html"><div class="card-inner"><img src="assets/logos/faist-digital.png"><strong>Digital</strong><span>Digital products & services</span></div></a>
-      <a class="card" href="energy.html"><div class="card-inner"><img src="assets/logos/faist-energy.png"><strong>Energy</strong><span>Energy management</span></div></a>
-      <a class="card" href="security.html"><div class="card-inner"><img src="assets/logos/faist-security.png"><strong>Security</strong><span>Security systems</span></div></a>
-      <a class="card" href="edu.html"><div class="card-inner"><img src="assets/logos/faist-edu.png"><strong>Edu</strong><span>Education & training</span></div></a>
+      <a class="orbit-item" href="systems.html">
+        <img src="assets/logos/faist-systems.png">
+        <span>Systems</span>
+      </a>
+      <a class="orbit-item" href="lab.html">
+        <img src="assets/logos/faist-lab.png">
+        <span>Lab</span>
+      </a>
+      <a class="orbit-item" href="digital.html">
+        <img src="assets/logos/faist-digital.png">
+        <span>Digital</span>
+      </a>
+      <a class="orbit-item" href="energy.html">
+        <img src="assets/logos/faist-energy.png">
+        <span>Energy</span>
+      </a>
+      <a class="orbit-item" href="security.html">
+        <img src="assets/logos/faist-security.png">
+        <span>Security</span>
+      </a>
+      <a class="orbit-item" href="edu.html">
+        <img src="assets/logos/faist-edu.png">
+        <span>Edu</span>
+      </a>
     </div>
 
   </div>
@@ -267,12 +246,6 @@ body{
         <li><a href="edu.html">Edu</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="contacts.html">Kontakt</a></li>
-      </ul>
-    </div>
   </div>
   <div class="footer-bottom">© 2025 F.A.I.S.T. Holding</div>
 </footer>
@@ -281,7 +254,7 @@ body{
 /* ===== INNER COIN TEXT ===== */
 const coinText = "Forge of Artificial Intelligence, Science & Technology • ";
 const innerOrbit = document.getElementById("innerOrbit");
-const innerRadius = 140;
+const innerRadius = 150;
 let innerAngle = 0;
 
 coinText.split("").forEach((char,i)=>{
@@ -294,36 +267,23 @@ coinText.split("").forEach((char,i)=>{
 });
 
 /* ===== OUTER ORBIT ===== */
-const cards = document.querySelectorAll(".card");
-const radius = 250;
+const items = document.querySelectorAll(".orbit-item");
+const radius = 270;
 const speed = 0.00002;
-const count = cards.length;
-let paused = false;
-
-cards.forEach(card=>{
-  card.addEventListener("mouseenter",()=>{
-    paused = true;
-    card.classList.add("hovered");
-  });
-  card.addEventListener("mouseleave",()=>{
-    paused = false;
-    card.classList.remove("hovered");
-  });
-});
+const count = items.length;
 
 function animate(time){
-  if(!paused){
-    const base = time * speed;
+  const base = time * speed;
 
-    cards.forEach((card,i)=>{
-      const a = base + i * (Math.PI * 2 / count);
-      card.style.transform =
-        `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-    });
+  items.forEach((item,i)=>{
+    const a = base + i * (Math.PI * 2 / count);
+    item.style.transform =
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+  });
 
-    innerAngle -= 0.04; // CCW
-    innerOrbit.style.transform = `rotate(${innerAngle}deg)`;
-  }
+  innerAngle -= 0.04;
+  innerOrbit.style.transform = `rotate(${innerAngle}deg)`;
+
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
