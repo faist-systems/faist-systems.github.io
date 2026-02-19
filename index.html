@@ -29,21 +29,22 @@ body{
 a{text-decoration:none;color:inherit}
 
 /* =========================
-   HERO / HEX ORBIT
+   HERO / HEX
 ========================= */
 .hero{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:80px 24px;
+  padding:64px 24px;
 }
 
 /* HEX CONTAINER */
 .hex-container{
   position:relative;
-  width:900px;
-  height:900px;
+  width:min(90vmin, 900px);
+  height:min(90vmin, 900px);
+  overflow:hidden;
 }
 
 /* CENTER */
@@ -55,11 +56,11 @@ a{text-decoration:none;color:inherit}
   align-items:center;
   justify-content:center;
   text-align:center;
-  z-index:2;
+  z-index:3;
 }
 .hex-center img{
-  width:280px;
-  margin-bottom:18px;
+  width:260px;
+  margin-bottom:16px;
 }
 .hex-center h1{
   margin:0;
@@ -72,6 +73,8 @@ a{text-decoration:none;color:inherit}
   position:absolute;
   inset:0;
   animation:spin 90s linear infinite;
+  will-change:transform;
+  pointer-events:none;
 }
 .hex-ring:hover{
   animation-play-state:paused;
@@ -94,19 +97,17 @@ a{text-decoration:none;color:inherit}
   text-align:center;
 
   transform:translate(-50%,-50%);
-  animation:counter-spin 90s linear infinite;
   transition:
     transform .35s ease,
     box-shadow .35s ease,
     background .35s ease;
-}
-.hex-ring:hover .hex-item{
-  animation-play-state:paused;
+  pointer-events:auto;
+  will-change:transform;
 }
 
 .hex-item img{
   width:120px;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .hex-item strong{
@@ -114,40 +115,85 @@ a{text-decoration:none;color:inherit}
   letter-spacing:1px;
 }
 
-/* HOVER */
-.hex-item:hover{
-  transform:translate(-50%,-50%) scale(1.18);
-  background:rgba(255,255,255,0.12);
-  box-shadow:0 28px 70px rgba(0,0,0,0.7);
-  z-index:5;
+/* POPISEK */
+.hex-desc{
+  margin-top:4px;
+  font-size:13px;
+  color:var(--text-muted);
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .25s ease, transform .25s ease;
 }
 
-/* POSITIONS – REGULAR HEX */
-.h1{top:0%;   left:50%;}
-.h2{top:25%;  left:85%;}
-.h3{top:75%;  left:85%;}
-.h4{top:100%; left:50%;}
-.h5{top:75%;  left:15%;}
-.h6{top:25%;  left:15%;}
+/* HOVER */
+.hex-item:hover{
+  transform:translate(-50%,-50%) scale(1.12);
+  background:rgba(255,255,255,0.12);
+  box-shadow:0 28px 70px rgba(0,0,0,0.7);
+  z-index:10;
+}
+.hex-item:hover .hex-desc{
+  opacity:1;
+  transform:translateY(0);
+}
 
-/* ANIMATIONS */
+/* POSITIONS – HEX */
+.h1{top:5%;   left:50%;}
+.h2{top:25%;  left:80%;}
+.h3{top:75%;  left:80%;}
+.h4{top:95%;  left:50%;}
+.h5{top:75%;  left:20%;}
+.h6{top:25%;  left:20%;}
+
+/* ANIMATION */
 @keyframes spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
-@keyframes counter-spin{
-  from{transform:rotate(360deg)}
-  to{transform:rotate(0deg)}
+
+/* =========================
+   FOOTER
+========================= */
+.site-footer{
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:64px 24px 40px;
+  font-size:14px;
+  color:#a8b0bd;
+}
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:48px;
+}
+.footer-col h4{
+  margin:0 0 16px;
+  font-size:15px;
+  color:#fff;
+}
+.footer-col ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.footer-col li{margin-bottom:10px}
+.footer-col a:hover{color:#fff}
+.footer-bottom{
+  margin-top:48px;
+  padding-top:24px;
+  border-top:1px solid rgba(255,255,255,0.06);
+  text-align:center;
+  font-size:13px;
+  color:#7f8896;
 }
 
 /* =========================
    MOBILE
 ========================= */
 @media (max-width:900px){
-  .hex-ring,
-  .hex-item{
-    animation:none;
-  }
+  .hex-ring{animation:none}
   .hex-container{
     width:100%;
     height:auto;
@@ -155,7 +201,7 @@ a{text-decoration:none;color:inherit}
   .hex-item{
     position:static;
     transform:none;
-    margin:20px auto;
+    margin:16px auto;
   }
 }
 </style>
@@ -166,50 +212,90 @@ a{text-decoration:none;color:inherit}
 <section class="hero">
   <div class="hex-container">
 
-    <!-- CENTER -->
     <div class="hex-center">
       <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
       <h1>F.A.I.S.T. HOLDING</h1>
     </div>
 
-    <!-- HEX RING -->
     <div class="hex-ring">
 
       <a href="systems.html" class="hex-item h1">
-        <img src="assets/logos/faist-systems.png" alt="">
+        <img src="assets/logos/faist-systems.png">
         <strong>Systems</strong>
+        <span class="hex-desc">Smart systems & IoT</span>
       </a>
 
       <a href="lab.html" class="hex-item h2">
-        <img src="assets/logos/faist-lab.png" alt="">
+        <img src="assets/logos/faist-lab.png">
         <strong>Lab</strong>
+        <span class="hex-desc">AI research & prototyping</span>
       </a>
 
       <a href="digital.html" class="hex-item h3">
-        <img src="assets/logos/faist-digital.png" alt="">
+        <img src="assets/logos/faist-digital.png">
         <strong>Digital</strong>
+        <span class="hex-desc">Digital products & services</span>
       </a>
 
       <a href="energy.html" class="hex-item h4">
-        <img src="assets/logos/faist-energy.png" alt="">
+        <img src="assets/logos/faist-energy.png">
         <strong>Energy</strong>
+        <span class="hex-desc">Energy management</span>
       </a>
 
       <a href="security.html" class="hex-item h5">
-        <img src="assets/logos/faist-security.png" alt="">
+        <img src="assets/logos/faist-security.png">
         <strong>Security</strong>
+        <span class="hex-desc">Security systems</span>
       </a>
 
       <a href="edu.html" class="hex-item h6">
-        <img src="assets/logos/faist-edu.png" alt="">
+        <img src="assets/logos/faist-edu.png">
         <strong>Edu</strong>
+        <span class="hex-desc">Education & training</span>
       </a>
 
     </div>
-
   </div>
 </section>
 
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>O nás</h4>
+      <ul>
+        <li><a href="#">F.A.I.S.T. Holding</a></li>
+        <li><a href="#">Vize & přístup</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Divize</h4>
+      <ul>
+        <li><a href="systems.html">Systems</a></li>
+        <li><a href="lab.html">Lab</a></li>
+        <li><a href="digital.html">Digital</a></li>
+        <li><a href="energy.html">Energy</a></li>
+        <li><a href="security.html">Security</a></li>
+        <li><a href="edu.html">Edu</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Podpora</h4>
+      <ul>
+        <li><a href="contacts.html">Kontakt</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Pojmy</h4>
+      <ul>
+        <li><a href="#">Atlas technologií</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 F.A.I.S.T. Holding
+  </div>
+</footer>
+
 </body>
 </html>
-
