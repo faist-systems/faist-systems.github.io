@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>F.A.I.S.T. Holding</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
@@ -11,8 +10,8 @@
 <style>
 :root{
   --bg-main:#0f1117;
-  --bg-soft:rgba(255,255,255,0.06);
-  --border-soft:rgba(255,255,255,0.12);
+  --bg-soft:rgba(255,255,255,0.07);
+  --border-soft:rgba(255,255,255,0.14);
   --text-main:#ffffff;
   --text-muted:#a8b0bd;
 }
@@ -30,7 +29,7 @@ body{
 a{text-decoration:none;color:inherit}
 
 /* =========================
-   HERO / ORBIT
+   HERO / HEX ORBIT
 ========================= */
 .hero{
   min-height:100vh;
@@ -40,14 +39,15 @@ a{text-decoration:none;color:inherit}
   padding:80px 24px;
 }
 
-.orbit-container{
+/* HEX CONTAINER */
+.hex-container{
   position:relative;
-  width:720px;
-  height:720px;
+  width:900px;
+  height:900px;
 }
 
 /* CENTER */
-.orbit-center{
+.hex-center{
   position:absolute;
   inset:0;
   display:flex;
@@ -57,38 +57,35 @@ a{text-decoration:none;color:inherit}
   text-align:center;
   z-index:2;
 }
-.orbit-center img{
-  width:260px;
-  margin-bottom:24px;
+.hex-center img{
+  width:280px;
+  margin-bottom:18px;
 }
-.orbit-center h1{
-  margin:0 0 12px;
+.hex-center h1{
+  margin:0;
   font-size:22px;
   letter-spacing:3px;
 }
-.orbit-center p{
-  max-width:520px;
-  font-size:16px;
-  line-height:1.6;
-  color:var(--text-muted);
-}
 
-/* ORBIT RING */
-.orbit{
+/* HEX RING */
+.hex-ring{
   position:absolute;
   inset:0;
   animation:spin 90s linear infinite;
 }
+.hex-ring:hover{
+  animation-play-state:paused;
+}
 
-/* DIVISION */
-.orbit-item{
+/* HEX ITEM */
+.hex-item{
   position:absolute;
-  width:180px;
-  height:130px;
-  padding:18px;
+  width:220px;
+  height:160px;
+  padding:22px;
   background:var(--bg-soft);
   border:1px solid var(--border-soft);
-  border-radius:20px;
+  border-radius:22px;
 
   display:flex;
   flex-direction:column;
@@ -98,38 +95,40 @@ a{text-decoration:none;color:inherit}
 
   transform:translate(-50%,-50%);
   animation:counter-spin 90s linear infinite;
-  transition:transform .35s ease, box-shadow .35s ease, background .35s ease;
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    background .35s ease;
+}
+.hex-ring:hover .hex-item{
+  animation-play-state:paused;
 }
 
-.orbit-item img{
-  width:96px;
+.hex-item img{
+  width:120px;
   margin-bottom:10px;
 }
 
-.orbit-item strong{
+.hex-item strong{
   font-size:14px;
   letter-spacing:1px;
 }
 
-.orbit-item:hover{
-  transform:translate(-50%,-50%) scale(1.15);
-  background:rgba(255,255,255,0.1);
-  box-shadow:0 24px 60px rgba(0,0,0,0.6);
+/* HOVER */
+.hex-item:hover{
+  transform:translate(-50%,-50%) scale(1.18);
+  background:rgba(255,255,255,0.12);
+  box-shadow:0 28px 70px rgba(0,0,0,0.7);
   z-index:5;
 }
 
-/* POSITIONS */
-.i1{top:0%; left:50%;}
-.i2{top:18%; left:82%;}
-.i3{top:50%; left:100%;}
-.i4{top:82%; left:82%;}
-.i5{top:100%; left:50%;}
-.i6{top:82%; left:18%;}
-.i7{top:50%; left:0%;}
-.i8{top:18%; left:18%;}
-
-/* only 6 used */
-.i7,.i8{display:none}
+/* POSITIONS – REGULAR HEX */
+.h1{top:0%;   left:50%;}
+.h2{top:25%;  left:85%;}
+.h3{top:75%;  left:85%;}
+.h4{top:100%; left:50%;}
+.h5{top:75%;  left:15%;}
+.h6{top:25%;  left:15%;}
 
 /* ANIMATIONS */
 @keyframes spin{
@@ -142,61 +141,21 @@ a{text-decoration:none;color:inherit}
 }
 
 /* =========================
-   FOOTER
-========================= */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,0.06);
-  padding:72px 24px 40px;
-  font-size:14px;
-  color:#a8b0bd;
-}
-.footer-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:48px;
-}
-.footer-col h4{
-  margin:0 0 16px;
-  font-size:15px;
-  color:#fff;
-}
-.footer-col ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-.footer-col li{margin-bottom:10px}
-.footer-col a:hover{color:#fff}
-
-.footer-bottom{
-  margin-top:48px;
-  padding-top:24px;
-  border-top:1px solid rgba(255,255,255,0.06);
-  text-align:center;
-  font-size:13px;
-  color:#7f8896;
-}
-
-/* =========================
    MOBILE
 ========================= */
 @media (max-width:900px){
-  .orbit{animation:none}
-  .orbit-container{
+  .hex-ring,
+  .hex-item{
+    animation:none;
+  }
+  .hex-container{
     width:100%;
     height:auto;
   }
-  .orbit-item{
+  .hex-item{
     position:static;
     transform:none;
-    animation:none;
-    margin-bottom:20px;
-  }
-  .hero{
-    flex-direction:column;
+    margin:20px auto;
   }
 }
 </style>
@@ -205,98 +164,52 @@ a{text-decoration:none;color:inherit}
 <body>
 
 <section class="hero">
-  <div class="orbit-container">
+  <div class="hex-container">
 
-    <div class="orbit-center">
+    <!-- CENTER -->
+    <div class="hex-center">
       <img src="assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
       <h1>F.A.I.S.T. HOLDING</h1>
-      <p>
-        <strong>F.A.I.S.T.</strong> — Forge of Artificial Intelligence, Science & Technology.<br>
-        Sdružujeme technologické divize zaměřené na inteligentní systémy,
-        energii, bezpečnost, výzkum a vzdělávání.
-        Stavíme řešení, která fungují v reálném světě.
-      </p>
     </div>
 
-    <div class="orbit">
+    <!-- HEX RING -->
+    <div class="hex-ring">
 
-      <a href="systems.html" class="orbit-item i1">
+      <a href="systems.html" class="hex-item h1">
         <img src="assets/logos/faist-systems.png" alt="">
         <strong>Systems</strong>
       </a>
 
-      <a href="lab.html" class="orbit-item i2">
+      <a href="lab.html" class="hex-item h2">
         <img src="assets/logos/faist-lab.png" alt="">
         <strong>Lab</strong>
       </a>
 
-      <a href="digital.html" class="orbit-item i3">
+      <a href="digital.html" class="hex-item h3">
         <img src="assets/logos/faist-digital.png" alt="">
         <strong>Digital</strong>
       </a>
 
-      <a href="energy.html" class="orbit-item i4">
+      <a href="energy.html" class="hex-item h4">
         <img src="assets/logos/faist-energy.png" alt="">
         <strong>Energy</strong>
       </a>
 
-      <a href="security.html" class="orbit-item i5">
+      <a href="security.html" class="hex-item h5">
         <img src="assets/logos/faist-security.png" alt="">
         <strong>Security</strong>
       </a>
 
-      <a href="edu.html" class="orbit-item i6">
+      <a href="edu.html" class="hex-item h6">
         <img src="assets/logos/faist-edu.png" alt="">
         <strong>Edu</strong>
       </a>
 
     </div>
+
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-
-    <div class="footer-col">
-      <h4>O nás</h4>
-      <ul>
-        <li><a href="#">F.A.I.S.T. Holding</a></li>
-        <li><a href="#">Vize & přístup</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Divize</h4>
-      <ul>
-        <li><a href="systems.html">Systems</a></li>
-        <li><a href="lab.html">Lab</a></li>
-        <li><a href="digital.html">Digital</a></li>
-        <li><a href="energy.html">Energy</a></li>
-        <li><a href="security.html">Security</a></li>
-        <li><a href="edu.html">Edu</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="contacts.html">Kontakt</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Pojmy</h4>
-      <ul>
-        <li><a href="#">Atlas technologií</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © 2025 F.A.I.S.T. Holding
-  </div>
-</footer>
-
 </body>
 </html>
+
