@@ -134,8 +134,6 @@ body{
   font-size:14px;
   letter-spacing:1px;
 }
-
-/* tooltip */
 .orbit-item::after{
   content:attr(data-desc);
   position:absolute;
@@ -159,11 +157,11 @@ body{
 }
 
 /* =========================
-   MOBILE SHARED
+   MOBILE
 ========================= */
 .mobile{display:none}
 
-/* ===== PORTRAIT – VERTICAL LOOP ===== */
+/* PORTRAIT – VERTICAL LOOP */
 .mobile-vertical{
   height:100vh;
   overflow:hidden;
@@ -172,7 +170,7 @@ body{
   height:100%;
   overflow-y:auto;
   scroll-snap-type:y mandatory;
-  padding:120px 0;
+  padding:120px 0 160px; /* místo pro footer */
 }
 .vertical-track::-webkit-scrollbar{display:none}
 
@@ -200,7 +198,7 @@ body{
   text-decoration:none;
 }
 
-/* ===== LANDSCAPE – HORIZONTAL CAROUSEL ===== */
+/* LANDSCAPE – HORIZONTAL */
 .mobile-horizontal{
   padding-top:120px;
 }
@@ -209,7 +207,7 @@ body{
   gap:20px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
-  padding:0 20px;
+  padding:0 20px 60px;
 }
 .horizontal-track::-webkit-scrollbar{display:none}
 
@@ -225,6 +223,30 @@ body{
 }
 .horizontal-card img{width:96px;margin-bottom:14px}
 
+/* ===== FOOTER ===== */
+.site-footer{
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:48px 24px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
+}
+.site-footer h3{
+  font-size:14px;
+  letter-spacing:2px;
+}
+.site-footer a{
+  display:block;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:6px;
+}
+
 /* ===== RESPONSIVE SWITCH ===== */
 @media (max-width:900px){
   .scene{display:none}
@@ -235,11 +257,9 @@ body{
     margin:20px;
   }
 }
-
 @media (max-width:900px) and (orientation:portrait){
   .mobile-horizontal{display:none}
 }
-
 @media (max-width:900px) and (orientation:landscape){
   .mobile-vertical{display:none}
 }
@@ -259,7 +279,7 @@ body{
     <p>Navrhujeme inteligentní systémy propojující AI, vědu a technologie.</p>
   </div>
 
-  <!-- DESKTOP ORBIT -->
+  <!-- DESKTOP -->
   <div class="scene" id="scene">
     <div class="center">
       <img src="/assets/logos/faist-holding.png">
@@ -294,8 +314,32 @@ body{
 
 </section>
 
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>O nás</h3>
+      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
+    </div>
+    <div>
+      <h3>Divize</h3>
+      <a href="/cs/divisions/systems.html">Systems</a>
+      <a href="/cs/divisions/lab.html">Lab</a>
+      <a href="/cs/divisions/digital.html">Digital</a>
+      <a href="/cs/divisions/energy.html">Energy</a>
+      <a href="/cs/divisions/security.html">Security</a>
+      <a href="/cs/divisions/edu.html">Edu</a>
+    </div>
+    <div>
+      <h3>Informace</h3>
+      <a href="#">Slovník pojmů</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </div>
+</footer>
+
 <script>
-/* ===== DESKTOP ORBIT LOGIC ===== */
+/* ===== DESKTOP ORBIT ===== */
 const items=[...document.querySelectorAll(".orbit-item")];
 const scene=document.getElementById("scene");
 let radius,frozen=false,base=0;
