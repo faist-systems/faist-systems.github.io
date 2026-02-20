@@ -3,296 +3,284 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>F.A.I.S.T. Digital | F.A.I.S.T. Holding</title>
+<title>F.A.I.S.T. Holding</title>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg-main:#0f1117;
-  --bg-soft:rgba(255,255,255,0.03);
-  --border-soft:rgba(255,255,255,0.08);
-  --text-main:#ffffff;
-  --text-muted:#a8b0bd;
-  --accent:#4dd2a3; /* digitální, svěží */
+:root{
+  --bg:#0f1117;
+  --text:#ffffff;
+  --muted:#b6bcc6;
 }
 
-/* RESET */
-* { box-sizing:border-box; }
-a { text-decoration:none; color:inherit; }
+*{box-sizing:border-box}
 
-body {
+body{
   margin:0;
   font-family:Inter,system-ui,sans-serif;
-  color:var(--text-main);
+  color:var(--text);
   background:
-    radial-gradient(circle at 30% 20%, #13261f, var(--bg-main)),
-    radial-gradient(circle at 70% 80%, #101423, var(--bg-main));
+    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
+    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* =========================
-   HEADER
-========================= */
-header {
-  padding:32px 48px;
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  padding:120px 0 160px; /* dává prostor nahoře i dole */
 }
 
-header a {
-  font-size:14px;
-  opacity:0.75;
-}
-header a:hover { opacity:1; }
-
-/* =========================
-   HERO
-========================= */
-.hero {
-  max-width:1000px;
-  margin:0 auto;
-  padding:100px 24px 140px;
+/* ================= LEFT INFO ================= */
+.brand-info{
+  position:absolute;
+  top:40px;
+  left:40px;
+  max-width:340px;
+  z-index:5;
 }
 
-.hero img {
-  width:180px;
-  margin-bottom:32px;
+.brand-info h1{
+  margin:0 0 12px;
+  font-size:22px;
+  letter-spacing:3px;
 }
 
-.hero h1 {
-  font-size:clamp(36px,5vw,64px);
-  margin:0 0 24px;
-}
-
-.hero p {
-  max-width:760px;
-  color:var(--text-muted);
-  font-size:18px;
-  line-height:1.65;
-}
-
-/* =========================
-   SECTIONS
-========================= */
-.section {
-  max-width:1000px;
-  margin:0 auto;
-  padding:120px 24px;
-}
-
-.section h2 {
-  font-size:26px;
-  margin:0 0 32px;
-}
-
-.section p {
-  max-width:780px;
-  color:var(--text-muted);
-  line-height:1.7;
-}
-
-/* =========================
-   SERVICES
-========================= */
-.services {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:32px;
-  margin-top:40px;
-}
-
-.service {
-  background:var(--bg-soft);
-  border:1px solid var(--border-soft);
-  border-radius:20px;
-  padding:30px 28px;
-}
-
-.service h3 {
-  margin:0 0 14px;
-  font-size:18px;
-}
-
-.service p {
+.brand-info p{
   margin:0;
   font-size:15px;
-  color:var(--text-muted);
+  line-height:1.6;
+  color:var(--muted);
 }
 
-/* =========================
-   APPROACH
-========================= */
-.approach {
-  background:rgba(255,255,255,0.015);
-  border-top:1px solid var(--border-soft);
-  border-bottom:1px solid var(--border-soft);
-}
-
-/* =========================
-   CTA
-========================= */
-.cta {
-  text-align:center;
-  padding:140px 24px;
-}
-
-.cta a {
-  display:inline-block;
-  padding:14px 30px;
-  border-radius:32px;
-  border:1px solid var(--accent);
-  color:var(--accent);
-  font-weight:600;
-  transition:background .25s ease, color .25s ease;
-}
-
-.cta a:hover {
-  background:var(--accent);
-  color:#0f1117;
-}
-
-/* =========================
-   FOOTER – STEJNÝ JAKO INDEX
-========================= */
-footer {
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,0.06);
-  padding:64px 24px;
-  text-align:center;
-  font-size:14px;
-  color:var(--text-muted);
-}
-
-.footer-links {
-  margin-top:24px;
+/* ================= SCENE ================= */
+.scene{
+  position:relative;
+  width:1100px;          /* ⬅️ VĚTŠÍ, JAKO PO ZOOMU */
+  height:1100px;
+  max-width:95vw;
+  max-height:95vw;
+  margin:0 auto;
   display:flex;
+  align-items:center;
   justify-content:center;
-  gap:24px;
 }
 
-.footer-links a {
-  opacity:0.8;
+/* ================= CENTER LOGO ================= */
+.center{
+  position:absolute;
+  z-index:3;
 }
-.footer-links a:hover { opacity:1; }
+
+.center img{
+  width:260px;
+}
+
+/* ================= INNER COIN TEXT ================= */
+.inner-orbit{
+  position:absolute;
+  width:380px;
+  height:380px;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.inner-orbit span{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin:0 0;
+  white-space:nowrap;
+  font-size:13px;
+  letter-spacing:2px;
+  color:var(--muted);
+}
+
+/* ================= ORBIT ITEMS ================= */
+.orbit{
+  position:absolute;
+  inset:0;
+}
+
+.orbit-item{
+  position:absolute;
+  top:50%;
+  left:50%;
+  text-align:center;
+  cursor:pointer;
+  transition:transform .3s ease, filter .3s ease;
+}
+
+.orbit-item img{
+  width:140px;   /* ⬅️ VĚTŠÍ LOGA */
+  margin-bottom:8px;
+}
+
+.orbit-item .name{
+  display:block;
+  font-size:16px;
+  letter-spacing:1px;
+}
+
+.orbit-item .desc{
+  margin-top:6px;
+  font-size:14px;
+  color:var(--muted);
+  opacity:0;
+  transform:translateY(6px);
+  transition:.25s ease;
+}
+
+.orbit-item:hover{
+  transform:scale(1.25);
+  filter:drop-shadow(0 0 26px rgba(255,255,255,.25));
+}
+
+.orbit-item:hover .desc{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ================= FOOTER ================= */
+.site-footer{
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:64px 24px 40px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:48px;
+}
+
+.footer-col h4{
+  margin:0 0 16px;
+  font-size:15px;
+  color:#fff;
+}
+
+.footer-col ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.footer-col li{margin-bottom:10px}
+
+.footer-col a{
+  color:#a8b0bd;
+  text-decoration:none;
+}
+
+.footer-col a:hover{color:#fff}
+
+.footer-bottom{
+  margin-top:48px;
+  padding-top:24px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  text-align:center;
+  font-size:13px;
+  color:#7f8896;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-  <a href="index.html">← Zpět na úvodní stránku</a>
-</header>
-
 <section class="hero">
-  <img src="assets/logos/faist-digital.png" alt="FAIST Digital logo">
-  <h1>F.A.I.S.T. Digital</h1>
-  <p>
-    Vytváříme digitální produkty a rozhraní, která propojují
-    technologii s uživatelem. Zaměřujeme se na funkčnost,
-    jednoduchost a dlouhodobou udržitelnost řešení.
-  </p>
-</section>
 
-<section class="section">
-  <h2>Co dodáváme</h2>
-
-  <div class="services">
-    <div class="service">
-      <h3>Webové aplikace</h3>
-      <p>
-        Návrh a vývoj moderních webových řešení
-        s důrazem na výkon a přehlednost.
-      </p>
-    </div>
-
-    <div class="service">
-      <h3>AI integrace</h3>
-      <p>
-        Propojení umělé inteligence s existujícími
-        systémy a uživatelskými rozhraními.
-      </p>
-    </div>
-
-    <div class="service">
-      <h3>Interní nástroje</h3>
-      <p>
-        Vývoj nástrojů pro automatizaci procesů,
-        reporting a práci s daty.
-      </p>
-    </div>
-
-    <div class="service">
-      <h3>UX & architektura</h3>
-      <p>
-        Návrh struktury aplikací a uživatelských
-        toků s důrazem na použitelnost.
-      </p>
-    </div>
+  <div class="brand-info">
+    <h1>F.A.I.S.T. Holding</h1>
+    <p>
+      We design intelligent systems connecting artificial intelligence,
+      science and advanced technology into practical, scalable solutions.
+    </p>
   </div>
-</section>
 
-<section class="section approach">
-  <h2>Jak pracujeme</h2>
-  <p>
-    Neoddělujeme design od technologie.
-    Digitální řešení navrhujeme jako celek –
-    od architektury přes rozhraní až po provoz.
-    Důležitá je pro nás čitelnost, jednoduchost
-    a možnost dalšího rozvoje.
-  </p>
-</section>
+  <div class="scene">
 
-<section class="cta">
-  <a href="contacts.html">Spojte se s námi</a>
+    <div class="center">
+      <img src="assets/logos/faist-holding.png" alt="FAIST Holding">
+    </div>
+
+    <div class="inner-orbit" id="innerOrbit"></div>
+
+    <div class="orbit" id="orbit">
+      <a class="orbit-item" href="#"><img src="assets/logos/faist-lab.png"><span class="name">Lab</span><span class="desc">AI research</span></a>
+      <a class="orbit-item" href="#"><img src="assets/logos/faist-digital.png"><span class="name">Digital</span><span class="desc">Digital products</span></a>
+      <a class="orbit-item" href="#"><img src="assets/logos/faist-energy.png"><span class="name">Energy</span><span class="desc">Energy systems</span></a>
+      <a class="orbit-item" href="#"><img src="assets/logos/faist-security.png"><span class="name">Security</span><span class="desc">Protection</span></a>
+      <a class="orbit-item" href="#"><img src="assets/logos/faist-edu.png"><span class="name">Edu</span><span class="desc">Education</span></a>
+      <a class="orbit-item" href="#"><img src="assets/logos/faist-systems.png"><span class="name">Systems</span><span class="desc">Smart systems</span></a>
+    </div>
+
+  </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-inner">
-
     <div class="footer-col">
       <h4>O nás</h4>
       <ul>
         <li><a href="#">F.A.I.S.T. Holding</a></li>
-        <li><a href="#">Naše vize</a></li>
-        <li><a href="#">Jak pracujeme</a></li>
+        <li><a href="#">Vize & přístup</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>Divize</h4>
       <ul>
-        <li><a href="systems.html">Systems</a></li>
-        <li><a href="lab.html">Lab</a></li>
-        <li><a href="digital.html">Digital</a></li>
-        <li><a href="energy.html">Energy</a></li>
-        <li><a href="security.html">Security</a></li>
-        <li><a href="edu.html">Edu</a></li>
+        <li><a href="#">Systems</a></li>
+        <li><a href="#">Lab</a></li>
+        <li><a href="#">Digital</a></li>
+        <li><a href="#">Energy</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">Edu</a></li>
       </ul>
     </div>
-
-    <div class="footer-col">
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="contacts.html">Kontakt</a></li>
-        <li><a href="#">Poradenství</a></li>
-        <li><a href="#">Časté dotazy</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Pojmy</h4>
-      <ul>
-        <li><a href="#">Atlas technologií</a></li>
-        <li><a href="#">Smart Home</a></li>
-        <li><a href="#">AI & automatizace</a></li>
-      </ul>
-    </div>
-
   </div>
-
-  <div class="footer-bottom">
-    © 2025 F.A.I.S.T. Holding
-  </div>
+  <div class="footer-bottom">© 2025 F.A.I.S.T. Holding</div>
 </footer>
 
+<script>
+/* ===== INNER COIN TEXT ===== */
+const coinText = "Forge of Artificial Intelligence, Science & Technology • ";
+const innerOrbit = document.getElementById("innerOrbit");
+const innerRadius = 190;
+let innerAngle = 0;
+
+coinText.split("").forEach((char,i)=>{
+  const span = document.createElement("span");
+  const angle = i * (360 / coinText.length);
+  span.textContent = char;
+  span.style.transform = `rotate(${angle}deg) translate(${innerRadius}px)`;
+  innerOrbit.appendChild(span);
+});
+
+/* ===== OUTER ORBIT ===== */
+const items = document.querySelectorAll(".orbit-item");
+const radius = 360;   // ⬅️ větší orbit = „zoom efekt natrvalo“
+
+function animate(t){
+  const base = t * 0.00002;
+
+  items.forEach((item,i)=>{
+    const a = base + i * (Math.PI*2/items.length);
+    item.style.transform =
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+  });
+
+  innerAngle -= 0.04;
+  innerOrbit.style.transform = `rotate(${innerAngle}deg)`;
+
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script>
 
 </body>
 </html>
