@@ -5,15 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>F.A.I.S.T. Holding</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="description" content="F.A.I.S.T. Holding navrhuje inteligentní systémy propojující umělou inteligenci, vědu a moderní technologie do praktických řešení.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faist.xyz/">
+<meta property="og:title" content="F.A.I.S.T. Holding">
+<meta property="og:description" content="Forge of Artificial Intelligence, Science & Technology">
+<meta property="og:image" content="https://faist.xyz/assets/og/og-faist.jpg">
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
   --bg:#0f1117;
+  --bg-soft:#151824;
   --text:#ffffff;
   --muted:#b6bcc6;
+  --border:rgba(255,255,255,0.08);
 }
 
 *{box-sizing:border-box}
@@ -27,128 +36,123 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* ================= HERO ================= */
-.hero{
-  min-height:100vh;
-  position:relative;
-  padding-bottom:140px;
-}
-
-/* ================= LEFT INFO ================= */
-.brand-info{
-  position:absolute;
-  top:32px;
-  left:32px;
-  max-width:320px;
+/* ===== HEADER ===== */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:24px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   z-index:10;
 }
 
-.brand-info h1{
-  margin:0 0 12px;
-  font-size:20px;
-  letter-spacing:3px;
-}
-
-.brand-info p{
-  margin:0;
+.brand{
   font-size:14px;
-  line-height:1.6;
-  color:var(--muted);
+  letter-spacing:3px;
+  font-weight:600;
 }
 
-/* ================= SCENE ================= */
-.scene{
-  position:relative;
-  width:90vmin;
-  height:90vmin;
-  margin:0 auto;
+/* ===== LANGUAGE SWITCH ===== */
+.lang-switch{
+  display:flex;
+  gap:12px;
+}
+
+.lang-switch a{
   display:flex;
   align-items:center;
-  justify-content:center;
-}
-
-/* ================= CENTER LOGO ================= */
-.center{
-  position:absolute;
-  z-index:5;
-}
-
-.center img{
-  width:240px;
-}
-
-/* ================= INNER COIN TEXT ================= */
-.inner-orbit{
-  position:absolute;
-  width:300px;
-  height:300px;
-  border-radius:50%;
-  pointer-events:none;
-}
-
-.inner-orbit span{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform-origin:0 0;
-  white-space:nowrap;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
   font-size:12px;
-  letter-spacing:2px;
+  text-decoration:none;
+  transition:background .2s ease;
+}
+
+.lang-switch a:hover{
+  background:rgba(255,255,255,0.12);
+}
+
+.lang-switch img{
+  width:18px;
+  height:12px;
+  object-fit:cover;
+  border-radius:2px;
+}
+
+/* ===== HERO ===== */
+.hero{
+  padding:160px 40px 120px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.hero h1{
+  font-size:32px;
+  letter-spacing:3px;
+  margin-bottom:20px;
+}
+
+.hero p{
+  max-width:600px;
+  line-height:1.7;
   color:var(--muted);
+  margin-bottom:20px;
 }
 
-/* ================= ORBIT ITEMS ================= */
-.orbit{
-  position:absolute;
-  inset:0;
+/* ===== DIVISIONS ===== */
+.divisions{
+  margin-top:80px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
 }
 
-.orbit-item{
-  position:absolute;
-  top:50%;
-  left:50%;
-  text-align:center;
-  cursor:pointer;
-  transition:transform .3s ease, filter .3s ease;
+.division{
+  padding:28px;
+  background:rgba(255,255,255,0.04);
+  border-radius:20px;
+  transition:background .3s ease;
 }
 
-.orbit-item img{
-  width:130px;            /* ⬅️ ZVĚTŠENÉ DIVIZNÍ LOGO */
-  margin-bottom:8px;
+.division:hover{
+  background:rgba(255,255,255,0.08);
 }
 
-.orbit-item .name{
-  display:block;
-  font-size:15px;
+.division h3{
+  margin:0 0 12px;
+  font-size:18px;
   letter-spacing:1px;
-  color:#ffffff;
 }
 
-.orbit-item .desc{
-  margin-top:6px;
-  font-size:13px;
+.division p{
+  margin:0 0 16px;
+  font-size:14px;
   color:var(--muted);
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity .25s ease, transform .25s ease;
+  line-height:1.6;
 }
 
-/* ===== HOVER ===== */
-.orbit-item:hover{
-  transform:scale(1.22);
-  filter:drop-shadow(0 0 24px rgba(255,255,255,.25));
+.division a{
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
 }
 
-.orbit-item:hover .desc{
-  opacity:1;
-  transform:translateY(0);
+.division a:hover{
+  text-decoration:underline;
 }
 
-/* ================= FOOTER ================= */
-.site-footer{
+/* ===== FOOTER ===== */
+footer{
+  margin-top:140px;
   background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding:64px 24px 40px;
+  border-top:1px solid var(--border);
+  padding:64px 40px 40px;
 }
 
 .footer-inner{
@@ -171,19 +175,24 @@ body{
   margin:0;
 }
 
-.footer-col li{margin-bottom:10px}
+.footer-col li{
+  margin-bottom:10px;
+}
 
 .footer-col a{
   color:#a8b0bd;
   text-decoration:none;
+  font-size:14px;
 }
 
-.footer-col a:hover{color:#fff}
+.footer-col a:hover{
+  color:#fff;
+}
 
 .footer-bottom{
   margin-top:48px;
   padding-top:24px;
-  border-top:1px solid rgba(255,255,255,0.08);
+  border-top:1px solid var(--border);
   text-align:center;
   font-size:13px;
   color:#7f8896;
@@ -193,62 +202,79 @@ body{
 
 <body>
 
-<section class="hero">
+<header class="header">
+  <div class="brand">F.A.I.S.T.</div>
 
-  <div class="brand-info">
-    <h1>F.A.I.S.T. Holding</h1>
-    <p>
-      We design intelligent systems connecting artificial intelligence,
-      science and advanced technology into practical, scalable solutions.
-    </p>
+  <div class="lang-switch">
+    <a href="index.html">
+      <img src="assets/icons/flag-cz.svg" alt="CZ"> CZ
+    </a>
+    <a href="en/index.html">
+      <img src="assets/icons/flag-en.svg" alt="EN"> EN
+    </a>
   </div>
+</header>
 
-  <div class="scene">
+<section class="hero">
+  <h1>F.A.I.S.T. Holding</h1>
 
-    <div class="center">
-      <img src="assets/logos/faist-holding.png" alt="FAIST Holding">
+  <p>
+    F.A.I.S.T. (Forge of Artificial Intelligence, Science & Technology)
+    je technologický holding zaměřený na návrh a vývoj inteligentních systémů.
+    Propojujeme umělou inteligenci, vědu a moderní technologie do praktických,
+    dlouhodobě udržitelných řešení.
+  </p>
+
+  <p>
+    Každá divize se specializuje na konkrétní oblast, ale všechny sdílejí
+    společnou filozofii: smysluplné využití technologií, důraz na kvalitu
+    a schopnost růstu do budoucna.
+  </p>
+
+  <div class="divisions">
+
+    <div class="division">
+      <h3>Systems</h3>
+      <p>Návrh a integrace chytrých systémů, automatizace a technologických celků.</p>
+      <a href="divisions/cs/systems.html">Zjistit více →</a>
     </div>
 
-    <div class="inner-orbit" id="innerOrbit"></div>
+    <div class="division">
+      <h3>Lab</h3>
+      <p>Výzkum, experimenty a prototypování v oblasti AI a pokročilých technologií.</p>
+      <a href="divisions/cs/lab.html">Zjistit více →</a>
+    </div>
 
-    <div class="orbit" id="orbit">
-      <a class="orbit-item" href="systems.html">
-        <img src="assets/logos/faist-systems.png">
-        <span class="name">Systems</span>
-        <span class="desc">Smart systems & IoT</span>
-      </a>
-      <a class="orbit-item" href="lab.html">
-        <img src="assets/logos/faist-lab.png">
-        <span class="name">Lab</span>
-        <span class="desc">AI research & prototyping</span>
-      </a>
-      <a class="orbit-item" href="digital.html">
-        <img src="assets/logos/faist-digital.png">
-        <span class="name">Digital</span>
-        <span class="desc">Digital products</span>
-      </a>
-      <a class="orbit-item" href="energy.html">
-        <img src="assets/logos/faist-energy.png">
-        <span class="name">Energy</span>
-        <span class="desc">Energy management</span>
-      </a>
-      <a class="orbit-item" href="security.html">
-        <img src="assets/logos/faist-security.png">
-        <span class="name">Security</span>
-        <span class="desc">Security systems</span>
-      </a>
-      <a class="orbit-item" href="edu.html">
-        <img src="assets/logos/faist-edu.png">
-        <span class="name">Edu</span>
-        <span class="desc">Education & training</span>
-      </a>
+    <div class="division">
+      <h3>Digital</h3>
+      <p>Digitální produkty, weby a aplikace propojující technologii s UX.</p>
+      <a href="divisions/cs/digital.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Energy</h3>
+      <p>Energetická řešení, optimalizace spotřeby a chytré řízení energie.</p>
+      <a href="divisions/cs/energy.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Security</h3>
+      <p>Bezpečnostní systémy, ochrana dat a prevence digitálních hrozeb.</p>
+      <a href="divisions/cs/security.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Edu</h3>
+      <p>Vzdělávání, školení a sdílení know-how v oblasti moderních technologií.</p>
+      <a href="divisions/cs/edu.html">Zjistit více →</a>
     </div>
 
   </div>
 </section>
 
-<footer class="site-footer">
+<footer>
   <div class="footer-inner">
+
     <div class="footer-col">
       <h4>O nás</h4>
       <ul>
@@ -256,59 +282,39 @@ body{
         <li><a href="#">Vize & přístup</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>Divize</h4>
       <ul>
-        <li><a href="systems.html">Systems</a></li>
-        <li><a href="lab.html">Lab</a></li>
-        <li><a href="digital.html">Digital</a></li>
-        <li><a href="energy.html">Energy</a></li>
-        <li><a href="security.html">Security</a></li>
-        <li><a href="edu.html">Edu</a></li>
+        <li><a href="divisions/cs/systems.html">Systems</a></li>
+        <li><a href="divisions/cs/lab.html">Lab</a></li>
+        <li><a href="divisions/cs/digital.html">Digital</a></li>
+        <li><a href="divisions/cs/energy.html">Energy</a></li>
+        <li><a href="divisions/cs/security.html">Security</a></li>
+        <li><a href="divisions/cs/edu.html">Edu</a></li>
       </ul>
     </div>
+
+    <div class="footer-col">
+      <h4>Podpora</h4>
+      <ul>
+        <li><a href="contacts.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Pojmy</h4>
+      <ul>
+        <li><a href="#">Atlas technologií</a></li>
+      </ul>
+    </div>
+
   </div>
-  <div class="footer-bottom">© 2025 F.A.I.S.T. Holding</div>
+
+  <div class="footer-bottom">
+    © 2025 F.A.I.S.T. Holding
+  </div>
 </footer>
-
-<script>
-/* ===== INNER COIN TEXT ===== */
-const coinText = "Forge of Artificial Intelligence, Science & Technology • ";
-const innerOrbit = document.getElementById("innerOrbit");
-const innerRadius = 150;
-let innerAngle = 0;
-
-coinText.split("").forEach((char,i)=>{
-  const span = document.createElement("span");
-  const angle = i * (360 / coinText.length);
-  span.textContent = char;
-  span.style.transform =
-    `rotate(${angle}deg) translate(${innerRadius}px)`;
-  innerOrbit.appendChild(span);
-});
-
-/* ===== OUTER ORBIT ===== */
-const items = document.querySelectorAll(".orbit-item");
-const radius = 270;
-const speed = 0.00002;
-const count = items.length;
-
-function animate(time){
-  const base = time * speed;
-
-  items.forEach((item,i)=>{
-    const a = base + i * (Math.PI * 2 / count);
-    item.style.transform =
-      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-  });
-
-  innerAngle -= 0.04;
-  innerOrbit.style.transform = `rotate(${innerAngle}deg)`;
-
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-</script>
 
 </body>
 </html>
