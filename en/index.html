@@ -17,10 +17,7 @@
 }
 
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  height:100%;
-}
+html,body{margin:0;height:100%}
 
 body{
   font-family:Inter,system-ui,sans-serif;
@@ -36,32 +33,17 @@ body{
   position:fixed;
   top:24px;
   right:24px;
-  z-index:20;
+  z-index:50;
 }
-.lang-current{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:8px;
-  padding:6px;
-  cursor:pointer;
-}
-.lang-current img{width:22px}
+.lang-switch img{width:22px}
 
-/* ===== HERO ===== */
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
-
-/* ===== LEFT INFO ===== */
+/* ===== LEFT TEXT ===== */
 .brand-info{
-  position:absolute;
+  position:fixed;
   top:32px;
   left:32px;
   max-width:360px;
+  z-index:10;
 }
 .brand-info h1{
   margin:0 0 12px;
@@ -75,21 +57,26 @@ body{
   color:var(--muted);
 }
 
-/* ===== SCENE (REFERENCE CENTER) ===== */
+/* ===== ABSOLUTE CENTER SCENE ===== */
 .scene{
-  position:relative;
+  position:fixed;
+  left:50vw;
+  top:50vh;
   width:900px;
   height:900px;
-  max-width:90vw;
-  max-height:90vw;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  max-width:90vmin;
+  max-height:90vmin;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
 }
 
 /* ===== CENTER LOGO ===== */
 .center{
   position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   z-index:3;
 }
 .center img{
@@ -97,12 +84,13 @@ body{
   max-width:40vmin;
 }
 
-/* ===== INNER COIN TEXT ===== */
+/* ===== INNER TEXT RING ===== */
 .inner-orbit{
   position:absolute;
-  width:250px;
-  height:250px;
-  border-radius:50%;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   pointer-events:none;
 }
 .inner-orbit span{
@@ -117,10 +105,11 @@ body{
   text-shadow:0 0 8px rgba(255,255,255,.35);
 }
 
-/* ===== ORBIT DIVISIONS ===== */
+/* ===== OUTER ORBIT ===== */
 .orbit{
   position:absolute;
   inset:0;
+  pointer-events:auto;
 }
 .orbit-item{
   position:absolute;
@@ -128,15 +117,14 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
+  color:#fff;
   text-decoration:none;
-  color:var(--text);
-  pointer-events:auto;
 }
 .orbit-item img{
   width:130px;
   display:block;
   margin:0 auto 6px;
-  animation:spin 18s linear infinite;
+  animation:spin 20s linear infinite;
 }
 .orbit-item span{
   display:block;
@@ -144,7 +132,6 @@ body{
   letter-spacing:1px;
 }
 
-/* ===== ICON ROTATION ONLY ===== */
 @keyframes spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
@@ -152,6 +139,8 @@ body{
 
 /* ===== FOOTER ===== */
 .site-footer{
+  position:relative;
+  margin-top:100vh;
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
@@ -178,14 +167,9 @@ body{
 
 <body>
 
-<!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
-  <a class="lang-current" href="/cs/">
-    <img src="/assets/flags/en.svg" alt="EN">
-  </a>
+  <a href="/cs/"><img src="/assets/flags/en.svg" alt="EN"></a>
 </div>
-
-<section class="hero">
 
 <div class="brand-info">
   <h1>F.A.I.S.T. Holding</h1>
@@ -198,7 +182,7 @@ body{
 <div class="scene" id="scene">
 
   <div class="center">
-    <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+    <img src="/assets/logos/faist-holding.png" alt="FAIST">
   </div>
 
   <div class="inner-orbit" id="innerOrbit"></div>
@@ -213,7 +197,6 @@ body{
   </div>
 
 </div>
-</section>
 
 <footer class="site-footer">
   <div class="footer-grid">
@@ -240,11 +223,11 @@ body{
 </footer>
 
 <script>
-/* ===== INNER COIN TEXT ===== */
-const text = "Forge of Artificial Intelligence, Science & Technology • ";
-const inner = document.getElementById("innerOrbit");
-const textRadius = 125;
-let textAngle = 0;
+/* ===== INNER TEXT ===== */
+const text="Forge of Artificial Intelligence, Science & Technology • ";
+const inner=document.getElementById("innerOrbit");
+const textRadius=125;
+let textAngle=0;
 
 text.split("").forEach((c,i)=>{
   const s=document.createElement("span");
@@ -253,19 +236,18 @@ text.split("").forEach((c,i)=>{
   inner.appendChild(s);
 });
 
-/* ===== OUTER ORBIT ===== */
+/* ===== ORBIT ===== */
 const items=[...document.querySelectorAll(".orbit-item")];
-const scene=document.getElementById("scene");
 let radius;
 
 function resize(){
-  radius=Math.min(scene.clientWidth,scene.clientHeight)*0.38;
+  radius=Math.min(window.innerWidth,window.innerHeight)*0.34;
 }
 resize();
 window.addEventListener("resize",resize);
 
 function animate(t){
-  const base=t/120000*Math.PI*2;
+  const base=t/140000*Math.PI*2;
   items.forEach((el,i)=>{
     const a=base+i*(Math.PI*2/items.length);
     el.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
