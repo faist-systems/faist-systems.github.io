@@ -28,21 +28,22 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* HERO */
+/* ================= HERO ================= */
 .hero{
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
   position:relative;
+  overflow:hidden;
 }
 
-/* LEFT INFO */
+/* ================= LEFT INFO ================= */
 .brand-info{
   position:absolute;
   top:32px;
   left:32px;
-  max-width:320px;
+  max-width:340px;
   z-index:5;
 }
 
@@ -59,7 +60,7 @@ body{
   color:var(--muted);
 }
 
-/* SCENE */
+/* ================= SCENE ================= */
 .scene{
   position:relative;
   width:min(90vw, 900px);
@@ -69,17 +70,18 @@ body{
   justify-content:center;
 }
 
-/* CENTER LOGO */
+/* ================= CENTER LOGO ================= */
 .center{
   position:absolute;
   z-index:3;
 }
+
 .center img{
   width:220px;
   max-width:40vmin;
 }
 
-/* INNER COIN TEXT */
+/* ================= INNER COIN TEXT ================= */
 .inner-orbit{
   position:absolute;
   width:300px;
@@ -99,12 +101,13 @@ body{
   color:var(--muted);
 }
 
-/* ORBIT ITEMS */
+/* ================= ORBIT ================= */
 .orbit{
   position:absolute;
   inset:0;
 }
 
+/* ================= ORBIT ITEM ================= */
 .orbit-item{
   position:absolute;
   top:50%;
@@ -155,56 +158,64 @@ body{
   <div class="scene">
 
     <div class="center">
-      <img src="assets/logos/faist-holding.png" alt="FAIST Holding">
+      <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
 
     <div class="inner-orbit" id="innerOrbit"></div>
 
     <div class="orbit" id="orbit">
+
       <a class="orbit-item" href="/cs/divisions/lab.html">
-        <img src="assets/logos/faist-lab.png">
+        <img src="/assets/logos/faist-lab.png">
         <span class="name">Lab</span>
-        <span class="desc">Výzkum AI</span>
+        <span class="desc">Výzkum umělé inteligence</span>
       </a>
+
       <a class="orbit-item" href="/cs/divisions/digital.html">
-        <img src="assets/logos/faist-digital.png">
+        <img src="/assets/logos/faist-digital.png">
         <span class="name">Digital</span>
         <span class="desc">Digitální produkty</span>
       </a>
+
       <a class="orbit-item" href="/cs/divisions/energy.html">
-        <img src="assets/logos/faist-energy.png">
+        <img src="/assets/logos/faist-energy.png">
         <span class="name">Energy</span>
-        <span class="desc">Energetika</span>
+        <span class="desc">Energetické systémy</span>
       </a>
+
       <a class="orbit-item" href="/cs/divisions/security.html">
-        <img src="assets/logos/faist-security.png">
+        <img src="/assets/logos/faist-security.png">
         <span class="name">Security</span>
-        <span class="desc">Bezpečnost</span>
+        <span class="desc">Bezpečnostní řešení</span>
       </a>
+
       <a class="orbit-item" href="/cs/divisions/edu.html">
-        <img src="assets/logos/faist-edu.png">
+        <img src="/assets/logos/faist-edu.png">
         <span class="name">Edu</span>
         <span class="desc">Vzdělávání</span>
       </a>
+
       <a class="orbit-item" href="/cs/divisions/systems.html">
-        <img src="assets/logos/faist-systems.png">
+        <img src="/assets/logos/faist-systems.png">
         <span class="name">Systems</span>
         <span class="desc">Chytré systémy</span>
       </a>
-    </div>
 
+    </div>
   </div>
 </section>
 
 <script>
-/* ===== MINCOVÝ TEXT (plynule dokola) ===== */
+/* ================= VNITŘNÍ MINCOVÝ TEXT ================= */
 const coinText =
   "Forge of Artificial Intelligence • Science & Technology • ";
 const innerOrbit = document.getElementById("innerOrbit");
-const innerRadius = 150;
+const innerRadius = 140;
 let innerAngle = 0;
 
-coinText.split("").forEach((char,i)=>{
+innerOrbit.innerHTML = "";
+
+coinText.split("").forEach((char, i) => {
   const span = document.createElement("span");
   const angle = i * (360 / coinText.length);
   span.textContent = char;
@@ -213,48 +224,45 @@ coinText.split("").forEach((char,i)=>{
   innerOrbit.appendChild(span);
 });
 
-/* ===== ORBIT DIVIZÍ – 60 s / 360° ===== */
+/* ================= ORBIT DIVIZÍ ================= */
 const items = document.querySelectorAll(".orbit-item");
+const ORBIT_PERIOD = 60000;
 let radius = 0;
 
 function computeRadius(){
   radius = Math.min(
     window.innerHeight * 0.28,
-    window.innerWidth * 0.25
+    window.innerWidth * 0.28
   );
 }
 computeRadius();
 window.addEventListener("resize", computeRadius);
 
-const ORBIT_PERIOD = 60000; // 60 sekund
-
-function animate(t){
+/* ================= ANIMACE ================= */
+function animate(time){
   const baseAngle =
-    (t % ORBIT_PERIOD) / ORBIT_PERIOD * Math.PI * 2;
+    (time % ORBIT_PERIOD) / ORBIT_PERIOD * Math.PI * 2;
 
-  items.forEach((item,i)=>{
+  items.forEach((item, i) => {
     const angle =
       baseAngle + i * (Math.PI * 2 / items.length);
 
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
 
-    /* pozice po kruhu */
     item.style.transform =
-      `translate(-50%,-50%) translate(${x}px,${y}px)`;
-
-    /* COUNTER-ROTATION → vždy dolů */
-    item.style.rotate =
-      `${Math.PI/2 - angle}rad`;
+      `translate(-50%, -50%)
+       translate(${x}px, ${y}px)
+       rotate(${Math.PI/2 - angle}rad)`;
   });
 
-  /* mincový text proti směru */
   innerAngle -= 0.03;
   innerOrbit.style.transform =
     `rotate(${innerAngle}deg)`;
 
   requestAnimationFrame(animate);
 }
+
 requestAnimationFrame(animate);
 </script>
 
