@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>F.A.I.S.T. Holding</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -41,14 +40,13 @@ body{
   overflow:hidden;
 }
 
-/* ===== CENTER ORBIT SYSTEM ===== */
+/* ===== ORBIT SYSTEM ===== */
 .orbit{
   position:relative;
-  width:520px;
-  height:520px;
+  width:560px;
+  height:560px;
 }
 
-/* main logo */
 .center-logo{
   position:absolute;
   inset:0;
@@ -59,14 +57,14 @@ body{
 }
 
 .center-logo img{
-  width:160px;
+  width:180px;
 }
 
-/* rotating text ring */
+/* inner text ring */
 .text-ring{
   position:absolute;
   inset:0;
-  animation:spinCCW 30s linear infinite;
+  pointer-events:none;
 }
 
 .text-ring svg{
@@ -80,28 +78,24 @@ body{
   fill:var(--muted);
 }
 
-/* divisions ring */
+/* outer orbit items */
 .divisions{
   position:absolute;
   inset:0;
-  animation:spinCW 60s linear infinite;
 }
 
-.hero:hover .divisions,
-.hero:hover .text-ring{
-  animation-play-state:paused;
-}
-
-/* division item */
 .division{
   position:absolute;
-  width:96px;
+  top:50%;
+  left:50%;
+  width:110px;
   text-align:center;
-  transform:translate(-50%,-50%);
+  transform-origin:0 0;
+  cursor:pointer;
 }
 
 .division img{
-  width:64px;
+  width:72px;
   display:block;
   margin:0 auto 6px;
 }
@@ -111,20 +105,11 @@ body{
   color:var(--text);
 }
 
-/* positions (perfect circle) */
-.d1{top:0%;left:50%}
-.d2{top:25%;left:85%}
-.d3{top:75%;left:85%}
-.d4{top:100%;left:50%}
-.d5{top:75%;left:15%}
-.d6{top:25%;left:15%}
-
 /* ===== FOOTER ===== */
 footer{
   background:#070a14;
   border-top:1px solid rgba(255,255,255,.06);
   padding:48px 24px 32px;
-  font-size:14px;
 }
 
 .footer-inner{
@@ -168,17 +153,6 @@ footer a:hover{
   color:#7f8896;
   font-size:13px;
 }
-
-/* ===== ANIMATIONS ===== */
-@keyframes spinCW{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-@keyframes spinCCW{
-  from{transform:rotate(360deg)}
-  to{transform:rotate(0deg)}
-}
 </style>
 </head>
 
@@ -187,14 +161,14 @@ footer a:hover{
 
 <section class="hero">
 
-  <div class="orbit">
+  <div class="orbit" id="orbit">
 
-    <!-- rotating text -->
-    <div class="text-ring">
-      <svg viewBox="0 0 520 520">
+    <!-- INNER TEXT RING -->
+    <div class="text-ring" id="textRing">
+      <svg viewBox="0 0 560 560">
         <defs>
           <path id="circlePath"
-            d="M260,260 m-210,0 a210,210 0 1,1 420,0 a210,210 0 1,1 -420,0"/>
+            d="M280,280 m-220,0 a220,220 0 1,1 440,0 a220,220 0 1,1 -440,0"/>
         </defs>
         <text>
           <textPath href="#circlePath">
@@ -204,52 +178,38 @@ footer a:hover{
       </svg>
     </div>
 
-    <!-- center logo -->
+    <!-- CENTER LOGO -->
     <div class="center-logo">
       <img src="/assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
     </div>
 
-    <!-- divisions -->
-    <div class="divisions">
-
-      <a class="division d1" href="/cs/divisions/lab.html">
-        <img src="/assets/logos/faist-lab.png" alt="">
-        <span>Lab</span>
+    <!-- DIVISIONS -->
+    <div class="divisions" id="divisions">
+      <a class="division" href="/cs/divisions/lab.html">
+        <img src="/assets/logos/faist-lab.png"><span>Lab</span>
       </a>
-
-      <a class="division d2" href="/cs/divisions/digital.html">
-        <img src="/assets/logos/faist-digital.png" alt="">
-        <span>Digital</span>
+      <a class="division" href="/cs/divisions/digital.html">
+        <img src="/assets/logos/faist-digital.png"><span>Digital</span>
       </a>
-
-      <a class="division d3" href="/cs/divisions/energy.html">
-        <img src="/assets/logos/faist-energy.png" alt="">
-        <span>Energy</span>
+      <a class="division" href="/cs/divisions/energy.html">
+        <img src="/assets/logos/faist-energy.png"><span>Energy</span>
       </a>
-
-      <a class="division d4" href="/cs/divisions/edu.html">
-        <img src="/assets/logos/faist-edu.png" alt="">
-        <span>Edu</span>
+      <a class="division" href="/cs/divisions/edu.html">
+        <img src="/assets/logos/faist-edu.png"><span>Edu</span>
       </a>
-
-      <a class="division d5" href="/cs/divisions/systems.html">
-        <img src="/assets/logos/faist-systems.png" alt="">
-        <span>Systems</span>
+      <a class="division" href="/cs/divisions/systems.html">
+        <img src="/assets/logos/faist-systems.png"><span>Systems</span>
       </a>
-
-      <a class="division d6" href="/cs/divisions/security.html">
-        <img src="/assets/logos/faist-security.png" alt="">
-        <span>Security</span>
+      <a class="division" href="/cs/divisions/security.html">
+        <img src="/assets/logos/faist-security.png"><span>Security</span>
       </a>
-
     </div>
-  </div>
 
+  </div>
 </section>
 
 <footer>
   <div class="footer-inner">
-
     <div>
       <h4>O nás</h4>
       <ul>
@@ -257,7 +217,6 @@ footer a:hover{
         <li>Forge of Artificial Intelligence, Science & Technology</li>
       </ul>
     </div>
-
     <div>
       <h4>Divize</h4>
       <ul>
@@ -269,21 +228,55 @@ footer a:hover{
         <li><a href="/cs/divisions/edu.html">Edu</a></li>
       </ul>
     </div>
-
-    <div>
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="/contacts.html">Kontakt</a></li>
-      </ul>
-    </div>
-
   </div>
-
-  <div class="footer-bottom">
-    © 2025 F.A.I.S.T. Holding
-  </div>
+  <div class="footer-bottom">© 2025 F.A.I.S.T. Holding</div>
 </footer>
 
 </div>
+
+<script>
+/*
+  =====================================================
+  FA.I.S.T. ORBIT ENGINE – JS ONLY
+  =====================================================
+*/
+
+const orbit = document.getElementById("orbit");
+const divisions = [...document.querySelectorAll(".division")];
+const textRing = document.getElementById("textRing");
+
+const ORBIT_RADIUS = 240;           // px
+const ORBIT_PERIOD = 60000;         // 60 s
+const TEXT_SPEED = -0.5;            // opposite direction
+let paused = false;
+
+/* pause on hover */
+orbit.addEventListener("mouseenter", () => paused = true);
+orbit.addEventListener("mouseleave", () => paused = false);
+
+function animate(time){
+  if(!paused){
+    const angleBase = (time % ORBIT_PERIOD) / ORBIT_PERIOD * Math.PI * 2;
+
+    divisions.forEach((el, i) => {
+      const angle = angleBase + i * (Math.PI * 2 / divisions.length);
+
+      const x = Math.cos(angle) * ORBIT_RADIUS;
+      const y = Math.sin(angle) * ORBIT_RADIUS;
+
+      el.style.transform =
+        `translate(-50%,-50%) translate(${x}px,${y}px) rotate(${-angle}rad)`;
+    });
+
+    textRing.style.transform =
+      `rotate(${angleBase * TEXT_SPEED}rad)`;
+  }
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+</script>
+
 </body>
 </html>
