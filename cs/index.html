@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>F.A.I.S.T. Holding</title>
+<title>FAIST – Test Layout</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,8 +58,10 @@ body{
 /* ===== SCENE ===== */
 .scene{
   position:relative;
-  width:min(90vw,900px);
-  height:min(80vh,900px);
+  width:900px;
+  height:900px;
+  max-width:90vw;
+  max-height:80vh;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -68,9 +70,7 @@ body{
 /* ===== CENTER LOGO ===== */
 .center img{
   width:220px;
-  max-width:40vmin;
   z-index:3;
-  position:relative;
 }
 
 /* ===== INNER COIN ===== */
@@ -105,9 +105,8 @@ body{
   top:50%;
   left:50%;
   text-align:center;
-  text-decoration:none;
   color:#fff;
-  pointer-events:auto;
+  text-decoration:none;
 }
 
 /* ICON */
@@ -122,24 +121,27 @@ body{
 .icon-wrap img{
   width:150px;
   animation:spin 6s linear infinite;
-  filter:drop-shadow(0 0 0 rgba(255,255,255,0));
   transition:filter .3s ease, transform .3s ease;
 }
 
 /* TEXT */
-.orbit-item .name{
+.name{
   display:block;
   margin-top:-6px;
   font-size:14px;
   letter-spacing:1px;
 }
 
-.orbit-item .desc{
-  margin-top:6px;
+.desc{
+  margin-top:10px;
   font-size:13px;
-  color:var(--muted);
-  max-width:180px;
+  color:#eaeaea;
+  max-width:200px;
   opacity:0;
+  padding:10px 14px;
+  border-radius:10px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
   transform:translateY(6px);
   transition:.25s ease;
 }
@@ -151,6 +153,7 @@ body{
     drop-shadow(0 0 36px rgba(120,160,255,.35));
   transform:scale(1.05);
 }
+
 .orbit-item:hover .desc{
   opacity:1;
   transform:translateY(0);
@@ -203,41 +206,41 @@ body{
 <div class="scene">
 
   <div class="center">
-    <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+    <img src="/assets/logos/faist-holding.png" alt="FAIST">
   </div>
 
   <div class="inner-orbit" id="innerOrbit"></div>
 
   <div class="orbit" id="orbit">
-    <a class="orbit-item" href="/divisions/cs/systems.html">
+    <a class="orbit-item" href="/cs/divisions/systems.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-systems.png"></div>
       <span class="name">Systems</span>
       <span class="desc">Chytré systémy a integrace technologií.</span>
     </a>
-    <a class="orbit-item" href="/divisions/cs/lab.html">
+    <a class="orbit-item" href="/cs/divisions/lab.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-lab.png"></div>
       <span class="name">Lab</span>
-      <span class="desc">Výzkum, prototypy a experimenty s AI.</span>
+      <span class="desc">Výzkum a experimenty v oblasti AI.</span>
     </a>
-    <a class="orbit-item" href="/divisions/cs/digital.html">
+    <a class="orbit-item" href="/cs/divisions/digital.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-digital.png"></div>
       <span class="name">Digital</span>
       <span class="desc">Digitální produkty a automatizace.</span>
     </a>
-    <a class="orbit-item" href="/divisions/cs/energy.html">
+    <a class="orbit-item" href="/cs/divisions/energy.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-energy.png"></div>
       <span class="name">Energy</span>
-      <span class="desc">Energetické systémy a optimalizace.</span>
+      <span class="desc">Energetické systémy nové generace.</span>
     </a>
-    <a class="orbit-item" href="/divisions/cs/security.html">
+    <a class="orbit-item" href="/cs/divisions/security.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-security.png"></div>
       <span class="name">Security</span>
-      <span class="desc">Bezpečnost systémů a infrastruktury.</span>
+      <span class="desc">Bezpečnost digitálních systémů.</span>
     </a>
-    <a class="orbit-item" href="/divisions/cs/edu.html">
+    <a class="orbit-item" href="/cs/divisions/edu.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-edu.png"></div>
       <span class="name">Edu</span>
-      <span class="desc">Vzdělávání v oblasti AI a technologií.</span>
+      <span class="desc">Vzdělávání v AI a technologiích.</span>
     </a>
   </div>
 
@@ -248,31 +251,40 @@ body{
   <div class="footer-grid">
     <div>
       <h3>O nás</h3>
-      <p style="color:var(--muted)">Forge of Artificial Intelligence, Science & Technology</p>
+      <p style="color:var(--muted)">
+        Inteligentní technologie, AI a věda v praxi.
+      </p>
     </div>
     <div>
       <h3>Divize</h3>
-      <a href="/divisions/cs/systems.html">Systems</a>
-      <a href="/divisions/cs/lab.html">Lab</a>
-      <a href="/divisions/cs/digital.html">Digital</a>
-      <a href="/divisions/cs/energy.html">Energy</a>
-      <a href="/divisions/cs/security.html">Security</a>
-      <a href="/divisions/cs/edu.html">Edu</a>
+      <a href="/cs/divisions/systems.html">Systems</a>
+      <a href="/cs/divisions/lab.html">Lab</a>
+      <a href="/cs/divisions/digital.html">Digital</a>
+      <a href="/cs/divisions/energy.html">Energy</a>
+      <a href="/cs/divisions/security.html">Security</a>
+      <a href="/cs/divisions/edu.html">Edu</a>
+    </div>
+    <div>
+      <h3>Slovník</h3>
+      <a href="#">AI</a>
+      <a href="#">IoT</a>
+      <a href="#">LLM</a>
+      <a href="#">Smart Systems</a>
     </div>
   </div>
 </footer>
 
 <script>
 /* INNER COIN */
-const coinText="Forge of Artificial Intelligence, Science & Technology • ";
+const text="Forge of Artificial Intelligence, Science & Technology • ";
 const inner=document.getElementById("innerOrbit");
 const rText=120;
-let angleText=0;
+let aText=0;
 
-coinText.split("").forEach((c,i)=>{
+text.split("").forEach((c,i)=>{
   const s=document.createElement("span");
   s.textContent=c;
-  s.style.transform=`rotate(${i*(360/coinText.length)}deg) translate(${rText}px)`;
+  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${rText}px)`;
   inner.appendChild(s);
 });
 
@@ -284,7 +296,7 @@ let speed=1;
 
 function resize(){
   const r=scene.getBoundingClientRect();
-  radius=Math.min(r.width,r.height)*0.38;
+  radius=Math.min(r.width,r.height)*0.42;
 }
 resize();
 window.addEventListener("resize",resize);
@@ -301,8 +313,8 @@ function animate(t){
     it.style.transform=
       `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
   });
-  angleText-=0.04;
-  inner.style.transform=`rotate(${angleText}deg)`;
+  aText-=0.04;
+  inner.style.transform=`rotate(${aText}deg)`;
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
