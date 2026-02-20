@@ -32,14 +32,17 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* LANGUAGE SWITCH */
+/* LANGUAGE SWITCH – SJEDNOCENO S EN */
 .lang-switch{
   position:fixed;
   top:16px;
   right:16px;
   z-index:50;
 }
-.lang-switch img{width:22px}
+.lang-switch img{
+  width:22px;
+  display:block;
+}
 
 /* HERO */
 .hero{
@@ -152,10 +155,7 @@ body{
   transform:translateX(-50%) translateY(0);
 }
 
-/* ===== MOBILE ===== */
-.mobile{display:none}
-
-/* FOOTER */
+/* FOOTER – SJEDNOCENÝ S EN */
 .site-footer{
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
@@ -168,11 +168,20 @@ body{
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:32px;
 }
+.site-footer h3{
+  font-size:14px;
+  letter-spacing:2px;
+}
+.site-footer a{
+  display:block;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:6px;
+}
 
 /* RESPONSIVE */
 @media (max-width:900px){
   .scene{display:none}
-  .mobile{display:block}
   .brand-panel{
     position:static;
     width:auto;
@@ -184,8 +193,11 @@ body{
 
 <body>
 
+<!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
-  <a href="/en/index.html"><img src="/assets/flags/gb.png" alt="EN"></a>
+  <a href="/en/index.html" title="English">
+    <img src="/assets/flags/gb.png" alt="EN">
+  </a>
 </div>
 
 <section class="hero">
@@ -199,13 +211,12 @@ body{
     </p>
   </div>
 
-  <!-- DESKTOP ORBIT -->
   <div class="scene" id="scene">
     <div class="center">
       <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
     <div class="inner-orbit" id="innerOrbit"></div>
-    <div class="orbit" id="orbit">
+    <div class="orbit">
       <a class="orbit-item" data-desc="Firemní systémy" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
       <a class="orbit-item" data-desc="Výzkum a prototypy" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
       <a class="orbit-item" data-desc="Digitální produkty" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
@@ -221,7 +232,9 @@ body{
   <div class="footer-grid">
     <div>
       <h3>O nás</h3>
-      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
+      <p style="color:var(--muted)">
+        Technologie, které dávají smysl.
+      </p>
     </div>
     <div>
       <h3>Divize</h3>
@@ -232,11 +245,17 @@ body{
       <a href="/cs/divisions/security.html">Security</a>
       <a href="/cs/divisions/edu.html">Edu</a>
     </div>
+    <div>
+      <h3>Informace</h3>
+      <a href="#">Slovník pojmů</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
+    </div>
   </div>
 </footer>
 
 <script>
-/* INNER TEXT ORBIT – SHODNÉ S EN */
+/* INNER TEXT ORBIT */
 const inner=document.getElementById("innerOrbit");
 const text="Forge of Artificial Intelligence, Science & Technology • ";
 const textRadius=125;
@@ -249,7 +268,7 @@ text.split("").forEach((c,i)=>{
   inner.appendChild(s);
 });
 
-/* ORBIT MOTION – SHODNÉ S EN */
+/* ORBIT MOTION */
 const items=[...document.querySelectorAll(".orbit-item")];
 const scene=document.getElementById("scene");
 let radius,frozen=false,base=0;
