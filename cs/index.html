@@ -29,6 +29,18 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
+/* ===== LANGUAGE SWITCH ===== */
+.lang-switch{
+  position:fixed;
+  top:24px;
+  right:24px;
+  z-index:30;
+}
+.lang-switch img{
+  width:22px;
+  display:block;
+}
+
 /* ===== HERO ===== */
 .hero{
   min-height:100vh;
@@ -157,10 +169,41 @@ body{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
+
+/* ===== FOOTER ===== */
+.site-footer{
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:48px 24px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
+}
+.site-footer h3{
+  font-size:14px;
+  letter-spacing:2px;
+}
+.site-footer a{
+  display:block;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:6px;
+}
 </style>
 </head>
 
 <body>
+
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch">
+  <a href="/en/index.html">
+    <img src="/assets/flags/cz.svg" alt="CZ">
+  </a>
+</div>
 
 <section class="hero">
 
@@ -192,6 +235,30 @@ body{
 
   </div>
 </section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>O nás</h3>
+      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
+    </div>
+    <div>
+      <h3>Divize</h3>
+      <a href="/cs/divisions/systems.html">Systems</a>
+      <a href="/cs/divisions/lab.html">Lab</a>
+      <a href="/cs/divisions/digital.html">Digital</a>
+      <a href="/cs/divisions/energy.html">Energy</a>
+      <a href="/cs/divisions/security.html">Security</a>
+      <a href="/cs/divisions/edu.html">Edu</a>
+    </div>
+    <div>
+      <h3>Informace</h3>
+      <a href="#">Slovník pojmů</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </div>
+</footer>
 
 <script>
 const text="Forge of Artificial Intelligence, Science & Technology • ";
@@ -225,7 +292,7 @@ window.addEventListener("resize",resize);
 
 function animate(t){
   if(!frozen){
-    frozenBase = t/140000*Math.PI*2;
+    frozenBase=t/140000*Math.PI*2;
   }
 
   items.forEach((el,i)=>{
