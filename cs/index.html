@@ -116,11 +116,11 @@ body{
   max-width:40vmin;
 }
 
-/* ===== INNER COIN TEXT ===== */
+/* ===== INNER COIN ===== */
 .inner-orbit{
   position:absolute;
-  width:300px;
-  height:300px;
+  width:270px;
+  height:270px;
   border-radius:50%;
   pointer-events:none;
 }
@@ -136,13 +136,9 @@ body{
   text-shadow:0 0 8px rgba(255,255,255,.35);
 }
 
-/* ===== OUTER ORBIT ===== */
-.orbit{
-  position:absolute;
-  inset:0;
-}
+/* ===== ORBIT ===== */
+.orbit{position:absolute;inset:0}
 
-/* ===== ORBIT ITEM ===== */
 .orbit-item{
   position:absolute;
   top:50%;
@@ -151,13 +147,12 @@ body{
   text-align:center;
   color:var(--text);
   text-decoration:none;
-  pointer-events:auto;
 }
 
 .orbit-item img{
   width:160px;
-  margin-bottom:2px; /* 🔽 menší mezera */
-  animation:spin 14s linear infinite;
+  margin-bottom:2px;
+  animation:spin 16s linear infinite;
 }
 
 .orbit-item .name{
@@ -176,12 +171,8 @@ body{
 .orbit-item:hover img{
   filter:drop-shadow(0 0 18px rgba(255,255,255,.55));
 }
+.orbit-item:hover .desc{opacity:1}
 
-.orbit-item:hover .desc{
-  opacity:1;
-}
-
-/* ===== ICON SPIN ===== */
 @keyframes spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
@@ -215,7 +206,6 @@ body{
 
 <body>
 
-<!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
   <button class="lang-current">
     <img src="/assets/flags/cz.svg" alt="CZ">
@@ -230,10 +220,7 @@ body{
 
 <div class="brand-info">
   <h1>F.A.I.S.T. Holding</h1>
-  <p>
-    Inteligentní systémy propojující umělou inteligenci,
-    vědu a moderní technologie.
-  </p>
+  <p>Inteligentní systémy propojující umělou inteligenci, vědu a moderní technologie.</p>
 </div>
 
 <div class="scene">
@@ -245,12 +232,12 @@ body{
   <div class="inner-orbit" id="innerOrbit"></div>
 
   <div class="orbit" id="orbit">
-    <a class="orbit-item" href="/divisions/cs/systems.html"><img src="/assets/logos/faist-systems.png"><div class="name">Systems</div><div class="desc">Chytré systémy a integrace.</div></a>
+    <a class="orbit-item" href="/divisions/cs/systems.html"><img src="/assets/logos/faist-systems.png"><div class="name">Systems</div><div class="desc">Chytré systémy.</div></a>
     <a class="orbit-item" href="/divisions/cs/lab.html"><img src="/assets/logos/faist-lab.png"><div class="name">Lab</div><div class="desc">Výzkum a prototypy.</div></a>
-    <a class="orbit-item" href="/divisions/cs/digital.html"><img src="/assets/logos/faist-digital.png"><div class="name">Digital</div><div class="desc">Digitální produkty.</div></a>
-    <a class="orbit-item" href="/divisions/cs/energy.html"><img src="/assets/logos/faist-energy.png"><div class="name">Energy</div><div class="desc">Energetická řešení.</div></a>
-    <a class="orbit-item" href="/divisions/cs/security.html"><img src="/assets/logos/faist-security.png"><div class="name">Security</div><div class="desc">Bezpečnost a ochrana.</div></a>
-    <a class="orbit-item" href="/divisions/cs/edu.html"><img src="/assets/logos/faist-edu.png"><div class="name">Edu</div><div class="desc">Vzdělávání a know-how.</div></a>
+    <a class="orbit-item" href="/divisions/cs/digital.html"><img src="/assets/logos/faist-digital.png"><div class="name">Digital</div><div class="desc">Digitální řešení.</div></a>
+    <a class="orbit-item" href="/divisions/cs/energy.html"><img src="/assets/logos/faist-energy.png"><div class="name">Energy</div><div class="desc">Energetika.</div></a>
+    <a class="orbit-item" href="/divisions/cs/security.html"><img src="/assets/logos/faist-security.png"><div class="name">Security</div><div class="desc">Bezpečnost.</div></a>
+    <a class="orbit-item" href="/divisions/cs/edu.html"><img src="/assets/logos/faist-edu.png"><div class="name">Edu</div><div class="desc">Vzdělávání.</div></a>
   </div>
 
 </div>
@@ -281,7 +268,7 @@ body{
 </footer>
 
 <script>
-/* LANG MENU */
+/* LANG */
 const btn=document.querySelector(".lang-current");
 const menu=document.querySelector(".lang-menu");
 btn.onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
@@ -292,7 +279,7 @@ document.addEventListener("click",e=>{
 /* INNER COIN */
 const text="Forge of Artificial Intelligence, Science & Technology • ";
 const inner=document.getElementById("innerOrbit");
-const rText=150;
+const rText=135;
 let aText=0;
 
 text.split("").forEach((c,i)=>{
@@ -302,9 +289,10 @@ text.split("").forEach((c,i)=>{
   inner.appendChild(s);
 });
 
-/* ORBIT ANIMATION */
+/* ORBIT */
 const items=document.querySelectorAll(".orbit-item");
-const radius=360; // stabilní radius
+const radius=300;
+
 function animate(t){
   const base=(t/60000)*Math.PI*2;
   items.forEach((it,i)=>{
