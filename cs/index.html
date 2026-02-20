@@ -11,25 +11,26 @@
 
 <style>
 :root{
+  --bg:#0f1117;
+  --bg2:#141a33;
   --text:#ffffff;
   --muted:#b6bcc6;
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
+
+html,body{
+  height:100%;
+  margin:0;
+}
 
 body{
-  margin:0;
   font-family:Inter,system-ui,sans-serif;
   color:var(--text);
   background:
-    radial-gradient(1200px 800px at 25% 20%, #1e2645 0%, transparent 60%),
-    radial-gradient(1000px 700px at 75% 80%, #141a33 0%, transparent 55%),
-    linear-gradient(180deg, #0f1117 0%, #0b0e16 100%);
+    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
+    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
-
-/* reset odkazu */
-a{color:inherit;text-decoration:none}
 
 /* ================= HERO ================= */
 .hero{
@@ -38,7 +39,6 @@ a{color:inherit;text-decoration:none}
   align-items:center;
   justify-content:center;
   position:relative;
-  overflow:hidden;
 }
 
 /* ================= LEFT INFO ================= */
@@ -46,7 +46,7 @@ a{color:inherit;text-decoration:none}
   position:absolute;
   top:32px;
   left:32px;
-  max-width:340px;
+  max-width:360px;
   z-index:5;
 }
 
@@ -84,7 +84,7 @@ a{color:inherit;text-decoration:none}
   max-width:40vmin;
 }
 
-/* ================= INNER COIN ================= */
+/* ================= INNER COIN TEXT ================= */
 .inner-orbit{
   position:absolute;
   width:300px;
@@ -104,7 +104,7 @@ a{color:inherit;text-decoration:none}
   color:var(--muted);
 }
 
-/* ================= ORBIT ================= */
+/* ================= ORBIT ITEMS ================= */
 .orbit{
   position:absolute;
   inset:0;
@@ -116,73 +116,54 @@ a{color:inherit;text-decoration:none}
   left:50%;
   text-align:center;
   cursor:pointer;
+  text-decoration:none;
+  color:var(--text);
 }
 
 .orbit-item img{
-  width:110px;
-  margin-bottom:6px;
+  width:120px;
+  display:block;
+  margin:0 auto 6px;
+  transform:rotate(var(--counter-rot));
 }
 
 .orbit-item .name{
-  display:block;
   font-size:14px;
   letter-spacing:1px;
+  transform:rotate(var(--counter-rot));
 }
 
-.orbit-item .desc{
-  margin-top:4px;
-  font-size:13px;
-  color:var(--muted);
-  opacity:0;
-  transform:translateY(6px);
-  transition:.25s ease;
-}
-
-.orbit-item:hover .desc{
-  opacity:1;
-  transform:translateY(0);
+.orbit-item:hover{
+  filter:drop-shadow(0 0 22px rgba(255,255,255,.25));
 }
 
 /* ================= FOOTER ================= */
 .site-footer{
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,0.08);
-  padding:56px 24px 40px;
-  color:#b6bcc6;
-  font-size:14px;
+  padding:48px 24px;
 }
 
-.footer-inner{
+.footer-grid{
   max-width:1200px;
-  margin:0 auto;
+  margin:auto;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:40px;
+  gap:32px;
 }
 
-.footer-col h4{
-  margin:0 0 14px;
-  color:#ffffff;
-  font-size:15px;
+.site-footer h3{
+  margin:0 0 12px;
+  font-size:14px;
+  letter-spacing:2px;
 }
 
-.footer-col ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-.footer-col li{
-  margin-bottom:10px;
-}
-
-.footer-bottom{
-  margin-top:40px;
-  padding-top:20px;
-  border-top:1px solid rgba(255,255,255,0.06);
-  text-align:center;
-  font-size:13px;
-  color:#7f8896;
+.site-footer a{
+  display:block;
+  color:var(--muted);
+  font-size:14px;
+  text-decoration:none;
+  margin-bottom:6px;
 }
 </style>
 </head>
@@ -208,108 +189,81 @@ a{color:inherit;text-decoration:none}
     <div class="inner-orbit" id="innerOrbit"></div>
 
     <div class="orbit" id="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html">
-        <img src="/assets/logos/faist-systems.png">
-        <span class="name">Systems</span>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/lab.html">
-        <img src="/assets/logos/faist-lab.png">
-        <span class="name">Lab</span>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/digital.html">
-        <img src="/assets/logos/faist-digital.png">
-        <span class="name">Digital</span>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/energy.html">
-        <img src="/assets/logos/faist-energy.png">
-        <span class="name">Energy</span>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/security.html">
-        <img src="/assets/logos/faist-security.png">
-        <span class="name">Security</span>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/edu.html">
-        <img src="/assets/logos/faist-edu.png">
-        <span class="name">Edu</span>
-      </a>
+      <a class="orbit-item" href="/divisions/cs/systems.html"><img src="/assets/logos/faist-systems.png"><span class="name">Systems</span></a>
+      <a class="orbit-item" href="/divisions/cs/lab.html"><img src="/assets/logos/faist-lab.png"><span class="name">Lab</span></a>
+      <a class="orbit-item" href="/divisions/cs/digital.html"><img src="/assets/logos/faist-digital.png"><span class="name">Digital</span></a>
+      <a class="orbit-item" href="/divisions/cs/energy.html"><img src="/assets/logos/faist-energy.png"><span class="name">Energy</span></a>
+      <a class="orbit-item" href="/divisions/cs/security.html"><img src="/assets/logos/faist-security.png"><span class="name">Security</span></a>
+      <a class="orbit-item" href="/divisions/cs/edu.html"><img src="/assets/logos/faist-edu.png"><span class="name">Edu</span></a>
     </div>
 
   </div>
 </section>
 
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-col">
-      <h4>O nás</h4>
-      <ul>
-        <li>F.A.I.S.T. Holding</li>
-        <li>Forge of Artificial Intelligence,<br>Science & Technology</li>
-      </ul>
+  <div class="footer-grid">
+    <div>
+      <h3>O nás</h3>
+      <p style="color:var(--muted)">Forge of Artificial Intelligence, Science & Technology</p>
     </div>
-    <div class="footer-col">
-      <h4>Divize</h4>
-      <ul>
-        <li>Systems</li>
-        <li>Lab</li>
-        <li>Digital</li>
-        <li>Energy</li>
-        <li>Security</li>
-        <li>Edu</li>
-      </ul>
+    <div>
+      <h3>Divize</h3>
+      <a href="/divisions/cs/systems.html">Systems</a>
+      <a href="/divisions/cs/lab.html">Lab</a>
+      <a href="/divisions/cs/digital.html">Digital</a>
+      <a href="/divisions/cs/energy.html">Energy</a>
+      <a href="/divisions/cs/security.html">Security</a>
+      <a href="/divisions/cs/edu.html">Edu</a>
     </div>
-    <div class="footer-col">
-      <h4>Podpora</h4>
-      <ul>
-        <li><a href="/cs/contacts.html">Kontakt</a></li>
-      </ul>
+    <div>
+      <h3>Podpora</h3>
+      <a href="/contacts.html">Kontakt</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    © 2025 F.A.I.S.T. Holding
   </div>
 </footer>
 
 <script>
-/* ===== MINCOVÝ TEXT ===== */
-const coinText =
-  "Forge of Artificial Intelligence • Science & Technology • ";
+/* ===== INNER COIN TEXT ===== */
+const text = "Forge of Artificial Intelligence, Science & Technology • ";
 const innerOrbit = document.getElementById("innerOrbit");
-const innerRadius = 150;
+const radiusText = 150;
 let innerAngle = 0;
 
-coinText.split("").forEach((char,i)=>{
-  const span=document.createElement("span");
-  span.textContent=char;
-  span.style.transform=
-    `rotate(${i*(360/coinText.length)}deg) translate(${innerRadius}px)`;
+text.split("").forEach((char,i)=>{
+  const span = document.createElement("span");
+  const angle = i * (360 / text.length);
+  span.textContent = char;
+  span.style.transform = `rotate(${angle}deg) translate(${radiusText}px)`;
   innerOrbit.appendChild(span);
 });
 
-/* ===== ORBIT DIVIZÍ – 60 s ===== */
-const items=document.querySelectorAll(".orbit-item");
-const PERIOD=60000;
-let radius=0;
+/* ===== ORBIT ITEMS (60s) ===== */
+const items = document.querySelectorAll(".orbit-item");
+let radius = 0;
 
 function computeRadius(){
-  radius=Math.min(
-    window.innerHeight*0.26,
-    window.innerWidth*0.26
-  );
+  radius = Math.min(window.innerWidth, window.innerHeight) * 0.32;
 }
 computeRadius();
-window.addEventListener("resize",computeRadius);
+window.addEventListener("resize", computeRadius);
 
 function animate(t){
-  const base=(t%PERIOD)/PERIOD*Math.PI*2;
+  const angleBase = (t / 60000) * Math.PI * 2;
+
   items.forEach((item,i)=>{
-    const a=base+i*(Math.PI*2/items.length);
-    const x=Math.cos(a)*radius;
-    const y=Math.sin(a)*radius;
-    item.style.transform=
-      `translate(-50%,-50%) translate(${x}px,${y}px) rotate(${Math.PI/2-a}rad)`;
+    const angle = angleBase + i * (Math.PI*2/items.length);
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+
+    item.style.transform =
+      `translate(-50%,-50%) translate(${x}px,${y}px)`;
+
+    item.style.setProperty('--counter-rot', `${-angle}rad`);
   });
-  innerAngle-=0.03;
-  innerOrbit.style.transform=`rotate(${innerAngle}deg)`;
+
+  innerAngle -= 0.03;
+  innerOrbit.style.transform = `rotate(${innerAngle}deg)`;
+
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
