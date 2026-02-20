@@ -17,7 +17,11 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%;margin:0}
+html,body{
+  height:100%;
+  margin:0;
+  overflow:hidden; /* ⬅️ žádný posun layoutu */
+}
 
 body{
   font-family:Inter,system-ui,sans-serif;
@@ -29,7 +33,7 @@ body{
 
 /* ===== HERO ===== */
 .hero{
-  min-height:100vh;
+  height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -44,7 +48,7 @@ body{
   max-width:360px;
 }
 .brand-info h1{
-  margin:0 0 12px;
+  margin:0 0 10px;
   font-size:20px;
   letter-spacing:3px;
 }
@@ -58,25 +62,32 @@ body{
 /* ===== SCENE ===== */
 .scene{
   position:relative;
-  width:min(90vw,900px);
-  height:min(80vh,900px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:900px;
+  height:900px;
+  max-width:90vmin;
+  max-height:90vmin;
 }
 
 /* ===== CENTER LOGO ===== */
+.center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:5;
+}
 .center img{
   width:220px;
-  z-index:5;
 }
 
 /* ===== INNER COIN ===== */
 .inner-orbit{
   position:absolute;
-  width:240px;
-  height:240px;
-  border-radius:50%;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   pointer-events:none;
 }
 .inner-orbit span{
@@ -84,11 +95,11 @@ body{
   top:50%;
   left:50%;
   transform-origin:0 0;
-  white-space:nowrap;
   font-size:15px;
   font-weight:700;
   letter-spacing:2px;
-  color:#ffffff;
+  white-space:nowrap;
+  color:#fff;
   text-shadow:0 0 10px rgba(255,255,255,.45);
 }
 
@@ -103,9 +114,10 @@ body{
   position:absolute;
   top:50%;
   left:50%;
+  width:200px;
   text-align:center;
   text-decoration:none;
-  color:var(--text);
+  color:#fff;
 }
 
 /* ICON */
@@ -118,44 +130,47 @@ body{
 }
 .icon-wrap img{
   width:140px;
-  animation:spin 12s linear infinite; /* 50 % rychlosti */
-  transition:filter .3s ease, transform .3s ease;
+  animation:spin 12s linear infinite;
+  transition:filter .25s ease, transform .25s ease;
 }
 
 /* TEXT – FIXNÍ */
 .name{
-  display:block;
   margin-top:-18px;
   font-size:14px;
   letter-spacing:1px;
 }
 .desc{
-  margin-top:4px;
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
   font-size:13px;
   color:var(--muted);
-  max-width:190px;
   opacity:0;
-  transform:translateY(4px);
-  transition:.25s ease;
+  transition:.2s ease;
+  width:180px;
 }
 
 /* HOVER */
 .orbit-item:hover .icon-wrap img{
   filter:
     drop-shadow(0 0 18px rgba(255,255,255,.6))
-    drop-shadow(0 0 34px rgba(120,160,255,.35));
+    drop-shadow(0 0 32px rgba(120,160,255,.35));
   transform:scale(1.05);
 }
 .orbit-item:hover .desc{
   opacity:1;
-  transform:translateY(0);
 }
 
 /* FOOTER */
 .site-footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
-  padding:48px 24px;
+  padding:32px 24px;
 }
 .footer-grid{
   max-width:1200px;
@@ -175,7 +190,7 @@ body{
   margin-bottom:6px;
 }
 
-/* ICON ROTATION */
+/* ICON SPIN */
 @keyframes spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
@@ -190,57 +205,49 @@ body{
 <div class="brand-info">
   <h1>F.A.I.S.T. Holding</h1>
   <p>
-    Navrhujeme inteligentní systémy propojující umělou inteligenci,
-    vědu a moderní technologie do praktických řešení.
+    Inteligentní systémy propojující AI, vědu a moderní technologie.
   </p>
 </div>
 
 <div class="scene">
 
   <div class="center">
-    <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+    <img src="/assets/logos/faist-holding.png" alt="FAIST">
   </div>
 
   <div class="inner-orbit" id="innerOrbit"></div>
 
   <div class="orbit" id="orbit">
-
     <a class="orbit-item" href="/cs/divisions/systems.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-systems.png"></div>
-      <span class="name">Systems</span>
-      <span class="desc">Chytré systémy a integrace.</span>
+      <div class="name">Systems</div>
+      <div class="desc">Chytré systémy a integrace.</div>
     </a>
-
     <a class="orbit-item" href="/cs/divisions/lab.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-lab.png"></div>
-      <span class="name">Lab</span>
-      <span class="desc">Výzkum a experimenty AI.</span>
+      <div class="name">Lab</div>
+      <div class="desc">Výzkum a experimenty AI.</div>
     </a>
-
     <a class="orbit-item" href="/cs/divisions/digital.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-digital.png"></div>
-      <span class="name">Digital</span>
-      <span class="desc">Digitální produkty.</span>
+      <div class="name">Digital</div>
+      <div class="desc">Digitální produkty.</div>
     </a>
-
     <a class="orbit-item" href="/cs/divisions/energy.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-energy.png"></div>
-      <span class="name">Energy</span>
-      <span class="desc">Energetické systémy.</span>
+      <div class="name">Energy</div>
+      <div class="desc">Energetické systémy.</div>
     </a>
-
     <a class="orbit-item" href="/cs/divisions/security.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-security.png"></div>
-      <span class="name">Security</span>
-      <span class="desc">Bezpečnost systémů.</span>
+      <div class="name">Security</div>
+      <div class="desc">Bezpečnost systémů.</div>
     </a>
-
     <a class="orbit-item" href="/cs/divisions/edu.html">
       <div class="icon-wrap"><img src="/assets/logos/faist-edu.png"></div>
-      <span class="name">Edu</span>
-      <span class="desc">Vzdělávání v AI.</span>
+      <div class="name">Edu</div>
+      <div class="desc">Vzdělávání v AI.</div>
     </a>
-
   </div>
 
 </div>
@@ -250,9 +257,7 @@ body{
   <div class="footer-grid">
     <div>
       <h3>O nás</h3>
-      <p style="color:var(--muted)">
-        F.A.I.S.T. – inteligentní technologie pro budoucnost.
-      </p>
+      <p style="color:var(--muted)">F.A.I.S.T. – technologie pro budoucnost.</p>
     </div>
     <div>
       <h3>Divize</h3>
@@ -286,11 +291,11 @@ text.split("").forEach((c,i)=>{
   inner.appendChild(s);
 });
 
-/* ORBIT */
+/* ORBIT – STABILNÍ */
 const items=document.querySelectorAll(".orbit-item");
 const scene=document.querySelector(".scene");
 let radius=0;
-let speed=1;
+let paused=false;
 
 function resize(){
   const r=scene.getBoundingClientRect();
@@ -300,19 +305,21 @@ resize();
 addEventListener("resize",resize);
 
 items.forEach(i=>{
-  i.onmouseenter=()=>speed=0.5;
-  i.onmouseleave=()=>speed=1;
+  i.onmouseenter=()=>paused=true;
+  i.onmouseleave=()=>paused=false;
 });
 
 function animate(t){
-  const base=(t/60000)*Math.PI*2*speed;
-  items.forEach((it,i)=>{
-    const a=base+i*(Math.PI*2/items.length);
-    it.style.transform=
-      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-  });
-  aText-=0.025;
-  inner.style.transform=`rotate(${aText}deg)`;
+  if(!paused){
+    const base=(t/60000)*Math.PI*2;
+    items.forEach((it,i)=>{
+      const a=base+i*(Math.PI*2/items.length);
+      it.style.transform=
+        `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+    });
+    aText-=0.025;
+    inner.style.transform=`rotate(${aText}deg)`;
+  }
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
