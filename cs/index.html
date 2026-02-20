@@ -29,15 +29,6 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* ===== LANGUAGE SWITCH ===== */
-.lang-switch{
-  position:fixed;
-  top:24px;
-  right:24px;
-  z-index:20;
-}
-.lang-switch img{width:22px}
-
 /* ===== HERO ===== */
 .hero{
   min-height:100vh;
@@ -52,12 +43,10 @@ body{
   top:32px;
   left:32px;
   width:360px;
-  max-height:320px;
   padding:20px 22px;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
-  overflow:hidden;
 }
 
 .brand-panel h1{
@@ -88,15 +77,15 @@ body{
   inset:0;
   display:grid;
   place-items:center;
-  z-index:3;
   pointer-events:none;
+  z-index:3;
 }
 .center img{
   width:220px;
   max-width:40vmin;
 }
 
-/* ===== INNER TEXT RING ===== */
+/* ===== INNER TEXT ===== */
 .inner-orbit{
   position:absolute;
   inset:0;
@@ -111,14 +100,14 @@ body{
   font-size:13px;
   letter-spacing:2px;
   color:#e6ebf5;
-  text-shadow:0 0 8px rgba(255,255,255,.35);
 }
 
-/* ===== OUTER ORBIT ===== */
+/* ===== ORBIT ===== */
 .orbit{
   position:absolute;
   inset:0;
 }
+
 .orbit-item{
   position:absolute;
   top:50%;
@@ -136,59 +125,44 @@ body{
   animation:spin 20s linear infinite;
 }
 
-/* ===== POPISEK – HOVER ===== */
-.orbit-item span{
-  display:block;
+/* ===== VŽDY VIDITELNÝ NÁZEV ===== */
+.orbit-item .label{
   font-size:14px;
   letter-spacing:1px;
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity .25s ease, transform .25s ease;
 }
 
-.orbit-item:hover span{
+/* ===== TOOLTIP ===== */
+.orbit-item::after{
+  content:attr(data-desc);
+  position:absolute;
+  bottom:110%;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+}
+
+.orbit-item:hover::after{
   opacity:1;
-  transform:translateY(0);
+  transform:translateX(-50%) translateY(0);
 }
 
 @keyframes spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
-
-/* ===== FOOTER ===== */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:48px 24px;
-}
-.footer-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:32px;
-}
-.site-footer h3{
-  font-size:14px;
-  letter-spacing:2px;
-}
-.site-footer a{
-  display:block;
-  color:var(--muted);
-  text-decoration:none;
-  margin-bottom:6px;
-}
 </style>
 </head>
 
 <body>
-
-<div class="lang-switch">
-  <a href="/en/index.html">
-    <img src="/assets/flags/cz.svg" alt="CZ">
-  </a>
-</div>
 
 <section class="hero">
 
@@ -209,52 +183,45 @@ body{
 
     <div class="inner-orbit" id="innerOrbit"></div>
 
-    <div class="orbit" id="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><span>Systems</span></a>
-      <a class="orbit-item" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><span>Lab</span></a>
-      <a class="orbit-item" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><span>Digital</span></a>
-      <a class="orbit-item" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><span>Energy</span></a>
-      <a class="orbit-item" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><span>Security</span></a>
-      <a class="orbit-item" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><span>Edu</span></a>
+    <div class="orbit">
+      <a class="orbit-item" data-desc="Firemní systémy a architektura" href="/cs/divisions/systems.html">
+        <img src="/assets/logos/faist-systems.png">
+        <div class="label">Systems</div>
+      </a>
+      <a class="orbit-item" data-desc="Výzkum, experimenty a prototypy" href="/cs/divisions/lab.html">
+        <img src="/assets/logos/faist-lab.png">
+        <div class="label">Lab</div>
+      </a>
+      <a class="orbit-item" data-desc="Digitální produkty a služby" href="/cs/divisions/digital.html">
+        <img src="/assets/logos/faist-digital.png">
+        <div class="label">Digital</div>
+      </a>
+      <a class="orbit-item" data-desc="Energetická řešení a efektivita" href="/cs/divisions/energy.html">
+        <img src="/assets/logos/faist-energy.png">
+        <div class="label">Energy</div>
+      </a>
+      <a class="orbit-item" data-desc="Kybernetická a fyzická bezpečnost" href="/cs/divisions/security.html">
+        <img src="/assets/logos/faist-security.png">
+        <div class="label">Security</div>
+      </a>
+      <a class="orbit-item" data-desc="Vzdělávání a rozvoj znalostí" href="/cs/divisions/edu.html">
+        <img src="/assets/logos/faist-edu.png">
+        <div class="label">Edu</div>
+      </a>
     </div>
 
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div>
-      <h3>O nás</h3>
-      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
-    </div>
-    <div>
-      <h3>Divize</h3>
-      <a href="/cs/divisions/systems.html">Systems</a>
-      <a href="/cs/divisions/lab.html">Lab</a>
-      <a href="/cs/divisions/digital.html">Digital</a>
-      <a href="/cs/divisions/energy.html">Energy</a>
-      <a href="/cs/divisions/security.html">Security</a>
-      <a href="/cs/divisions/edu.html">Edu</a>
-    </div>
-    <div>
-      <h3>Informace</h3>
-      <a href="#">Slovník pojmů</a>
-      <a href="#">FAQ</a>
-      <a href="#">Kontakt</a>
-    </div>
-  </div>
-</footer>
-
 <script>
 const text="Forge of Artificial Intelligence, Science & Technology • ";
 const inner=document.getElementById("innerOrbit");
-const textRadius=125;
 let textAngle=0;
 
 text.split("").forEach((c,i)=>{
   const s=document.createElement("span");
   s.textContent=c;
-  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${textRadius}px)`;
+  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(125px)`;
   inner.appendChild(s);
 });
 
@@ -275,8 +242,8 @@ resize();
 window.addEventListener("resize",resize);
 
 function animate(t){
-  const speed = hover ? 280000 : 140000;
-  const base = t/speed*Math.PI*2;
+  const speed=hover?280000:140000;
+  const base=t/speed*Math.PI*2;
 
   items.forEach((el,i)=>{
     const a=base+i*(Math.PI*2/items.length);
