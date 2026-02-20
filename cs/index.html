@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>F.A.I.S.T. Holding</title>
+<title>FAIST Industries</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -40,11 +40,32 @@ body{
   overflow:hidden;
 }
 
+/* ===== LEFT INFO ===== */
+.left-info{
+  position:absolute;
+  top:32px;
+  left:32px;
+  max-width:320px;
+}
+
+.left-info h1{
+  margin:0 0 12px;
+  font-size:18px;
+  letter-spacing:2px;
+}
+
+.left-info p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
+}
+
 /* ===== ORBIT SYSTEM ===== */
 .orbit{
   position:relative;
-  width:560px;
-  height:560px;
+  width:600px;
+  height:600px;
 }
 
 .center-logo{
@@ -60,7 +81,7 @@ body{
   width:180px;
 }
 
-/* inner text ring */
+/* ===== TEXT RING ===== */
 .text-ring{
   position:absolute;
   inset:0;
@@ -78,7 +99,7 @@ body{
   fill:var(--muted);
 }
 
-/* outer orbit items */
+/* ===== DIVISIONS ===== */
 .divisions{
   position:absolute;
   inset:0;
@@ -88,20 +109,22 @@ body{
   position:absolute;
   top:50%;
   left:50%;
-  width:110px;
-  text-align:center;
-  transform-origin:0 0;
+  transform:translate(-50%,-50%);
   cursor:pointer;
 }
 
-.division img{
-  width:72px;
+.division-inner{
+  text-align:center;
+}
+
+.division-inner img{
+  width:120px; /* cca 2,5× */
   display:block;
   margin:0 auto 6px;
 }
 
-.division span{
-  font-size:13px;
+.division-inner span{
+  font-size:14px;
   color:var(--text);
 }
 
@@ -161,14 +184,24 @@ footer a:hover{
 
 <section class="hero">
 
+  <!-- LEFT INFO -->
+  <div class="left-info">
+    <h1>FAIST Industries</h1>
+    <p>
+      Navrhujeme inteligentní systémy propojující umělou inteligenci,
+      vědu a moderní technologie do praktických a škálovatelných řešení.
+    </p>
+  </div>
+
+  <!-- ORBIT -->
   <div class="orbit" id="orbit">
 
-    <!-- INNER TEXT RING -->
+    <!-- TEXT RING -->
     <div class="text-ring" id="textRing">
-      <svg viewBox="0 0 560 560">
+      <svg viewBox="0 0 600 600">
         <defs>
           <path id="circlePath"
-            d="M280,280 m-220,0 a220,220 0 1,1 440,0 a220,220 0 1,1 -440,0"/>
+            d="M300,300 m-240,0 a240,240 0 1,1 480,0 a240,240 0 1,1 -480,0"/>
         </defs>
         <text>
           <textPath href="#circlePath">
@@ -180,28 +213,46 @@ footer a:hover{
 
     <!-- CENTER LOGO -->
     <div class="center-logo">
-      <img src="/assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
+      <img src="/assets/logos/faist-holding.png" alt="FAIST">
     </div>
 
     <!-- DIVISIONS -->
     <div class="divisions" id="divisions">
       <a class="division" href="/cs/divisions/lab.html">
-        <img src="/assets/logos/faist-lab.png"><span>Lab</span>
+        <div class="division-inner">
+          <img src="/assets/logos/faist-lab.png">
+          <span>Lab</span>
+        </div>
       </a>
       <a class="division" href="/cs/divisions/digital.html">
-        <img src="/assets/logos/faist-digital.png"><span>Digital</span>
+        <div class="division-inner">
+          <img src="/assets/logos/faist-digital.png">
+          <span>Digital</span>
+        </div>
       </a>
       <a class="division" href="/cs/divisions/energy.html">
-        <img src="/assets/logos/faist-energy.png"><span>Energy</span>
+        <div class="division-inner">
+          <img src="/assets/logos/faist-energy.png">
+          <span>Energy</span>
+        </div>
       </a>
       <a class="division" href="/cs/divisions/edu.html">
-        <img src="/assets/logos/faist-edu.png"><span>Edu</span>
+        <div class="division-inner">
+          <img src="/assets/logos/faist-edu.png">
+          <span>Edu</span>
+        </div>
       </a>
       <a class="division" href="/cs/divisions/systems.html">
-        <img src="/assets/logos/faist-systems.png"><span>Systems</span>
+        <div class="division-inner">
+          <img src="/assets/logos/faist-systems.png">
+          <span>Systems</span>
+        </div>
       </a>
       <a class="division" href="/cs/divisions/security.html">
-        <img src="/assets/logos/faist-security.png"><span>Security</span>
+        <div class="division-inner">
+          <img src="/assets/logos/faist-security.png">
+          <span>Security</span>
+        </div>
       </a>
     </div>
 
@@ -213,7 +264,7 @@ footer a:hover{
     <div>
       <h4>O nás</h4>
       <ul>
-        <li>F.A.I.S.T. Holding</li>
+        <li>FAIST Industries</li>
         <li>Forge of Artificial Intelligence, Science & Technology</li>
       </ul>
     </div>
@@ -229,49 +280,45 @@ footer a:hover{
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">© 2025 F.A.I.S.T. Holding</div>
+  <div class="footer-bottom">© 2025 FAIST Industries</div>
 </footer>
 
 </div>
 
 <script>
-/*
-  =====================================================
-  FA.I.S.T. ORBIT ENGINE – JS ONLY
-  =====================================================
-*/
+/* ===== FAIST ORBIT ENGINE ===== */
 
 const orbit = document.getElementById("orbit");
 const divisions = [...document.querySelectorAll(".division")];
 const textRing = document.getElementById("textRing");
 
-const ORBIT_RADIUS = 240;           // px
-const ORBIT_PERIOD = 60000;         // 60 s
-const TEXT_SPEED = -0.5;            // opposite direction
+const RADIUS = 260;
+const ORBIT_PERIOD = 60000; // 60 s
 let paused = false;
 
-/* pause on hover */
 orbit.addEventListener("mouseenter", () => paused = true);
 orbit.addEventListener("mouseleave", () => paused = false);
 
 function animate(time){
   if(!paused){
-    const angleBase = (time % ORBIT_PERIOD) / ORBIT_PERIOD * Math.PI * 2;
+    const baseAngle = (time % ORBIT_PERIOD) / ORBIT_PERIOD * Math.PI * 2;
 
     divisions.forEach((el, i) => {
-      const angle = angleBase + i * (Math.PI * 2 / divisions.length);
+      const step = Math.PI * 2 / divisions.length;
+      const angle = baseAngle + i * step;
 
-      const x = Math.cos(angle) * ORBIT_RADIUS;
-      const y = Math.sin(angle) * ORBIT_RADIUS;
+      const x = Math.cos(angle) * RADIUS;
+      const y = Math.sin(angle) * RADIUS;
 
       el.style.transform =
-        `translate(-50%,-50%) translate(${x}px,${y}px) rotate(${-angle}rad)`;
+        `translate(-50%,-50%) translate(${x}px,${y}px)`;
+
+      const inner = el.querySelector(".division-inner");
+      inner.style.transform = `rotate(${-angle}rad)`;
     });
 
-    textRing.style.transform =
-      `rotate(${angleBase * TEXT_SPEED}rad)`;
+    textRing.style.transform = `rotate(${-baseAngle}rad)`;
   }
-
   requestAnimationFrame(animate);
 }
 
