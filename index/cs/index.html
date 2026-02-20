@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F.A.I.S.T. Holding</title>
+
+<meta name="description" content="F.A.I.S.T. Holding navrhuje inteligentní systémy propojující umělou inteligenci, vědu a moderní technologie do praktických řešení.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://faist.xyz/">
+<meta property="og:title" content="F.A.I.S.T. Holding">
+<meta property="og:description" content="Forge of Artificial Intelligence, Science & Technology">
+<meta property="og:image" content="https://faist.xyz/assets/og/og-faist.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#0f1117;
+  --bg-soft:#151824;
+  --text:#ffffff;
+  --muted:#b6bcc6;
+  --border:rgba(255,255,255,0.08);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
+    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
+}
+
+/* ===== HEADER ===== */
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  padding:24px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:10;
+}
+
+.brand{
+  font-size:14px;
+  letter-spacing:3px;
+  font-weight:600;
+}
+
+/* ===== LANGUAGE SWITCH ===== */
+.lang-switch{
+  display:flex;
+  gap:12px;
+}
+
+.lang-switch a{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  color:#fff;
+  font-size:12px;
+  text-decoration:none;
+  transition:background .2s ease;
+}
+
+.lang-switch a:hover{
+  background:rgba(255,255,255,0.12);
+}
+
+.lang-switch img{
+  width:18px;
+  height:12px;
+  object-fit:cover;
+  border-radius:2px;
+}
+
+/* ===== HERO ===== */
+.hero{
+  padding:160px 40px 120px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.hero h1{
+  font-size:32px;
+  letter-spacing:3px;
+  margin-bottom:20px;
+}
+
+.hero p{
+  max-width:600px;
+  line-height:1.7;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+/* ===== DIVISIONS ===== */
+.divisions{
+  margin-top:80px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
+}
+
+.division{
+  padding:28px;
+  background:rgba(255,255,255,0.04);
+  border-radius:20px;
+  transition:background .3s ease;
+}
+
+.division:hover{
+  background:rgba(255,255,255,0.08);
+}
+
+.division h3{
+  margin:0 0 12px;
+  font-size:18px;
+  letter-spacing:1px;
+}
+
+.division p{
+  margin:0 0 16px;
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.division a{
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.division a:hover{
+  text-decoration:underline;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  margin-top:140px;
+  background:#0a0c11;
+  border-top:1px solid var(--border);
+  padding:64px 40px 40px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:48px;
+}
+
+.footer-col h4{
+  margin:0 0 16px;
+  font-size:15px;
+  color:#fff;
+}
+
+.footer-col ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.footer-col li{
+  margin-bottom:10px;
+}
+
+.footer-col a{
+  color:#a8b0bd;
+  text-decoration:none;
+  font-size:14px;
+}
+
+.footer-col a:hover{
+  color:#fff;
+}
+
+.footer-bottom{
+  margin-top:48px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  text-align:center;
+  font-size:13px;
+  color:#7f8896;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="brand">F.A.I.S.T.</div>
+
+  <div class="lang-switch">
+    <a href="index.html">
+      <img src="assets/icons/flag-cz.svg" alt="CZ"> CZ
+    </a>
+    <a href="en/index.html">
+      <img src="assets/icons/flag-en.svg" alt="EN"> EN
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>F.A.I.S.T. Holding</h1>
+
+  <p>
+    F.A.I.S.T. (Forge of Artificial Intelligence, Science & Technology)
+    je technologický holding zaměřený na návrh a vývoj inteligentních systémů.
+    Propojujeme umělou inteligenci, vědu a moderní technologie do praktických,
+    dlouhodobě udržitelných řešení.
+  </p>
+
+  <p>
+    Každá divize se specializuje na konkrétní oblast, ale všechny sdílejí
+    společnou filozofii: smysluplné využití technologií, důraz na kvalitu
+    a schopnost růstu do budoucna.
+  </p>
+
+  <div class="divisions">
+
+    <div class="division">
+      <h3>Systems</h3>
+      <p>Návrh a integrace chytrých systémů, automatizace a technologických celků.</p>
+      <a href="divisions/cs/systems.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Lab</h3>
+      <p>Výzkum, experimenty a prototypování v oblasti AI a pokročilých technologií.</p>
+      <a href="divisions/cs/lab.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Digital</h3>
+      <p>Digitální produkty, weby a aplikace propojující technologii s UX.</p>
+      <a href="divisions/cs/digital.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Energy</h3>
+      <p>Energetická řešení, optimalizace spotřeby a chytré řízení energie.</p>
+      <a href="divisions/cs/energy.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Security</h3>
+      <p>Bezpečnostní systémy, ochrana dat a prevence digitálních hrozeb.</p>
+      <a href="divisions/cs/security.html">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>Edu</h3>
+      <p>Vzdělávání, školení a sdílení know-how v oblasti moderních technologií.</p>
+      <a href="divisions/cs/edu.html">Zjistit více →</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-col">
+      <h4>O nás</h4>
+      <ul>
+        <li><a href="#">F.A.I.S.T. Holding</a></li>
+        <li><a href="#">Vize & přístup</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Divize</h4>
+      <ul>
+        <li><a href="divisions/cs/systems.html">Systems</a></li>
+        <li><a href="divisions/cs/lab.html">Lab</a></li>
+        <li><a href="divisions/cs/digital.html">Digital</a></li>
+        <li><a href="divisions/cs/energy.html">Energy</a></li>
+        <li><a href="divisions/cs/security.html">Security</a></li>
+        <li><a href="divisions/cs/edu.html">Edu</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Podpora</h4>
+      <ul>
+        <li><a href="contacts.html">Kontakt</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Pojmy</h4>
+      <ul>
+        <li><a href="#">Atlas technologií</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 F.A.I.S.T. Holding
+  </div>
+</footer>
+
+</body>
+</html>
