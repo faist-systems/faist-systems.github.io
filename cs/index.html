@@ -277,9 +277,17 @@ text.split("").forEach((c,i)=>{
 
 /* ORBIT */
 const items=document.querySelectorAll(".orbit-item");
-let radius=0,speed=1;
-function resize(){radius=Math.min(innerWidth,innerHeight)*0.32}
-resize();addEventListener("resize",resize);
+const scene = document.querySelector(".scene");
+let radius = 0;
+let speed = 1;
+
+function resize(){
+  const rect = scene.getBoundingClientRect();
+  radius = Math.min(rect.width, rect.height) * 0.38;
+}
+
+resize();
+window.addEventListener("resize", resize);
 items.forEach(i=>{
   i.onmouseenter=()=>speed=0.5;
   i.onmouseleave=()=>speed=1;
