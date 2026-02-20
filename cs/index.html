@@ -19,6 +19,8 @@
 
   --scene-size: clamp(420px, 70vmin, 820px);
   --logo-size: calc(var(--scene-size) * 0.25);
+  --orbit-radius-factor: 0.34;
+  --inner-text-radius: calc(var(--scene-size) * 0.16);
 }
 
 *{box-sizing:border-box}
@@ -64,13 +66,27 @@ body{
   border:1px solid var(--border);
   border-radius:14px;
 }
+.brand-panel h1{
+  margin:0 0 8px;
+  font-size:18px;
+  letter-spacing:3px;
+}
+.brand-panel p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
+}
 
-/* ===== DESKTOP ORBIT ===== */
+/* =========================
+   DESKTOP ORBIT
+========================= */
 .scene{
   position:relative;
   width:var(--scene-size);
   height:var(--scene-size);
 }
+
 .center{
   position:absolute;
   inset:0;
@@ -80,28 +96,84 @@ body{
 }
 .center img{width:var(--logo-size)}
 
-.orbit, .inner-orbit{position:absolute; inset:0}
-
-/* ===== MOBILE SHARED ===== */
-.mobile{
-  display:none;
-  width:100%;
-  height:100vh;
+.inner-orbit{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.inner-orbit span{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin:0 0;
+  white-space:nowrap;
+  font-size:13px;
+  letter-spacing:2px;
+  color:#e6ebf5;
 }
 
-/* ===== PORTRAIT – VERTIKÁLNÍ NEKONEČNÝ PÁS ===== */
+.orbit{
+  position:absolute;
+  inset:0;
+}
+.orbit-item{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  color:#fff;
+  text-decoration:none;
+}
+.orbit-item img{
+  width:120px;
+  margin:0 auto 6px;
+  display:block;
+}
+.orbit-item .label{
+  font-size:14px;
+  letter-spacing:1px;
+}
+
+/* tooltip */
+.orbit-item::after{
+  content:attr(data-desc);
+  position:absolute;
+  bottom:110%;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+}
+.orbit-item:hover::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   MOBILE SHARED
+========================= */
+.mobile{display:none}
+
+/* ===== PORTRAIT – VERTICAL LOOP ===== */
 .mobile-vertical{
-  display:none;
+  height:100vh;
   overflow:hidden;
 }
-
 .vertical-track{
   height:100%;
   overflow-y:auto;
   scroll-snap-type:y mandatory;
-  padding:100px 0;
+  padding:120px 0;
 }
-
 .vertical-track::-webkit-scrollbar{display:none}
 
 .vertical-card{
@@ -117,18 +189,9 @@ body{
   scroll-snap-align:center;
   text-align:center;
 }
-
-.vertical-card img{
-  width:96px;
-  margin-bottom:16px;
-}
-.vertical-card h3{
-  margin:0 0 10px;
-}
-.vertical-card p{
-  margin:0 0 18px;
-  color:var(--muted);
-}
+.vertical-card img{width:96px;margin-bottom:16px}
+.vertical-card h3{margin:0 0 10px}
+.vertical-card p{margin:0 0 18px;color:var(--muted)}
 .vertical-card a{
   padding:10px 18px;
   border-radius:999px;
@@ -137,12 +200,10 @@ body{
   text-decoration:none;
 }
 
-/* ===== LANDSCAPE – HORIZONTÁLNÍ CAROUSEL ===== */
+/* ===== LANDSCAPE – HORIZONTAL CAROUSEL ===== */
 .mobile-horizontal{
-  display:none;
   padding-top:120px;
 }
-
 .horizontal-track{
   display:flex;
   gap:20px;
@@ -162,29 +223,25 @@ body{
   scroll-snap-align:center;
   text-align:center;
 }
-
-.horizontal-card img{
-  width:96px;
-  margin-bottom:14px;
-}
+.horizontal-card img{width:96px;margin-bottom:14px}
 
 /* ===== RESPONSIVE SWITCH ===== */
 @media (max-width:900px){
   .scene{display:none}
+  .mobile{display:block}
   .brand-panel{
     position:static;
-    margin:20px;
     width:auto;
+    margin:20px;
   }
-  .mobile{display:block}
 }
 
 @media (max-width:900px) and (orientation:portrait){
-  .mobile-vertical{display:block}
+  .mobile-horizontal{display:none}
 }
 
 @media (max-width:900px) and (orientation:landscape){
-  .mobile-horizontal{display:block}
+  .mobile-vertical{display:none}
 }
 </style>
 </head>
@@ -198,24 +255,29 @@ body{
 <section class="hero">
 
   <div class="brand-panel">
-    <h2>F.A.I.S.T. Holding</h2>
-    <p style="color:var(--muted)">
-      Navrhujeme inteligentní systémy propojující AI, vědu a technologie.
-    </p>
+    <h1>F.A.I.S.T. Holding</h1>
+    <p>Navrhujeme inteligentní systémy propojující AI, vědu a technologie.</p>
   </div>
 
-  <!-- DESKTOP -->
-  <div class="scene">
+  <!-- DESKTOP ORBIT -->
+  <div class="scene" id="scene">
     <div class="center">
       <img src="/assets/logos/faist-holding.png">
+    </div>
+    <div class="inner-orbit" id="innerOrbit"></div>
+    <div class="orbit" id="orbit">
+      <a class="orbit-item" data-desc="Firemní systémy" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
+      <a class="orbit-item" data-desc="Výzkum a prototypy" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
+      <a class="orbit-item" data-desc="Digitální produkty" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
+      <a class="orbit-item" data-desc="Energetická řešení" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
+      <a class="orbit-item" data-desc="Bezpečnost" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
+      <a class="orbit-item" data-desc="Vzdělávání" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
     </div>
   </div>
 
   <!-- MOBILE PORTRAIT -->
   <div class="mobile mobile-vertical">
-    <div class="vertical-track" id="verticalTrack">
-      <!-- cards injected by JS -->
-    </div>
+    <div class="vertical-track" id="verticalTrack"></div>
   </div>
 
   <!-- MOBILE LANDSCAPE -->
@@ -233,34 +295,73 @@ body{
 </section>
 
 <script>
-/* ===== VERTIKÁLNÍ NEKONEČNÝ PÁS ===== */
-const data = [
-  {t:"Systems", d:"Firemní systémy", i:"faist-systems"},
-  {t:"Lab", d:"Výzkum a prototypy", i:"faist-lab"},
-  {t:"Digital", d:"Digitální produkty", i:"faist-digital"},
-  {t:"Energy", d:"Energetická řešení", i:"faist-energy"},
-  {t:"Security", d:"Bezpečnost", i:"faist-security"},
-  {t:"Edu", d:"Vzdělávání", i:"faist-edu"},
-];
+/* ===== DESKTOP ORBIT LOGIC ===== */
+const items=[...document.querySelectorAll(".orbit-item")];
+const scene=document.getElementById("scene");
+let radius,frozen=false,base=0;
 
-const track = document.getElementById("verticalTrack");
-[...data, ...data, ...data].forEach(item=>{
-  const c=document.createElement("div");
-  c.className="vertical-card";
-  c.innerHTML=`
-    <img src="/assets/logos/${item.i}.png">
-    <h3>${item.t}</h3>
-    <p>${item.d}</p>
-    <a href="/cs/divisions/${item.t.toLowerCase()}.html">Vstoupit</a>
-  `;
-  track.appendChild(c);
+items.forEach(el=>{
+  el.addEventListener("mouseenter",()=>frozen=true);
+  el.addEventListener("mouseleave",()=>frozen=false);
 });
 
-track.scrollTop = track.scrollHeight/3;
+function resize(){
+  radius=scene.clientWidth * parseFloat(getComputedStyle(document.documentElement)
+    .getPropertyValue('--orbit-radius-factor'));
+}
+resize();
+window.addEventListener("resize",resize);
+
+function animate(t){
+  if(!frozen) base=t/140000*Math.PI*2;
+  items.forEach((el,i)=>{
+    const a=base+i*(Math.PI*2/items.length);
+    el.style.transform=
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+  });
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+/* ===== INNER TEXT ===== */
+const text="Forge of Artificial Intelligence, Science & Technology • ";
+const inner=document.getElementById("innerOrbit");
+const textRadius=parseFloat(getComputedStyle(document.documentElement)
+  .getPropertyValue('--inner-text-radius'));
+text.split("").forEach((c,i)=>{
+  const s=document.createElement("span");
+  s.textContent=c;
+  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${textRadius}px)`;
+  inner.appendChild(s);
+});
+
+/* ===== MOBILE VERTICAL LOOP ===== */
+const data=[
+  ["Systems","Firemní systémy","systems"],
+  ["Lab","Výzkum a prototypy","lab"],
+  ["Digital","Digitální produkty","digital"],
+  ["Energy","Energetická řešení","energy"],
+  ["Security","Bezpečnost","security"],
+  ["Edu","Vzdělávání","edu"],
+];
+
+const track=document.getElementById("verticalTrack");
+[...data,...data,...data].forEach(d=>{
+  track.insertAdjacentHTML("beforeend",`
+    <div class="vertical-card">
+      <img src="/assets/logos/faist-${d[2]}.png">
+      <h3>${d[0]}</h3>
+      <p>${d[1]}</p>
+      <a href="/cs/divisions/${d[2]}.html">Vstoupit</a>
+    </div>
+  `);
+});
+
+track.scrollTop=track.scrollHeight/3;
 track.addEventListener("scroll",()=>{
-  const h = track.scrollHeight/3;
-  if(track.scrollTop < h*0.5) track.scrollTop += h;
-  if(track.scrollTop > h*1.5) track.scrollTop -= h;
+  const h=track.scrollHeight/3;
+  if(track.scrollTop<h*0.5) track.scrollTop+=h;
+  if(track.scrollTop>h*1.5) track.scrollTop-=h;
 });
 </script>
 
