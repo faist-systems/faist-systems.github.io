@@ -17,7 +17,7 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%;margin:0}
+html,body{margin:0}
 
 body{
   font-family:Inter,system-ui,sans-serif;
@@ -25,7 +25,6 @@ body{
   background:
     radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
-  overflow:hidden;
 }
 
 /* ===== LANGUAGE SWITCH ===== */
@@ -33,7 +32,7 @@ body{
   position:fixed;
   top:24px;
   right:24px;
-  z-index:10;
+  z-index:20;
 }
 .lang-current{
   background:rgba(255,255,255,.08);
@@ -67,12 +66,17 @@ body{
 .lang-menu a:hover{background:rgba(255,255,255,.08)}
 .lang-menu img{width:20px}
 
+/* ===== HERO WRAPPER ===== */
+.page{
+  display:grid;
+  grid-template-rows: 1fr auto;
+  min-height:100vh;
+}
+
 /* ===== HERO ===== */
 .hero{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display:grid;
+  place-items:center;
   position:relative;
 }
 
@@ -102,12 +106,15 @@ body{
   height:900px;
   max-width:90vmin;
   max-height:90vmin;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 
 /* ===== CENTER LOGO ===== */
+.center{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+}
 .center img{
   width:220px;
   max-width:40vmin;
@@ -116,9 +123,9 @@ body{
 /* ===== INNER COIN ===== */
 .inner-orbit{
   position:absolute;
-  width:240px;
-  height:240px;
-  border-radius:50%;
+  inset:0;
+  display:grid;
+  place-items:center;
   pointer-events:none;
 }
 .inner-orbit span{
@@ -144,7 +151,6 @@ body{
   text-decoration:none;
   color:var(--text);
 }
-
 .orbit-item img{
   width:110px;
   margin-bottom:6px;
@@ -174,9 +180,6 @@ body{
 
 /* ===== FOOTER ===== */
 .site-footer{
-  position:absolute;
-  bottom:0;
-  width:100%;
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
   padding:32px 24px;
@@ -203,7 +206,6 @@ body{
 
 <body>
 
-<!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
   <button class="lang-current">
     <img src="/assets/flags/en.svg" alt="EN">
@@ -213,6 +215,8 @@ body{
     <a href="/en/index.html"><img src="/assets/flags/en.svg">English</a>
   </div>
 </div>
+
+<div class="page">
 
 <section class="hero">
 
@@ -292,8 +296,10 @@ body{
   </div>
 </footer>
 
+</div>
+
 <script>
-/* LANGUAGE MENU */
+/* LANG MENU */
 const btn=document.querySelector(".lang-current");
 const menu=document.querySelector(".lang-menu");
 btn.onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
@@ -315,7 +321,7 @@ text.split("").forEach((c,i)=>{
 
 /* ORBIT */
 const items=document.querySelectorAll(".orbit-item");
-const radius = 300;
+const radius = 260;
 
 function animate(t){
   const base=(t/120000)*Math.PI*2;
