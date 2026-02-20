@@ -5,24 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>F.A.I.S.T. Holding</title>
 
-<meta name="description" content="F.A.I.S.T. Holding navrhuje inteligentní systémy propojující umělou inteligenci, vědu a moderní technologie do praktických řešení.">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://faist.xyz/">
-<meta property="og:title" content="F.A.I.S.T. Holding">
-<meta property="og:description" content="Forge of Artificial Intelligence, Science & Technology">
-<meta property="og:image" content="https://faist.xyz/assets/og/og-faist.jpg">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 
 <style>
 :root{
-  --bg:#0f1117;
-  --bg-soft:#151824;
-  --text:#ffffff;
-  --muted:#b6bcc6;
-  --border:rgba(255,255,255,0.08);
+  --bg:#0c1020;
+  --text:#e6e9f0;
+  --muted:#9aa3b2;
 }
 
 *{box-sizing:border-box}
@@ -32,280 +22,258 @@ body{
   font-family:Inter,system-ui,sans-serif;
   color:var(--text);
   background:
-    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
-    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
+    radial-gradient(circle at 50% 30%, #1a2040, var(--bg));
 }
 
-/* ===== HEADER ===== */
-.header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  padding:24px 32px;
+/* ===== LAYOUT ===== */
+.page{
+  min-height:100vh;
   display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:10;
+  flex-direction:column;
 }
 
-.brand{
-  font-size:14px;
-  letter-spacing:3px;
-  font-weight:600;
-}
-
-/* ===== LANGUAGE SWITCH ===== */
-.lang-switch{
-  display:flex;
-  gap:12px;
-}
-
-.lang-switch a{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:6px 10px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.05);
-  color:#fff;
-  font-size:12px;
-  text-decoration:none;
-  transition:background .2s ease;
-}
-
-.lang-switch a:hover{
-  background:rgba(255,255,255,0.12);
-}
-
-.lang-switch img{
-  width:18px;
-  height:12px;
-  object-fit:cover;
-  border-radius:2px;
-}
-
-/* ===== HERO ===== */
 .hero{
-  padding:160px 40px 120px;
-  max-width:1200px;
-  margin:0 auto;
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
 }
 
-.hero h1{
-  font-size:32px;
+/* ===== CENTER ORBIT SYSTEM ===== */
+.orbit{
+  position:relative;
+  width:520px;
+  height:520px;
+}
+
+/* main logo */
+.center-logo{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:3;
+}
+
+.center-logo img{
+  width:160px;
+}
+
+/* rotating text ring */
+.text-ring{
+  position:absolute;
+  inset:0;
+  animation:spinCCW 30s linear infinite;
+}
+
+.text-ring svg{
+  width:100%;
+  height:100%;
+}
+
+.text-ring text{
+  font-size:12px;
   letter-spacing:3px;
-  margin-bottom:20px;
+  fill:var(--muted);
 }
 
-.hero p{
-  max-width:600px;
-  line-height:1.7;
-  color:var(--muted);
-  margin-bottom:20px;
-}
-
-/* ===== DIVISIONS ===== */
+/* divisions ring */
 .divisions{
-  margin-top:80px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:32px;
+  position:absolute;
+  inset:0;
+  animation:spinCW 60s linear infinite;
 }
 
+.hero:hover .divisions,
+.hero:hover .text-ring{
+  animation-play-state:paused;
+}
+
+/* division item */
 .division{
-  padding:28px;
-  background:rgba(255,255,255,0.04);
-  border-radius:20px;
-  transition:background .3s ease;
+  position:absolute;
+  width:96px;
+  text-align:center;
+  transform:translate(-50%,-50%);
 }
 
-.division:hover{
-  background:rgba(255,255,255,0.08);
+.division img{
+  width:64px;
+  display:block;
+  margin:0 auto 6px;
 }
 
-.division h3{
-  margin:0 0 12px;
-  font-size:18px;
-  letter-spacing:1px;
+.division span{
+  font-size:13px;
+  color:var(--text);
 }
 
-.division p{
-  margin:0 0 16px;
-  font-size:14px;
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.division a{
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-}
-
-.division a:hover{
-  text-decoration:underline;
-}
+/* positions (perfect circle) */
+.d1{top:0%;left:50%}
+.d2{top:25%;left:85%}
+.d3{top:75%;left:85%}
+.d4{top:100%;left:50%}
+.d5{top:75%;left:15%}
+.d6{top:25%;left:15%}
 
 /* ===== FOOTER ===== */
 footer{
-  margin-top:140px;
-  background:#0a0c11;
-  border-top:1px solid var(--border);
-  padding:64px 40px 40px;
+  background:#070a14;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:48px 24px 32px;
+  font-size:14px;
 }
 
 .footer-inner{
   max-width:1200px;
   margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:48px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:40px;
 }
 
-.footer-col h4{
-  margin:0 0 16px;
+footer h4{
+  margin:0 0 12px;
   font-size:15px;
   color:#fff;
 }
 
-.footer-col ul{
+footer ul{
   list-style:none;
   padding:0;
   margin:0;
 }
 
-.footer-col li{
-  margin-bottom:10px;
+footer li{
+  margin-bottom:8px;
 }
 
-.footer-col a{
-  color:#a8b0bd;
+footer a{
+  color:var(--muted);
   text-decoration:none;
-  font-size:14px;
 }
 
-.footer-col a:hover{
+footer a:hover{
   color:#fff;
 }
 
 .footer-bottom{
-  margin-top:48px;
-  padding-top:24px;
-  border-top:1px solid var(--border);
+  margin-top:32px;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.06);
   text-align:center;
-  font-size:13px;
   color:#7f8896;
+  font-size:13px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes spinCW{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+@keyframes spinCCW{
+  from{transform:rotate(360deg)}
+  to{transform:rotate(0deg)}
 }
 </style>
 </head>
 
 <body>
-
-<header class="header">
-  <div class="brand">F.A.I.S.T.</div>
-
-  <div class="lang-switch">
-    <a href="index.html">
-      <img src="assets/icons/flag-cz.svg" alt="CZ"> CZ
-    </a>
-    <a href="en/index.html">
-      <img src="assets/icons/flag-en.svg" alt="EN"> EN
-    </a>
-  </div>
-</header>
+<div class="page">
 
 <section class="hero">
-  <h1>F.A.I.S.T. Holding</h1>
 
-  <p>
-    F.A.I.S.T. (Forge of Artificial Intelligence, Science & Technology)
-    je technologický holding zaměřený na návrh a vývoj inteligentních systémů.
-    Propojujeme umělou inteligenci, vědu a moderní technologie do praktických,
-    dlouhodobě udržitelných řešení.
-  </p>
+  <div class="orbit">
 
-  <p>
-    Každá divize se specializuje na konkrétní oblast, ale všechny sdílejí
-    společnou filozofii: smysluplné využití technologií, důraz na kvalitu
-    a schopnost růstu do budoucna.
-  </p>
-
-  <div class="divisions">
-
-    <div class="division">
-      <h3>Systems</h3>
-      <p>Návrh a integrace chytrých systémů, automatizace a technologických celků.</p>
-      <a href="divisions/cs/systems.html">Zjistit více →</a>
+    <!-- rotating text -->
+    <div class="text-ring">
+      <svg viewBox="0 0 520 520">
+        <defs>
+          <path id="circlePath"
+            d="M260,260 m-210,0 a210,210 0 1,1 420,0 a210,210 0 1,1 -420,0"/>
+        </defs>
+        <text>
+          <textPath href="#circlePath">
+            FORGE OF ARTIFICIAL INTELLIGENCE • SCIENCE & TECHNOLOGY •
+          </textPath>
+        </text>
+      </svg>
     </div>
 
-    <div class="division">
-      <h3>Lab</h3>
-      <p>Výzkum, experimenty a prototypování v oblasti AI a pokročilých technologií.</p>
-      <a href="divisions/cs/lab.html">Zjistit více →</a>
+    <!-- center logo -->
+    <div class="center-logo">
+      <img src="/assets/logos/faist-holding.png" alt="F.A.I.S.T. Holding">
     </div>
 
-    <div class="division">
-      <h3>Digital</h3>
-      <p>Digitální produkty, weby a aplikace propojující technologii s UX.</p>
-      <a href="divisions/cs/digital.html">Zjistit více →</a>
-    </div>
+    <!-- divisions -->
+    <div class="divisions">
 
-    <div class="division">
-      <h3>Energy</h3>
-      <p>Energetická řešení, optimalizace spotřeby a chytré řízení energie.</p>
-      <a href="divisions/cs/energy.html">Zjistit více →</a>
-    </div>
+      <a class="division d1" href="/cs/divisions/lab.html">
+        <img src="/assets/logos/faist-lab.png" alt="">
+        <span>Lab</span>
+      </a>
 
-    <div class="division">
-      <h3>Security</h3>
-      <p>Bezpečnostní systémy, ochrana dat a prevence digitálních hrozeb.</p>
-      <a href="divisions/cs/security.html">Zjistit více →</a>
-    </div>
+      <a class="division d2" href="/cs/divisions/digital.html">
+        <img src="/assets/logos/faist-digital.png" alt="">
+        <span>Digital</span>
+      </a>
 
-    <div class="division">
-      <h3>Edu</h3>
-      <p>Vzdělávání, školení a sdílení know-how v oblasti moderních technologií.</p>
-      <a href="divisions/cs/edu.html">Zjistit více →</a>
-    </div>
+      <a class="division d3" href="/cs/divisions/energy.html">
+        <img src="/assets/logos/faist-energy.png" alt="">
+        <span>Energy</span>
+      </a>
 
+      <a class="division d4" href="/cs/divisions/edu.html">
+        <img src="/assets/logos/faist-edu.png" alt="">
+        <span>Edu</span>
+      </a>
+
+      <a class="division d5" href="/cs/divisions/systems.html">
+        <img src="/assets/logos/faist-systems.png" alt="">
+        <span>Systems</span>
+      </a>
+
+      <a class="division d6" href="/cs/divisions/security.html">
+        <img src="/assets/logos/faist-security.png" alt="">
+        <span>Security</span>
+      </a>
+
+    </div>
   </div>
+
 </section>
 
 <footer>
   <div class="footer-inner">
 
-    <div class="footer-col">
+    <div>
       <h4>O nás</h4>
       <ul>
-        <li><a href="#">F.A.I.S.T. Holding</a></li>
-        <li><a href="#">Vize & přístup</a></li>
+        <li>F.A.I.S.T. Holding</li>
+        <li>Forge of Artificial Intelligence, Science & Technology</li>
       </ul>
     </div>
 
-    <div class="footer-col">
+    <div>
       <h4>Divize</h4>
       <ul>
-        <li><a href="divisions/cs/systems.html">Systems</a></li>
-        <li><a href="divisions/cs/lab.html">Lab</a></li>
-        <li><a href="divisions/cs/digital.html">Digital</a></li>
-        <li><a href="divisions/cs/energy.html">Energy</a></li>
-        <li><a href="divisions/cs/security.html">Security</a></li>
-        <li><a href="divisions/cs/edu.html">Edu</a></li>
+        <li><a href="/cs/divisions/systems.html">Systems</a></li>
+        <li><a href="/cs/divisions/lab.html">Lab</a></li>
+        <li><a href="/cs/divisions/digital.html">Digital</a></li>
+        <li><a href="/cs/divisions/energy.html">Energy</a></li>
+        <li><a href="/cs/divisions/security.html">Security</a></li>
+        <li><a href="/cs/divisions/edu.html">Edu</a></li>
       </ul>
     </div>
 
-    <div class="footer-col">
+    <div>
       <h4>Podpora</h4>
       <ul>
-        <li><a href="contacts.html">Kontakt</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Pojmy</h4>
-      <ul>
-        <li><a href="#">Atlas technologií</a></li>
+        <li><a href="/contacts.html">Kontakt</a></li>
       </ul>
     </div>
 
@@ -316,5 +284,6 @@ footer{
   </div>
 </footer>
 
+</div>
 </body>
 </html>
