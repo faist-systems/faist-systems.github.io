@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -198,10 +198,10 @@ body{
 <!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
   <button class="lang-current">
-    <img src="/assets/flags/cz.svg" alt="CZ">
+    <img src="/assets/flags/en.svg" alt="EN">
   </button>
   <div class="lang-menu">
-    <a href="/cs/index.html"><img src="/assets/flags/cz.svg">Čeština</a>
+    <a href="/cs/index.html"><img src="/assets/flags/cz.svg">Czech</a>
     <a href="/en/index.html"><img src="/assets/flags/en.svg">English</a>
   </div>
 </div>
@@ -211,8 +211,8 @@ body{
 <div class="brand-info">
   <h1>F.A.I.S.T. Holding</h1>
   <p>
-    Navrhujeme inteligentní systémy propojující umělou inteligenci,
-    vědu a moderní technologie do praktických a škálovatelných řešení.
+    We design intelligent systems connecting artificial intelligence,
+    science and advanced technology into practical and scalable solutions.
   </p>
 </div>
 
@@ -225,12 +225,36 @@ body{
   <div class="inner-orbit" id="innerOrbit"></div>
 
   <div class="orbit" id="orbit">
-    <a class="orbit-item" href="/divisions/cs/systems.html"><img src="/assets/logos/faist-systems.png"><span class="name">Systems</span><span class="desc">Chytré systémy a integrace.</span></a>
-    <a class="orbit-item" href="/divisions/cs/lab.html"><img src="/assets/logos/faist-lab.png"><span class="name">Lab</span><span class="desc">Výzkum a prototypy AI.</span></a>
-    <a class="orbit-item" href="/divisions/cs/digital.html"><img src="/assets/logos/faist-digital.png"><span class="name">Digital</span><span class="desc">Digitální produkty a automatizace.</span></a>
-    <a class="orbit-item" href="/divisions/cs/energy.html"><img src="/assets/logos/faist-energy.png"><span class="name">Energy</span><span class="desc">Energetické systémy.</span></a>
-    <a class="orbit-item" href="/divisions/cs/security.html"><img src="/assets/logos/faist-security.png"><span class="name">Security</span><span class="desc">Kybernetická a systémová bezpečnost.</span></a>
-    <a class="orbit-item" href="/divisions/cs/edu.html"><img src="/assets/logos/faist-edu.png"><span class="name">Edu</span><span class="desc">Vzdělávání v AI.</span></a>
+    <a class="orbit-item" href="/divisions/en/systems.html">
+      <img src="/assets/logos/faist-systems.png">
+      <span class="name">Systems</span>
+      <span class="desc">Design and integration of intelligent systems.</span>
+    </a>
+    <a class="orbit-item" href="/divisions/en/lab.html">
+      <img src="/assets/logos/faist-lab.png">
+      <span class="name">Lab</span>
+      <span class="desc">AI research, experiments and prototyping.</span>
+    </a>
+    <a class="orbit-item" href="/divisions/en/digital.html">
+      <img src="/assets/logos/faist-digital.png">
+      <span class="name">Digital</span>
+      <span class="desc">Digital products and automation platforms.</span>
+    </a>
+    <a class="orbit-item" href="/divisions/en/energy.html">
+      <img src="/assets/logos/faist-energy.png">
+      <span class="name">Energy</span>
+      <span class="desc">Energy systems, optimization and sustainability.</span>
+    </a>
+    <a class="orbit-item" href="/divisions/en/security.html">
+      <img src="/assets/logos/faist-security.png">
+      <span class="name">Security</span>
+      <span class="desc">Cybersecurity and system protection.</span>
+    </a>
+    <a class="orbit-item" href="/divisions/en/edu.html">
+      <img src="/assets/logos/faist-edu.png">
+      <span class="name">Edu</span>
+      <span class="desc">Education in AI and modern technologies.</span>
+    </a>
   </div>
 
 </div>
@@ -239,17 +263,17 @@ body{
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
-      <h3>O nás</h3>
+      <h3>About</h3>
       <p style="color:var(--muted)">Forge of Artificial Intelligence, Science & Technology</p>
     </div>
     <div>
-      <h3>Divize</h3>
-      <a href="/divisions/cs/systems.html">Systems</a>
-      <a href="/divisions/cs/lab.html">Lab</a>
-      <a href="/divisions/cs/digital.html">Digital</a>
-      <a href="/divisions/cs/energy.html">Energy</a>
-      <a href="/divisions/cs/security.html">Security</a>
-      <a href="/divisions/cs/edu.html">Edu</a>
+      <h3>Divisions</h3>
+      <a href="/divisions/en/systems.html">Systems</a>
+      <a href="/divisions/en/lab.html">Lab</a>
+      <a href="/divisions/en/digital.html">Digital</a>
+      <a href="/divisions/en/energy.html">Energy</a>
+      <a href="/divisions/en/security.html">Security</a>
+      <a href="/divisions/en/edu.html">Edu</a>
     </div>
   </div>
 </footer>
@@ -288,7 +312,8 @@ function anim(t){
   const base=(t/60000)*Math.PI*2*speed;
   items.forEach((it,i)=>{
     const a=base+i*(Math.PI*2/items.length);
-    it.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+    it.style.transform=
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
     it.style.setProperty("--counter-rot",`${-a}rad`);
   });
   aText-=0.03;
