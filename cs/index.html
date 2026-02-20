@@ -16,6 +16,12 @@
   --muted:#b6bcc6;
   --panel:rgba(255,255,255,.04);
   --border:rgba(255,255,255,.12);
+
+  /* === RESPONSIVE SCALE === */
+  --scene-size: clamp(420px, 70vmin, 820px);
+  --logo-size: calc(var(--scene-size) * 0.25);
+  --orbit-radius-factor: 0.34;
+  --inner-text-radius: calc(var(--scene-size) * 0.16);
 }
 
 *{box-sizing:border-box}
@@ -36,10 +42,7 @@ body{
   right:24px;
   z-index:30;
 }
-.lang-switch img{
-  width:22px;
-  display:block;
-}
+.lang-switch img{width:22px}
 
 /* ===== HERO ===== */
 .hero{
@@ -60,13 +63,11 @@ body{
   border:1px solid var(--border);
   border-radius:14px;
 }
-
 .brand-panel h1{
   margin:0 0 12px;
   font-size:20px;
   letter-spacing:3px;
 }
-
 .brand-panel p{
   margin:0;
   font-size:14px;
@@ -77,10 +78,8 @@ body{
 /* ===== SCENE ===== */
 .scene{
   position:relative;
-  width:900px;
-  height:900px;
-  max-width:90vmin;
-  max-height:90vmin;
+  width:var(--scene-size);
+  height:var(--scene-size);
 }
 
 /* ===== CENTER LOGO ===== */
@@ -92,8 +91,7 @@ body{
   pointer-events:none;
 }
 .center img{
-  width:220px;
-  max-width:40vmin;
+  width:var(--logo-size);
 }
 
 /* ===== INNER TEXT ===== */
@@ -118,7 +116,6 @@ body{
   position:absolute;
   inset:0;
 }
-
 .orbit-item{
   position:absolute;
   top:50%;
@@ -128,14 +125,12 @@ body{
   color:#fff;
   text-decoration:none;
 }
-
 .orbit-item img{
   width:130px;
-  display:block;
   margin:0 auto 6px;
+  display:block;
   animation:spin 20s linear infinite;
 }
-
 .orbit-item .label{
   font-size:14px;
   letter-spacing:1px;
@@ -159,7 +154,6 @@ body{
   pointer-events:none;
   transition:.25s ease;
 }
-
 .orbit-item:hover::after{
   opacity:1;
   transform:translateX(-50%) translateY(0);
@@ -198,11 +192,8 @@ body{
 
 <body>
 
-<!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
-  <a href="/en/index.html" title="English">
-    <img src="/assets/flags/gb.png" alt="EN">
-  </a>
+  <a href="/en/index.html"><img src="/assets/flags/gb.png" alt="EN"></a>
 </div>
 
 <section class="hero">
@@ -261,14 +252,17 @@ body{
 </footer>
 
 <script>
-const text="Forge of Artificial Intelligence, Science & Technology • ";
 const inner=document.getElementById("innerOrbit");
+const text="Forge of Artificial Intelligence, Science & Technology • ";
 let textAngle=0;
+
+const textRadius=parseFloat(getComputedStyle(document.documentElement)
+  .getPropertyValue('--inner-text-radius'));
 
 text.split("").forEach((c,i)=>{
   const s=document.createElement("span");
   s.textContent=c;
-  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(125px)`;
+  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${textRadius}px)`;
   inner.appendChild(s);
 });
 
@@ -285,7 +279,9 @@ items.forEach(el=>{
 });
 
 function resize(){
-  radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
+  radius=scene.clientWidth *
+    parseFloat(getComputedStyle(document.documentElement)
+    .getPropertyValue('--orbit-radius-factor'));
 }
 resize();
 window.addEventListener("resize",resize);
@@ -294,13 +290,11 @@ function animate(t){
   if(!frozen){
     frozenBase=t/140000*Math.PI*2;
   }
-
   items.forEach((el,i)=>{
     const a=frozenBase+i*(Math.PI*2/items.length);
     el.style.transform=
       `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
   });
-
   textAngle-=0.015;
   inner.style.transform=`rotate(${textAngle}deg)`;
   requestAnimationFrame(animate);
