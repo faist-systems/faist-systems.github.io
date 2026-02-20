@@ -17,7 +17,6 @@
   --panel:rgba(255,255,255,.04);
   --border:rgba(255,255,255,.12);
 
-  /* === RESPONSIVE SCALE === */
   --scene-size: clamp(420px, 70vmin, 820px);
   --logo-size: calc(var(--scene-size) * 0.25);
   --orbit-radius-factor: 0.34;
@@ -25,7 +24,12 @@
 }
 
 *{box-sizing:border-box}
-html,body{margin:0}
+
+/* ✅ KLÍČOVÁ OPRAVA */
+html,body{
+  margin:0;
+  scrollbar-gutter: stable;
+}
 
 body{
   font-family:Inter,system-ui,sans-serif;
@@ -197,7 +201,6 @@ body{
 </div>
 
 <section class="hero">
-
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
     <p>
@@ -208,13 +211,10 @@ body{
   </div>
 
   <div class="scene" id="scene">
-
     <div class="center">
       <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
-
     <div class="inner-orbit" id="innerOrbit"></div>
-
     <div class="orbit">
       <a class="orbit-item" data-desc="Firemní systémy a architektura" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
       <a class="orbit-item" data-desc="Výzkum, experimenty a prototypy" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
@@ -223,7 +223,6 @@ body{
       <a class="orbit-item" data-desc="Kybernetická a fyzická bezpečnost" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
       <a class="orbit-item" data-desc="Vzdělávání a rozvoj znalostí" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
     </div>
-
   </div>
 </section>
 
