@@ -89,7 +89,7 @@ body{
   display:grid;
   place-items:center;
   z-index:3;
-  pointer-events:none; /* ← JEDINÁ ÚPRAVA */
+  pointer-events:none;
 }
 .center img{
   width:220px;
@@ -128,16 +128,27 @@ body{
   color:#fff;
   text-decoration:none;
 }
+
 .orbit-item img{
   width:130px;
   display:block;
   margin:0 auto 6px;
   animation:spin 20s linear infinite;
 }
+
+/* ===== POPISEK – HOVER ===== */
 .orbit-item span{
   display:block;
   font-size:14px;
   letter-spacing:1px;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .25s ease, transform .25s ease;
+}
+
+.orbit-item:hover span{
+  opacity:1;
+  transform:translateY(0);
 }
 
 @keyframes spin{
@@ -250,6 +261,12 @@ text.split("").forEach((c,i)=>{
 const items=[...document.querySelectorAll(".orbit-item")];
 const scene=document.getElementById("scene");
 let radius;
+let hover=false;
+
+items.forEach(el=>{
+  el.addEventListener("mouseenter",()=>hover=true);
+  el.addEventListener("mouseleave",()=>hover=false);
+});
 
 function resize(){
   radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
@@ -258,11 +275,15 @@ resize();
 window.addEventListener("resize",resize);
 
 function animate(t){
-  const base=t/140000*Math.PI*2;
+  const speed = hover ? 280000 : 140000;
+  const base = t/speed*Math.PI*2;
+
   items.forEach((el,i)=>{
     const a=base+i*(Math.PI*2/items.length);
-    el.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+    el.style.transform=
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
   });
+
   textAngle-=0.015;
   inner.style.transform=`rotate(${textAngle}deg)`;
   requestAnimationFrame(animate);
