@@ -14,13 +14,11 @@
   --bg:#0f1117;
   --text:#ffffff;
   --muted:#b6bcc6;
-  --panel:rgba(255,255,255,.04);
+  --panel:rgba(255,255,255,.05);
   --border:rgba(255,255,255,.12);
 
   --scene-size: clamp(420px, 70vmin, 820px);
   --logo-size: calc(var(--scene-size) * 0.25);
-  --orbit-radius-factor: 0.34;
-  --inner-text-radius: calc(var(--scene-size) * 0.16);
 }
 
 *{box-sizing:border-box}
@@ -43,48 +41,36 @@ body{
   position:fixed;
   top:16px;
   right:16px;
-  z-index:30;
+  z-index:50;
 }
 .lang-switch img{width:22px}
 
 /* ===== HERO ===== */
 .hero{
   min-height:100vh;
+  position:relative;
   display:grid;
   place-items:center;
-  position:relative;
 }
 
-/* ===== LEFT PANEL ===== */
+/* ===== BRAND PANEL ===== */
 .brand-panel{
   position:absolute;
-  top:24px;
-  left:24px;
-  width:340px;
-  padding:18px 20px;
+  top:20px;
+  left:20px;
+  width:320px;
+  padding:16px 18px;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
 }
-.brand-panel h1{
-  margin:0 0 10px;
-  font-size:18px;
-  letter-spacing:3px;
-}
-.brand-panel p{
-  margin:0;
-  font-size:14px;
-  line-height:1.6;
-  color:var(--muted);
-}
 
-/* ===== DESKTOP SCENE ===== */
+/* ===== DESKTOP ORBIT ===== */
 .scene{
   position:relative;
   width:var(--scene-size);
   height:var(--scene-size);
 }
-
 .center{
   position:absolute;
   inset:0;
@@ -94,126 +80,111 @@ body{
 }
 .center img{width:var(--logo-size)}
 
-.inner-orbit{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-.inner-orbit span{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform-origin:0 0;
-  white-space:nowrap;
-  font-size:13px;
-  letter-spacing:2px;
-  color:#e6ebf5;
+.orbit, .inner-orbit{position:absolute; inset:0}
+
+/* ===== MOBILE SHARED ===== */
+.mobile{
+  display:none;
+  width:100%;
+  height:100vh;
 }
 
-.orbit{
-  position:absolute;
-  inset:0;
+/* ===== PORTRAIT – VERTIKÁLNÍ NEKONEČNÝ PÁS ===== */
+.mobile-vertical{
+  display:none;
+  overflow:hidden;
 }
-.orbit-item{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+
+.vertical-track{
+  height:100%;
+  overflow-y:auto;
+  scroll-snap-type:y mandatory;
+  padding:100px 0;
+}
+
+.vertical-track::-webkit-scrollbar{display:none}
+
+.vertical-card{
+  height:70vh;
+  margin:20px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  scroll-snap-align:center;
   text-align:center;
+}
+
+.vertical-card img{
+  width:96px;
+  margin-bottom:16px;
+}
+.vertical-card h3{
+  margin:0 0 10px;
+}
+.vertical-card p{
+  margin:0 0 18px;
+  color:var(--muted);
+}
+.vertical-card a{
+  padding:10px 18px;
+  border-radius:999px;
+  border:1px solid var(--border);
   color:#fff;
   text-decoration:none;
 }
-.orbit-item img{
-  width:120px;
-  margin:0 auto 6px;
-  display:block;
-}
-.orbit-item .label{
-  font-size:14px;
-}
 
-/* ===== MOBILE CAROUSEL ===== */
-.mobile-carousel{
+/* ===== LANDSCAPE – HORIZONTÁLNÍ CAROUSEL ===== */
+.mobile-horizontal{
   display:none;
-  width:100%;
-  padding:120px 0 40px;
+  padding-top:120px;
 }
 
-.carousel-track{
+.horizontal-track{
   display:flex;
   gap:20px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   padding:0 20px;
 }
-.carousel-track::-webkit-scrollbar{display:none}
+.horizontal-track::-webkit-scrollbar{display:none}
 
-.carousel-card{
-  flex:0 0 80%;
+.horizontal-card{
+  flex:0 0 75%;
   max-width:360px;
-  scroll-snap-align:center;
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:20px;
-  padding:28px 24px;
+  border-radius:24px;
+  padding:28px;
+  scroll-snap-align:center;
   text-align:center;
 }
 
-.carousel-card img{
+.horizontal-card img{
   width:96px;
   margin-bottom:14px;
 }
-.carousel-card h3{
-  margin:0 0 8px;
-  font-size:18px;
-  letter-spacing:1px;
-}
-.carousel-card p{
-  margin:0 0 16px;
-  font-size:14px;
-  color:var(--muted);
-}
-.carousel-card a{
-  display:inline-block;
-  padding:10px 18px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-}
 
-/* ===== FOOTER ===== */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:48px 24px;
-}
-.footer-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:32px;
-}
-
-/* ===== BREAKPOINT ===== */
+/* ===== RESPONSIVE SWITCH ===== */
 @media (max-width:900px){
-  .scene,
-  .inner-orbit,
-  .orbit{display:none}
-
+  .scene{display:none}
   .brand-panel{
     position:static;
+    margin:20px;
     width:auto;
-    margin:24px;
   }
+  .mobile{display:block}
+}
 
-  .hero{
-    display:block;
-  }
+@media (max-width:900px) and (orientation:portrait){
+  .mobile-vertical{display:block}
+}
 
-  .mobile-carousel{display:block}
+@media (max-width:900px) and (orientation:landscape){
+  .mobile-horizontal{display:block}
 }
 </style>
 </head>
@@ -227,91 +198,71 @@ body{
 <section class="hero">
 
   <div class="brand-panel">
-    <h1>F.A.I.S.T. Holding</h1>
-    <p>
-      Navrhujeme inteligentní systémy propojující umělou inteligenci,
-      vědu a moderní technologie do praktických a dlouhodobě
-      udržitelných řešení.
+    <h2>F.A.I.S.T. Holding</h2>
+    <p style="color:var(--muted)">
+      Navrhujeme inteligentní systémy propojující AI, vědu a technologie.
     </p>
   </div>
 
-  <!-- DESKTOP ORBIT -->
-  <div class="scene" id="scene">
+  <!-- DESKTOP -->
+  <div class="scene">
     <div class="center">
-      <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
-    </div>
-    <div class="inner-orbit" id="innerOrbit"></div>
-    <div class="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-      <a class="orbit-item" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-      <a class="orbit-item" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-      <a class="orbit-item" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-      <a class="orbit-item" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-      <a class="orbit-item" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+      <img src="/assets/logos/faist-holding.png">
     </div>
   </div>
 
-  <!-- MOBILE CAROUSEL -->
-  <div class="mobile-carousel">
-    <div class="carousel-track">
-      <div class="carousel-card">
-        <img src="/assets/logos/faist-systems.png">
-        <h3>Systems</h3>
-        <p>Firemní systémy a architektura.</p>
-        <a href="/cs/divisions/systems.html">Vstoupit</a>
-      </div>
-      <div class="carousel-card">
-        <img src="/assets/logos/faist-lab.png">
-        <h3>Lab</h3>
-        <p>Výzkum, experimenty a prototypy.</p>
-        <a href="/cs/divisions/lab.html">Vstoupit</a>
-      </div>
-      <div class="carousel-card">
-        <img src="/assets/logos/faist-digital.png">
-        <h3>Digital</h3>
-        <p>Digitální produkty a služby.</p>
-        <a href="/cs/divisions/digital.html">Vstoupit</a>
-      </div>
-      <div class="carousel-card">
-        <img src="/assets/logos/faist-energy.png">
-        <h3>Energy</h3>
-        <p>Energetická řešení a efektivita.</p>
-        <a href="/cs/divisions/energy.html">Vstoupit</a>
-      </div>
-      <div class="carousel-card">
-        <img src="/assets/logos/faist-security.png">
-        <h3>Security</h3>
-        <p>Kybernetická a fyzická bezpečnost.</p>
-        <a href="/cs/divisions/security.html">Vstoupit</a>
-      </div>
-      <div class="carousel-card">
-        <img src="/assets/logos/faist-edu.png">
-        <h3>Edu</h3>
-        <p>Vzdělávání a rozvoj znalostí.</p>
-        <a href="/cs/divisions/edu.html">Vstoupit</a>
-      </div>
+  <!-- MOBILE PORTRAIT -->
+  <div class="mobile mobile-vertical">
+    <div class="vertical-track" id="verticalTrack">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- MOBILE LANDSCAPE -->
+  <div class="mobile mobile-horizontal">
+    <div class="horizontal-track">
+      <div class="horizontal-card"><img src="/assets/logos/faist-systems.png"><h3>Systems</h3></div>
+      <div class="horizontal-card"><img src="/assets/logos/faist-lab.png"><h3>Lab</h3></div>
+      <div class="horizontal-card"><img src="/assets/logos/faist-digital.png"><h3>Digital</h3></div>
+      <div class="horizontal-card"><img src="/assets/logos/faist-energy.png"><h3>Energy</h3></div>
+      <div class="horizontal-card"><img src="/assets/logos/faist-security.png"><h3>Security</h3></div>
+      <div class="horizontal-card"><img src="/assets/logos/faist-edu.png"><h3>Edu</h3></div>
     </div>
   </div>
 
 </section>
 
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div>
-      <h3>O nás</h3>
-      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
-    </div>
-    <div>
-      <h3>Divize</h3>
-      <a href="/cs/divisions/systems.html">Systems</a>
-      <a href="/cs/divisions/lab.html">Lab</a>
-      <a href="/cs/divisions/digital.html">Digital</a>
-      <a href="/cs/divisions/energy.html">Energy</a>
-      <a href="/cs/divisions/security.html">Security</a>
-      <a href="/cs/divisions/edu.html">Edu</a>
-    </div>
-  </div>
-</footer>
+<script>
+/* ===== VERTIKÁLNÍ NEKONEČNÝ PÁS ===== */
+const data = [
+  {t:"Systems", d:"Firemní systémy", i:"faist-systems"},
+  {t:"Lab", d:"Výzkum a prototypy", i:"faist-lab"},
+  {t:"Digital", d:"Digitální produkty", i:"faist-digital"},
+  {t:"Energy", d:"Energetická řešení", i:"faist-energy"},
+  {t:"Security", d:"Bezpečnost", i:"faist-security"},
+  {t:"Edu", d:"Vzdělávání", i:"faist-edu"},
+];
+
+const track = document.getElementById("verticalTrack");
+[...data, ...data, ...data].forEach(item=>{
+  const c=document.createElement("div");
+  c.className="vertical-card";
+  c.innerHTML=`
+    <img src="/assets/logos/${item.i}.png">
+    <h3>${item.t}</h3>
+    <p>${item.d}</p>
+    <a href="/cs/divisions/${item.t.toLowerCase()}.html">Vstoupit</a>
+  `;
+  track.appendChild(c);
+});
+
+track.scrollTop = track.scrollHeight/3;
+track.addEventListener("scroll",()=>{
+  const h = track.scrollHeight/3;
+  if(track.scrollTop < h*0.5) track.scrollTop += h;
+  if(track.scrollTop > h*1.5) track.scrollTop -= h;
+});
+</script>
 
 </body>
 </html>
