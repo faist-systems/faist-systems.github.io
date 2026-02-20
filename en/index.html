@@ -14,10 +14,12 @@
   --bg:#0f1117;
   --text:#ffffff;
   --muted:#b6bcc6;
+  --panel:rgba(255,255,255,.04);
+  --border:rgba(255,255,255,.12);
 }
 
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
+html,body{margin:0}
 
 body{
   font-family:Inter,system-ui,sans-serif;
@@ -25,7 +27,6 @@ body{
   background:
     radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
-  overflow-x:hidden;
 }
 
 /* ===== LANGUAGE SWITCH ===== */
@@ -33,64 +34,72 @@ body{
   position:fixed;
   top:24px;
   right:24px;
-  z-index:50;
+  z-index:30;
 }
-.lang-switch img{width:22px}
+.lang-switch img{
+  width:22px;
+  display:block;
+}
 
-/* ===== LEFT TEXT ===== */
-.brand-info{
-  position:fixed;
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+/* ===== LEFT PANEL ===== */
+.brand-panel{
+  position:absolute;
   top:32px;
   left:32px;
-  max-width:360px;
-  z-index:10;
+  width:360px;
+  padding:20px 22px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
 }
-.brand-info h1{
+
+.brand-panel h1{
   margin:0 0 12px;
   font-size:20px;
   letter-spacing:3px;
 }
-.brand-info p{
+
+.brand-panel p{
   margin:0;
   font-size:14px;
   line-height:1.6;
   color:var(--muted);
 }
 
-/* ===== ABSOLUTE CENTER SCENE ===== */
+/* ===== SCENE ===== */
 .scene{
-  position:fixed;
-  left:50vw;
-  top:50vh;
+  position:relative;
   width:900px;
   height:900px;
   max-width:90vmin;
   max-height:90vmin;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
 }
 
 /* ===== CENTER LOGO ===== */
 .center{
   position:absolute;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:3;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
 }
 .center img{
   width:220px;
   max-width:40vmin;
 }
 
-/* ===== INNER TEXT RING ===== */
+/* ===== INNER TEXT ===== */
 .inner-orbit{
   position:absolute;
   inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   pointer-events:none;
 }
 .inner-orbit span{
@@ -102,15 +111,14 @@ body{
   font-size:13px;
   letter-spacing:2px;
   color:#e6ebf5;
-  text-shadow:0 0 8px rgba(255,255,255,.35);
 }
 
-/* ===== OUTER ORBIT ===== */
+/* ===== ORBIT ===== */
 .orbit{
   position:absolute;
   inset:0;
-  pointer-events:auto;
 }
+
 .orbit-item{
   position:absolute;
   top:50%;
@@ -120,16 +128,41 @@ body{
   color:#fff;
   text-decoration:none;
 }
+
 .orbit-item img{
   width:130px;
   display:block;
   margin:0 auto 6px;
   animation:spin 20s linear infinite;
 }
-.orbit-item span{
-  display:block;
+
+.orbit-item .label{
   font-size:14px;
   letter-spacing:1px;
+}
+
+/* ===== TOOLTIP ===== */
+.orbit-item::after{
+  content:attr(data-desc);
+  position:absolute;
+  bottom:110%;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+}
+
+.orbit-item:hover::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
 
 @keyframes spin{
@@ -139,8 +172,6 @@ body{
 
 /* ===== FOOTER ===== */
 .site-footer{
-  position:relative;
-  margin-top:100vh;
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
@@ -167,51 +198,58 @@ body{
 
 <body>
 
+<!-- LANGUAGE SWITCH -->
 <div class="lang-switch">
-  <a href="/cs/"><img src="/assets/flags/en.svg" alt="EN"></a>
+  <a href="/cs/index.html" title="Česky">
+    <img src="/assets/flags/cz.png" alt="CZ">
+  </a>
 </div>
 
-<div class="brand-info">
-  <h1>F.A.I.S.T. Holding</h1>
-  <p>
-    We design intelligent systems connecting artificial intelligence,
-    science and advanced technology into practical solutions.
-  </p>
-</div>
+<section class="hero">
 
-<div class="scene" id="scene">
-
-  <div class="center">
-    <img src="/assets/logos/faist-holding.png" alt="FAIST">
+  <div class="brand-panel">
+    <h1>F.A.I.S.T. Holding</h1>
+    <p>
+      We design intelligent systems connecting artificial intelligence,
+      science and modern technologies into practical and long-term
+      sustainable solutions.
+    </p>
   </div>
 
-  <div class="inner-orbit" id="innerOrbit"></div>
+  <div class="scene" id="scene">
 
-  <div class="orbit" id="orbit">
-    <a class="orbit-item" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><span>Systems</span></a>
-    <a class="orbit-item" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><span>Lab</span></a>
-    <a class="orbit-item" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><span>Digital</span></a>
-    <a class="orbit-item" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><span>Energy</span></a>
-    <a class="orbit-item" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><span>Security</span></a>
-    <a class="orbit-item" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><span>Edu</span></a>
+    <div class="center">
+      <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+    </div>
+
+    <div class="inner-orbit" id="innerOrbit"></div>
+
+    <div class="orbit">
+      <a class="orbit-item" data-desc="Enterprise systems and architecture" href="/en/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
+      <a class="orbit-item" data-desc="Research, experiments and prototypes" href="/en/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
+      <a class="orbit-item" data-desc="Digital products and services" href="/en/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
+      <a class="orbit-item" data-desc="Energy solutions and efficiency" href="/en/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
+      <a class="orbit-item" data-desc="Cyber and physical security" href="/en/divisions/security.html"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
+      <a class="orbit-item" data-desc="Education and knowledge development" href="/en/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+    </div>
+
   </div>
-
-</div>
+</section>
 
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
       <h3>About</h3>
-      <p style="color:var(--muted)">F.A.I.S.T. – technology for the future.</p>
+      <p style="color:var(--muted)">Technology that makes sense.</p>
     </div>
     <div>
       <h3>Divisions</h3>
-      <a href="/cs/divisions/systems.html">Systems</a>
-      <a href="/cs/divisions/lab.html">Lab</a>
-      <a href="/cs/divisions/digital.html">Digital</a>
-      <a href="/cs/divisions/energy.html">Energy</a>
-      <a href="/cs/divisions/security.html">Security</a>
-      <a href="/cs/divisions/edu.html">Edu</a>
+      <a href="/en/divisions/systems.html">Systems</a>
+      <a href="/en/divisions/lab.html">Lab</a>
+      <a href="/en/divisions/digital.html">Digital</a>
+      <a href="/en/divisions/energy.html">Energy</a>
+      <a href="/en/divisions/security.html">Security</a>
+      <a href="/en/divisions/edu.html">Edu</a>
     </div>
     <div>
       <h3>Information</h3>
@@ -223,35 +261,46 @@ body{
 </footer>
 
 <script>
-/* ===== INNER TEXT ===== */
 const text="Forge of Artificial Intelligence, Science & Technology • ";
 const inner=document.getElementById("innerOrbit");
-const textRadius=125;
 let textAngle=0;
 
 text.split("").forEach((c,i)=>{
   const s=document.createElement("span");
   s.textContent=c;
-  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${textRadius}px)`;
+  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(125px)`;
   inner.appendChild(s);
 });
 
-/* ===== ORBIT ===== */
 const items=[...document.querySelectorAll(".orbit-item")];
+const scene=document.getElementById("scene");
+
 let radius;
+let frozen=false;
+let frozenBase=0;
+
+items.forEach(el=>{
+  el.addEventListener("mouseenter",()=>frozen=true);
+  el.addEventListener("mouseleave",()=>frozen=false);
+});
 
 function resize(){
-  radius=Math.min(window.innerWidth,window.innerHeight)*0.34;
+  radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
 }
 resize();
 window.addEventListener("resize",resize);
 
 function animate(t){
-  const base=t/140000*Math.PI*2;
+  if(!frozen){
+    frozenBase=t/140000*Math.PI*2;
+  }
+
   items.forEach((el,i)=>{
-    const a=base+i*(Math.PI*2/items.length);
-    el.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+    const a=frozenBase+i*(Math.PI*2/items.length);
+    el.style.transform=
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
   });
+
   textAngle-=0.015;
   inner.style.transform=`rotate(${textAngle}deg)`;
   requestAnimationFrame(animate);
