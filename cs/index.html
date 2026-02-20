@@ -27,62 +27,16 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* ================= LANGUAGE SWITCH ================= */
-.lang-switch{
-  position:fixed;
-  top:24px;
-  right:24px;
-  z-index:20;
-}
-.lang-current{
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:8px;
-  padding:6px;
-  cursor:pointer;
-}
-.lang-current img{width:22px}
-.lang-menu{
-  position:absolute;
-  top:42px;
-  right:0;
-  background:#0a0c11;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:10px;
-  padding:8px;
-  display:none;
-  min-width:140px;
-}
-.lang-menu a{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 10px;
-  color:#e6e9ef;
-  text-decoration:none;
-  font-size:14px;
-  border-radius:6px;
-}
-.lang-menu a:hover{background:rgba(255,255,255,.08)}
-.lang-menu img{width:20px}
-
-/* ================= HERO ================= */
+/* ===== HERO ===== */
 .hero{
   min-height:100vh;
   display:flex;
-  justify-content:center;
-}
-
-.hero-inner{
-  position:relative;
-  width:100%;
-  max-width:1400px;
-  display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
+  position:relative;
 }
 
-/* ================= LEFT INFO ================= */
+/* ===== LEFT INFO ===== */
 .brand-info{
   position:absolute;
   top:32px;
@@ -101,25 +55,25 @@ body{
   color:var(--muted);
 }
 
-/* ================= SCENE ================= */
+/* ===== SCENE ===== */
 .scene{
   position:relative;
-  width:900px;
-  height:900px;
-  max-width:90vw;
-  max-height:80vh;
+  width:min(90vw,900px);
+  height:min(80vh,900px);
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-/* ================= CENTER LOGO ================= */
+/* ===== CENTER LOGO ===== */
 .center img{
   width:220px;
   max-width:40vmin;
+  z-index:3;
+  position:relative;
 }
 
-/* ================= INNER COIN ================= */
+/* ===== INNER COIN ===== */
 .inner-orbit{
   position:absolute;
   width:240px;
@@ -135,34 +89,51 @@ body{
   white-space:nowrap;
   font-size:13px;
   letter-spacing:2px;
-  color:#e2e6ee;
-  text-shadow:0 0 6px rgba(255,255,255,.25);
+  color:#e6e9ef;
+  text-shadow:0 0 6px rgba(255,255,255,.35);
 }
 
-/* ================= ORBIT ITEMS ================= */
-.orbit{position:absolute;inset:0}
+/* ===== ORBIT ===== */
+.orbit{
+  position:absolute;
+  inset:0;
+}
 
+/* ===== ORBIT ITEM ===== */
 .orbit-item{
   position:absolute;
   top:50%;
   left:50%;
   text-align:center;
   text-decoration:none;
-  color:var(--text);
-  --counter-rot:0rad;
+  color:#fff;
+  pointer-events:auto;
 }
 
-.orbit-item img{
-  width:120px;
-  margin-bottom:6px;
-  transform:rotate(var(--counter-rot));
+/* ICON */
+.icon-wrap{
+  width:220px;
+  height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
+
+.icon-wrap img{
+  width:150px;
+  animation:spin 6s linear infinite;
+  filter:drop-shadow(0 0 0 rgba(255,255,255,0));
+  transition:filter .3s ease, transform .3s ease;
+}
+
+/* TEXT */
 .orbit-item .name{
   display:block;
+  margin-top:-6px;
   font-size:14px;
   letter-spacing:1px;
-  transform:rotate(var(--counter-rot));
 }
+
 .orbit-item .desc{
   margin-top:6px;
   font-size:13px;
@@ -172,12 +143,20 @@ body{
   transform:translateY(6px);
   transition:.25s ease;
 }
+
+/* HOVER */
+.orbit-item:hover .icon-wrap img{
+  filter:
+    drop-shadow(0 0 16px rgba(255,255,255,.6))
+    drop-shadow(0 0 36px rgba(120,160,255,.35));
+  transform:scale(1.05);
+}
 .orbit-item:hover .desc{
   opacity:1;
   transform:translateY(0);
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 .site-footer{
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
@@ -200,24 +179,18 @@ body{
   text-decoration:none;
   margin-bottom:6px;
 }
+
+/* ICON SPIN */
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
 </style>
 </head>
 
 <body>
 
-<!-- LANGUAGE SWITCH -->
-<div class="lang-switch">
-  <button class="lang-current">
-    <img src="/assets/flags/cz.svg" alt="CZ">
-  </button>
-  <div class="lang-menu">
-    <a href="/cs/index.html"><img src="/assets/flags/cz.svg">Čeština</a>
-    <a href="/en/index.html"><img src="/assets/flags/en.svg">English</a>
-  </div>
-</div>
-
 <section class="hero">
-<div class="hero-inner">
 
 <div class="brand-info">
   <h1>F.A.I.S.T. Holding</h1>
@@ -237,38 +210,37 @@ body{
 
   <div class="orbit" id="orbit">
     <a class="orbit-item" href="/divisions/cs/systems.html">
-      <img src="/assets/logos/faist-systems.png">
+      <div class="icon-wrap"><img src="/assets/logos/faist-systems.png"></div>
       <span class="name">Systems</span>
       <span class="desc">Chytré systémy a integrace technologií.</span>
     </a>
     <a class="orbit-item" href="/divisions/cs/lab.html">
-      <img src="/assets/logos/faist-lab.png">
+      <div class="icon-wrap"><img src="/assets/logos/faist-lab.png"></div>
       <span class="name">Lab</span>
-      <span class="desc">Výzkum, prototypování a experimenty v AI.</span>
+      <span class="desc">Výzkum, prototypy a experimenty s AI.</span>
     </a>
     <a class="orbit-item" href="/divisions/cs/digital.html">
-      <img src="/assets/logos/faist-digital.png">
+      <div class="icon-wrap"><img src="/assets/logos/faist-digital.png"></div>
       <span class="name">Digital</span>
       <span class="desc">Digitální produkty a automatizace.</span>
     </a>
     <a class="orbit-item" href="/divisions/cs/energy.html">
-      <img src="/assets/logos/faist-energy.png">
+      <div class="icon-wrap"><img src="/assets/logos/faist-energy.png"></div>
       <span class="name">Energy</span>
-      <span class="desc">Energetické systémy nové generace.</span>
+      <span class="desc">Energetické systémy a optimalizace.</span>
     </a>
     <a class="orbit-item" href="/divisions/cs/security.html">
-      <img src="/assets/logos/faist-security.png">
+      <div class="icon-wrap"><img src="/assets/logos/faist-security.png"></div>
       <span class="name">Security</span>
-      <span class="desc">Bezpečnost dat, systémů a infrastruktury.</span>
+      <span class="desc">Bezpečnost systémů a infrastruktury.</span>
     </a>
     <a class="orbit-item" href="/divisions/cs/edu.html">
-      <img src="/assets/logos/faist-edu.png">
+      <div class="icon-wrap"><img src="/assets/logos/faist-edu.png"></div>
       <span class="name">Edu</span>
       <span class="desc">Vzdělávání v oblasti AI a technologií.</span>
     </a>
   </div>
 
-</div>
 </div>
 </section>
 
@@ -276,9 +248,7 @@ body{
   <div class="footer-grid">
     <div>
       <h3>O nás</h3>
-      <p style="color:var(--muted)">
-        Forge of Artificial Intelligence, Science & Technology
-      </p>
+      <p style="color:var(--muted)">Forge of Artificial Intelligence, Science & Technology</p>
     </div>
     <div>
       <h3>Divize</h3>
@@ -293,14 +263,6 @@ body{
 </footer>
 
 <script>
-/* LANGUAGE MENU */
-const btn=document.querySelector(".lang-current");
-const menu=document.querySelector(".lang-menu");
-btn.onclick=()=>menu.style.display=menu.style.display==="block"?"none":"block";
-document.addEventListener("click",e=>{
-  if(!e.target.closest(".lang-switch"))menu.style.display="none";
-});
-
 /* INNER COIN */
 const coinText="Forge of Artificial Intelligence, Science & Technology • ";
 const inner=document.getElementById("innerOrbit");
@@ -317,14 +279,12 @@ coinText.split("").forEach((c,i)=>{
 /* ORBIT */
 const items=document.querySelectorAll(".orbit-item");
 const scene=document.querySelector(".scene");
-const center=document.querySelector(".center img");
 let radius=0;
 let speed=1;
 
 function resize(){
-  const rect=scene.getBoundingClientRect();
-  const logo=center.offsetWidth;
-  radius=(Math.min(rect.width,rect.height)-logo)*0.42;
+  const r=scene.getBoundingClientRect();
+  radius=Math.min(r.width,r.height)*0.38;
 }
 resize();
 window.addEventListener("resize",resize);
@@ -338,10 +298,10 @@ function animate(t){
   const base=(t/60000)*Math.PI*2*speed;
   items.forEach((it,i)=>{
     const a=base+i*(Math.PI*2/items.length);
-    it.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-    it.style.setProperty("--counter-rot",`${-a}rad`);
+    it.style.transform=
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
   });
-  angleText-=0.03;
+  angleText-=0.04;
   inner.style.transform=`rotate(${angleText}deg)`;
   requestAnimationFrame(animate);
 }
