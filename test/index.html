@@ -8,10 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;background:#000;color:#eee;
-font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
-body{overflow-x:hidden}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#000;color:#eee;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body{overflow:hidden}
 
 /* HEADER */
 header{
@@ -20,8 +19,8 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
-  position:relative;
   z-index:20;
+  position:relative;
 }
 header nav a{
   margin-left:24px;
@@ -32,7 +31,11 @@ header nav a{
 header nav a:hover{color:#fff}
 
 /* MAIN */
-main{height:calc(100vh - 64px);position:relative;overflow:hidden}
+main{
+  height:calc(100vh - 64px);
+  position:relative;
+  overflow:hidden;
+}
 
 /* BACKGROUND */
 .background{
@@ -46,25 +49,8 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
   background-image:repeating-radial-gradient(circle,
     rgba(255,255,255,.02) 0 1px, transparent 1px 2px);
   background-size:2px 2px;
-  opacity:.18;
+  opacity:.15;
   mix-blend-mode:overlay;
-}
-
-/* CORE – POSUNUTÝ KVŮLI TYPOGRAFII */
-.light-core{
-  position:absolute;
-  top:0;
-  left:calc(50% + 12px);
-  width:2px;
-  height:100%;
-  transform:translateX(-50%);
-  background:linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255,215,120,.35) 50%,
-    transparent
-  );
-  z-index:4;
 }
 
 /* HERO */
@@ -72,132 +58,165 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
   position:relative;
   z-index:10;
   text-align:center;
-  margin-top:5vh;
+  margin-top:6vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
-  font-size:clamp(2.6rem,4.8vw,3.8rem);
+  font-size:clamp(2.6rem,4.6vw,3.6rem);
   letter-spacing:.24em;
   text-shadow:
-    0 2px 4px rgba(255,215,120,.4),
-    0 0 1px rgba(255,215,120,.6);
+    0 2px 4px rgba(255,215,120,.35),
+    0 0 1px rgba(255,215,120,.5);
 }
 .hero p{
-  margin-top:24px;
+  margin-top:22px;
   font-size:.95rem;
-  opacity:.75;
+  opacity:.7;
   max-width:660px;
   margin-inline:auto;
 }
 
-/* BUS */
-.light-bus{
+/* VERTICAL CORE – ONLY BELOW TEXT */
+.core{
   position:absolute;
-  top:36%;
-  left:12vw;
-  right:12vw;
-  height:2px;
-  z-index:6;
+  top:42%;
+  left:50%;
+  width:2px;
+  height:58%;
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom,
+    rgba(255,215,120,.25),
+    rgba(255,215,120,.05));
 }
-.light-bus::before{
-  content:"";
+
+/* BUS CONTAINER */
+.bus-wrap{
   position:absolute;
-  inset:0;
-  background:linear-gradient(
-    to right,
+  top:42%;
+  left:50%;
+  transform:translateX(-50%);
+  width:1100px;
+  max-width:90vw;
+  height:2px;
+}
+
+/* BUS */
+.bus{
+  width:100%;
+  height:2px;
+  background:linear-gradient(to right,
     transparent,
-    rgba(255,215,120,.55) 50%,
-    transparent
-  );
+    rgba(255,215,120,.35) 50%,
+    transparent);
 }
 
 /* BUS DROPS */
 .bus-drop{
   position:absolute;
-  top:36%;
+  top:0;
   width:2px;
-  height:28px;
-  background:linear-gradient(
-    to bottom,
-    rgba(255,215,120,.7),
-    transparent
-  );
-  opacity:.7;
+  height:26px;
+  background:linear-gradient(to bottom,
+    rgba(255,215,120,.55),
+    transparent);
 }
-.bus-drop:nth-child(1){left:16.7%}
-.bus-drop:nth-child(2){left:33.4%}
-.bus-drop:nth-child(3){left:50%}
-.bus-drop:nth-child(4){left:66.6%}
-.bus-drop:nth-child(5){left:83.3%}
+.bus-drop:nth-child(1){left:0%}
+.bus-drop:nth-child(2){left:20%}
+.bus-drop:nth-child(3){left:40%}
+.bus-drop:nth-child(4){left:60%}
+.bus-drop:nth-child(5){left:80%}
 .bus-drop:nth-child(6){left:100%}
 
-/* PULSE */
+/* PULSE DROP */
 .pulse{
   position:absolute;
   top:120px;
-  left:calc(50% + 12px);
+  left:50%;
   width:6px;
-  height:26px;
+  height:28px;
   transform:translateX(-50%);
-  background:linear-gradient(
-    to bottom,
+  background:linear-gradient(to bottom,
     transparent,
     rgba(255,220,150,1),
-    transparent
-  );
+    transparent);
   border-radius:4px;
-  animation:pulseDrop 8s ease-in-out infinite;
-  z-index:7;
+  animation:pulseDrop 12s ease-in-out infinite;
 }
+
 @keyframes pulseDrop{
-  0%{opacity:0;transform:translate(-50%,-30px);}
-  15%{opacity:1;}
-  42%{transform:translate(-50%,180px);}
-  55%{opacity:0;}
-  100%{opacity:0;}
+  0%{opacity:0;transform:translate(-50%,-30px)}
+  15%{opacity:1}
+  45%{transform:translate(-50%,260px)}
+  55%{opacity:0}
+  100%{opacity:0}
+}
+
+/* HORIZONTAL FLOW */
+.h-flow{
+  position:absolute;
+  top:42%;
+  left:50%;
+  height:2px;
+  background:linear-gradient(to right,
+    rgba(255,215,120,.6),
+    transparent);
+  transform-origin:left;
+  animation:hFlow 12s ease-in-out infinite;
+  opacity:0;
+}
+.h-flow.left{
+  right:50%;
+  transform-origin:right;
+}
+.h-flow.right{
+  left:50%;
+}
+
+@keyframes hFlow{
+  0%,50%{opacity:0;width:0}
+  55%{opacity:1}
+  80%{width:550px;opacity:0}
+  100%{opacity:0}
 }
 
 /* DIVISIONS */
 .divisions{
   position:absolute;
   bottom:5vh;
-  left:0;width:100%;
+  left:0;
+  width:100%;
   padding:0 6vw;
   display:flex;
   gap:1.4vw;
-  z-index:10;
 }
-.division{width:calc(100%/6);}
+.division{width:calc(100%/6)}
 
 /* CARD */
 .window{
   height:260px;
   padding:18px;
   border-radius:20px;
-  background:rgba(12,12,12,.7);
+  background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
-  animation:react 8s ease-in-out infinite;
+  animation:react 12s ease-in-out infinite;
 }
 
-/* FYZIKÁLNÍ REAKCE */
 @keyframes react{
-  0%,55%{box-shadow:none;}
-  60%{box-shadow:0 0 0 2px var(--accent);}
-  70%{box-shadow:none;}
-  100%{box-shadow:none;}
+  0%,65%{box-shadow:none}
+  70%{box-shadow:0 0 0 1px var(--accent)}
+  85%{box-shadow:none}
+  100%{box-shadow:none}
 }
 
-/* STAGGER – SYMETRIE OD STŘEDU */
+/* DELAYS – FYZIKA */
 .division:nth-child(3) .window,
-.division:nth-child(4) .window{animation-delay:0s;}
-
+.division:nth-child(4) .window{animation-delay:0s}
 .division:nth-child(2) .window,
-.division:nth-child(5) .window{animation-delay:.25s;}
-
+.division:nth-child(5) .window{animation-delay:1s}
 .division:nth-child(1) .window,
-.division:nth-child(6) .window{animation-delay:.5s;}
+.division:nth-child(6) .window{animation-delay:2s}
 
 .image-slot{
   height:100px;
@@ -210,12 +229,12 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 .window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
 
 /* ACCENTS */
-.systems{--accent:rgba(120,180,255,.8)}
-.research{--accent:rgba(170,120,255,.8)}
-.digital{--accent:rgba(120,220,255,.8)}
-.energy{--accent:rgba(255,180,90,.8)}
-.security{--accent:rgba(120,255,180,.8)}
-.academy{--accent:rgba(255,220,140,.8)}
+.systems{--accent:rgba(120,180,255,.45)}
+.research{--accent:rgba(170,120,255,.45)}
+.digital{--accent:rgba(120,220,255,.45)}
+.energy{--accent:rgba(255,180,90,.45)}
+.security{--accent:rgba(120,255,180,.45)}
+.academy{--accent:rgba(255,220,140,.45)}
 </style>
 
 <script>
@@ -239,17 +258,26 @@ window.onload=()=>window.scrollTo(0,0);
 <div class="background"></div>
 <div class="noise"></div>
 
-<div class="light-core"></div>
-<div class="pulse"></div>
-
 <div class="hero">
 <h1>F.A.I.S.T. HOLDING</h1>
 <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<div class="light-bus"></div>
-<div class="bus-drop"></div><div class="bus-drop"></div><div class="bus-drop"></div>
-<div class="bus-drop"></div><div class="bus-drop"></div><div class="bus-drop"></div>
+<div class="core"></div>
+
+<div class="pulse"></div>
+<div class="h-flow left"></div>
+<div class="h-flow right"></div>
+
+<div class="bus-wrap">
+  <div class="bus"></div>
+  <div class="bus-drop"></div>
+  <div class="bus-drop"></div>
+  <div class="bus-drop"></div>
+  <div class="bus-drop"></div>
+  <div class="bus-drop"></div>
+  <div class="bus-drop"></div>
+</div>
 
 <div class="divisions">
 <div class="division"><div class="window systems"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura.</p><a href="#">Zjistit více →</a></div></div>
