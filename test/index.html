@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>FAIST Systems</title>
+  <title>FAIST Holding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -10,12 +10,14 @@
   <style>
     :root{
       --bg:#0e1116;
+      --panel:#121722;
       --text:#e6e6e6;
       --muted:#9aa0a6;
-      --accent:#7f8790; /* šedá / grafit */
+      --gold:#c9a44c;
     }
 
     *{box-sizing:border-box}
+
     body{
       margin:0;
       font-family:Inter,system-ui,sans-serif;
@@ -23,39 +25,149 @@
       color:var(--text);
     }
 
+    /* HEADER */
     header{
-      padding:24px 48px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:28px 56px;
     }
 
-    header a{
+    header nav a{
       color:var(--muted);
       text-decoration:none;
+      margin-left:32px;
       font-size:14px;
+      letter-spacing:.5px;
     }
 
+    header nav a:hover{
+      color:var(--text);
+    }
+
+    /* HERO */
     .hero{
-      min-height:80vh;
+      position:relative;
+      min-height:75vh;
       display:flex;
       align-items:center;
-      padding:80px 48px;
-      background:
-        linear-gradient(rgba(14,17,22,.75), rgba(14,17,22,.9)),
-        url("../assets/background/systems.png") center/cover no-repeat;
+      justify-content:center;
+      text-align:center;
+      padding:80px 24px;
+    }
+
+    /* zlatá osa */
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:50%;
+      width:1px;
+      background:linear-gradient(
+        to bottom,
+        transparent,
+        var(--gold),
+        transparent
+      );
+      opacity:.9;
+    }
+
+    .hero-content{
+      max-width:900px;
+      position:relative;
+      z-index:2;
     }
 
     .hero h1{
-      font-size:48px;
+      font-size:56px;
+      letter-spacing:3px;
       margin-bottom:12px;
     }
 
-    .hero p{
+    .hero h2{
+      font-size:20px;
+      font-weight:400;
       color:var(--muted);
-      max-width:520px;
+      margin-bottom:24px;
     }
 
-    .content{
-      padding:80px 48px;
-      background:#0b0e13;
+    .hero p{
+      max-width:640px;
+      margin:0 auto 32px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .hero button{
+      background:transparent;
+      border:1px solid var(--gold);
+      color:var(--gold);
+      padding:14px 30px;
+      font-size:14px;
+      cursor:pointer;
+    }
+
+    .hero button:hover{
+      background:var(--gold);
+      color:#000;
+    }
+
+    /* DIVISIONS GRID */
+    .divisions{
+      padding:80px 56px;
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:24px;
+    }
+
+    .division{
+      background:var(--panel);
+      border-radius:14px;
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:260px;
+    }
+
+    .division h3{
+      margin:0 0 8px;
+      font-size:18px;
+    }
+
+    .division p{
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.5;
+      flex-grow:1;
+    }
+
+    .division a{
+      margin-top:16px;
+      font-size:13px;
+      color:var(--gold);
+      text-decoration:none;
+    }
+
+    .division a:hover{
+      text-decoration:underline;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1200px){
+      .divisions{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media(max-width:700px){
+      .divisions{
+        grid-template-columns:1fr;
+      }
+      .hero h1{
+        font-size:40px;
+      }
     }
 
     footer{
@@ -70,21 +182,70 @@
 <body>
 
 <header>
-  <a href="../index.html">← FAIST Holding</a>
+  <strong>FAIST</strong>
+  <nav>
+    <a href="#">About</a>
+    <a href="#">Divisions</a>
+    <a href="#">Careers</a>
+    <a href="#">Blog</a>
+  </nav>
 </header>
 
 <section class="hero">
-  <div>
-    <h1>FAIST Systems</h1>
-    <p>Stabilní infrastruktura, která drží celý ekosystém v chodu.</p>
+  <div class="hero-content">
+    <h1>FAIST HOLDING</h1>
+    <h2>Sjednocující síla pro technologie, energii a vzdělávání</h2>
+    <p>
+      Mateřská entita propojující infrastrukturu, výzkum, digitální produkty,
+      energetická řešení a vzdělávání do jednoho funkčního celku.
+    </p>
+    <button>Zjistit více</button>
   </div>
 </section>
 
-<section class="content">
-  <!-- sem přijde budoucí systémový obsah / dashboard -->
+<section class="divisions">
+
+  <div class="division">
+    <h3>FAIST Systems</h3>
+    <p>Infrastruktura a technické zázemí, na kterém stojí celý ekosystém.</p>
+    <a href="#">Zjistit více →</a>
+  </div>
+
+  <div class="division">
+    <h3>FAIST Research</h3>
+    <p>Výzkum, experimenty a vývoj nových technologických řešení.</p>
+    <a href="#">Zjistit více →</a>
+  </div>
+
+  <div class="division">
+    <h3>FAIST Digital</h3>
+    <p>Vývoj webových aplikací, digitálních produktů a uživatelských rozhraní.</p>
+    <a href="#">Zjistit více →</a>
+  </div>
+
+  <div class="division">
+    <h3>FAIST Energy</h3>
+    <p>Energetická řešení zaměřená na efektivitu a dlouhodobou udržitelnost.</p>
+    <a href="#">Zjistit více →</a>
+  </div>
+
+  <div class="division">
+    <h3>FAIST Security</h3>
+    <p>Kybernetická ochrana, dohled a bezpečný provoz systémů.</p>
+    <a href="#">Zjistit více →</a>
+  </div>
+
+  <div class="division">
+    <h3>FAIST Academy</h3>
+    <p>Vzdělávání a rozvoj digitálních dovedností srozumitelnou formou.</p>
+    <a href="#">Zjistit více →</a>
+  </div>
+
 </section>
 
-<footer>© FAIST Systems</footer>
+<footer>
+  © FAIST Holding
+</footer>
 
 </body>
 </html>
