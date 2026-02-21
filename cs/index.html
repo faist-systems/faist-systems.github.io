@@ -71,30 +71,55 @@ body{
   max-height:90vmin;
 }
 
-/* ===== ORBIT LAYER ===== */
+/* ORBIT LAYER */
 .orbit-layer{
   position:absolute;
   inset:0;
   z-index:1;
 }
 
+/* CENTER LOGO */
 .center{
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
+  z-index:2;
 }
 .center img{
   width:220px;
-  transition:filter .35s ease, transform .35s ease;
+  transition:filter .3s ease, transform .3s ease;
 }
-
-/* GLOW STATE (řízené JS) */
 .center img.ai-glow{
   filter:
     drop-shadow(0 0 14px var(--gold1))
     drop-shadow(0 0 32px var(--gold2));
   transform:scale(1.04);
+}
+
+/* AI HITBOX – POUZE NAD LOGEM */
+.ai-trigger{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:260px;
+  height:260px;
+  transform:translate(-50%,-50%);
+  z-index:4;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-end;
+  padding-bottom:12px;
+}
+
+.ai-trigger span{
+  font-size:12px;
+  color:var(--muted);
+}
+.ai-trigger:hover span{
+  text-shadow:0 0 10px var(--gold1);
 }
 
 /* INNER TEXT */
@@ -129,16 +154,19 @@ body{
   color:#fff;
   text-decoration:none;
 }
+
 .orbit-item img{
   width:130px;
   margin:0 auto 6px;
   display:block;
   animation:spin 20s linear infinite;
 }
+
 .orbit-item .label{
   font-size:14px;
   color:#fff;
 }
+
 .orbit-item::after{
   content:attr(data-desc);
   position:absolute;
@@ -156,6 +184,7 @@ body{
   pointer-events:none;
   transition:.25s ease;
 }
+
 .orbit-item:hover::after{
   opacity:1;
   transform:translateX(-50%) translateY(0);
@@ -166,24 +195,34 @@ body{
   to{transform:rotate(360deg)}
 }
 
-/* ===== AI TRIGGER ===== */
-.ai-trigger{
-  position:absolute;
+/* AI MODAL */
+.ai-modal{
+  position:fixed;
   inset:0;
-  display:grid;
+  background:rgba(10,12,17,.75);
+  display:none;
   place-items:center;
-  z-index:5;
-  cursor:pointer;
+  z-index:100;
 }
+.ai-modal.open{display:grid}
 
-.ai-trigger span{
-  position:absolute;
-  top:calc(50% + 120px);
-  font-size:12px;
-  color:var(--muted);
+.ai-box{
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px 28px;
+  max-width:420px;
+  color:#fff;
+  text-align:center;
 }
-.ai-trigger:hover span{
-  text-shadow:0 0 10px var(--gold1);
+.ai-box button{
+  margin-top:18px;
+  background:none;
+  border:1px solid var(--border);
+  color:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
 /* FOOTER */
@@ -214,8 +253,13 @@ body{
   <div class="scene" id="scene">
 
     <div class="orbit-layer">
+
       <div class="center">
-        <img id="mainLogo" src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+        <img id="mainLogo" src="/assets/logos/faist-holding.png">
+      </div>
+
+      <div class="ai-trigger" id="openAI">
+        <span>Zeptej se mě</span>
       </div>
 
       <div class="inner-orbit" id="innerOrbit"></div>
@@ -228,28 +272,38 @@ body{
         <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
         <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
       </div>
-    </div>
 
-    <!-- AI CLICK LAYER -->
-    <div class="ai-trigger" id="openAI">
-      <span>Zeptej se mě</span>
     </div>
-
   </div>
 </section>
 
 <footer class="site-footer"></footer>
 
+<div class="ai-modal" id="aiModal">
+  <div class="ai-box">
+    <h3>FAIST AI</h3>
+    <p>Tady bude AI rozhraní.</p>
+    <button id="closeAI">Zavřít</button>
+  </div>
+</div>
+
 <script>
-/* AI CLICK + GLOW */
-const ai = document.getElementById('openAI');
-const logo = document.getElementById('mainLogo');
+/* SCROLL FIX */
+if ('scrollRestoration' in history) history.scrollRestoration='manual';
+window.addEventListener('load',()=>window.scrollTo(0,0));
+
+/* AI */
+const ai=document.getElementById('openAI');
+const logo=document.getElementById('mainLogo');
+const modal=document.getElementById('aiModal');
 
 ai.addEventListener('mouseenter',()=>logo.classList.add('ai-glow'));
 ai.addEventListener('mouseleave',()=>logo.classList.remove('ai-glow'));
-ai.addEventListener('click',()=>{
-  alert('AI modal – tady přijde AI 👍');
+ai.addEventListener('click',()=>modal.classList.add('open'));
+modal.addEventListener('click',e=>{
+  if(e.target===modal) modal.classList.remove('open');
 });
+document.getElementById('closeAI').onclick=()=>modal.classList.remove('open');
 
 /* INNER TEXT */
 const text="Forge of Artificial Intelligence · Science · Technology · ";
