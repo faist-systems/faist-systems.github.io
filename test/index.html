@@ -19,8 +19,8 @@ header{
     align-items:center;
     justify-content:space-between;
     padding:0 4vw;
-    position:relative;
     z-index:30;
+    position:relative;
 }
 header nav a{
     margin-left:24px;
@@ -37,7 +37,7 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 .background{
     position:absolute;inset:0;
     background:
-        radial-gradient(circle at center, rgba(255,200,120,.04), transparent 60%),
+        radial-gradient(circle at center, rgba(255,200,120,.03), transparent 60%),
         linear-gradient(to bottom,#050505,#000 70%);
     z-index:0;
 }
@@ -45,7 +45,7 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     position:absolute;inset:0;
     background-image:repeating-radial-gradient(circle,rgba(255,255,255,.02) 0 1px,transparent 1px 2px);
     background-size:2px 2px;
-    opacity:.2;
+    opacity:.18;
     mix-blend-mode:overlay;
     z-index:1;
 }
@@ -56,17 +56,8 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     top:0;left:50%;
     width:2px;height:100%;
     transform:translateX(-50%);
-    background:linear-gradient(to bottom,transparent,rgba(255,215,120,1) 50%,transparent);
+    background:linear-gradient(to bottom,transparent,rgba(255,215,120,.9) 50%,transparent);
     z-index:4;
-}
-.light-atmosphere{
-    position:absolute;
-    top:0;left:50%;
-    width:360px;height:100%;
-    transform:translateX(-50%);
-    background:radial-gradient(circle,rgba(255,180,90,.06),transparent 70%);
-    filter:blur(40px);
-    z-index:3;
 }
 
 /* HERO */
@@ -92,7 +83,7 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     margin-inline:auto;
 }
 
-/* BUS – SPRÁVNĚ VÝŠ */
+/* BUS */
 .light-bus{
     position:absolute;
     top:36%;
@@ -101,12 +92,12 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     height:2px;
     background:linear-gradient(to right,
         transparent,
-        rgba(255,215,120,1) 50%,
+        rgba(255,215,120,.65) 50%,
         transparent);
     z-index:6;
 }
 
-/* PULSE – VERTIKÁLA */
+/* PULSE */
 .pulse{
     position:absolute;
     top:120px;
@@ -126,39 +117,6 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     100%{opacity:0;}
 }
 
-/* HORIZONTAL SPLIT – NAVÁZANÉ NA UZEL */
-.h-pulse{
-    position:absolute;
-    top:36%;
-    height:2px;
-    background:linear-gradient(to right,rgba(255,215,120,1),transparent);
-    opacity:0;
-    z-index:7;
-}
-.h-pulse.left{
-    right:50%;
-    transform-origin:right;
-    animation:hSplitLeft 8s ease-in-out infinite;
-}
-.h-pulse.right{
-    left:50%;
-    transform-origin:left;
-    animation:hSplitRight 8s ease-in-out infinite;
-}
-
-@keyframes hSplitLeft{
-    0%,50%{opacity:0;width:0}
-    55%{opacity:1}
-    75%{width:38vw;opacity:0}
-    100%{opacity:0}
-}
-@keyframes hSplitRight{
-    0%,50%{opacity:0;width:0}
-    55%{opacity:1}
-    75%{width:38vw;opacity:0}
-    100%{opacity:0}
-}
-
 /* DIVISIONS */
 .divisions{
     position:absolute;
@@ -169,14 +127,9 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     gap:1.4vw;
     z-index:10;
 }
-.division{width:calc(100%/6);position:relative}
-
-.feed{
-    position:absolute;
-    top:-80px;left:50%;
-    width:2px;height:80px;
-    transform:translateX(-50%);
-    background:linear-gradient(to bottom,rgba(255,215,120,1),transparent);
+.division{
+    width:calc(100%/6);
+    position:relative;
 }
 
 /* CARD */
@@ -189,7 +142,25 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     backdrop-filter:blur(6px);
     display:flex;
     flex-direction:column;
+    --glow: transparent;
+    animation:react 8s ease-in-out infinite;
 }
+.window::after{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:20px;
+    box-shadow:0 0 0 0 var(--glow);
+    pointer-events:none;
+}
+
+@keyframes react{
+    0%,55%{--glow: transparent;}
+    60%{--glow: var(--accent);}
+    65%{--glow: transparent;}
+    100%{--glow: transparent;}
+}
+
 .image-slot{
     height:100px;border-radius:14px;
     border:1px dashed rgba(255,255,255,.18);
@@ -199,6 +170,14 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 .window p{font-size:.8rem;opacity:.7;line-height:1.4;margin-bottom:auto}
 .window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
 .window a:hover{text-decoration:underline}
+
+/* ACCENT COLORS */
+.systems{--accent: rgba(120,180,255,.55);}
+.research{--accent: rgba(170,120,255,.55);}
+.digital{--accent: rgba(120,220,255,.55);}
+.energy{--accent: rgba(255,180,90,.55);}
+.security{--accent: rgba(120,255,180,.55);}
+.academy{--accent: rgba(255,220,140,.55);}
 </style>
 
 <script>
@@ -221,13 +200,8 @@ window.onload=()=>window.scrollTo(0,0);
 <main>
 <div class="background"></div>
 <div class="noise"></div>
-
-<div class="light-atmosphere"></div>
 <div class="light-core"></div>
-
 <div class="pulse"></div>
-<div class="h-pulse left"></div>
-<div class="h-pulse right"></div>
 
 <div class="hero">
 <h1>F.A.I.S.T. HOLDING</h1>
@@ -237,12 +211,12 @@ window.onload=()=>window.scrollTo(0,0);
 <div class="light-bus"></div>
 
 <div class="divisions">
-<div class="division"><div class="feed"></div><div class="window"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura digitálního světa.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="feed"></div><div class="window"><div class="image-slot"></div><h3>Research</h3><p>Výzkum a hledání nových technologických cest.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="feed"></div><div class="window"><div class="image-slot"></div><h3>Digital</h3><p>Digitální produkty s reálným dopadem.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="feed"></div><div class="window"><div class="image-slot"></div><h3>Energy</h3><p>Přenos a transformace energie.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="feed"></div><div class="window"><div class="image-slot"></div><h3>Security</h3><p>Bezpečnost a kontrola systémů.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="feed"></div><div class="window"><div class="image-slot"></div><h3>Academy</h3><p>Vzdělávání a přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window systems"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura digitálního světa.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window research"><div class="image-slot"></div><h3>Research</h3><p>Výzkum a hledání nových technologických cest.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window digital"><div class="image-slot"></div><h3>Digital</h3><p>Digitální produkty s reálným dopadem.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window energy"><div class="image-slot"></div><h3>Energy</h3><p>Přenos a transformace energie.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window security"><div class="image-slot"></div><h3>Security</h3><p>Bezpečnost a kontrola systémů.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window academy"><div class="image-slot"></div><h3>Academy</h3><p>Vzdělávání a přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
 </div>
 </main>
 
