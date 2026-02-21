@@ -78,7 +78,7 @@ body{
   display:grid;
   place-items:center;
   z-index:5;
-  pointer-events:none; /* 🔑 KLÍČOVÁ OPRAVA */
+  pointer-events:none;
 }
 
 .center-inner{
@@ -86,7 +86,7 @@ body{
   flex-direction:column;
   align-items:center;
   cursor:pointer;
-  pointer-events:auto; /* 🔑 povolíme jen logo */
+  pointer-events:auto;
 }
 
 .center-inner img{
@@ -202,6 +202,33 @@ body{
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
 }
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:32px;
+}
+
+.footer-inner h4{
+  margin:0 0 12px;
+  font-size:14px;
+}
+
+.footer-inner p,
+.footer-inner a{
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+}
+
+.footer-bottom{
+  margin-top:32px;
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+}
 </style>
 </head>
 
@@ -240,9 +267,26 @@ body{
   </div>
 </section>
 
-<footer class="site-footer"></footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>F.A.I.S.T. Holding</h4>
+      <p>Inteligentní systémy.<br>Výzkum. Technologie.</p>
+    </div>
+    <div>
+      <h4>Divize</h4>
+      <p>Systems · Lab · Digital<br>Energy · Security · Edu</p>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <p>info@faistgroup.com<br>Praha · EU</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 F.A.I.S.T. Holding
+  </div>
+</footer>
 
-<!-- AI PANEL -->
 <div id="aiPanel">
   <div id="aiBox">
     <h2>FAIST AI</h2>
@@ -257,12 +301,11 @@ body{
 </div>
 
 <script>
-/* AI */
 const aiPanel=document.getElementById("aiPanel");
 const aiContent=document.getElementById("aiContent");
 
 const answers={
-  "Co je FAIST?":"FAIST je technologický holding zaměřený na AI a systémy.",
+  "Co je FAIST?":"FAIST je technologický holding zaměřený na AI a systémová řešení.",
   "Divize":"Systems, Lab, Digital, Energy, Security a Edu.",
   "Spolupráce":"Začněte přes digitální nebo systémovou divizi."
 };
@@ -279,7 +322,6 @@ aiPanel.onclick=e=>{
   }
 };
 
-/* ORBIT MOTION */
 (function(){
   const scene=document.getElementById("scene");
   const items=[...document.querySelectorAll(".orbit-item")];
