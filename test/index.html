@@ -25,8 +25,8 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
-  z-index:20;
   position:relative;
+  z-index:20;
 }
 header nav a{
   margin-left:24px;
@@ -102,50 +102,65 @@ main{
   left:50%;
   transform:translateX(-50%);
   width:min(1100px,90vw);
-  top:clamp(24%,28vh,30%);
+  top:clamp(22%,26vh,28%);
 }
 .bus{
+  position:relative;
   height:2px;
   background:rgba(255,215,120,.35);
-  position:relative;
   overflow:hidden;
 }
 
-/* HORIZONTAL FLOW */
+/* HORIZONTAL FLOWS */
 .flow{
   position:absolute;
   top:0;
   height:2px;
   width:0;
+  opacity:0;
+}
+.flow.left{
+  right:50%;
+  background:linear-gradient(to left,
+    rgba(255,215,120,.9),
+    rgba(255,215,120,.2),
+    transparent
+  );
+}
+.flow.right{
+  left:50%;
   background:linear-gradient(to right,
     rgba(255,215,120,.9),
     rgba(255,215,120,.2),
     transparent
   );
-  opacity:0;
 }
 
-/* DROPS */
+/* BUS DROPS */
 .bus-drop{
   position:absolute;
   top:0;
   width:2px;
-  height:22px;
+  height:18px;
   background:linear-gradient(to bottom,
-    rgba(255,215,120,.6),
+    rgba(255,215,120,.5),
     transparent);
 }
+
+/* BRANCH DROPS */
 .branch-drop{
   position:absolute;
-  top:22px;
+  top:18px;
   width:4px;
   height:0;
   opacity:0;
   transform:translateX(-50%);
   background:linear-gradient(to bottom,
-    rgba(255,220,150,1),
+    rgba(255,220,150,.9),
     transparent);
-  transition:height 1s ease, opacity .25s;
+  transition:
+    height .9s ease,
+    opacity .25s ease;
 }
 
 /* DIVISIONS */
@@ -169,11 +184,12 @@ main{
   border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
-  transition:box-shadow .4s ease;
+  transition:box-shadow .35s ease;
 }
 .window.active{
   box-shadow:0 0 0 1px var(--accent);
 }
+
 .image-slot{
   height:160px;
   border-radius:14px;
@@ -215,13 +231,13 @@ main{
   <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<div class="bus-wrap" id="bus">
+<div class="bus-wrap">
   <div class="bus">
-    <div class="flow" id="flowLeft"></div>
-    <div class="flow" id="flowRight" style="right:0"></div>
+    <div class="flow left" id="flowL"></div>
+    <div class="flow right" id="flowR"></div>
   </div>
 
-  <!-- drops -->
+  <!-- fixed drops -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -229,6 +245,7 @@ main{
   <div class="bus-drop" style="left:80%"></div>
   <div class="bus-drop" style="left:100%"></div>
 
+  <!-- animated branches -->
   <div class="branch-drop" style="left:0%"></div>
   <div class="branch-drop" style="left:20%"></div>
   <div class="branch-drop" style="left:40%"></div>
@@ -251,46 +268,65 @@ main{
 
 <script>
 window.onload = () => {
-  const flowL = document.getElementById("flowLeft");
-  const flowR = document.getElementById("flowRight");
+  const flowL = document.getElementById("flowL");
+  const flowR = document.getElementById("flowR");
   const branches = document.querySelectorAll(".branch-drop");
   const windows = document.querySelectorAll(".window");
-  const sequence = [[2,3],[1,4],[0,5]];
 
-  function reset(){
+  const sequence = [[2,3],[1,4],[0,5]];
+  const step = 1500;
+
+  function resetAll(){
     flowL.style.width = flowR.style.width = "0";
     flowL.style.opacity = flowR.style.opacity = 0;
-    branches.forEach(b=>{b.style.height=0;b.style.opacity=0});
+    branches.forEach(b=>{
+      b.style.height = "0";
+      b.style.opacity = 0;
+    });
     windows.forEach(w=>w.classList.remove("active"));
   }
 
   function cycle(){
-    reset();
+    resetAll();
 
     // horizontal spread
     setTimeout(()=>{
-      flowL.style.left="50%";
-      flowL.style.width="50%";
-      flowL.style.opacity=1;
-
-      flowR.style.width="50%";
-      flowR.style.opacity=1;
-    },200);
+      flowL.style.width = "50%";
+      flowL.style.opacity = 1;
+      flowR.style.width = "50%";
+      flowR.style.opacity = 1;
+    },300);
 
     sequence.forEach((pair,i)=>{
       setTimeout(()=>{
-        reset();
+        // zhasni předchozí
+        branches.forEach(b=>{
+          b.style.height = "0";
+          b.style.opacity = 0;
+        });
+        windows.forEach(w=>w.classList.remove("active"));
+
+        // rozsvit aktuální pár
         pair.forEach(idx=>{
-          branches[idx].style.height="180px";
-          branches[idx].style.opacity=1;
+          branches[idx].style.height = "150px";
+          branches[idx].style.opacity = 1;
           windows[idx].classList.add("active");
         });
-      },1200+i*1200);
+      },step + i*step);
     });
+
+    // zhasni poslední pár
+    setTimeout(()=>{
+      branches.forEach(b=>{
+        b.style.height = "0";
+        b.style.opacity = 0;
+      });
+      windows.forEach(w=>w.classList.remove("active"));
+    },step + sequence.length*step);
   }
 
   cycle();
-  setInterval(cycle,14000);
+  setInterval(cycle, step*sequence.length + 3000);
 };
 </script>
 
