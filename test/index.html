@@ -9,11 +9,17 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#000;color:#eee;
-font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+html,body{
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
 body{overflow:hidden}
 
-/* HEADER / FOOTER */
+/* ================= HEADER / FOOTER ================= */
+
 header{
   height:64px;
   display:flex;
@@ -44,29 +50,37 @@ footer{
   z-index:20;
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
+
 main{
   height:calc(100vh - 64px);
   position:relative;
 }
 
-/* BACKGROUND */
+/* ================= BACKGROUND ================= */
+
 .background{
-  position:absolute;inset:0;
+  position:absolute;
+  inset:0;
   background:
     radial-gradient(circle at center, rgba(255,200,120,.02), transparent 60%),
     linear-gradient(to bottom,#050505,#000 70%);
 }
 .noise{
-  position:absolute;inset:0;
-  background-image:repeating-radial-gradient(circle,
-    rgba(255,255,255,.02) 0 1px, transparent 1px 2px);
+  position:absolute;
+  inset:0;
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
   background-size:2px 2px;
   opacity:.15;
   mix-blend-mode:overlay;
 }
 
-/* HERO */
+/* ================= HERO ================= */
+
 .hero{
   position:relative;
   z-index:10;
@@ -87,14 +101,15 @@ main{
   opacity:.7;
 }
 
-/* BUS */
+/* ================= BUS ================= */
+
 .bus-wrap{
   position:absolute;
-  top:42%;
   left:50%;
   transform:translateX(-50%);
-  width:1100px;
-  max-width:90vw;
+  width:min(1100px,90vw);
+  /* bus je vždy mezi hero a kartami */
+  top:clamp(38%,42vh,44%);
 }
 .bus{
   height:2px;
@@ -102,48 +117,58 @@ main{
   position:relative;
 }
 
-/* MAIN DROP */
+/* ================= MAIN DROP ================= */
+
 .pulse{
   position:absolute;
   left:50%;
   width:6px;
   height:26px;
   transform:translate(-50%,-80px);
-  background:linear-gradient(to bottom,
+  background:linear-gradient(
+    to bottom,
     transparent,
     rgba(255,220,150,1),
-    transparent);
+    transparent
+  );
   border-radius:4px;
   opacity:0;
-  transition:transform 2s ease-in, opacity .25s;
+  transition:transform 2.2s ease-in, opacity .25s;
 }
 
-/* BUS DROPS */
+/* ================= BUS DROPS ================= */
+
 .bus-drop{
   position:absolute;
   top:0;
   width:2px;
   height:22px;
-  background:linear-gradient(to bottom,
+  background:linear-gradient(
+    to bottom,
     rgba(255,215,120,.5),
-    transparent);
+    transparent
+  );
 }
 
-/* BRANCH DROPS */
+/* ================= BRANCH DROPS ================= */
+
 .branch-drop{
   position:absolute;
   top:22px;
   width:4px;
   height:0;
   transform:translateX(-50%);
-  background:linear-gradient(to bottom,
+  background:linear-gradient(
+    to bottom,
     rgba(255,220,150,1),
-    transparent);
+    transparent
+  );
   opacity:0;
   transition:height .9s ease-in, opacity .25s;
 }
 
-/* DIVISIONS */
+/* ================= DIVISIONS ================= */
+
 .divisions{
   position:absolute;
   bottom:60px;
@@ -157,7 +182,7 @@ main{
 .division{width:calc(100%/6)}
 
 .window{
-  height:260px;
+  height:clamp(220px,26vh,280px);
   padding:18px;
   border-radius:20px;
   background:rgba(12,12,12,.75);
@@ -171,9 +196,14 @@ main{
 }
 .window h3{font-size:.95rem;margin-bottom:6px}
 .window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
-.window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
+.window a{
+  font-size:.8rem;
+  color:rgb(255,215,120);
+  text-decoration:none;
+}
 
-/* ACCENTS */
+/* ================= ACCENTS ================= */
+
 .systems{--accent:rgba(120,180,255,.45)}
 .research{--accent:rgba(170,120,255,.45)}
 .digital{--accent:rgba(120,220,255,.45)}
@@ -209,6 +239,7 @@ main{
 <div class="bus-wrap" id="bus">
   <div class="bus"></div>
 
+  <!-- svody + kapky -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -238,11 +269,17 @@ main{
 
 <script>
 window.onload = () => {
+  window.scrollTo(0,0);
+
   const pulse = document.getElementById("pulse");
   const bus = document.getElementById("bus");
   const branches = document.querySelectorAll(".branch-drop");
   const windows  = document.querySelectorAll(".window");
 
+  // pevný start kapky (neměnný)
+  const pulseStartY = pulse.getBoundingClientRect().top;
+
+  // páry od středu ven
   const sequence = [
     [2,3],
     [1,4],
@@ -262,7 +299,7 @@ window.onload = () => {
     pulse.style.opacity = 0;
     pulse.style.transform = "translate(-50%,-80px)";
     requestAnimationFrame(()=>{
-      pulse.style.transition = "transform 2s ease-in, opacity .25s";
+      pulse.style.transition = "transform 2.2s ease-in, opacity .25s";
     });
   }
 
@@ -270,20 +307,20 @@ window.onload = () => {
     resetAll();
     resetPulse();
 
-    const busRect   = bus.getBoundingClientRect();
-    const pulseRect = pulse.getBoundingClientRect();
-    const deltaY    = busRect.top - pulseRect.top;
+    const busRect = bus.getBoundingClientRect();
+    const deltaY  = busRect.top - pulseStartY;
 
-    const cardTop = document.querySelector(".window").getBoundingClientRect().top;
+    const cardTop = windows[0].getBoundingClientRect().top;
     const dropLen = cardTop - busRect.bottom - 4;
 
     pulse.style.opacity = 1;
 
-    // 🔽 pád přesně DO BUSU
+    // pád přesně DO BUSU
     setTimeout(()=>{
       pulse.style.transform = `translate(-50%, ${deltaY}px)`;
-    },50);
+    },60);
 
+    // sekvence světla
     sequence.forEach((pair, step)=>{
       setTimeout(()=>{
         resetAll();
@@ -292,17 +329,18 @@ window.onload = () => {
           branches[i].style.height = dropLen + "px";
           windows[i].classList.add("active");
         });
-      }, 2200 + step * 1000);
+      }, 2400 + step * 1000);
     });
 
+    // konec cyklu
     setTimeout(()=>{
       resetAll();
       pulse.style.opacity = 0;
-    }, 2200 + sequence.length * 1000 + 300);
+    }, 2400 + sequence.length * 1000 + 300);
   }
 
   runCycle();
-  setInterval(runCycle,14000);
+  setInterval(runCycle,15000);
 };
 </script>
 
