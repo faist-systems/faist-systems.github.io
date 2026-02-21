@@ -17,9 +17,10 @@ body{overflow:hidden}
 header{
   height:64px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
   padding:0 4vw;
+  position:relative;
+  z-index:10;
 }
 
 /* MAIN */
@@ -77,23 +78,22 @@ main{
 }
 
 /* HORIZONTAL FLOW */
-.h-flow{
+.flow{
   position:absolute;
   top:0;
-  height:2px;
-  opacity:0;
-}
-.h-flow.left{
-  right:50%;
-  background:linear-gradient(to left,
-    rgba(255,215,120,.9),
-    transparent);
-}
-.h-flow.right{
-  left:50%;
+  height:3px;
   background:linear-gradient(to right,
     rgba(255,215,120,.9),
     transparent);
+  opacity:0;
+  transition:width 1.6s ease-out, opacity .3s;
+}
+.flow.left{
+  right:50%;
+  transform:scaleX(-1);
+}
+.flow.right{
+  left:50%;
 }
 
 /* BUS DROPS */
@@ -101,23 +101,10 @@ main{
   position:absolute;
   top:0;
   width:2px;
-  height:26px;
+  height:22px;
   background:linear-gradient(to bottom,
-    rgba(255,215,120,.55),
+    rgba(255,215,120,.5),
     transparent);
-}
-
-/* DROPS TO DIVISIONS */
-.branch-drop{
-  position:absolute;
-  top:26px;
-  width:4px;
-  height:0;
-  transform:translateX(-50%);
-  background:linear-gradient(to bottom,
-    rgba(255,220,150,1),
-    transparent);
-  opacity:0;
 }
 
 /* MAIN DROP */
@@ -126,7 +113,7 @@ main{
   top:120px;
   left:50%;
   width:6px;
-  height:28px;
+  height:26px;
   transform:translate(-50%,-40px);
   background:linear-gradient(to bottom,
     transparent,
@@ -134,7 +121,23 @@ main{
     transparent);
   border-radius:4px;
   opacity:0;
-  transition:transform 1.2s ease-in, opacity .3s;
+  transition:
+    transform 1.8s ease-in,
+    opacity .3s;
+}
+
+/* BRANCH DROPS */
+.branch-drop{
+  position:absolute;
+  top:22px;
+  width:4px;
+  height:0;
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom,
+    rgba(255,220,150,1),
+    transparent);
+  opacity:0;
+  transition:height .9s ease-in, opacity .3s;
 }
 
 /* DIVISIONS */
@@ -157,6 +160,7 @@ main{
   border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
+  transition:box-shadow .4s ease;
 }
 .window.active{
   box-shadow:0 0 0 1px var(--accent);
@@ -184,10 +188,11 @@ main{
 
 <div class="pulse" id="pulse"></div>
 
-<div class="bus-wrap">
+<div class="bus-wrap" id="bus">
   <div class="bus"></div>
-  <div class="h-flow left" id="flowL"></div>
-  <div class="h-flow right" id="flowR"></div>
+
+  <div class="flow left" id="flowL"></div>
+  <div class="flow right" id="flowR"></div>
 
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
@@ -225,38 +230,47 @@ window.onload = () => {
   function runCycle(){
     pulse.style.opacity = 1;
     pulse.style.transform = "translate(-50%,-40px)";
-    flowL.style.width = 0;
-    flowR.style.width = 0;
+
+    flowL.style.width = "0";
+    flowR.style.width = "0";
     flowL.style.opacity = 0;
     flowR.style.opacity = 0;
-    branches.forEach(b=>{b.style.height=0;b.style.opacity=0});
+
+    branches.forEach(b=>{
+      b.style.height = "0";
+      b.style.opacity = 0;
+    });
     windows.forEach(w=>w.classList.remove("active"));
 
+    // pád kapky
     setTimeout(()=>{
       pulse.style.transform = "translate(-50%,220px)";
     },50);
 
+    // rozdělení
     setTimeout(()=>{
       pulse.style.opacity = 0;
 
       flowL.style.opacity = 1;
       flowR.style.opacity = 1;
-
-      flowL.animate([{width:"0px"},{width:"550px"}],{duration:1600,easing:"ease-out"});
-      flowR.animate([{width:"0px"},{width:"550px"}],{duration:1600,easing:"ease-out"});
+      flowL.style.width = "550px";
+      flowR.style.width = "550px";
 
       branches.forEach((b,i)=>{
         const dist = Math.abs(i - 2.5);
-        const delay = 200 + dist*dist*220;
+        const delay = 400 + dist * dist * 350;
 
         setTimeout(()=>{
-          b.animate([{height:"0px",opacity:1},{height:"140px",opacity:0}],
-            {duration:900,easing:"ease-in",fill:"forwards"});
+          b.style.opacity = 1;
+          b.style.height = "120px"; // KONČÍ NA HORNÍ HRANĚ RÁMEČKU
+
+          // sekvenční svícení
+          windows.forEach(w=>w.classList.remove("active"));
           windows[i].classList.add("active");
         },delay);
       });
 
-    },1200);
+    },1800);
   }
 
   runCycle();
