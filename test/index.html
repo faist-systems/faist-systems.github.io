@@ -21,13 +21,6 @@ header{
   align-items:center;
   padding:0 4vw;
 }
-header nav a{
-  margin-left:24px;
-  font-size:.85rem;
-  color:#ccc;
-  text-decoration:none;
-}
-header nav a:hover{color:#fff}
 
 /* MAIN */
 main{
@@ -54,24 +47,17 @@ main{
 /* HERO */
 .hero{
   position:relative;
-  z-index:10;
+  z-index:5;
   text-align:center;
   margin-top:6vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
   font-size:clamp(2.6rem,4.6vw,3.6rem);
-  letter-spacing:.24em;
+  letter-spacing:.22em;
   text-shadow:
     0 2px 4px rgba(255,215,120,.35),
     0 0 1px rgba(255,215,120,.5);
-}
-.hero p{
-  margin-top:22px;
-  font-size:.95rem;
-  opacity:.7;
-  max-width:660px;
-  margin-inline:auto;
 }
 
 /* BUS */
@@ -87,13 +73,30 @@ main{
 .bus{
   width:100%;
   height:2px;
+  background:rgba(255,215,120,.25);
+}
+
+/* HORIZONTAL FLOW */
+.h-flow{
+  position:absolute;
+  top:0;
+  height:2px;
+  opacity:0;
+}
+.h-flow.left{
+  right:50%;
+  background:linear-gradient(to left,
+    rgba(255,215,120,.9),
+    transparent);
+}
+.h-flow.right{
+  left:50%;
   background:linear-gradient(to right,
-    transparent,
-    rgba(255,215,120,.35) 50%,
+    rgba(255,215,120,.9),
     transparent);
 }
 
-/* BUS DROPS (statické – zůstávají) */
+/* BUS DROPS */
 .bus-drop{
   position:absolute;
   top:0;
@@ -103,65 +106,35 @@ main{
     rgba(255,215,120,.55),
     transparent);
 }
-.bus-drop:nth-child(1){left:0%}
-.bus-drop:nth-child(2){left:20%}
-.bus-drop:nth-child(3){left:40%}
-.bus-drop:nth-child(4){left:60%}
-.bus-drop:nth-child(5){left:80%}
-.bus-drop:nth-child(6){left:100%}
 
-/* === KAPKA === */
+/* DROPS TO DIVISIONS */
+.branch-drop{
+  position:absolute;
+  top:26px;
+  width:4px;
+  height:0;
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom,
+    rgba(255,220,150,1),
+    transparent);
+  opacity:0;
+}
+
+/* MAIN DROP */
 .pulse{
   position:absolute;
   top:120px;
   left:50%;
   width:6px;
   height:28px;
-  transform:translateX(-50%);
+  transform:translate(-50%,-40px);
   background:linear-gradient(to bottom,
     transparent,
     rgba(255,220,150,1),
     transparent);
   border-radius:4px;
   opacity:0;
-  transition:opacity .2s;
-}
-
-/* === HORIZONTÁLNÍ TOK === */
-.h-flow{
-  position:absolute;
-  top:42%;
-  height:2px;
-  opacity:0;
-}
-.h-flow.left{
-  right:50%;
-  background:linear-gradient(to left,
-    rgba(255,215,120,.6),
-    transparent);
-}
-.h-flow.right{
-  left:50%;
-  background:linear-gradient(to right,
-    rgba(255,215,120,.6),
-    transparent);
-}
-
-/* ANIMACE TOKU */
-.flow-active.left{
-  animation:flowLeft 1.8s ease-out forwards;
-}
-.flow-active.right{
-  animation:flowRight 1.8s ease-out forwards;
-}
-
-@keyframes flowLeft{
-  from{width:0;opacity:1}
-  to{width:50%;opacity:0}
-}
-@keyframes flowRight{
-  from{width:0;opacity:1}
-  to{width:50%;opacity:0}
+  transition:transform 1.2s ease-in, opacity .3s;
 }
 
 /* DIVISIONS */
@@ -176,7 +149,6 @@ main{
 }
 .division{width:calc(100%/6)}
 
-/* CARD */
 .window{
   height:260px;
   padding:18px;
@@ -185,33 +157,10 @@ main{
   border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
-  animation:react 12s ease-in-out infinite;
 }
-
-@keyframes react{
-  0%,65%{box-shadow:none}
-  70%{box-shadow:0 0 0 1px var(--accent)}
-  85%{box-shadow:none}
-  100%{box-shadow:none}
+.window.active{
+  box-shadow:0 0 0 1px var(--accent);
 }
-
-/* DELAYS – zůstávají */
-.division:nth-child(3) .window,
-.division:nth-child(4) .window{animation-delay:0s}
-.division:nth-child(2) .window,
-.division:nth-child(5) .window{animation-delay:1s}
-.division:nth-child(1) .window,
-.division:nth-child(6) .window{animation-delay:2s}
-
-.image-slot{
-  height:100px;
-  border-radius:14px;
-  border:1px dashed rgba(255,255,255,.18);
-  margin-bottom:12px;
-}
-.window h3{font-size:.95rem;margin-bottom:6px}
-.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
-.window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
 
 /* ACCENTS */
 .systems{--accent:rgba(120,180,255,.45)}
@@ -225,47 +174,43 @@ main{
 
 <body>
 
-<header>
-<div>FAIST</div>
-<nav>
-<a href="#">Holding</a>
-<a href="#">Divize</a>
-<a href="#">O nás</a>
-<a href="#">Kontakt</a>
-</nav>
-</header>
+<header><div>FAIST</div></header>
 
 <main>
 <div class="background"></div>
 <div class="noise"></div>
 
-<div class="hero">
-<h1>F.A.I.S.T. HOLDING</h1>
-<p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
-</div>
+<div class="hero"><h1>F.A.I.S.T. HOLDING</h1></div>
 
 <div class="pulse" id="pulse"></div>
 
-<div class="h-flow left" id="flowL"></div>
-<div class="h-flow right" id="flowR"></div>
-
-<div class="bus-wrap" id="bus">
+<div class="bus-wrap">
   <div class="bus"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
+  <div class="h-flow left" id="flowL"></div>
+  <div class="h-flow right" id="flowR"></div>
+
+  <div class="bus-drop" style="left:0%"></div>
+  <div class="bus-drop" style="left:20%"></div>
+  <div class="bus-drop" style="left:40%"></div>
+  <div class="bus-drop" style="left:60%"></div>
+  <div class="bus-drop" style="left:80%"></div>
+  <div class="bus-drop" style="left:100%"></div>
+
+  <div class="branch-drop" style="left:0%"></div>
+  <div class="branch-drop" style="left:20%"></div>
+  <div class="branch-drop" style="left:40%"></div>
+  <div class="branch-drop" style="left:60%"></div>
+  <div class="branch-drop" style="left:80%"></div>
+  <div class="branch-drop" style="left:100%"></div>
 </div>
 
 <div class="divisions">
-<div class="division"><div class="window systems"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window research"><div class="image-slot"></div><h3>Research</h3><p>Výzkum a experiment.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window digital"><div class="image-slot"></div><h3>Digital</h3><p>Digitální produkty.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window energy"><div class="image-slot"></div><h3>Energy</h3><p>Transformace energie.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window security"><div class="image-slot"></div><h3>Security</h3><p>Ochrana systémů.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window academy"><div class="image-slot"></div><h3>Academy</h3><p>Přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window systems">Systems</div></div>
+  <div class="division"><div class="window research">Research</div></div>
+  <div class="division"><div class="window digital">Digital</div></div>
+  <div class="division"><div class="window energy">Energy</div></div>
+  <div class="division"><div class="window security">Security</div></div>
+  <div class="division"><div class="window academy">Academy</div></div>
 </div>
 </main>
 
@@ -274,25 +219,44 @@ window.onload = () => {
   const pulse = document.getElementById("pulse");
   const flowL = document.getElementById("flowL");
   const flowR = document.getElementById("flowR");
+  const branches = document.querySelectorAll(".branch-drop");
+  const windows  = document.querySelectorAll(".window");
 
   function runCycle(){
-    // start drop
     pulse.style.opacity = 1;
-    pulse.style.transform = "translate(-50%, 220px)";
+    pulse.style.transform = "translate(-50%,-40px)";
+    flowL.style.width = 0;
+    flowR.style.width = 0;
+    flowL.style.opacity = 0;
+    flowR.style.opacity = 0;
+    branches.forEach(b=>{b.style.height=0;b.style.opacity=0});
+    windows.forEach(w=>w.classList.remove("active"));
 
-    // stop at bus and start flow
+    setTimeout(()=>{
+      pulse.style.transform = "translate(-50%,220px)";
+    },50);
+
     setTimeout(()=>{
       pulse.style.opacity = 0;
-      flowL.classList.add("flow-active","left");
-      flowR.classList.add("flow-active","right");
-    },1200);
 
-    // reset
-    setTimeout(()=>{
-      pulse.style.transform = "translate(-50%, -30px)";
-      flowL.classList.remove("flow-active","left");
-      flowR.classList.remove("flow-active","right");
-    },3500);
+      flowL.style.opacity = 1;
+      flowR.style.opacity = 1;
+
+      flowL.animate([{width:"0px"},{width:"550px"}],{duration:1600,easing:"ease-out"});
+      flowR.animate([{width:"0px"},{width:"550px"}],{duration:1600,easing:"ease-out"});
+
+      branches.forEach((b,i)=>{
+        const dist = Math.abs(i - 2.5);
+        const delay = 200 + dist*dist*220;
+
+        setTimeout(()=>{
+          b.animate([{height:"0px",opacity:1},{height:"140px",opacity:0}],
+            {duration:900,easing:"ease-in",fill:"forwards"});
+          windows[i].classList.add("active");
+        },delay);
+      });
+
+    },1200);
   }
 
   runCycle();
