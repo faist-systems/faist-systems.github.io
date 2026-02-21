@@ -9,7 +9,13 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#000;color:#eee;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+html,body{
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
 body{overflow:hidden}
 
 /* HEADER */
@@ -19,8 +25,8 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
-  position:relative;
   z-index:20;
+  position:relative;
 }
 header nav a{
   margin-left:24px;
@@ -59,8 +65,11 @@ main{
 }
 .noise{
   position:absolute;inset:0;
-  background-image:repeating-radial-gradient(circle,
-    rgba(255,255,255,.02) 0 1px, transparent 1px 2px);
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
   background-size:2px 2px;
   opacity:.15;
   mix-blend-mode:overlay;
@@ -93,46 +102,56 @@ main{
   left:50%;
   transform:translateX(-50%);
   width:min(1100px,90vw);
-  top:clamp(26%,30vh,32%);
+  top:clamp(24%,28vh,30%);
 }
 .bus{
   height:2px;
   background:rgba(255,215,120,.35);
   position:relative;
+  overflow:hidden;
 }
 
-/* MAIN DROP */
-.pulse{
+/* HORIZONTAL FLOW */
+.flow{
   position:absolute;
-  left:50%;
-  width:6px;
-  height:28px;
-  transform:translate(-50%,-80px);
-  background:linear-gradient(to bottom,transparent,rgba(255,220,150,1),transparent);
-  border-radius:4px;
+  top:0;
+  height:2px;
+  width:0;
+  background:linear-gradient(to right,
+    rgba(255,215,120,.9),
+    rgba(255,215,120,.2),
+    transparent
+  );
   opacity:0;
-  transition:transform 2.6s ease-in, opacity .25s;
 }
 
-/* BUS + BRANCH DROPS */
-.bus-drop, .branch-drop{
+/* DROPS */
+.bus-drop{
   position:absolute;
+  top:0;
   width:2px;
-  background:linear-gradient(to bottom,rgba(255,215,120,.6),transparent);
+  height:22px;
+  background:linear-gradient(to bottom,
+    rgba(255,215,120,.6),
+    transparent);
 }
-.bus-drop{top:0;height:22px}
 .branch-drop{
+  position:absolute;
   top:22px;
   width:4px;
   height:0;
   opacity:0;
-  transition:height 1.2s ease, opacity .25s;
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom,
+    rgba(255,220,150,1),
+    transparent);
+  transition:height 1s ease, opacity .25s;
 }
 
 /* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:40px;
+  bottom:56px;
   left:0;
   width:100%;
   padding:0 6vw;
@@ -196,12 +215,13 @@ main{
   <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<div class="pulse" id="pulse"></div>
-
 <div class="bus-wrap" id="bus">
-  <div class="bus"></div>
+  <div class="bus">
+    <div class="flow" id="flowLeft"></div>
+    <div class="flow" id="flowRight" style="right:0"></div>
+  </div>
 
-  <!-- positions -->
+  <!-- drops -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -231,43 +251,42 @@ main{
 
 <script>
 window.onload = () => {
-  const pulse = document.getElementById("pulse");
-  const bus = document.getElementById("bus");
+  const flowL = document.getElementById("flowLeft");
+  const flowR = document.getElementById("flowRight");
   const branches = document.querySelectorAll(".branch-drop");
   const windows = document.querySelectorAll(".window");
-
-  const startY = pulse.getBoundingClientRect().top;
   const sequence = [[2,3],[1,4],[0,5]];
 
   function reset(){
+    flowL.style.width = flowR.style.width = "0";
+    flowL.style.opacity = flowR.style.opacity = 0;
     branches.forEach(b=>{b.style.height=0;b.style.opacity=0});
     windows.forEach(w=>w.classList.remove("active"));
   }
 
   function cycle(){
     reset();
-    pulse.style.opacity=1;
-    pulse.style.transform="translate(-50%,-80px)";
 
-    const busY = bus.getBoundingClientRect().top;
-    const dropLen = windows[0].getBoundingClientRect().top - bus.getBoundingClientRect().bottom - 6;
-
+    // horizontal spread
     setTimeout(()=>{
-      pulse.style.transform=`translate(-50%,${busY-startY-2}px)`;
-    },100);
+      flowL.style.left="50%";
+      flowL.style.width="50%";
+      flowL.style.opacity=1;
+
+      flowR.style.width="50%";
+      flowR.style.opacity=1;
+    },200);
 
     sequence.forEach((pair,i)=>{
       setTimeout(()=>{
         reset();
         pair.forEach(idx=>{
-          branches[idx].style.height=dropLen+"px";
+          branches[idx].style.height="180px";
           branches[idx].style.opacity=1;
           windows[idx].classList.add("active");
         });
-      },2800+i*1200);
+      },1200+i*1200);
     });
-
-    setTimeout(()=>{reset();pulse.style.opacity=0},7000);
   }
 
   cycle();
