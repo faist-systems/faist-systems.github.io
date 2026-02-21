@@ -16,8 +16,8 @@
   --muted:#b6bcc6;
   --panel:rgba(255,255,255,.04);
   --border:rgba(255,255,255,.12);
-  --gold1:rgba(255,200,80,.55);
-  --gold2:rgba(255,160,40,.35);
+  --gold1:rgba(255,200,80,.6);
+  --gold2:rgba(255,160,40,.4);
 }
 
 *{box-sizing:border-box}
@@ -71,54 +71,39 @@ body{
   max-height:90vmin;
 }
 
-/* ORBIT LAYER */
-.orbit-layer{
-  position:absolute;
-  inset:0;
-  z-index:1;
-}
-
-/* CENTER LOGO */
-.center{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  z-index:2;
-}
-.center img{
-  width:220px;
-  transition:filter .3s ease, transform .3s ease;
-}
-.center img.ai-glow{
-  filter:
-    drop-shadow(0 0 14px var(--gold1))
-    drop-shadow(0 0 32px var(--gold2));
-  transform:scale(1.04);
-}
-
-/* AI HITBOX – POUZE NAD LOGEM */
-.ai-trigger{
+/* CENTER STACK */
+.center-stack{
   position:absolute;
   top:50%;
   left:50%;
-  width:260px;
-  height:260px;
   transform:translate(-50%,-50%);
-  z-index:4;
-  cursor:pointer;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:flex-end;
-  padding-bottom:12px;
+  z-index:3;
 }
 
-.ai-trigger span{
+/* MAIN LOGO */
+.center-stack img{
+  width:220px;
+  transition:filter .3s ease, transform .3s ease;
+  cursor:pointer;
+}
+.center-stack img.ai-glow{
+  filter:
+    drop-shadow(0 0 16px var(--gold1))
+    drop-shadow(0 0 36px var(--gold2));
+  transform:scale(1.04);
+}
+
+/* ASK ME */
+.ask-me{
+  margin-top:6px;              /* 🔧 POSUN VÝŠ */
   font-size:12px;
   color:var(--muted);
+  cursor:pointer;
 }
-.ai-trigger:hover span{
+.ask-me:hover{
   text-shadow:0 0 10px var(--gold1);
 }
 
@@ -127,6 +112,7 @@ body{
   position:absolute;
   inset:0;
   pointer-events:none;
+  z-index:1;
 }
 .inner-orbit span{
   position:absolute;
@@ -143,6 +129,7 @@ body{
 .orbit{
   position:absolute;
   inset:0;
+  z-index:2;
 }
 
 .orbit-item{
@@ -165,6 +152,7 @@ body{
 .orbit-item .label{
   font-size:14px;
   color:#fff;
+  text-decoration:none;
 }
 
 .orbit-item::after{
@@ -210,9 +198,8 @@ body{
   background:#0a0c11;
   border:1px solid var(--border);
   border-radius:14px;
-  padding:24px 28px;
+  padding:26px 30px;
   max-width:420px;
-  color:#fff;
   text-align:center;
 }
 .ai-box button{
@@ -252,28 +239,22 @@ body{
 
   <div class="scene" id="scene">
 
-    <div class="orbit-layer">
-
-      <div class="center">
-        <img id="mainLogo" src="/assets/logos/faist-holding.png">
-      </div>
-
-      <div class="ai-trigger" id="openAI">
-        <span>Zeptej se mě</span>
-      </div>
-
-      <div class="inner-orbit" id="innerOrbit"></div>
-
-      <div class="orbit">
-        <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-        <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-        <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-        <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-        <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-        <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
-      </div>
-
+    <div class="center-stack">
+      <img id="mainLogo" src="/assets/logos/faist-holding.png" alt="FAIST">
+      <div class="ask-me" id="askAI">Zeptej se mě</div>
     </div>
+
+    <div class="inner-orbit" id="innerOrbit"></div>
+
+    <div class="orbit">
+      <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
+      <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
+      <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
+      <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
+      <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
+      <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+    </div>
+
   </div>
 </section>
 
@@ -293,13 +274,16 @@ if ('scrollRestoration' in history) history.scrollRestoration='manual';
 window.addEventListener('load',()=>window.scrollTo(0,0));
 
 /* AI */
-const ai=document.getElementById('openAI');
 const logo=document.getElementById('mainLogo');
+const ask=document.getElementById('askAI');
 const modal=document.getElementById('aiModal');
 
-ai.addEventListener('mouseenter',()=>logo.classList.add('ai-glow'));
-ai.addEventListener('mouseleave',()=>logo.classList.remove('ai-glow'));
-ai.addEventListener('click',()=>modal.classList.add('open'));
+[logo,ask].forEach(el=>{
+  el.addEventListener('mouseenter',()=>logo.classList.add('ai-glow'));
+  el.addEventListener('mouseleave',()=>logo.classList.remove('ai-glow'));
+  el.addEventListener('click',()=>modal.classList.add('open'));
+});
+
 modal.addEventListener('click',e=>{
   if(e.target===modal) modal.classList.remove('open');
 });
