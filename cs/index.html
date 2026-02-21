@@ -16,6 +16,8 @@
   --muted:#b6bcc6;
   --panel:rgba(255,255,255,.04);
   --border:rgba(255,255,255,.12);
+  --gold1:rgba(255,200,80,.55);
+  --gold2:rgba(255,160,40,.35);
 }
 
 *{box-sizing:border-box}
@@ -147,22 +149,36 @@ body{
   cursor:pointer;
   pointer-events:auto;
 }
+
 .ai-trigger img{
   width:220px;
   max-width:40vmin;
+  transition:
+    filter .35s ease,
+    transform .35s ease;
 }
+
+/* === GLOW EFFECT === */
+.ai-trigger:hover img{
+  filter:
+    drop-shadow(0 0 14px var(--gold1))
+    drop-shadow(0 0 32px var(--gold2));
+  transform:scale(1.04);
+}
+
 .ai-trigger span{
   margin-top:6px;
   font-size:12px;
   letter-spacing:1px;
   color:var(--muted);
   opacity:.7;
+  transition:opacity .25s ease;
 }
 .ai-trigger:hover span{
   opacity:1;
 }
 
-/* AI MODAL */
+/* ===== AI MODAL ===== */
 .ai-modal{
   position:fixed;
   inset:0;
@@ -200,7 +216,7 @@ body{
   text-align:right;
 }
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 .site-footer{
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
@@ -354,7 +370,7 @@ function animate(now){
 }
 requestAnimationFrame(animate);
 
-/* AI */
+/* AI MODAL */
 const openAI=document.getElementById("openAI");
 const closeAI=document.getElementById("closeAI");
 const modal=document.getElementById("aiModal");
