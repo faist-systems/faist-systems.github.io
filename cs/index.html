@@ -51,6 +51,17 @@ body{
   border-radius:14px;
   z-index:20;
 }
+.brand-panel h1{
+  margin:0 0 12px;
+  font-size:20px;
+  letter-spacing:3px;
+}
+.brand-panel p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
+}
 
 /* SCENE */
 .scene{
@@ -65,24 +76,27 @@ body{
 .orbit-layer{
   position:absolute;
   inset:0;
-  pointer-events:none;
 }
 
+/* CENTER LOGO (vizuální, neklikací) */
 .center{
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
+  pointer-events:none;
 }
 .center img{
   width:220px;
+  max-width:40vmin;
 }
 
+/* INNER TEXT */
 .inner-orbit{
   position:absolute;
   inset:0;
+  pointer-events:none;
 }
-
 .inner-orbit span{
   position:absolute;
   top:50%;
@@ -94,6 +108,7 @@ body{
   color:#e6ebf5;
 }
 
+/* ORBIT */
 .orbit{
   position:absolute;
   inset:0;
@@ -105,7 +120,9 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
-  pointer-events:auto; /* ← KLÍČOVÁ OPRAVA */
+  color:#fff;
+  text-decoration:none;      /* žádné podtržení */
+  pointer-events:auto;
 }
 
 .orbit-item img{
@@ -118,6 +135,31 @@ body{
 .orbit-item .label{
   font-size:14px;
   letter-spacing:1px;
+  color:#fff;                /* VŽDY bílý text */
+}
+
+/* TOOLTIP */
+.orbit-item::after{
+  content:attr(data-desc);
+  position:absolute;
+  bottom:110%;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s ease;
+}
+
+.orbit-item:hover::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
 
 @keyframes spin{
@@ -145,20 +187,67 @@ body{
 
 .ai-trigger img{
   width:220px;
+  max-width:40vmin;
   transition:filter .35s ease, transform .35s ease;
 }
 
+.ai-trigger span{
+  margin-top:6px;
+  font-size:12px;
+  letter-spacing:1px;
+  color:var(--muted);
+  opacity:.7;
+  transition:opacity .25s ease, text-shadow .25s ease;
+}
+
+/* GLOW – LOGO I TEXT */
 .ai-trigger:hover img{
   filter:
     drop-shadow(0 0 14px var(--gold1))
     drop-shadow(0 0 32px var(--gold2));
   transform:scale(1.04);
 }
+.ai-trigger:hover span{
+  opacity:1;
+  text-shadow:0 0 10px var(--gold1);
+}
 
-.ai-trigger span{
-  margin-top:6px;
+/* AI MODAL */
+.ai-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(10,12,17,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+.ai-modal.open{display:flex}
+.ai-panel{
+  width:420px;
+  max-width:90%;
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+}
+.ai-panel h2{
+  margin:0 0 12px;
+  font-size:16px;
+  letter-spacing:2px;
+}
+.ai-panel p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.6;
+}
+.ai-close{
+  margin-top:16px;
   font-size:12px;
   color:var(--muted);
+  cursor:pointer;
+  text-align:right;
 }
 
 /* FOOTER */
@@ -176,15 +265,18 @@ body{
 
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
-    <p style="color:var(--muted)">
+    <p>
       Navrhujeme inteligentní systémy propojující umělou inteligenci,
-      vědu a moderní technologie.
+      vědu a moderní technologie do praktických a dlouhodobě
+      udržitelných řešení.
     </p>
   </div>
 
   <div class="scene" id="scene">
 
+    <!-- ORBIT -->
     <div class="orbit-layer">
+
       <div class="center">
         <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
       </div>
@@ -192,15 +284,29 @@ body{
       <div class="inner-orbit" id="innerOrbit"></div>
 
       <div class="orbit">
-        <a class="orbit-item" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-        <a class="orbit-item" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-        <a class="orbit-item" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-        <a class="orbit-item" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-        <a class="orbit-item" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-        <a class="orbit-item" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+        <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy">
+          <img src="/assets/logos/faist-systems.png"><div class="label">Systems</div>
+        </a>
+        <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy">
+          <img src="/assets/logos/faist-lab.png"><div class="label">Lab</div>
+        </a>
+        <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty">
+          <img src="/assets/logos/faist-digital.png"><div class="label">Digital</div>
+        </a>
+        <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení">
+          <img src="/assets/logos/faist-energy.png"><div class="label">Energy</div>
+        </a>
+        <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost">
+          <img src="/assets/logos/faist-security.png"><div class="label">Security</div>
+        </a>
+        <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání">
+          <img src="/assets/logos/faist-edu.png"><div class="label">Edu</div>
+        </a>
       </div>
+
     </div>
 
+    <!-- AI OVERLAY -->
     <div class="ai-layer">
       <div class="ai-trigger" id="openAI">
         <img src="/assets/logos/faist-holding.png" alt="FAIST AI">
@@ -211,11 +317,20 @@ body{
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-grid">
-    <p style="color:var(--muted)">© FAIST Holding</p>
+<footer class="site-footer"></footer>
+
+<!-- AI MODAL -->
+<div class="ai-modal" id="aiModal">
+  <div class="ai-panel">
+    <h2>FAIST AI</h2>
+    <p>
+      Jsem centrální inteligence holdingu FAIST.
+      Brzy se mě budeš moci ptát na naše divize,
+      projekty a technologie.
+    </p>
+    <div class="ai-close" id="closeAI">Zavřít</div>
   </div>
-</footer>
+</div>
 
 <script>
 /* INNER TEXT */
@@ -230,13 +345,22 @@ text.split("").forEach((c,i)=>{
   inner.appendChild(s);
 });
 
-/* ORBIT */
+/* ORBIT + HOVER FREEZE */
 const items=[...document.querySelectorAll(".orbit-item")];
 const scene=document.getElementById("scene");
 
 let radius;
 let base=0;
 let last=performance.now();
+let frozen=false;
+
+items.forEach(el=>{
+  el.addEventListener("mouseenter",()=>frozen=true);
+  el.addEventListener("mouseleave",()=>{
+    frozen=false;
+    last=performance.now();
+  });
+});
 
 function resize(){
   radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
@@ -248,8 +372,11 @@ function animate(now){
   const dt=(now-last)/1000;
   last=now;
 
-  const speed=(Math.PI*2)/60;
-  base+=speed*dt;
+  if(!frozen){
+    const speed=(Math.PI*2)/60;
+    base+=speed*dt;
+    textAngle-=speed*dt*0.4*180/Math.PI;
+  }
 
   items.forEach((el,i)=>{
     const a=base+i*(Math.PI*2/items.length);
@@ -257,12 +384,22 @@ function animate(now){
       `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
   });
 
-  textAngle-=speed*dt*0.4*180/Math.PI;
   inner.style.transform=`rotate(${textAngle}deg)`;
 
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
+
+/* AI MODAL */
+const openAI=document.getElementById("openAI");
+const closeAI=document.getElementById("closeAI");
+const modal=document.getElementById("aiModal");
+
+openAI.addEventListener("click",()=>modal.classList.add("open"));
+closeAI.addEventListener("click",()=>modal.classList.remove("open"));
+modal.addEventListener("click",e=>{
+  if(e.target===modal) modal.classList.remove("open");
+});
 </script>
 
 </body>
