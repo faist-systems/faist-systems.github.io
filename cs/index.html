@@ -16,19 +16,42 @@
   --muted:#b6bcc6;
   --panel:rgba(255,255,255,.05);
   --border:rgba(255,255,255,.12);
-  --glow1:rgba(255,200,80,.6);
-  --glow2:rgba(255,160,40,.4);
+  --glow1:rgba(255,200,80,.45);
+  --glow2:rgba(120,160,255,.25);
 }
 
 *{box-sizing:border-box}
-html,body{margin:0}
+html,body{margin:0;height:100%}
 
 body{
   font-family:Inter,system-ui,sans-serif;
   color:var(--text);
+  background:#0f1117;
+  overflow-x:hidden;
+}
+
+/* 🌌 LIVING BACKGROUND */
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  z-index:-1;
   background:
-    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
-    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
+    radial-gradient(circle at var(--x1,30%) var(--y1,30%), var(--glow1), transparent 60%),
+    radial-gradient(circle at var(--x2,70%) var(--y2,70%), var(--glow2), transparent 65%);
+  animation: drift 90s linear infinite;
+}
+
+body::after{
+  animation-duration:140s;
+  opacity:.6;
+}
+
+@keyframes drift{
+  0%{transform:translate(0,0)}
+  50%{transform:translate(-4%,3%)}
+  100%{transform:translate(0,0)}
 }
 
 /* LANGUAGE */
@@ -46,7 +69,6 @@ body{
   display:grid;
   place-items:center;
   position:relative;
-  overflow:hidden;
 }
 
 /* LEFT PANEL */
@@ -91,13 +113,13 @@ body{
 
 .center-inner img{
   width:220px;
-  transition:filter .3s ease, transform .3s ease;
+  transition:.3s ease;
 }
 
 .center-inner:hover img{
   filter:
-    drop-shadow(0 0 18px var(--glow1))
-    drop-shadow(0 0 36px var(--glow2));
+    drop-shadow(0 0 18px rgba(255,200,80,.6))
+    drop-shadow(0 0 36px rgba(255,160,40,.4));
   transform:scale(1.04);
 }
 
@@ -111,7 +133,6 @@ body{
 .orbit{
   position:absolute;
   inset:0;
-  z-index:2;
 }
 
 .orbit-item{
@@ -120,43 +141,18 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
-  color:#fff;
+  color:white;
   text-decoration:none;
 }
 
 .orbit-item img{
   width:130px;
-  display:block;
-  margin:0 auto 6px;
+  margin-bottom:6px;
   animation:spin 20s linear infinite;
 }
 
-.orbit-item .label{font-size:14px}
-
-.orbit-item::after{
-  content:attr(data-desc);
-  position:absolute;
-  bottom:110%;
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
-  background:#0a0c11;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
-  color:var(--muted);
-  opacity:0;
-  transition:.25s ease;
-  pointer-events:none;
-}
-
-.orbit-item:hover::after{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
 @keyframes spin{
-  from{transform:rotate(0deg)}
+  from{transform:rotate(0)}
   to{transform:rotate(360deg)}
 }
 
@@ -164,7 +160,7 @@ body{
 #aiPanel{
   position:fixed;
   inset:0;
-  background:rgba(10,12,17,.92);
+  background:rgba(10,12,17,.9);
   backdrop-filter:blur(6px);
   display:none;
   z-index:100;
@@ -173,7 +169,7 @@ body{
 
 #aiBox{
   max-width:720px;
-  margin:0 auto;
+  margin:auto;
   background:#0f1117;
   border:1px solid var(--border);
   border-radius:16px;
@@ -202,33 +198,6 @@ body{
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
 }
-
-.footer-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:32px;
-}
-
-.footer-inner h4{
-  margin:0 0 12px;
-  font-size:14px;
-}
-
-.footer-inner p,
-.footer-inner a{
-  font-size:13px;
-  color:var(--muted);
-  text-decoration:none;
-}
-
-.footer-bottom{
-  margin-top:32px;
-  text-align:center;
-  font-size:12px;
-  color:var(--muted);
-}
 </style>
 </head>
 
@@ -242,7 +211,7 @@ body{
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
     <p style="color:var(--muted)">
-      Navrhujeme inteligentní systémy propojující AI, vědu a technologie.
+      Inteligentní systémy, výzkum a technologie.
     </p>
   </div>
 
@@ -256,58 +225,50 @@ body{
     </div>
 
     <div class="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-      <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-      <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-      <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-      <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-      <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+      <a class="orbit-item" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div>Systems</div></a>
+      <a class="orbit-item" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div>Lab</div></a>
+      <a class="orbit-item" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div>Digital</div></a>
+      <a class="orbit-item" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div>Energy</div></a>
+      <a class="orbit-item" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div>Security</div></a>
+      <a class="orbit-item" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div>Edu</div></a>
     </div>
 
   </div>
 </section>
 
 <footer class="site-footer">
-  <div class="footer-inner">
-    <div>
-      <h4>F.A.I.S.T. Holding</h4>
-      <p>Inteligentní systémy.<br>Výzkum. Technologie.</p>
-    </div>
-    <div>
-      <h4>Divize</h4>
-      <p>Systems · Lab · Digital<br>Energy · Security · Edu</p>
-    </div>
-    <div>
-      <h4>Kontakt</h4>
-      <p>tadeas.hora@faist.xyz<br>Praha · EU</p>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    © 2025 F.A.I.S.T. Holding
-  </div>
+  © 2026 F.A.I.S.T. Holding
 </footer>
 
 <div id="aiPanel">
   <div id="aiBox">
     <h2>FAIST AI</h2>
-    <div id="aiContent" style="color:var(--muted); line-height:1.6"></div>
+    <div id="aiContent" style="color:var(--muted)"></div>
     <div class="ai-buttons">
       <button data-q="Co je FAIST?">Co je FAIST?</button>
       <button data-q="Divize">Divize</button>
-      <button data-q="Spolupráce">Spolupráce</button>
       <button data-q="Zavřít">Zavřít</button>
     </div>
   </div>
 </div>
 
 <script>
+/* BACKGROUND PARALLAX */
+document.addEventListener("mousemove",e=>{
+  const x=e.clientX/window.innerWidth*100;
+  const y=e.clientY/window.innerHeight*100;
+  document.body.style.setProperty("--x1",`${x}%`);
+  document.body.style.setProperty("--y1",`${y}%`);
+  document.body.style.setProperty("--x2",`${100-x}%`);
+  document.body.style.setProperty("--y2",`${100-y}%`);
+});
+
+/* AI */
 const aiPanel=document.getElementById("aiPanel");
 const aiContent=document.getElementById("aiContent");
-
 const answers={
-  "Co je FAIST?":"FAIST je technologický holding zaměřený na AI a systémová řešení.",
-  "Divize":"Systems, Lab, Digital, Energy, Security a Edu.",
-  "Spolupráce":"Začněte přes digitální nebo systémovou divizi."
+  "Co je FAIST?":"FAIST je technologický holding zaměřený na inteligentní systémy.",
+  "Divize":"Systems, Lab, Digital, Energy, Security a Edu."
 };
 
 document.getElementById("centerClick").onclick=()=>{
@@ -321,37 +282,6 @@ aiPanel.onclick=e=>{
     else aiContent.innerHTML=answers[e.target.dataset.q];
   }
 };
-
-(function(){
-  const scene=document.getElementById("scene");
-  const items=[...document.querySelectorAll(".orbit-item")];
-  let radius=0,base=0,frozen=false,last=performance.now();
-
-  items.forEach(el=>{
-    el.onmouseenter=()=>frozen=true;
-    el.onmouseleave=()=>{frozen=false;last=performance.now();}
-  });
-
-  function resize(){
-    radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
-  }
-  resize();
-  window.onresize=resize;
-
-  function anim(now){
-    const dt=(now-last)/1000;
-    last=now;
-    if(!frozen) base+=(Math.PI*2/60)*dt;
-
-    items.forEach((el,i)=>{
-      const a=base+i*(Math.PI*2/items.length);
-      el.style.transform=
-        `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-    });
-    requestAnimationFrame(anim);
-  }
-  requestAnimationFrame(anim);
-})();
 </script>
 
 </body>
