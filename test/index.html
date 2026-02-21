@@ -13,13 +13,15 @@
 :root{
   --bg1:#0b0e16;
   --bg2:#12172a;
-  --bg3:#07080d;
-  --gold:rgba(200,160,80,.55);
-  --gold-dim:rgba(200,160,80,.15);
+  --bg3:#080a11;
+  --grid:rgba(255,255,255,.035);
+  --dot:rgba(255,255,255,.06);
   --text:#fff;
   --muted:#b6bcc6;
   --panel:rgba(255,255,255,.05);
   --border:rgba(255,255,255,.12);
+  --glow1:rgba(255,200,80,.6);
+  --glow2:rgba(255,160,40,.4);
 }
 
 *{box-sizing:border-box}
@@ -31,52 +33,26 @@ body{
   background:
     radial-gradient(1200px 800px at 20% 20%, var(--bg2), var(--bg1)),
     radial-gradient(1000px 700px at 80% 80%, #0e1325, var(--bg3));
-  overflow-x:hidden;
   position:relative;
+  overflow-x:hidden;
 }
 
-/* =========================
-   GOLDEN THREADS BACKGROUND
-   ========================= */
-#threads{
+/* TECH GRID */
+body::before{
+  content:"";
   position:fixed;
   inset:0;
-  z-index:0;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
+  background-size:80px 80px,80px 80px,40px 40px;
+  opacity:.5;
   pointer-events:none;
+  z-index:0;
 }
 
-.thread{
-  position:absolute;
-  width:1px;
-  height:140%;
-  background:linear-gradient(
-    to bottom,
-    transparent,
-    var(--gold),
-    var(--gold-dim),
-    transparent
-  );
-  opacity:0;
-  filter:blur(.3px);
-  animation:
-    thread-move linear infinite,
-    thread-fade ease-in-out infinite;
-}
-
-@keyframes thread-move{
-  from{transform:translateY(-20%)}
-  to{transform:translateY(120%)}
-}
-
-@keyframes thread-fade{
-  0%{opacity:0}
-  20%{opacity:.6}
-  80%{opacity:.6}
-  100%{opacity:0}
-}
-
-/* ========================= */
-
+/* LANGUAGE */
 .lang-switch{
   position:fixed;
   top:16px;
@@ -85,6 +61,7 @@ body{
 }
 .lang-switch img{width:22px}
 
+/* HERO */
 .hero{
   min-height:100vh;
   display:grid;
@@ -93,6 +70,7 @@ body{
   z-index:1;
 }
 
+/* LEFT PANEL */
 .brand-panel{
   position:absolute;
   top:24px;
@@ -105,6 +83,7 @@ body{
   z-index:20;
 }
 
+/* SCENE */
 .scene{
   position:relative;
   width:900px;
@@ -113,19 +92,22 @@ body{
   max-height:90vmin;
 }
 
+/* CENTER */
 .center{
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
-  pointer-events:none;
   z-index:5;
+  pointer-events:none;
 }
 
 .center-inner{
-  pointer-events:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   cursor:pointer;
-  text-align:center;
+  pointer-events:auto;
 }
 
 .center-inner img{
@@ -134,15 +116,19 @@ body{
 }
 
 .center-inner:hover img{
-  filter:drop-shadow(0 0 18px rgba(255,200,120,.5));
+  filter:
+    drop-shadow(0 0 18px var(--glow1))
+    drop-shadow(0 0 36px var(--glow2));
   transform:scale(1.04);
 }
 
 .ask-me{
+  margin-top:6px;
   font-size:12px;
   color:var(--muted);
 }
 
+/* ORBIT */
 .orbit{
   position:absolute;
   inset:0;
@@ -155,22 +141,49 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
-  color:white;
+  color:#fff;
   text-decoration:none;
 }
 
 .orbit-item img{
   width:130px;
-  margin-bottom:6px;
+  display:block;
+  margin:0 auto 6px;
   animation:spin 20s linear infinite;
 }
 
+.orbit-item .label{font-size:14px}
+
+/* TOOLTIP – OPRAVENO */
+.orbit-item::after{
+  content:attr(data-desc);
+  position:absolute;
+  bottom:110%;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  background:#0a0c11;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:12px;
+  color:var(--muted);
+  opacity:0;
+  transition:.25s ease;
+  pointer-events:none;
+  white-space:nowrap;
+}
+
+.orbit-item:hover::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
 @keyframes spin{
-  from{transform:rotate(0)}
+  from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
 
-/* AI */
+/* AI PANEL */
 #aiPanel{
   position:fixed;
   inset:0;
@@ -213,15 +226,11 @@ body{
   padding:48px 24px;
   text-align:center;
   color:var(--muted);
-  position:relative;
-  z-index:1;
 }
 </style>
 </head>
 
 <body>
-
-<div id="threads"></div>
 
 <div class="lang-switch">
   <a href="/en/index.html"><img src="/assets/flags/gb.png"></a>
@@ -245,12 +254,24 @@ body{
     </div>
 
     <div class="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div>Systems</div></a>
-      <a class="orbit-item" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div>Lab</div></a>
-      <a class="orbit-item" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div>Digital</div></a>
-      <a class="orbit-item" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div>Energy</div></a>
-      <a class="orbit-item" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div>Security</div></a>
-      <a class="orbit-item" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div>Edu</div></a>
+      <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy">
+        <img src="/assets/logos/faist-systems.png"><div class="label">Systems</div>
+      </a>
+      <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy">
+        <img src="/assets/logos/faist-lab.png"><div class="label">Lab</div>
+      </a>
+      <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty">
+        <img src="/assets/logos/faist-digital.png"><div class="label">Digital</div>
+      </a>
+      <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení">
+        <img src="/assets/logos/faist-energy.png"><div class="label">Energy</div>
+      </a>
+      <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost">
+        <img src="/assets/logos/faist-security.png"><div class="label">Security</div>
+      </a>
+      <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání">
+        <img src="/assets/logos/faist-edu.png"><div class="label">Edu</div>
+      </a>
     </div>
 
   </div>
@@ -273,23 +294,6 @@ body{
 </div>
 
 <script>
-/* GOLD THREADS */
-const threads=document.getElementById("threads");
-
-function spawnThread(){
-  const t=document.createElement("div");
-  t.className="thread";
-  t.style.left=Math.random()*100+"%";
-  const duration=30+Math.random()*40;
-  t.style.animationDuration=duration+"s,"+(duration*0.8)+"s";
-  threads.appendChild(t);
-  setTimeout(()=>t.remove(),duration*1000);
-}
-
-setInterval(()=>{
-  if(threads.children.length<7) spawnThread();
-},4000);
-
 /* AI */
 const aiPanel=document.getElementById("aiPanel");
 const aiContent=document.getElementById("aiContent");
@@ -310,7 +314,7 @@ aiPanel.onclick=e=>{
   }
 };
 
-/* ORBIT – stabilní */
+/* ORBIT */
 (function(){
   const scene=document.getElementById("scene");
   const items=[...document.querySelectorAll(".orbit-item")];
