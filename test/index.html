@@ -38,7 +38,7 @@ body{
   right:16px;
   z-index:50;
 }
-.lang-switch img{width:22px;display:block}
+.lang-switch img{width:22px}
 
 /* HERO */
 .hero{
@@ -71,31 +71,29 @@ body{
   max-height:90vmin;
 }
 
-/* CENTER STACK */
+/* CENTER */
 .center{
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
-  z-index:3;
-  pointer-events:none; /* KLÍČOVÉ */
+  z-index:5;              /* 🔑 OPRAVA */
+  pointer-events:none;
 }
 
 .center-inner{
   display:flex;
   flex-direction:column;
   align-items:center;
-  pointer-events:auto; /* klikatelné jen tohle */
+  pointer-events:auto;
+  cursor:pointer;
 }
 
 .center-inner img{
   width:220px;
-  max-width:40vmin;
-  cursor:pointer;
   transition:filter .3s ease, transform .3s ease;
 }
 
-.center-inner img:hover,
 .center-inner:hover img{
   filter:
     drop-shadow(0 0 18px var(--glow1))
@@ -107,29 +105,18 @@ body{
   margin-top:6px;
   font-size:12px;
   color:var(--muted);
-  cursor:pointer;
 }
 
 .center-inner:hover .ask-me{
   text-shadow:0 0 10px var(--glow1);
 }
 
-/* INNER TEXT ORBIT */
+/* INNER TEXT */
 .inner-orbit{
   position:absolute;
   inset:0;
   pointer-events:none;
   z-index:1;
-}
-.inner-orbit span{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform-origin:0 0;
-  white-space:nowrap;
-  font-size:13px;
-  letter-spacing:2px;
-  color:#e6ebf5;
 }
 
 /* ORBIT */
@@ -138,6 +125,7 @@ body{
   inset:0;
   z-index:2;
 }
+
 .orbit-item{
   position:absolute;
   top:50%;
@@ -147,16 +135,18 @@ body{
   color:#fff;
   text-decoration:none;
 }
+
 .orbit-item img{
   width:130px;
-  margin:0 auto 6px;
   display:block;
+  margin:0 auto 6px;
   animation:spin 20s linear infinite;
 }
+
 .orbit-item .label{
   font-size:14px;
-  color:#fff;
 }
+
 .orbit-item::after{
   content:attr(data-desc);
   position:absolute;
@@ -169,11 +159,11 @@ body{
   padding:8px 10px;
   font-size:12px;
   color:var(--muted);
-  white-space:nowrap;
   opacity:0;
-  pointer-events:none;
   transition:.25s ease;
+  pointer-events:none;
 }
+
 .orbit-item:hover::after{
   opacity:1;
   transform:translateX(-50%) translateY(0);
@@ -200,7 +190,6 @@ body{
 </div>
 
 <section class="hero">
-
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
     <p style="color:var(--muted)">
@@ -235,38 +224,11 @@ body{
 <footer class="site-footer"></footer>
 
 <script>
-/* SCROLL FIX */
-if ('scrollRestoration' in history) history.scrollRestoration='manual';
-window.addEventListener('load',()=>window.scrollTo(0,0));
-
-/* TEST CLICK */
 document.getElementById('centerClick').addEventListener('click',()=>{
-  console.log('Center clicked – ready for AI');
+  console.log('Center logo clicked – ready for AI modal');
 });
 
-/* INNER TEXT ORBIT */
-(function(){
-  const inner=document.getElementById("innerOrbit");
-  const text="Forge of Artificial Intelligence, Science & Technology • ";
-  const r=125;
-
-  text.split("").forEach((c,i)=>{
-    const s=document.createElement("span");
-    s.textContent=c;
-    s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${r}px)`;
-    inner.appendChild(s);
-  });
-
-  let a=0;
-  function spin(){
-    a-=0.015;
-    inner.style.transform=`rotate(${a}deg)`;
-    requestAnimationFrame(spin);
-  }
-  requestAnimationFrame(spin);
-})();
-
-/* ORBIT */
+/* ORBIT MOTION */
 (function(){
   const scene=document.getElementById("scene");
   const items=[...document.querySelectorAll(".orbit-item")];
