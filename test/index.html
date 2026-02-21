@@ -108,7 +108,6 @@ main{
   position:relative;
   height:2px;
   background:rgba(255,215,120,.35);
-  overflow:hidden;
 }
 
 /* HORIZONTAL FLOWS */
@@ -166,7 +165,7 @@ main{
 /* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:56px;
+  bottom:80px; /* ⬅ finální posun */
   left:0;
   width:100%;
   padding:0 6vw;
@@ -237,7 +236,6 @@ main{
     <div class="flow right" id="flowR"></div>
   </div>
 
-  <!-- fixed drops -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -245,7 +243,6 @@ main{
   <div class="bus-drop" style="left:80%"></div>
   <div class="bus-drop" style="left:100%"></div>
 
-  <!-- animated branches -->
   <div class="branch-drop" style="left:0%"></div>
   <div class="branch-drop" style="left:20%"></div>
   <div class="branch-drop" style="left:40%"></div>
@@ -289,7 +286,6 @@ window.onload = () => {
   function cycle(){
     resetAll();
 
-    // horizontal spread
     setTimeout(()=>{
       flowL.style.width = "50%";
       flowL.style.opacity = 1;
@@ -299,14 +295,12 @@ window.onload = () => {
 
     sequence.forEach((pair,i)=>{
       setTimeout(()=>{
-        // zhasni předchozí
         branches.forEach(b=>{
           b.style.height = "0";
           b.style.opacity = 0;
         });
         windows.forEach(w=>w.classList.remove("active"));
 
-        // rozsvit aktuální pár
         pair.forEach(idx=>{
           branches[idx].style.height = "150px";
           branches[idx].style.opacity = 1;
@@ -315,7 +309,6 @@ window.onload = () => {
       },step + i*step);
     });
 
-    // zhasni poslední pár
     setTimeout(()=>{
       branches.forEach(b=>{
         b.style.height = "0";
