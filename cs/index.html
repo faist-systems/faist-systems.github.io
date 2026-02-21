@@ -31,6 +31,18 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
+/* ===== LANGUAGE SWITCH ===== */
+.lang-switch{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:50;
+}
+.lang-switch img{
+  width:22px;
+  display:block;
+}
+
 /* HERO */
 .hero{
   min-height:100vh;
@@ -66,6 +78,7 @@ body{
 .orbit-layer{
   position:absolute;
   inset:0;
+  z-index:1;
 }
 
 .center{
@@ -74,7 +87,6 @@ body{
   display:grid;
   place-items:center;
   pointer-events:none;
-  z-index:2;
 }
 .center img{
   width:220px;
@@ -86,7 +98,6 @@ body{
   position:absolute;
   inset:0;
   pointer-events:none;
-  z-index:1;
 }
 .inner-orbit span{
   position:absolute;
@@ -103,7 +114,6 @@ body{
 .orbit{
   position:absolute;
   inset:0;
-  z-index:3;
 }
 
 .orbit-item{
@@ -158,7 +168,7 @@ body{
   to{transform:rotate(360deg)}
 }
 
-/* ===== AI OVERLAY (NO LOGO) ===== */
+/* ===== AI OVERLAY ===== */
 .ai-layer{
   position:absolute;
   inset:0;
@@ -178,13 +188,13 @@ body{
   flex-direction:column;
   align-items:center;
   justify-content:flex-end;
-  padding-bottom:22px;
+  padding-bottom:14px;
 }
 
 .ai-trigger span{
   font-size:12px;
   color:var(--muted);
-  opacity:.75;
+  opacity:.8;
 }
 
 .ai-trigger:hover span{
@@ -192,8 +202,7 @@ body{
   text-shadow:0 0 10px var(--gold1);
 }
 
-/* GLOW ON REAL LOGO */
-.ai-trigger:hover ~ .orbit-layer .center img{
+.ai-trigger:hover + .orbit-layer .center img{
   filter:
     drop-shadow(0 0 14px var(--gold1))
     drop-shadow(0 0 32px var(--gold2));
@@ -206,10 +215,34 @@ body{
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
 }
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
+}
+.site-footer h3{
+  font-size:14px;
+  letter-spacing:2px;
+}
+.site-footer a{
+  display:block;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:6px;
+}
 </style>
 </head>
 
 <body>
+
+<!-- LANGUAGE SWITCH -->
+<div class="lang-switch">
+  <a href="/en/index.html" title="English">
+    <img src="/assets/flags/gb.png" alt="EN">
+  </a>
+</div>
 
 <section class="hero">
 
@@ -263,7 +296,29 @@ body{
   </div>
 </section>
 
-<footer class="site-footer"></footer>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>O nás</h3>
+      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
+    </div>
+    <div>
+      <h3>Divize</h3>
+      <a href="/cs/divisions/systems.html">Systems</a>
+      <a href="/cs/divisions/lab.html">Lab</a>
+      <a href="/cs/divisions/digital.html">Digital</a>
+      <a href="/cs/divisions/energy.html">Energy</a>
+      <a href="/cs/divisions/security.html">Security</a>
+      <a href="/cs/divisions/edu.html">Edu</a>
+    </div>
+    <div>
+      <h3>Informace</h3>
+      <a href="#">Slovník pojmů</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </div>
+</footer>
 
 <script>
 /* SCROLL FIX */
@@ -276,7 +331,7 @@ window.addEventListener('load',()=>window.scrollTo(0,0));
 const text="Forge of Artificial Intelligence · Science · Technology · ";
 const inner=document.getElementById("innerOrbit");
 let textAngle=0;
-const textRadius=150;
+const textRadius=135;
 
 text.split("").forEach((c,i)=>{
   const s=document.createElement("span");
