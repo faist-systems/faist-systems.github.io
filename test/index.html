@@ -9,17 +9,18 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;background:#000;color:#eee;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
+html,body{width:100%;height:100%;background:#000;color:#eee;
+font-family:system-ui,-apple-system,"Segoe UI",sans-serif;}
 body{overflow-x:hidden}
 
-/* HEADER */
+/* ===== HEADER ===== */
 header{
     height:64px;
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
     padding:0 4vw;
-    z-index:30;
+    z-index:20;
     position:relative;
 }
 header nav a{
@@ -30,37 +31,39 @@ header nav a{
 }
 header nav a:hover{color:#fff}
 
-/* MAIN */
+/* ===== MAIN ===== */
 main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 
-/* BACKGROUND */
+/* ===== BACKGROUND ===== */
 .background{
     position:absolute;inset:0;
     background:
-        radial-gradient(circle at center, rgba(255,200,120,.03), transparent 60%),
-        linear-gradient(to bottom,#050505,#000 70%);
-    z-index:0;
+      radial-gradient(circle at center, rgba(255,200,120,.025), transparent 60%),
+      linear-gradient(to bottom,#050505,#000 70%);
 }
 .noise{
     position:absolute;inset:0;
-    background-image:repeating-radial-gradient(circle,rgba(255,255,255,.02) 0 1px,transparent 1px 2px);
+    background-image:repeating-radial-gradient(circle,
+        rgba(255,255,255,.02) 0 1px, transparent 1px 2px);
     background-size:2px 2px;
     opacity:.18;
     mix-blend-mode:overlay;
-    z-index:1;
 }
 
-/* CORE */
+/* ===== CORE ===== */
 .light-core{
     position:absolute;
     top:0;left:50%;
     width:2px;height:100%;
     transform:translateX(-50%);
-    background:linear-gradient(to bottom,transparent,rgba(255,215,120,.9) 50%,transparent);
+    background:linear-gradient(to bottom,
+        transparent,
+        rgba(255,215,120,.45) 50%,
+        transparent);
     z-index:4;
 }
 
-/* HERO */
+/* ===== HERO ===== */
 .hero{
     position:relative;
     z-index:10;
@@ -72,18 +75,18 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     font-size:clamp(2.6rem,4.8vw,3.8rem);
     letter-spacing:.24em;
     text-shadow:
-        0 2px 6px rgba(255,215,120,.35),
-        0 0 1px rgba(255,215,120,.6);
+      0 2px 4px rgba(255,215,120,.45),
+      0 0 1px rgba(255,215,120,.6);
 }
 .hero p{
-    margin-top:26px;
+    margin-top:24px;
     font-size:.95rem;
     opacity:.75;
     max-width:660px;
     margin-inline:auto;
 }
 
-/* BUS */
+/* ===== BUS ===== */
 .light-bus{
     position:absolute;
     top:36%;
@@ -92,19 +95,39 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     height:2px;
     background:linear-gradient(to right,
         transparent,
-        rgba(255,215,120,.65) 50%,
+        rgba(255,215,120,.5) 50%,
         transparent);
     z-index:6;
 }
 
-/* PULSE */
+/* ===== BUS DROPS (6×) ===== */
+.bus-drop{
+    position:absolute;
+    top:36%;
+    width:2px;
+    height:26px;
+    background:linear-gradient(to bottom,
+        rgba(255,215,120,.6),
+        transparent);
+}
+.bus-drop:nth-child(1){left:8.3%}
+.bus-drop:nth-child(2){left:25%}
+.bus-drop:nth-child(3){left:41.7%}
+.bus-drop:nth-child(4){left:58.3%}
+.bus-drop:nth-child(5){left:75%}
+.bus-drop:nth-child(6){left:91.7%}
+
+/* ===== PULSE ===== */
 .pulse{
     position:absolute;
     top:120px;
     left:50%;
     width:6px;height:26px;
     transform:translateX(-50%);
-    background:linear-gradient(to bottom,transparent,rgba(255,220,150,1),transparent);
+    background:linear-gradient(to bottom,
+        transparent,
+        rgba(255,220,150,1),
+        transparent);
     border-radius:4px;
     animation:pulseDrop 8s ease-in-out infinite;
     z-index:7;
@@ -112,12 +135,12 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 @keyframes pulseDrop{
     0%{opacity:0;transform:translate(-50%,-30px);}
     15%{opacity:1;}
-    45%{transform:translate(-50%,200px);}
+    42%{transform:translate(-50%,180px);}
     55%{opacity:0;}
     100%{opacity:0;}
 }
 
-/* DIVISIONS */
+/* ===== DIVISIONS ===== */
 .divisions{
     position:absolute;
     bottom:5vh;
@@ -127,57 +150,45 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     gap:1.4vw;
     z-index:10;
 }
-.division{
-    width:calc(100%/6);
-    position:relative;
-}
+.division{width:calc(100%/6);}
 
-/* CARD */
+/* ===== CARD ===== */
 .window{
     height:260px;
     padding:18px;
     border-radius:20px;
     background:rgba(12,12,12,.7);
     border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(6px);
     display:flex;
     flex-direction:column;
-    --glow: transparent;
     animation:react 8s ease-in-out infinite;
 }
-.window::after{
-    content:"";
-    position:absolute;
-    inset:-1px;
-    border-radius:20px;
-    box-shadow:0 0 0 0 var(--glow);
-    pointer-events:none;
-}
 
+/* reakce při impulzu */
 @keyframes react{
-    0%,55%{--glow: transparent;}
-    60%{--glow: var(--accent);}
-    65%{--glow: transparent;}
-    100%{--glow: transparent;}
+    0%,55%{box-shadow:none;}
+    60%{box-shadow:0 0 0 2px var(--accent);}
+    65%{box-shadow:none;}
+    100%{box-shadow:none;}
 }
 
 .image-slot{
-    height:100px;border-radius:14px;
+    height:100px;
+    border-radius:14px;
     border:1px dashed rgba(255,255,255,.18);
     margin-bottom:12px;
 }
 .window h3{font-size:.95rem;margin-bottom:6px}
-.window p{font-size:.8rem;opacity:.7;line-height:1.4;margin-bottom:auto}
+.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
 .window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
-.window a:hover{text-decoration:underline}
 
-/* ACCENT COLORS */
-.systems{--accent: rgba(120,180,255,.55);}
-.research{--accent: rgba(170,120,255,.55);}
-.digital{--accent: rgba(120,220,255,.55);}
-.energy{--accent: rgba(255,180,90,.55);}
-.security{--accent: rgba(120,255,180,.55);}
-.academy{--accent: rgba(255,220,140,.55);}
+/* ===== ACCENTS ===== */
+.systems{--accent:rgba(120,180,255,.8)}
+.research{--accent:rgba(170,120,255,.8)}
+.digital{--accent:rgba(120,220,255,.8)}
+.energy{--accent:rgba(255,180,90,.8)}
+.security{--accent:rgba(120,255,180,.8)}
+.academy{--accent:rgba(255,220,140,.8)}
 </style>
 
 <script>
@@ -200,23 +211,26 @@ window.onload=()=>window.scrollTo(0,0);
 <main>
 <div class="background"></div>
 <div class="noise"></div>
+
 <div class="light-core"></div>
 <div class="pulse"></div>
 
 <div class="hero">
 <h1>F.A.I.S.T. HOLDING</h1>
-<p>Struktura, která propojuje stabilitu, inovace, energii a znalosti do jednoho funkčního celku.</p>
+<p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
 <div class="light-bus"></div>
+<div class="bus-drop"></div><div class="bus-drop"></div><div class="bus-drop"></div>
+<div class="bus-drop"></div><div class="bus-drop"></div><div class="bus-drop"></div>
 
 <div class="divisions">
-<div class="division"><div class="window systems"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura digitálního světa.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window research"><div class="image-slot"></div><h3>Research</h3><p>Výzkum a hledání nových technologických cest.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window digital"><div class="image-slot"></div><h3>Digital</h3><p>Digitální produkty s reálným dopadem.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window energy"><div class="image-slot"></div><h3>Energy</h3><p>Přenos a transformace energie.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window security"><div class="image-slot"></div><h3>Security</h3><p>Bezpečnost a kontrola systémů.</p><a href="#">Zjistit více →</a></div></div>
-<div class="division"><div class="window academy"><div class="image-slot"></div><h3>Academy</h3><p>Vzdělávání a přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window systems"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window research"><div class="image-slot"></div><h3>Research</h3><p>Výzkum a experiment.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window digital"><div class="image-slot"></div><h3>Digital</h3><p>Digitální produkty.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window energy"><div class="image-slot"></div><h3>Energy</h3><p>Transformace energie.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window security"><div class="image-slot"></div><h3>Security</h3><p>Ochrana systémů.</p><a href="#">Zjistit více →</a></div></div>
+<div class="division"><div class="window academy"><div class="image-slot"></div><h3>Academy</h3><p>Přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
 </div>
 </main>
 
