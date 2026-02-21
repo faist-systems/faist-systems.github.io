@@ -18,8 +18,7 @@ html,body{
 }
 body{overflow:hidden}
 
-/* ================= HEADER / FOOTER ================= */
-
+/* HEADER */
 header{
   height:64px;
   display:flex;
@@ -37,28 +36,27 @@ header nav a{
 }
 header nav a:hover{color:#fff}
 
+/* FOOTER */
 footer{
   position:absolute;
   bottom:0;
   width:100%;
-  height:36px;
+  height:32px;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:.75rem;
-  opacity:.5;
-  z-index:20;
+  font-size:.7rem;
+  opacity:.45;
+  z-index:10;
 }
 
-/* ================= MAIN ================= */
-
+/* MAIN */
 main{
   height:calc(100vh - 64px);
   position:relative;
 }
 
-/* ================= BACKGROUND ================= */
-
+/* BACKGROUND */
 .background{
   position:absolute;
   inset:0;
@@ -79,8 +77,7 @@ main{
   mix-blend-mode:overlay;
 }
 
-/* ================= HERO ================= */
-
+/* HERO */
 .hero{
   position:relative;
   z-index:10;
@@ -101,24 +98,21 @@ main{
   opacity:.7;
 }
 
-/* ================= BUS ================= */
-
+/* BUS */
 .bus-wrap{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
   width:min(1100px,90vw);
-  /* bus je vždy mezi hero a kartami */
-  top:clamp(38%,42vh,44%);
+  top:clamp(34%,38vh,40%);
 }
 .bus{
   height:2px;
-  background:rgba(255,215,120,.25);
+  background:rgba(255,215,120,.28);
   position:relative;
 }
 
-/* ================= MAIN DROP ================= */
-
+/* MAIN DROP */
 .pulse{
   position:absolute;
   left:50%;
@@ -133,11 +127,10 @@ main{
   );
   border-radius:4px;
   opacity:0;
-  transition:transform 2.2s ease-in, opacity .25s;
+  transition:transform 2.4s ease-in, opacity .25s;
 }
 
-/* ================= BUS DROPS ================= */
-
+/* BUS DROPS */
 .bus-drop{
   position:absolute;
   top:0;
@@ -150,8 +143,7 @@ main{
   );
 }
 
-/* ================= BRANCH DROPS ================= */
-
+/* BRANCH DROPS */
 .branch-drop{
   position:absolute;
   top:22px;
@@ -164,14 +156,13 @@ main{
     transparent
   );
   opacity:0;
-  transition:height .9s ease-in, opacity .25s;
+  transition:height 1.1s ease-in, opacity .25s;
 }
 
-/* ================= DIVISIONS ================= */
-
+/* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:60px;
+  bottom:56px;
   left:0;
   width:100%;
   padding:0 6vw;
@@ -182,14 +173,14 @@ main{
 .division{width:calc(100%/6)}
 
 .window{
-  height:clamp(220px,26vh,280px);
+  height:clamp(220px,25vh,270px);
   padding:18px;
   border-radius:20px;
   background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
-  transition:box-shadow .3s ease;
+  transition:box-shadow .35s ease;
 }
 .window.active{
   box-shadow:0 0 0 1px var(--accent);
@@ -202,8 +193,7 @@ main{
   text-decoration:none;
 }
 
-/* ================= ACCENTS ================= */
-
+/* ACCENTS */
 .systems{--accent:rgba(120,180,255,.45)}
 .research{--accent:rgba(170,120,255,.45)}
 .digital{--accent:rgba(120,220,255,.45)}
@@ -239,7 +229,6 @@ main{
 <div class="bus-wrap" id="bus">
   <div class="bus"></div>
 
-  <!-- svody + kapky -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -276,10 +265,8 @@ window.onload = () => {
   const branches = document.querySelectorAll(".branch-drop");
   const windows  = document.querySelectorAll(".window");
 
-  // pevný start kapky (neměnný)
   const pulseStartY = pulse.getBoundingClientRect().top;
 
-  // páry od středu ven
   const sequence = [
     [2,3],
     [1,4],
@@ -299,7 +286,7 @@ window.onload = () => {
     pulse.style.opacity = 0;
     pulse.style.transform = "translate(-50%,-80px)";
     requestAnimationFrame(()=>{
-      pulse.style.transition = "transform 2.2s ease-in, opacity .25s";
+      pulse.style.transition = "transform 2.4s ease-in, opacity .25s";
     });
   }
 
@@ -308,19 +295,17 @@ window.onload = () => {
     resetPulse();
 
     const busRect = bus.getBoundingClientRect();
-    const deltaY  = busRect.top - pulseStartY;
+    const deltaY  = busRect.top - pulseStartY - 2;
 
     const cardTop = windows[0].getBoundingClientRect().top;
-    const dropLen = cardTop - busRect.bottom - 4;
+    const dropLen = cardTop - busRect.bottom - 6;
 
     pulse.style.opacity = 1;
 
-    // pád přesně DO BUSU
     setTimeout(()=>{
       pulse.style.transform = `translate(-50%, ${deltaY}px)`;
-    },60);
+    },80);
 
-    // sekvence světla
     sequence.forEach((pair, step)=>{
       setTimeout(()=>{
         resetAll();
@@ -329,18 +314,17 @@ window.onload = () => {
           branches[i].style.height = dropLen + "px";
           windows[i].classList.add("active");
         });
-      }, 2400 + step * 1000);
+      }, 2600 + step * 1100);
     });
 
-    // konec cyklu
     setTimeout(()=>{
       resetAll();
       pulse.style.opacity = 0;
-    }, 2400 + sequence.length * 1000 + 300);
+    }, 2600 + sequence.length * 1100 + 400);
   }
 
   runCycle();
-  setInterval(runCycle,15000);
+  setInterval(runCycle,16000);
 };
 </script>
 
