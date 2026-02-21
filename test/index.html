@@ -31,7 +31,7 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* LANGUAGE SWITCH */
+/* LANGUAGE */
 .lang-switch{
   position:fixed;
   top:16px;
@@ -78,6 +78,7 @@ body{
   display:grid;
   place-items:center;
   z-index:5;
+  pointer-events:none; /* 🔑 KLÍČOVÁ OPRAVA */
 }
 
 .center-inner{
@@ -85,6 +86,7 @@ body{
   flex-direction:column;
   align-items:center;
   cursor:pointer;
+  pointer-events:auto; /* 🔑 povolíme jen logo */
 }
 
 .center-inner img{
@@ -103,10 +105,6 @@ body{
   margin-top:6px;
   font-size:12px;
   color:var(--muted);
-}
-
-.center-inner:hover .ask-me{
-  text-shadow:0 0 10px var(--glow1);
 }
 
 /* ORBIT */
@@ -133,9 +131,7 @@ body{
   animation:spin 20s linear infinite;
 }
 
-.orbit-item .label{
-  font-size:14px;
-}
+.orbit-item .label{font-size:14px}
 
 .orbit-item::after{
   content:attr(data-desc);
@@ -219,8 +215,7 @@ body{
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
     <p style="color:var(--muted)">
-      Navrhujeme inteligentní systémy propojující umělou inteligenci,
-      vědu a moderní technologie.
+      Navrhujeme inteligentní systémy propojující AI, vědu a technologie.
     </p>
   </div>
 
@@ -252,7 +247,6 @@ body{
   <div id="aiBox">
     <h2>FAIST AI</h2>
     <div id="aiContent" style="color:var(--muted); line-height:1.6"></div>
-
     <div class="ai-buttons">
       <button data-q="Co je FAIST?">Co je FAIST?</button>
       <button data-q="Divize">Divize</button>
@@ -263,41 +257,25 @@ body{
 </div>
 
 <script>
-/* AI LOGIC */
+/* AI */
 const aiPanel=document.getElementById("aiPanel");
 const aiContent=document.getElementById("aiContent");
 
 const answers={
-  "Co je FAIST?":`
-    FAIST je technologický holding zaměřený na AI, výzkum a systémy s reálným dopadem.
-    <br><br><a href="/cs/about.html">Více o FAIST →</a>
-  `,
-  "Divize":`
-    Systems, Lab, Digital, Energy, Security a Edu.
-    <br><br><a href="/cs/divisions/">Přehled divizí →</a>
-  `,
-  "Spolupráce":`
-    Začněte přes digitální nebo systémovou divizi.
-    <br><br><a href="/cs/contact.html">Kontakt →</a>
-  `
+  "Co je FAIST?":"FAIST je technologický holding zaměřený na AI a systémy.",
+  "Divize":"Systems, Lab, Digital, Energy, Security a Edu.",
+  "Spolupráce":"Začněte přes digitální nebo systémovou divizi."
 };
-
-function render(q){
-  aiContent.innerHTML=answers[q]||"Tuhle odpověď připravujeme.";
-}
 
 document.getElementById("centerClick").onclick=()=>{
   aiPanel.style.display="block";
-  render("Co je FAIST?");
+  aiContent.innerHTML=answers["Co je FAIST?"];
 };
 
 aiPanel.onclick=e=>{
   if(e.target.dataset.q){
-    if(e.target.dataset.q==="Zavřít"){
-      aiPanel.style.display="none";
-    }else{
-      render(e.target.dataset.q);
-    }
+    if(e.target.dataset.q==="Zavřít") aiPanel.style.display="none";
+    else aiContent.innerHTML=answers[e.target.dataset.q];
   }
 };
 
