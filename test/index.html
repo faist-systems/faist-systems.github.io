@@ -1,237 +1,131 @@
-
-
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<title>FAIST Holding – Test</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <title>FAIST Holding – Light Core</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-:root{
-  --gold:#d4af37;
-  --text:#f2f2f2;
-  --muted:#b0b0b0;
-  --panel:rgba(18,18,18,.88);
-}
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
 
-*{margin:0;padding:0;box-sizing:border-box}
+        /* SCENE */
+        .scene {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
 
-body{
-  font-family:Inter,system-ui,sans-serif;
-  background:#000;
-  color:var(--text);
-}
+        /* BACKGROUND IMAGE */
+        .background {
+            position: absolute;
+            inset: 0;
+            background: url("../assets/bg/faist-bg.jpg") center center / cover no-repeat;
+            z-index: 0;
+        }
 
-/* HEADER */
-header{
-  position:absolute;
-  top:0;left:0;
-  width:100%;
-  height:72px;
-  padding:0 56px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:10;
-}
+        /* NOISE OVERLAY */
+        .noise {
+            position: absolute;
+            inset: 0;
+            background: url("../assets/noise/noise.png") repeat;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-header nav a{
-  color:var(--muted);
-  margin-left:28px;
-  text-decoration:none;
-  font-size:14px;
-}
-header nav a:hover{color:#fff}
+        /* LIGHT CORE WRAPPER */
+        .light-core {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 100%;
+            transform: translateX(-50%);
+            z-index: 5;
+            pointer-events: none;
+        }
 
-/* HERO */
-.hero{
-  position:relative;
-  min-height:100vh;
-  background:
-    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.85)),
-  overflow:hidden;
-}
+        /* CORE – ostré jádro */
+        .light-core::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            transform: translateX(-50%);
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 248, 220, 0.95) 20%,
+                rgba(255, 215, 120, 1) 50%,
+                rgba(255, 248, 220, 0.95) 80%,
+                rgba(255, 255, 255, 0) 100%
+            );
+        }
 
-/* MAIN VERTICAL BEAM */
-.hero::before{
-  content:"";
-  position:absolute;
-  top:-20%;
-  bottom:0;
-  left:50%;
-  width:2px;
-  transform:translateX(-50%);
-  background:linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(212,175,55,.9) 35%,
-    rgba(212,175,55,.9) 65%,
-    transparent 100%
-  );
-  box-shadow:
-    0 0 20px rgba(212,175,55,.6),
-    0 0 60px rgba(212,175,55,.35);
-  z-index:0;
-}
+        /* HALO – zlatý rozptyl */
+        .light-core::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 120px;
+            height: 100%;
+            transform: translateX(-50%);
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 200, 80, 0.35) 0%,
+                rgba(255, 180, 60, 0.18) 25%,
+                rgba(255, 150, 40, 0.08) 45%,
+                rgba(0, 0, 0, 0) 70%
+            );
+            filter: blur(12px);
+        }
 
-/* HORIZONTAL DISTRIBUTION */
-.hero::after{
-  content:"";
-  position:absolute;
-  left:8%;
-  right:8%;
-  top:62%;
-  height:2px;
-  background:linear-gradient(
-    to right,
-    transparent,
-    rgba(212,175,55,.9),
-    transparent
-  );
-  box-shadow:
-    0 0 18px rgba(212,175,55,.5);
-  z-index:0;
-}
-
-/* NOISE */
-.hero .noise{
-  position:absolute;
-  inset:0;
-  background:url("/assets/noise.png");
-  opacity:.035;
-  pointer-events:none;
-  z-index:1;
-}
-
-/* CONTENT */
-.hero-content{
-  position:relative;
-  z-index:2;
-  min-height:100vh;
-  padding-top:120px;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.hero-content h1{
-  font-size:44px;
-  letter-spacing:3px;
-  margin-bottom:12px;
-}
-
-.hero-content h2{
-  font-size:18px;
-  color:var(--muted);
-  margin-bottom:14px;
-}
-
-.hero-content p{
-  font-size:14px;
-  max-width:760px;
-  color:#b5b5b5;
-  line-height:1.6;
-}
-
-/* DIVISIONS */
-.divisions{
-  position:relative;
-  margin-top:90px;
-  width:calc(100% - 112px);
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:20px;
-}
-
-/* LIGHT NODES ABOVE CARDS */
-.divisions::before{
-  content:"";
-  position:absolute;
-  top:-12px;
-  left:0;
-  right:0;
-  height:6px;
-  background:transparent;
-  box-shadow:
-    0 0 0 rgba(0,0,0,0),
-    8.33% 0 var(--gold),
-    25% 0 var(--gold),
-    41.66% 0 var(--gold),
-    58.33% 0 var(--gold),
-    75% 0 var(--gold),
-    91.66% 0 var(--gold);
-}
-
-/* CARD */
-.division{
-  background:var(--panel);
-  border-radius:14px;
-  padding:20px;
-  min-height:180px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  box-shadow:0 10px 30px rgba(0,0,0,.45);
-}
-
-.division h3{font-size:15px;margin-bottom:8px}
-.division p{font-size:13px;color:#b5b5b5;line-height:1.4}
-.division a{
-  font-size:13px;
-  color:var(--gold);
-  text-decoration:none;
-}
-.division a:hover{text-decoration:underline}
-
-/* RESPONSIVE */
-@media(max-width:1200px){
-  .divisions{grid-template-columns:repeat(3,1fr)}
-}
-@media(max-width:700px){
-  header{padding:0 24px}
-  .divisions{
-    grid-template-columns:1fr;
-    width:calc(100% - 48px)
-  }
-}
-</style>
+        /* ATMOSPHERIC GLOW */
+        .light-atmosphere {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 420px;
+            height: 100%;
+            transform: translateX(-50%);
+            background: radial-gradient(
+                ellipse at center,
+                rgba(255, 180, 90, 0.08) 0%,
+                rgba(255, 180, 90, 0.04) 30%,
+                rgba(0, 0, 0, 0) 70%
+            );
+            filter: blur(40px);
+            z-index: 4;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="scene">
+        <div class="background"></div>
+        <div class="noise"></div>
 
-<header>
-  <strong>FAIST</strong>
-  <nav>
-    <a href="#">About</a>
-    <a href="#">Divisions</a>
-    <a href="#">Careers</a>
-    <a href="#">Blog</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div class="noise"></div>
-
-  <div class="hero-content">
-    <h1>FAIST HOLDING</h1>
-    <h2>Sjednocující síla pro technologie, energii a vzdělávání</h2>
-    <p>Mateřská entita propojující infrastrukturu, výzkum, digitální produkty,
-    energetická řešení a vzdělávání do jednoho funkčního celku.</p>
-
-    <div class="divisions">
-      <div class="division"><h3>FAIST Systems</h3><p>Infrastruktura a technické zázemí.</p><a href="#">Zjistit více →</a></div>
-      <div class="division"><h3>FAIST Research</h3><p>Výzkum a experimenty.</p><a href="#">Zjistit více →</a></div>
-      <div class="division"><h3>FAIST Digital</h3><p>Weby a digitální produkty.</p><a href="#">Zjistit více →</a></div>
-      <div class="division"><h3>FAIST Energy</h3><p>Energetická řešení.</p><a href="#">Zjistit více →</a></div>
-      <div class="division"><h3>FAIST Security</h3><p>Kybernetická ochrana.</p><a href="#">Zjistit více →</a></div>
-      <div class="division"><h3>FAIST Academy</h3><p>Vzdělávání.</p><a href="#">Zjistit více →</a></div>
+        <div class="light-atmosphere"></div>
+        <div class="light-core"></div>
     </div>
-  </div>
-</section>
-
 </body>
 </html>
