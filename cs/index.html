@@ -14,15 +14,12 @@
   --bg:#0f1117;
   --text:#ffffff;
   --muted:#b6bcc6;
-  --panel:rgba(255,255,255,.05);
+  --panel:rgba(255,255,255,.04);
   --border:rgba(255,255,255,.12);
 }
 
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  scrollbar-gutter:stable;
-}
+html,body{margin:0}
 
 body{
   font-family:Inter,system-ui,sans-serif;
@@ -30,18 +27,6 @@ body{
   background:
     radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
-}
-
-/* LANGUAGE SWITCH */
-.lang-switch{
-  position:fixed;
-  top:16px;
-  right:16px;
-  z-index:50;
-}
-.lang-switch img{
-  width:22px;
-  display:block;
 }
 
 /* HERO */
@@ -55,17 +40,17 @@ body{
 /* LEFT PANEL */
 .brand-panel{
   position:absolute;
-  top:24px;
-  left:24px;
-  width:340px;
-  padding:18px 20px;
+  top:32px;
+  left:32px;
+  width:360px;
+  padding:20px 22px;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
 }
 .brand-panel h1{
-  margin:0 0 10px;
-  font-size:18px;
+  margin:0 0 12px;
+  font-size:20px;
   letter-spacing:3px;
 }
 .brand-panel p{
@@ -75,7 +60,7 @@ body{
   color:var(--muted);
 }
 
-/* ===== ORBIT ===== */
+/* SCENE */
 .scene{
   position:relative;
   width:900px;
@@ -84,33 +69,36 @@ body{
   max-height:90vmin;
 }
 
+/* CENTER LOGO (CLICKABLE) */
 .center{
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
-  pointer-events:none;
-  z-index:3;
+  z-index:5;
 }
-.center img{width:220px}
+.center-button{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  cursor:pointer;
+}
+.center-button img{
+  width:220px;
+  max-width:40vmin;
+}
+.center-button span{
+  margin-top:8px;
+  font-size:12px;
+  letter-spacing:1px;
+  color:var(--muted);
+  opacity:.7;
+}
+.center-button:hover span{
+  opacity:1;
+}
 
-.inner-orbit{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-.inner-orbit span{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform-origin:0 0;
-  white-space:nowrap;
-  font-size:13px;
-  letter-spacing:2px;
-  color:#e6ebf5;
-  text-shadow:0 0 8px rgba(255,255,255,.35);
-}
-
+/* ORBIT */
 .orbit{
   position:absolute;
   inset:0;
@@ -126,78 +114,60 @@ body{
 }
 .orbit-item img{
   width:130px;
-  margin:0 auto 6px;
   display:block;
+  margin:0 auto 6px;
+  animation:spin 20s linear infinite;
 }
 .orbit-item .label{
   font-size:14px;
   letter-spacing:1px;
 }
-.orbit-item::after{
-  content:attr(data-desc);
-  position:absolute;
-  bottom:110%;
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
+@keyframes spin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+/* AI MODAL */
+.ai-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(10,12,17,.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+}
+.ai-modal.open{display:flex}
+.ai-panel{
+  width:420px;
+  max-width:90%;
   background:#0a0c11;
   border:1px solid var(--border);
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
-  color:var(--muted);
-  white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s ease;
+  border-radius:16px;
+  padding:24px;
 }
-.orbit-item:hover::after{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-/* FOOTER */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:48px 24px;
-}
-.footer-grid{
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:32px;
-}
-.site-footer h3{
-  font-size:14px;
+.ai-panel h2{
+  margin:0 0 12px;
+  font-size:16px;
   letter-spacing:2px;
 }
-.site-footer a{
-  display:block;
+.ai-panel p{
+  margin:0;
+  font-size:14px;
   color:var(--muted);
-  text-decoration:none;
-  margin-bottom:6px;
+  line-height:1.6;
 }
-
-/* RESPONSIVE */
-@media (max-width:900px){
-  .scene{display:none}
-  .brand-panel{
-    position:static;
-    width:auto;
-    margin:20px;
-  }
+.ai-close{
+  margin-top:16px;
+  font-size:12px;
+  color:var(--muted);
+  cursor:pointer;
+  text-align:right;
 }
 </style>
 </head>
 
 <body>
-
-<div class="lang-switch">
-  <a href="/en/index.html" title="English">
-    <img src="/assets/flags/gb.png" alt="EN">
-  </a>
-</div>
 
 <section class="hero">
 
@@ -212,108 +182,50 @@ body{
 
   <div class="scene" id="scene">
 
+    <!-- CLICKABLE LOGO -->
     <div class="center">
-      <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+      <div class="center-button" id="openAI">
+        <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+        <span>Zeptej se mě</span>
+      </div>
     </div>
 
-    <div class="inner-orbit" id="innerOrbit"></div>
-
     <div class="orbit">
-      <a class="orbit-item" data-desc="Firemní systémy" href="/cs/divisions/systems.html">
-        <img src="/assets/logos/faist-systems.png">
-        <div class="label">Systems</div>
-      </a>
-      <a class="orbit-item" data-desc="Výzkum a prototypy" href="/cs/divisions/lab.html">
-        <img src="/assets/logos/faist-lab.png">
-        <div class="label">Lab</div>
-      </a>
-      <a class="orbit-item" data-desc="Digitální produkty" href="/cs/divisions/digital.html">
-        <img src="/assets/logos/faist-digital.png">
-        <div class="label">Digital</div>
-      </a>
-      <a class="orbit-item" data-desc="Energetická řešení" href="/cs/divisions/energy.html">
-        <img src="/assets/logos/faist-energy.png">
-        <div class="label">Energy</div>
-      </a>
-      <a class="orbit-item" data-desc="Bezpečnost" href="/cs/divisions/security.html">
-        <img src="/assets/logos/faist-security.png">
-        <div class="label">Security</div>
-      </a>
-      <a class="orbit-item" data-desc="Vzdělávání" href="/cs/divisions/edu.html">
-        <img src="/assets/logos/faist-edu.png">
-        <div class="label">Edu</div>
-      </a>
+      <a class="orbit-item" href="#"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
+      <a class="orbit-item" href="#"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
+      <a class="orbit-item" href="#"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
+      <a class="orbit-item" href="#"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
+      <a class="orbit-item" href="#"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
+      <a class="orbit-item" href="#"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
     </div>
 
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div>
-      <h3>O nás</h3>
-      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
-    </div>
-    <div>
-      <h3>Divize</h3>
-      <a href="/cs/divisions/systems.html">Systems</a>
-      <a href="/cs/divisions/lab.html">Lab</a>
-      <a href="/cs/divisions/digital.html">Digital</a>
-      <a href="/cs/divisions/energy.html">Energy</a>
-      <a href="/cs/divisions/security.html">Security</a>
-      <a href="/cs/divisions/edu.html">Edu</a>
-    </div>
-    <div>
-      <h3>Informace</h3>
-      <a href="#">Slovník pojmů</a>
-      <a href="#">FAQ</a>
-      <a href="#">Kontakt</a>
-    </div>
+<!-- AI MODAL -->
+<div class="ai-modal" id="aiModal">
+  <div class="ai-panel">
+    <h2>FAIST AI</h2>
+    <p>
+      Jsem centrální inteligence holdingu FAIST.<br>
+      Brzy se mě budeš moci ptát na naše divize,
+      projekty a technologie.
+    </p>
+    <div class="ai-close" id="closeAI">Zavřít</div>
   </div>
-</footer>
+</div>
 
 <script>
-/* INNER TEXT ORBIT */
-const inner=document.getElementById("innerOrbit");
-const text="Forge of Artificial Intelligence, Science & Technology • ";
-const textRadius=125;
-let textAngle=0;
+/* AI MODAL LOGIC */
+const openAI=document.getElementById("openAI");
+const closeAI=document.getElementById("closeAI");
+const modal=document.getElementById("aiModal");
 
-text.split("").forEach((c,i)=>{
-  const s=document.createElement("span");
-  s.textContent=c;
-  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${textRadius}px)`;
-  inner.appendChild(s);
+openAI.addEventListener("click",()=>modal.classList.add("open"));
+closeAI.addEventListener("click",()=>modal.classList.remove("open"));
+modal.addEventListener("click",e=>{
+  if(e.target===modal) modal.classList.remove("open");
 });
-
-/* ORBIT MOTION */
-const items=[...document.querySelectorAll(".orbit-item")];
-const scene=document.getElementById("scene");
-let radius,frozen=false,base=0;
-
-items.forEach(el=>{
-  el.addEventListener("mouseenter",()=>frozen=true);
-  el.addEventListener("mouseleave",()=>frozen=false);
-});
-
-function resize(){
-  radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
-}
-resize();
-window.addEventListener("resize",resize);
-
-function animate(t){
-  if(!frozen) base=t/140000*Math.PI*2;
-  items.forEach((el,i)=>{
-    const a=base+i*(Math.PI*2/items.length);
-    el.style.transform=
-      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-  });
-  textAngle-=0.015;
-  inner.style.transform=`rotate(${textAngle}deg)`;
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
 </script>
 
 </body>
