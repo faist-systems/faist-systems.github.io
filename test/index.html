@@ -157,15 +157,13 @@ main{
   background:linear-gradient(to bottom,
     rgba(255,220,150,.9),
     transparent);
-  transition:
-    height .9s ease,
-    opacity .25s ease;
+  transition:height .9s ease, opacity .25s ease;
 }
 
 /* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:70px; /* ⬅ finální posun */
+  bottom:70px; /* finální */
   left:0;
   width:100%;
   padding:0 6vw;
@@ -302,7 +300,7 @@ window.onload = () => {
         windows.forEach(w=>w.classList.remove("active"));
 
         pair.forEach(idx=>{
-          branches[idx].style.height = "150px";
+          branches[idx].style.height = "110px"; // ⬅ zkráceno
           branches[idx].style.opacity = 1;
           windows[idx].classList.add("active");
         });
