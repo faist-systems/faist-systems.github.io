@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>FAIST Holding</title>
+  <title>FAIST Holding – TEST</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -53,9 +53,8 @@
       position:relative;
       height:calc(100vh - 72px);
 
-      /* 🔑 KLÍČOVÁ OPRAVA */
-      background:
-        url("assets/backgrounds/holding.png") center / contain no-repeat;
+      /* 🔑 ZDE JE KLÍČ – ŽÁDNÝ GRADIENT, ŽÁDNÉ COVER */
+      background: url("assets/backgrounds/holding.png") center / contain no-repeat;
       background-color:var(--bg);
 
       display:flex;
@@ -63,7 +62,7 @@
       align-items:center;
     }
 
-    /* zlatá osa – jen jemné zvýraznění */
+    /* zlatá osa – jen jemný overlay */
     .hero::before{
       content:"";
       position:absolute;
