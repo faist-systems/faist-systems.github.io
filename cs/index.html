@@ -69,20 +69,17 @@ body{
   color:var(--muted);
 }
 
-/* ===== ORBIT SYSTEM ===== */
-@keyframes orbit{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
+/* ===== SCENE ===== */
 .scene{
   position:relative;
   width:900px;
   height:900px;
   max-width:90vmin;
   max-height:90vmin;
+  --r:min(38vmin,360px);
 }
 
+/* CENTER */
 .center{
   position:absolute;
   inset:0;
@@ -92,6 +89,12 @@ body{
   pointer-events:none;
 }
 .center img{width:220px}
+
+/* ===== ORBIT (ROTATING WORLD) ===== */
+@keyframes orbit{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
 
 .orbit{
   position:absolute;
@@ -104,63 +107,42 @@ body{
   animation-play-state:paused;
 }
 
-/* ORBIT ITEM */
 .orbit-item{
   position:absolute;
   top:50%;
   left:50%;
   transform:
     rotate(calc(var(--i) * 360deg / 6))
-    translate(min(38vmin, 360px));
-  pointer-events:none; /* zabrání překlikům */
+    translate(var(--r));
+  pointer-events:none;
 }
 
-/* LOGO – rotuje */
-.orbit-logo{
+.orbit-item img{
+  width:130px;
+  display:block;
   pointer-events:auto;
   cursor:pointer;
 }
-.orbit-logo img{
-  width:130px;
-  display:block;
+
+/* ===== LABELS (STATIC WORLD) ===== */
+.labels-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
 }
 
-/* TEXT – drží orientaci */
-.label{
-  margin-top:6px;
+.orbit-label{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:
+    rotate(calc(var(--i) * 360deg / 6))
+    translate(var(--r))
+    translateY(90px);
   text-align:center;
   font-size:14px;
   letter-spacing:1px;
-  color:#fff;
-  transform:
-    rotate(calc(var(--i) * -360deg / 6))
-    rotate(-360deg);
-}
-
-/* TOOLTIP */
-.orbit-item::after{
-  content:attr(data-desc);
-  position:absolute;
-  bottom:115%;
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
-  background:#0a0c11;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
-  color:var(--muted);
   white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:.25s ease;
-}
-.orbit-logo:hover + .label,
-.orbit-logo:hover ~ .label{
-  color:#fff;
-}
-.orbit-logo:hover::after{
-  opacity:1;
 }
 
 /* INNER TEXT ORBIT */
@@ -196,7 +178,9 @@ body{
 <body>
 
 <div class="lang-switch">
-  <a href="/en/index.html"><img src="/assets/flags/gb.png" alt="EN"></a>
+  <a href="/en/index.html">
+    <img src="/assets/flags/gb.png" alt="EN">
+  </a>
 </div>
 
 <section class="hero">
@@ -218,31 +202,36 @@ body{
 
     <div class="inner-orbit" id="innerOrbit"></div>
 
+    <!-- ROTATING LOGOS -->
     <div class="orbit">
-      <a class="orbit-item" style="--i:0" data-desc="Firemní systémy" href="/cs/divisions/systems.html">
-        <div class="orbit-logo"><img src="/assets/logos/faist-systems.png"></div>
-        <div class="label">Systems</div>
+      <a class="orbit-item" style="--i:0" href="/cs/divisions/systems.html">
+        <img src="/assets/logos/faist-systems.png">
       </a>
-      <a class="orbit-item" style="--i:1" data-desc="Výzkum a prototypy" href="/cs/divisions/lab.html">
-        <div class="orbit-logo"><img src="/assets/logos/faist-lab.png"></div>
-        <div class="label">Lab</div>
+      <a class="orbit-item" style="--i:1" href="/cs/divisions/lab.html">
+        <img src="/assets/logos/faist-lab.png">
       </a>
-      <a class="orbit-item" style="--i:2" data-desc="Digitální produkty" href="/cs/divisions/digital.html">
-        <div class="orbit-logo"><img src="/assets/logos/faist-digital.png"></div>
-        <div class="label">Digital</div>
+      <a class="orbit-item" style="--i:2" href="/cs/divisions/digital.html">
+        <img src="/assets/logos/faist-digital.png">
       </a>
-      <a class="orbit-item" style="--i:3" data-desc="Energetická řešení" href="/cs/divisions/energy.html">
-        <div class="orbit-logo"><img src="/assets/logos/faist-energy.png"></div>
-        <div class="label">Energy</div>
+      <a class="orbit-item" style="--i:3" href="/cs/divisions/energy.html">
+        <img src="/assets/logos/faist-energy.png">
       </a>
-      <a class="orbit-item" style="--i:4" data-desc="Bezpečnost" href="/cs/divisions/security.html">
-        <div class="orbit-logo"><img src="/assets/logos/faist-security.png"></div>
-        <div class="label">Security</div>
+      <a class="orbit-item" style="--i:4" href="/cs/divisions/security.html">
+        <img src="/assets/logos/faist-security.png">
       </a>
-      <a class="orbit-item" style="--i:5" data-desc="Vzdělávání" href="/cs/divisions/edu.html">
-        <div class="orbit-logo"><img src="/assets/logos/faist-edu.png"></div>
-        <div class="label">Edu</div>
+      <a class="orbit-item" style="--i:5" href="/cs/divisions/edu.html">
+        <img src="/assets/logos/faist-edu.png">
       </a>
+    </div>
+
+    <!-- STATIC LABELS -->
+    <div class="labels-layer">
+      <div class="orbit-label" style="--i:0">Systems</div>
+      <div class="orbit-label" style="--i:1">Lab</div>
+      <div class="orbit-label" style="--i:2">Digital</div>
+      <div class="orbit-label" style="--i:3">Energy</div>
+      <div class="orbit-label" style="--i:4">Security</div>
+      <div class="orbit-label" style="--i:5">Edu</div>
     </div>
 
   </div>
