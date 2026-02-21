@@ -10,7 +10,7 @@
   <style>
     :root{
       --bg:#0b0e13;
-      --panel:rgba(18,23,34,.85);
+      --panel:rgba(18,23,34,.9);
       --text:#eaeaea;
       --muted:#b0b5be;
       --gold:#c9a44c;
@@ -42,7 +42,6 @@
       text-decoration:none;
       margin-left:28px;
       font-size:13px;
-      letter-spacing:.4px;
     }
 
     header nav a:hover{
@@ -54,21 +53,17 @@
       position:relative;
       height:calc(100vh - 72px);
 
-      /* 🔑 ŽÁDNÝ TĚŽKÝ GRADIENT – necháme obrázek dýchat */
+      /* 🔑 KLÍČOVÁ OPRAVA */
       background:
-        radial-gradient(
-          circle at center,
-          rgba(0,0,0,0.15),
-          rgba(0,0,0,0.45)
-        ),
-        url("assets/backgrounds/holding.png") center / cover no-repeat;
+        url("assets/backgrounds/holding.png") center / contain no-repeat;
+      background-color:var(--bg);
 
       display:flex;
       flex-direction:column;
       align-items:center;
     }
 
-    /* zlatá osa – jen jemný boost */
+    /* zlatá osa – jen jemné zvýraznění */
     .hero::before{
       content:"";
       position:absolute;
@@ -76,13 +71,8 @@
       bottom:0;
       left:50%;
       width:1px;
-      background:linear-gradient(
-        to bottom,
-        transparent,
-        var(--gold),
-        transparent
-      );
-      opacity:.9;
+      background:var(--gold);
+      opacity:.6;
       pointer-events:none;
     }
 
@@ -99,7 +89,6 @@
       font-size:42px;
       letter-spacing:2.5px;
       margin:0 0 10px;
-      text-shadow:0 0 20px rgba(0,0,0,.6);
     }
 
     .hero-text h2{
@@ -131,7 +120,6 @@
 
     .division{
       background:var(--panel);
-      backdrop-filter:blur(6px);
       border-radius:14px;
       padding:18px;
       min-height:180px;
