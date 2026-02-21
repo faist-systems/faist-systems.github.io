@@ -37,7 +37,7 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 .background{
     position:absolute;inset:0;
     background:
-        radial-gradient(circle at center, rgba(255,200,120,.08), transparent 55%),
+        radial-gradient(circle at center, rgba(255,200,120,.04), transparent 60%),
         linear-gradient(to bottom,#050505,#000 70%);
     z-index:0;
 }
@@ -45,7 +45,7 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     position:absolute;inset:0;
     background-image:repeating-radial-gradient(circle,rgba(255,255,255,.02) 0 1px,transparent 1px 2px);
     background-size:2px 2px;
-    opacity:.25;
+    opacity:.2;
     mix-blend-mode:overlay;
     z-index:1;
 }
@@ -62,10 +62,10 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 .light-atmosphere{
     position:absolute;
     top:0;left:50%;
-    width:520px;height:100%;
+    width:360px;height:100%;
     transform:translateX(-50%);
-    background:radial-gradient(circle,rgba(255,180,90,.12),transparent 70%);
-    filter:blur(50px);
+    background:radial-gradient(circle,rgba(255,180,90,.06),transparent 70%);
+    filter:blur(40px);
     z-index:3;
 }
 
@@ -80,31 +80,22 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
     font-family:"Cinzel",serif;
     font-size:clamp(2.6rem,4.8vw,3.8rem);
     letter-spacing:.24em;
-    position:relative;
-}
-.hero h1::after{
-    content:"";
-    position:absolute;
-    left:50%;bottom:-22px;
-    width:560px;height:32px;
-    transform:translateX(-50%);
-    background:radial-gradient(ellipse at center,
-        rgba(255,215,120,.65),
-        rgba(255,215,120,0) 70%);
-    filter:blur(22px);
+    text-shadow:
+        0 2px 6px rgba(255,215,120,.35),
+        0 0 1px rgba(255,215,120,.6);
 }
 .hero p{
-    margin-top:34px;
+    margin-top:26px;
     font-size:.95rem;
     opacity:.75;
     max-width:660px;
     margin-inline:auto;
 }
 
-/* BUS – SPRÁVNÁ VÝŠKA */
+/* BUS – SPRÁVNĚ VÝŠ */
 .light-bus{
     position:absolute;
-    top:41%;
+    top:36%;
     left:6vw;
     right:6vw;
     height:2px;
@@ -114,56 +105,57 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
         transparent);
     z-index:6;
 }
-.light-bus::after{
-    content:"";
-    position:absolute;
-    inset:-20px 0;
-    background:linear-gradient(to right,
-        transparent,
-        rgba(255,200,100,.35) 50%,
-        transparent);
-    filter:blur(20px);
-}
 
 /* PULSE – VERTIKÁLA */
 .pulse{
     position:absolute;
-    top:130px;
+    top:120px;
     left:50%;
     width:6px;height:26px;
     transform:translateX(-50%);
     background:linear-gradient(to bottom,transparent,rgba(255,220,150,1),transparent);
-    filter:blur(1px);
     border-radius:4px;
     animation:pulseDrop 8s ease-in-out infinite;
     z-index:7;
 }
 @keyframes pulseDrop{
     0%{opacity:0;transform:translate(-50%,-30px);}
-    12%{opacity:1;}
-    45%{transform:translate(-50%,220px);}
+    15%{opacity:1;}
+    45%{transform:translate(-50%,200px);}
     55%{opacity:0;}
     100%{opacity:0;}
 }
 
-/* HORIZONTAL PULSES */
+/* HORIZONTAL SPLIT – NAVÁZANÉ NA UZEL */
 .h-pulse{
     position:absolute;
-    top:41%;
-    left:50%;
+    top:36%;
     height:2px;
     background:linear-gradient(to right,rgba(255,215,120,1),transparent);
-    animation:hPulse 8s ease-in-out infinite;
     opacity:0;
     z-index:7;
 }
-.h-pulse.left{right:50%;transform-origin:right}
-.h-pulse.right{left:50%;transform-origin:left}
+.h-pulse.left{
+    right:50%;
+    transform-origin:right;
+    animation:hSplitLeft 8s ease-in-out infinite;
+}
+.h-pulse.right{
+    left:50%;
+    transform-origin:left;
+    animation:hSplitRight 8s ease-in-out infinite;
+}
 
-@keyframes hPulse{
-    0%,45%{opacity:0;width:0}
+@keyframes hSplitLeft{
+    0%,50%{opacity:0;width:0}
     55%{opacity:1}
-    80%{width:35vw;opacity:0}
+    75%{width:38vw;opacity:0}
+    100%{opacity:0}
+}
+@keyframes hSplitRight{
+    0%,50%{opacity:0;width:0}
+    55%{opacity:1}
+    75%{width:38vw;opacity:0}
     100%{opacity:0}
 }
 
@@ -181,8 +173,8 @@ main{height:calc(100vh - 64px);position:relative;overflow:hidden}
 
 .feed{
     position:absolute;
-    top:-90px;left:50%;
-    width:2px;height:90px;
+    top:-80px;left:50%;
+    width:2px;height:80px;
     transform:translateX(-50%);
     background:linear-gradient(to bottom,rgba(255,215,120,1),transparent);
 }
