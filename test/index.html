@@ -16,6 +16,8 @@
   --muted:#b6bcc6;
   --panel:rgba(255,255,255,.05);
   --border:rgba(255,255,255,.12);
+  --glow1:rgba(255,200,80,.6);
+  --glow2:rgba(255,160,40,.4);
 }
 
 *{box-sizing:border-box}
@@ -86,12 +88,21 @@ body{
   inset:0;
   display:grid;
   place-items:center;
-  pointer-events:none;
   z-index:3;
 }
+
 .center img{
   width:220px;
   max-width:40vmin;
+  cursor:pointer;
+  transition:filter .3s ease, transform .3s ease;
+}
+
+.center img:hover{
+  filter:
+    drop-shadow(0 0 18px var(--glow1))
+    drop-shadow(0 0 36px var(--glow2));
+  transform:scale(1.04);
 }
 
 /* INNER TEXT ORBIT */
@@ -222,7 +233,7 @@ body{
   <div class="scene" id="scene">
 
     <div class="center">
-      <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
+      <img id="mainLogo" src="/assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
 
     <div class="inner-orbit" id="innerOrbit"></div>
@@ -264,11 +275,16 @@ body{
 </footer>
 
 <script>
-/* === SCROLL RESTORE FIX === */
+/* SCROLL FIX */
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
 window.addEventListener('load',()=>window.scrollTo(0,0));
 
-/* === INNER TEXT ORBIT === */
+/* LOGO CLICK – zatím jen test */
+document.getElementById('mainLogo').addEventListener('click',()=>{
+  console.log('Main logo clicked – ready for AI');
+});
+
+/* INNER TEXT ORBIT */
 (function(){
   const inner=document.getElementById("innerOrbit");
   if(!inner) return;
@@ -292,7 +308,7 @@ window.addEventListener('load',()=>window.scrollTo(0,0));
   requestAnimationFrame(spin);
 })();
 
-/* === ORBIT MOTION (ISOLATED & SAFE) === */
+/* ORBIT MOTION (SAFE) */
 (function(){
   const scene=document.getElementById("scene");
   const items=[...document.querySelectorAll(".orbit-item")];
