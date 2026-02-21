@@ -47,6 +47,7 @@ body{
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
+  z-index:20;
 }
 .brand-panel h1{
   margin:0 0 12px;
@@ -69,33 +70,39 @@ body{
   max-height:90vmin;
 }
 
-/* CENTER LOGO (CLICKABLE) */
+/* ===== VRSTVA 1: ORBIT (NEDOTÝKAT SE) ===== */
+.orbit-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+/* CENTER LOGO (VIZUÁLNÍ) */
 .center{
   position:absolute;
   inset:0;
   display:grid;
   place-items:center;
-  z-index:5;
 }
-.center-button{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  cursor:pointer;
-}
-.center-button img{
+.center img{
   width:220px;
   max-width:40vmin;
 }
-.center-button span{
-  margin-top:8px;
-  font-size:12px;
-  letter-spacing:1px;
-  color:var(--muted);
-  opacity:.7;
+
+/* INNER TEXT */
+.inner-orbit{
+  position:absolute;
+  inset:0;
 }
-.center-button:hover span{
-  opacity:1;
+.inner-orbit span{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform-origin:0 0;
+  white-space:nowrap;
+  font-size:13px;
+  letter-spacing:2px;
+  color:#e6ebf5;
 }
 
 /* ORBIT */
@@ -122,9 +129,38 @@ body{
   font-size:14px;
   letter-spacing:1px;
 }
+
 @keyframes spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
+}
+
+/* ===== VRSTVA 2: AI OVERLAY ===== */
+.ai-layer{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index:10;
+  pointer-events:none;
+}
+
+.ai-trigger{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  pointer-events:auto;
+  cursor:pointer;
+}
+.ai-trigger span{
+  margin-top:8px;
+  font-size:12px;
+  letter-spacing:1px;
+  color:var(--muted);
+  opacity:.7;
+}
+.ai-trigger:hover span{
+  opacity:1;
 }
 
 /* AI MODAL */
@@ -182,21 +218,31 @@ body{
 
   <div class="scene" id="scene">
 
-    <!-- CLICKABLE LOGO -->
-    <div class="center">
-      <div class="center-button" id="openAI">
+    <!-- VRSTVA 1: ORBIT -->
+    <div class="orbit-layer">
+
+      <div class="center">
         <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
-        <span>Zeptej se mě</span>
       </div>
+
+      <div class="inner-orbit" id="innerOrbit"></div>
+
+      <div class="orbit">
+        <div class="orbit-item"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></div>
+        <div class="orbit-item"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></div>
+        <div class="orbit-item"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></div>
+        <div class="orbit-item"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></div>
+        <div class="orbit-item"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></div>
+        <div class="orbit-item"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></div>
+      </div>
+
     </div>
 
-    <div class="orbit">
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+    <!-- VRSTVA 2: AI -->
+    <div class="ai-layer">
+      <div class="ai-trigger" id="openAI">
+        <span>Zeptej se mě</span>
+      </div>
     </div>
 
   </div>
@@ -216,7 +262,53 @@ body{
 </div>
 
 <script>
-/* AI MODAL LOGIC */
+/* INNER TEXT */
+const text="Forge of Artificial Intelligence, Science & Technology • ";
+const inner=document.getElementById("innerOrbit");
+let textAngle=0;
+
+text.split("").forEach((c,i)=>{
+  const s=document.createElement("span");
+  s.textContent=c;
+  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(125px)`;
+  inner.appendChild(s);
+});
+
+/* ORBIT */
+const items=[...document.querySelectorAll(".orbit-item")];
+const scene=document.getElementById("scene");
+
+let radius;
+let base=0;
+let last=performance.now();
+
+function resize(){
+  radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
+}
+resize();
+window.addEventListener("resize",resize);
+
+function animate(now){
+  const dt=(now-last)/1000;
+  last=now;
+
+  const speed=(Math.PI*2)/60;
+  base+=speed*dt;
+
+  items.forEach((el,i)=>{
+    const a=base+i*(Math.PI*2/items.length);
+    el.style.transform=
+      `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+  });
+
+  textAngle-=speed*dt*0.4*180/Math.PI;
+  inner.style.transform=`rotate(${textAngle}deg)`;
+
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+/* AI MODAL */
 const openAI=document.getElementById("openAI");
 const closeAI=document.getElementById("closeAI");
 const modal=document.getElementById("aiModal");
