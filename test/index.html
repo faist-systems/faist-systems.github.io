@@ -9,7 +9,8 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#000;color:#eee;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+html,body{width:100%;height:100%;background:#000;color:#eee;
+font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 body{overflow:hidden}
 
 /* HEADER */
@@ -19,8 +20,6 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
-  z-index:20;
-  position:relative;
 }
 header nav a{
   margin-left:24px;
@@ -34,7 +33,6 @@ header nav a:hover{color:#fff}
 main{
   height:calc(100vh - 64px);
   position:relative;
-  overflow:hidden;
 }
 
 /* BACKGROUND */
@@ -56,14 +54,14 @@ main{
 /* HERO */
 .hero{
   position:relative;
-  z-index:10;
+  z-index:5;
   text-align:center;
   margin-top:6vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
   font-size:clamp(2.6rem,4.6vw,3.6rem);
-  letter-spacing:.24em;
+  letter-spacing:.22em;
   text-shadow:
     0 2px 4px rgba(255,215,120,.35),
     0 0 1px rgba(255,215,120,.5);
@@ -76,20 +74,7 @@ main{
   margin-inline:auto;
 }
 
-/* VERTICAL CORE – ONLY BELOW TEXT */
-.core{
-  position:absolute;
-  top:42%;
-  left:50%;
-  width:2px;
-  height:58%;
-  transform:translateX(-50%);
-  background:linear-gradient(to bottom,
-    rgba(255,215,120,.25),
-    rgba(255,215,120,.05));
-}
-
-/* BUS CONTAINER */
+/* === BUS === */
 .bus-wrap{
   position:absolute;
   top:42%;
@@ -99,36 +84,40 @@ main{
   max-width:90vw;
   height:2px;
 }
-
-/* BUS */
 .bus{
   width:100%;
   height:2px;
-  background:linear-gradient(to right,
-    transparent,
-    rgba(255,215,120,.35) 50%,
-    transparent);
+  background:rgba(255,215,120,.25);
 }
 
-/* BUS DROPS */
-.bus-drop{
+/* === HORIZONTAL FLOW === */
+.flow{
   position:absolute;
   top:0;
-  width:2px;
-  height:26px;
-  background:linear-gradient(to bottom,
-    rgba(255,215,120,.55),
+  height:2px;
+  background:linear-gradient(to right,
+    rgba(255,215,120,.8),
     transparent);
+  animation:flow 12s ease-in-out infinite;
 }
-.bus-drop:nth-child(1){left:0%}
-.bus-drop:nth-child(2){left:20%}
-.bus-drop:nth-child(3){left:40%}
-.bus-drop:nth-child(4){left:60%}
-.bus-drop:nth-child(5){left:80%}
-.bus-drop:nth-child(6){left:100%}
+.flow.left{
+  right:50%;
+  transform-origin:right;
+}
+.flow.right{
+  left:50%;
+  transform-origin:left;
+}
 
-/* PULSE DROP */
-.pulse{
+@keyframes flow{
+  0%,30%{width:0;opacity:0}
+  30%{opacity:1}
+  60%{width:50%}
+  100%{opacity:0}
+}
+
+/* === DROP FROM TOP === */
+.main-drop{
   position:absolute;
   top:120px;
   left:50%;
@@ -140,46 +129,63 @@ main{
     rgba(255,220,150,1),
     transparent);
   border-radius:4px;
-  animation:pulseDrop 12s ease-in-out infinite;
+  animation:mainDrop 12s ease-in-out infinite;
 }
 
-@keyframes pulseDrop{
-  0%{opacity:0;transform:translate(-50%,-30px)}
+@keyframes mainDrop{
+  0%{opacity:0;transform:translate(-50%,-40px)}
   15%{opacity:1}
-  45%{transform:translate(-50%,260px)}
-  55%{opacity:0}
+  30%{transform:translate(-50%,220px)}
+  35%{opacity:0}
   100%{opacity:0}
 }
 
-/* HORIZONTAL FLOW */
-.h-flow{
+/* === BUS DROPS === */
+.bus-drop{
   position:absolute;
-  top:42%;
-  left:50%;
-  height:2px;
-  background:linear-gradient(to right,
+  top:0;
+  width:2px;
+  height:26px;
+  background:linear-gradient(to bottom,
     rgba(255,215,120,.6),
     transparent);
-  transform-origin:left;
-  animation:hFlow 12s ease-in-out infinite;
+}
+
+/* === DROPLETS TO CARDS === */
+.card-drop{
+  position:absolute;
+  top:26px;
+  width:4px;
+  height:20px;
+  background:linear-gradient(to bottom,
+    rgba(255,220,150,1),
+    transparent);
+  border-radius:3px;
   opacity:0;
-}
-.h-flow.left{
-  right:50%;
-  transform-origin:right;
-}
-.h-flow.right{
-  left:50%;
+  animation:cardDrop 12s ease-in-out infinite;
 }
 
-@keyframes hFlow{
-  0%,50%{opacity:0;width:0}
-  55%{opacity:1}
-  80%{width:550px;opacity:0}
-  100%{opacity:0}
+@keyframes cardDrop{
+  0%,45%{opacity:0}
+  50%{opacity:1}
+  65%{opacity:0}
 }
 
-/* DIVISIONS */
+/* POSITIONS */
+.bus-drop:nth-child(1),
+.card-drop:nth-child(1){left:0%}
+.bus-drop:nth-child(2),
+.card-drop:nth-child(2){left:20%}
+.bus-drop:nth-child(3),
+.card-drop:nth-child(3){left:40%}
+.bus-drop:nth-child(4),
+.card-drop:nth-child(4){left:60%}
+.bus-drop:nth-child(5),
+.card-drop:nth-child(5){left:80%}
+.bus-drop:nth-child(6),
+.card-drop:nth-child(6){left:100%}
+
+/* === DIVISIONS === */
 .divisions{
   position:absolute;
   bottom:5vh;
@@ -204,19 +210,10 @@ main{
 }
 
 @keyframes react{
-  0%,65%{box-shadow:none}
+  0%,60%{box-shadow:none}
   70%{box-shadow:0 0 0 1px var(--accent)}
-  85%{box-shadow:none}
-  100%{box-shadow:none}
+  90%{box-shadow:none}
 }
-
-/* DELAYS – FYZIKA */
-.division:nth-child(3) .window,
-.division:nth-child(4) .window{animation-delay:0s}
-.division:nth-child(2) .window,
-.division:nth-child(5) .window{animation-delay:1s}
-.division:nth-child(1) .window,
-.division:nth-child(6) .window{animation-delay:2s}
 
 .image-slot{
   height:100px;
@@ -229,12 +226,12 @@ main{
 .window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
 
 /* ACCENTS */
-.systems{--accent:rgba(120,180,255,.45)}
-.research{--accent:rgba(170,120,255,.45)}
-.digital{--accent:rgba(120,220,255,.45)}
-.energy{--accent:rgba(255,180,90,.45)}
-.security{--accent:rgba(120,255,180,.45)}
-.academy{--accent:rgba(255,220,140,.45)}
+.systems{--accent:rgba(120,180,255,.4)}
+.research{--accent:rgba(170,120,255,.4)}
+.digital{--accent:rgba(120,220,255,.4)}
+.energy{--accent:rgba(255,180,90,.4)}
+.security{--accent:rgba(120,255,180,.4)}
+.academy{--accent:rgba(255,220,140,.4)}
 </style>
 
 <script>
@@ -263,20 +260,18 @@ window.onload=()=>window.scrollTo(0,0);
 <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<div class="core"></div>
-
-<div class="pulse"></div>
-<div class="h-flow left"></div>
-<div class="h-flow right"></div>
+<div class="main-drop"></div>
 
 <div class="bus-wrap">
   <div class="bus"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
-  <div class="bus-drop"></div>
+  <div class="flow left"></div>
+  <div class="flow right"></div>
+
+  <div class="bus-drop"></div><div class="bus-drop"></div><div class="bus-drop"></div>
+  <div class="bus-drop"></div><div class="bus-drop"></div><div class="bus-drop"></div>
+
+  <div class="card-drop"></div><div class="card-drop"></div><div class="card-drop"></div>
+  <div class="card-drop"></div><div class="card-drop"></div><div class="card-drop"></div>
 </div>
 
 <div class="divisions">
