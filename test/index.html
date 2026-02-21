@@ -14,10 +14,8 @@
   --bg:#0f1117;
   --text:#ffffff;
   --muted:#b6bcc6;
-  --panel:rgba(255,255,255,.04);
+  --panel:rgba(255,255,255,.05);
   --border:rgba(255,255,255,.12);
-  --gold1:rgba(255,200,80,.6);
-  --gold2:rgba(255,160,40,.4);
 }
 
 *{box-sizing:border-box}
@@ -34,11 +32,11 @@ body{
 /* LANGUAGE SWITCH */
 .lang-switch{
   position:fixed;
-  top:20px;
-  right:20px;
+  top:16px;
+  right:16px;
   z-index:50;
 }
-.lang-switch img{width:22px}
+.lang-switch img{width:22px;display:block}
 
 /* HERO */
 .hero{
@@ -52,14 +50,25 @@ body{
 /* LEFT PANEL */
 .brand-panel{
   position:absolute;
-  top:32px;
-  left:32px;
-  width:360px;
-  padding:20px 22px;
+  top:24px;
+  left:24px;
+  width:340px;
+  padding:18px 20px;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
   z-index:20;
+}
+.brand-panel h1{
+  margin:0 0 10px;
+  font-size:18px;
+  letter-spacing:3px;
+}
+.brand-panel p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
 }
 
 /* SCENE */
@@ -71,43 +80,21 @@ body{
   max-height:90vmin;
 }
 
-/* CENTER STACK */
-.center-stack{
+/* CENTER LOGO */
+.center{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  inset:0;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
   z-index:3;
 }
-
-/* MAIN LOGO */
-.center-stack img{
+.center img{
   width:220px;
-  cursor:pointer;
-  transition:filter .3s ease, transform .3s ease;
-}
-.center-stack img.ai-glow{
-  filter:
-    drop-shadow(0 0 16px var(--gold1))
-    drop-shadow(0 0 36px var(--gold2));
-  transform:scale(1.04);
+  max-width:40vmin;
 }
 
-/* ASK ME */
-.ask-me{
-  margin-top:6px;
-  font-size:12px;
-  color:var(--muted);
-  cursor:pointer;
-}
-.ask-me:hover{
-  text-shadow:0 0 10px var(--gold1);
-}
-
-/* INNER TEXT */
+/* INNER TEXT ORBIT */
 .inner-orbit{
   position:absolute;
   inset:0;
@@ -120,8 +107,8 @@ body{
   left:50%;
   transform-origin:0 0;
   white-space:nowrap;
-  font-size:12px;
-  letter-spacing:1.4px;
+  font-size:13px;
+  letter-spacing:2px;
   color:#e6ebf5;
 }
 
@@ -148,12 +135,13 @@ body{
 }
 .orbit-item .label{
   font-size:14px;
+  letter-spacing:1px;
   color:#fff;
 }
 .orbit-item::after{
   content:attr(data-desc);
   position:absolute;
-  bottom:115%;
+  bottom:110%;
   left:50%;
   transform:translateX(-50%) translateY(6px);
   background:#0a0c11;
@@ -183,73 +171,32 @@ body{
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
 }
-
-/* === AI MODAL === */
-.ai-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(10,12,17,.75);
-  display:none;
-  place-items:center;
-  z-index:200;
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
 }
-.ai-modal.open{display:grid}
-
-.ai-box{
-  position:relative;
-  background:#0a0c11;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:26px 28px 30px;
-  width:100%;
-  max-width:420px;
-  color:#fff;
-}
-
-.ai-box h3{
-  margin:0 0 6px;
+.site-footer h3{
+  font-size:14px;
   letter-spacing:2px;
 }
-.ai-intro{
-  font-size:13px;
+.site-footer a{
+  display:block;
   color:var(--muted);
-  margin-bottom:16px;
-}
-
-.ai-box input{
-  width:100%;
-  padding:10px 12px;
-  background:#0f1117;
-  border:1px solid var(--border);
-  border-radius:8px;
-  color:#fff;
-  font-size:14px;
-}
-
-.ai-answer{
-  margin-top:16px;
-  font-size:14px;
-  line-height:1.6;
-  color:#e6ebf5;
-}
-
-.ai-answer a{
-  display:inline-block;
-  margin-top:10px;
-  color:#fff;
   text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.3);
+  margin-bottom:6px;
 }
 
-.ai-close{
-  position:absolute;
-  top:10px;
-  right:12px;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:18px;
-  cursor:pointer;
+/* RESPONSIVE */
+@media (max-width:900px){
+  .scene{display:none}
+  .brand-panel{
+    position:static;
+    width:auto;
+    margin:20px;
+  }
 }
 </style>
 </head>
@@ -257,95 +204,144 @@ body{
 <body>
 
 <div class="lang-switch">
-  <a href="/en/index.html"><img src="/assets/flags/gb.png"></a>
+  <a href="/en/index.html" title="English">
+    <img src="/assets/flags/gb.png" alt="EN">
+  </a>
 </div>
 
 <section class="hero">
 
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
-    <p style="color:var(--muted)">
+    <p>
       Navrhujeme inteligentní systémy propojující umělou inteligenci,
-      vědu a moderní technologie.
+      vědu a moderní technologie do praktických řešení.
     </p>
   </div>
 
   <div class="scene" id="scene">
 
-    <div class="center-stack">
-      <img id="mainLogo" src="/assets/logos/faist-holding.png" alt="FAIST">
-      <div class="ask-me" id="askAI">Zeptej se mě</div>
+    <div class="center">
+      <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
     </div>
 
     <div class="inner-orbit" id="innerOrbit"></div>
 
     <div class="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-      <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-      <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-      <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-      <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-      <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
+      <a class="orbit-item" data-desc="Firemní systémy" href="/cs/divisions/systems.html"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
+      <a class="orbit-item" data-desc="Výzkum a prototypy" href="/cs/divisions/lab.html"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
+      <a class="orbit-item" data-desc="Digitální produkty" href="/cs/divisions/digital.html"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
+      <a class="orbit-item" data-desc="Energetická řešení" href="/cs/divisions/energy.html"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
+      <a class="orbit-item" data-desc="Bezpečnost" href="/cs/divisions/security.html"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
+      <a class="orbit-item" data-desc="Vzdělávání" href="/cs/divisions/edu.html"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
     </div>
 
   </div>
 </section>
 
-<footer class="site-footer"></footer>
-
-<!-- AI MODAL -->
-<div class="ai-modal" id="aiModal">
-  <div class="ai-box">
-    <button class="ai-close" id="closeAI">✕</button>
-    <h3>FAIST AI</h3>
-    <p class="ai-intro">Zeptej se na cokoliv ohledně FAIST nebo našich divizí.</p>
-    <input id="aiInput" placeholder="Na co se chcete zeptat?">
-    <div class="ai-answer" id="aiAnswer"></div>
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>O nás</h3>
+      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
+    </div>
+    <div>
+      <h3>Divize</h3>
+      <a href="/cs/divisions/systems.html">Systems</a>
+      <a href="/cs/divisions/lab.html">Lab</a>
+      <a href="/cs/divisions/digital.html">Digital</a>
+      <a href="/cs/divisions/energy.html">Energy</a>
+      <a href="/cs/divisions/security.html">Security</a>
+      <a href="/cs/divisions/edu.html">Edu</a>
+    </div>
+    <div>
+      <h3>Informace</h3>
+      <a href="#">Slovník pojmů</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
+    </div>
   </div>
-</div>
+</footer>
 
 <script>
-/* SCROLL FIX */
+/* === SCROLL RESTORE FIX === */
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
 window.addEventListener('load',()=>window.scrollTo(0,0));
 
-/* AI OPEN */
-const logo=document.getElementById('mainLogo');
-const ask=document.getElementById('askAI');
-const modal=document.getElementById('aiModal');
-const input=document.getElementById('aiInput');
-const answer=document.getElementById('aiAnswer');
+/* === INNER TEXT ORBIT === */
+(function(){
+  const inner=document.getElementById("innerOrbit");
+  if(!inner) return;
 
-[logo,ask].forEach(el=>{
-  el.addEventListener('mouseenter',()=>logo.classList.add('ai-glow'));
-  el.addEventListener('mouseleave',()=>logo.classList.remove('ai-glow'));
-  el.addEventListener('click',()=>{
-    modal.classList.add('open');
-    input.focus();
+  const text="Forge of Artificial Intelligence, Science & Technology • ";
+  const radius=125;
+
+  text.split("").forEach((c,i)=>{
+    const s=document.createElement("span");
+    s.textContent=c;
+    s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${radius}px)`;
+    inner.appendChild(s);
   });
-});
 
-document.getElementById('closeAI').onclick=()=>modal.classList.remove('open');
-modal.addEventListener('click',e=>{
-  if(e.target===modal) modal.classList.remove('open');
-});
+  let angle=0;
+  function spin(){
+    angle-=0.015;
+    inner.style.transform=`rotate(${angle}deg)`;
+    requestAnimationFrame(spin);
+  }
+  requestAnimationFrame(spin);
+})();
 
-/* AI RULES */
-const rules=[
-  {keys:['faist','holding','kdo'],text:'FAIST je technologický holding propojující AI, vývoj systémů, výzkum a moderní technologie.'},
-  {keys:['ai','automatizace'],text:'AI využíváme pro automatizaci procesů a chytré systémy.',link:['Systems','/cs/divisions/systems.html']},
-  {keys:['výzkum','lab'],text:'FAIST Lab se zaměřuje na výzkum a prototypy.',link:['Lab','/cs/divisions/lab.html']},
-  {keys:['bezpečnost'],text:'Bezpečnost řeší divize Security.',link:['Security','/cs/divisions/security.html']}
-];
+/* === ORBIT MOTION (ISOLATED & SAFE) === */
+(function(){
+  const scene=document.getElementById("scene");
+  const items=[...document.querySelectorAll(".orbit-item")];
+  if(!scene || !items.length) return;
 
-input.addEventListener('keydown',e=>{
-  if(e.key!=='Enter')return;
-  const q=input.value.toLowerCase();
-  const r=rules.find(r=>r.keys.some(k=>q.includes(k)));
-  answer.innerHTML=r
-    ? r.text+(r.link?`<br><a href="${r.link[1]}">${r.link[0]}</a>`:'')
-    : 'Tomu zatím nerozumím. Zkus se zeptat jinak.';
-});
+  let radius=0;
+  let base=0;
+  let frozen=false;
+  let last=performance.now();
+
+  items.forEach(el=>{
+    el.addEventListener("mouseenter",()=>frozen=true);
+    el.addEventListener("mouseleave",()=>{
+      frozen=false;
+      last=performance.now();
+    });
+  });
+
+  function computeRadius(){
+    const w=scene.clientWidth;
+    const h=scene.clientHeight;
+    if(w>0 && h>0){
+      radius=Math.min(w,h)*0.34;
+    }
+  }
+
+  function tick(now){
+    const dt=(now-last)/1000;
+    last=now;
+
+    if(!frozen && radius>0){
+      base+=(Math.PI*2/60)*dt;
+    }
+
+    if(radius>0){
+      items.forEach((el,i)=>{
+        const a=base+i*(Math.PI*2/items.length);
+        el.style.transform=
+          `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+      });
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  computeRadius();
+  window.addEventListener("resize",computeRadius);
+  requestAnimationFrame(tick);
+})();
 </script>
 
 </body>
