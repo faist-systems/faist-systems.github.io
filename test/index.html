@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>FAIST Holding – TEST</title>
+  <title>FAIST Holding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,11 @@
       --panel:rgba(20,20,20,0.85);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
     body{
       font-family:Inter,system-ui,sans-serif;
@@ -44,14 +48,15 @@
       font-size:14px;
     }
 
-    header nav a:hover{color:#fff}
+    header nav a:hover{
+      color:#fff;
+    }
 
-    /* HERO BACKGROUND – ČISTÉ CSS */
+    /* HERO BACKGROUND – CSS KOMPOZICE */
     .hero{
       position:relative;
       min-height:100vh;
       overflow:hidden;
-
       background:
         radial-gradient(
           ellipse at center,
@@ -70,7 +75,6 @@
       left:50%;
       width:2px;
       transform:translateX(-50%);
-
       background:linear-gradient(
         to bottom,
         transparent 0%,
@@ -79,11 +83,9 @@
         rgba(212,175,55,0.15) 75%,
         transparent 100%
       );
-
       box-shadow:
         0 0 20px rgba(212,175,55,0.4),
         0 0 60px rgba(212,175,55,0.25);
-
       pointer-events:none;
     }
 
@@ -93,7 +95,7 @@
       position:absolute;
       inset:0;
       background-image:url("/assets/noise.png");
-      opacity:0.04;
+      opacity:0.035;
       pointer-events:none;
     }
 
@@ -106,6 +108,7 @@
       flex-direction:column;
       align-items:center;
       padding-top:120px;
+      text-align:center;
     }
 
     .hero-content h1{
@@ -119,14 +122,12 @@
       font-weight:400;
       color:var(--muted);
       margin-bottom:14px;
-      text-align:center;
     }
 
     .hero-content p{
       font-size:14px;
       color:#a8a8a8;
       max-width:720px;
-      text-align:center;
       line-height:1.6;
     }
 
@@ -168,14 +169,25 @@
       text-decoration:none;
     }
 
-    .division a:hover{text-decoration:underline}
+    .division a:hover{
+      text-decoration:underline;
+    }
 
+    /* RESPONSIVE */
     @media(max-width:1200px){
-      .divisions{grid-template-columns:repeat(3,1fr)}
+      .divisions{
+        grid-template-columns:repeat(3,1fr);
+      }
     }
 
     @media(max-width:700px){
-      .divisions{grid-template-columns:1fr}
+      header{
+        padding:0 24px;
+      }
+      .divisions{
+        grid-template-columns:1fr;
+        width:calc(100% - 48px);
+      }
     }
   </style>
 </head>
@@ -203,6 +215,7 @@
     </p>
 
     <div class="divisions">
+
       <div class="division">
         <h3>FAIST Systems</h3>
         <p>Infrastruktura a technické zázemí celého ekosystému.</p>
@@ -238,6 +251,7 @@
         <p>Vzdělávání a rozvoj digitálních dovedností.</p>
         <a href="#">Zjistit více →</a>
       </div>
+
     </div>
 
   </div>
