@@ -14,10 +14,10 @@
   --bg:#0f1117;
   --text:#ffffff;
   --muted:#b6bcc6;
-  --panel:rgba(255,255,255,.04);
+  --panel:rgba(255,255,255,.05);
   --border:rgba(255,255,255,.12);
-  --gold1:rgba(255,200,80,.6);
-  --gold2:rgba(255,160,40,.4);
+  --glow1:rgba(255,200,80,.6);
+  --glow2:rgba(255,160,40,.4);
 }
 
 *{box-sizing:border-box}
@@ -31,11 +31,11 @@ body{
     radial-gradient(circle at 80% 80%, #12162a, var(--bg));
 }
 
-/* LANGUAGE SWITCH */
+/* LANGUAGE */
 .lang-switch{
   position:fixed;
-  top:20px;
-  right:20px;
+  top:16px;
+  right:16px;
   z-index:50;
 }
 .lang-switch img{width:22px}
@@ -52,10 +52,10 @@ body{
 /* LEFT PANEL */
 .brand-panel{
   position:absolute;
-  top:32px;
-  left:32px;
-  width:360px;
-  padding:20px 22px;
+  top:24px;
+  left:24px;
+  width:340px;
+  padding:18px 20px;
   background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;
@@ -71,58 +71,40 @@ body{
   max-height:90vmin;
 }
 
-/* CENTER STACK */
-.center-stack{
+/* CENTER */
+.center{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
+  inset:0;
+  display:grid;
+  place-items:center;
+  z-index:5;
+  pointer-events:none;
+}
+
+.center-inner{
   display:flex;
   flex-direction:column;
   align-items:center;
-  z-index:3;
+  cursor:pointer;
+  pointer-events:auto;
 }
 
-/* MAIN LOGO */
-.center-stack img{
+.center-inner img{
   width:220px;
   transition:filter .3s ease, transform .3s ease;
-  cursor:pointer;
 }
-.center-stack img.ai-glow{
+
+.center-inner:hover img{
   filter:
-    drop-shadow(0 0 16px var(--gold1))
-    drop-shadow(0 0 36px var(--gold2));
+    drop-shadow(0 0 18px var(--glow1))
+    drop-shadow(0 0 36px var(--glow2));
   transform:scale(1.04);
 }
 
-/* ASK ME */
 .ask-me{
-  margin-top:6px;              /* 🔧 POSUN VÝŠ */
+  margin-top:6px;
   font-size:12px;
   color:var(--muted);
-  cursor:pointer;
-}
-.ask-me:hover{
-  text-shadow:0 0 10px var(--gold1);
-}
-
-/* INNER TEXT */
-.inner-orbit{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
-.inner-orbit span{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform-origin:0 0;
-  white-space:nowrap;
-  font-size:12px;
-  letter-spacing:1.4px;
-  color:#e6ebf5;
 }
 
 /* ORBIT */
@@ -144,21 +126,17 @@ body{
 
 .orbit-item img{
   width:130px;
-  margin:0 auto 6px;
   display:block;
+  margin:0 auto 6px;
   animation:spin 20s linear infinite;
 }
 
-.orbit-item .label{
-  font-size:14px;
-  color:#fff;
-  text-decoration:none;
-}
+.orbit-item .label{font-size:14px}
 
 .orbit-item::after{
   content:attr(data-desc);
   position:absolute;
-  bottom:115%;
+  bottom:110%;
   left:50%;
   transform:translateX(-50%) translateY(6px);
   background:#0a0c11;
@@ -167,10 +145,9 @@ body{
   padding:8px 10px;
   font-size:12px;
   color:var(--muted);
-  white-space:nowrap;
   opacity:0;
-  pointer-events:none;
   transition:.25s ease;
+  pointer-events:none;
 }
 
 .orbit-item:hover::after{
@@ -183,32 +160,39 @@ body{
   to{transform:rotate(360deg)}
 }
 
-/* AI MODAL */
-.ai-modal{
+/* AI PANEL */
+#aiPanel{
   position:fixed;
   inset:0;
-  background:rgba(10,12,17,.75);
+  background:rgba(10,12,17,.92);
+  backdrop-filter:blur(6px);
   display:none;
-  place-items:center;
   z-index:100;
+  padding:32px;
 }
-.ai-modal.open{display:grid}
 
-.ai-box{
-  background:#0a0c11;
+#aiBox{
+  max-width:720px;
+  margin:0 auto;
+  background:#0f1117;
   border:1px solid var(--border);
-  border-radius:14px;
-  padding:26px 30px;
-  max-width:420px;
-  text-align:center;
+  border-radius:16px;
+  padding:24px;
 }
-.ai-box button{
-  margin-top:18px;
-  background:none;
+
+.ai-buttons{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.ai-buttons button{
+  background:#1b2035;
+  color:white;
   border:1px solid var(--border);
-  color:#fff;
   padding:8px 14px;
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
 }
 
@@ -217,6 +201,33 @@ body{
   background:#0a0c11;
   border-top:1px solid rgba(255,255,255,.08);
   padding:48px 24px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:32px;
+}
+
+.footer-inner h4{
+  margin:0 0 12px;
+  font-size:14px;
+}
+
+.footer-inner p,
+.footer-inner a{
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+}
+
+.footer-bottom{
+  margin-top:32px;
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
 }
 </style>
 </head>
@@ -228,23 +239,21 @@ body{
 </div>
 
 <section class="hero">
-
   <div class="brand-panel">
     <h1>F.A.I.S.T. Holding</h1>
     <p style="color:var(--muted)">
-      Navrhujeme inteligentní systémy propojující umělou inteligenci,
-      vědu a moderní technologie.
+      Navrhujeme inteligentní systémy propojující AI, vědu a technologie.
     </p>
   </div>
 
   <div class="scene" id="scene">
 
-    <div class="center-stack">
-      <img id="mainLogo" src="/assets/logos/faist-holding.png" alt="FAIST">
-      <div class="ask-me" id="askAI">Zeptej se mě</div>
+    <div class="center">
+      <div class="center-inner" id="centerClick">
+        <img src="/assets/logos/faist-holding.png" alt="FAIST">
+        <div class="ask-me">Zeptej se mě</div>
+      </div>
     </div>
-
-    <div class="inner-orbit" id="innerOrbit"></div>
 
     <div class="orbit">
       <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
@@ -258,85 +267,91 @@ body{
   </div>
 </section>
 
-<footer class="site-footer"></footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>F.A.I.S.T. Holding</h4>
+      <p>Inteligentní systémy.<br>Výzkum. Technologie.</p>
+    </div>
+    <div>
+      <h4>Divize</h4>
+      <p>Systems · Lab · Digital<br>Energy · Security · Edu</p>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <p>tadeas.hora@faist.xyz<br>Praha · EU</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 F.A.I.S.T. Holding
+  </div>
+</footer>
 
-<div class="ai-modal" id="aiModal">
-  <div class="ai-box">
-    <h3>FAIST AI</h3>
-    <p>Tady bude AI rozhraní.</p>
-    <button id="closeAI">Zavřít</button>
+<div id="aiPanel">
+  <div id="aiBox">
+    <h2>FAIST AI</h2>
+    <div id="aiContent" style="color:var(--muted); line-height:1.6"></div>
+    <div class="ai-buttons">
+      <button data-q="Co je FAIST?">Co je FAIST?</button>
+      <button data-q="Divize">Divize</button>
+      <button data-q="Spolupráce">Spolupráce</button>
+      <button data-q="Zavřít">Zavřít</button>
+    </div>
   </div>
 </div>
 
 <script>
-/* SCROLL FIX */
-if ('scrollRestoration' in history) history.scrollRestoration='manual';
-window.addEventListener('load',()=>window.scrollTo(0,0));
+const aiPanel=document.getElementById("aiPanel");
+const aiContent=document.getElementById("aiContent");
 
-/* AI */
-const logo=document.getElementById('mainLogo');
-const ask=document.getElementById('askAI');
-const modal=document.getElementById('aiModal');
+const answers={
+  "Co je FAIST?":"FAIST je technologický holding zaměřený na AI a systémová řešení.",
+  "Divize":"Systems, Lab, Digital, Energy, Security a Edu.",
+  "Spolupráce":"Začněte přes digitální nebo systémovou divizi."
+};
 
-[logo,ask].forEach(el=>{
-  el.addEventListener('mouseenter',()=>logo.classList.add('ai-glow'));
-  el.addEventListener('mouseleave',()=>logo.classList.remove('ai-glow'));
-  el.addEventListener('click',()=>modal.classList.add('open'));
-});
+document.getElementById("centerClick").onclick=()=>{
+  aiPanel.style.display="block";
+  aiContent.innerHTML=answers["Co je FAIST?"];
+};
 
-modal.addEventListener('click',e=>{
-  if(e.target===modal) modal.classList.remove('open');
-});
-document.getElementById('closeAI').onclick=()=>modal.classList.remove('open');
-
-/* INNER TEXT */
-const text="Forge of Artificial Intelligence · Science · Technology · ";
-const inner=document.getElementById("innerOrbit");
-let textAngle=0;
-const textRadius=135;
-
-text.split("").forEach((c,i)=>{
-  const s=document.createElement("span");
-  s.textContent=c;
-  s.style.transform=`rotate(${i*(360/text.length)}deg) translate(${textRadius}px)`;
-  inner.appendChild(s);
-});
-
-/* ORBIT */
-const items=[...document.querySelectorAll(".orbit-item")];
-const scene=document.getElementById("scene");
-let radius,base=0,last=performance.now(),frozen=false;
-
-items.forEach(el=>{
-  el.addEventListener("mouseenter",()=>frozen=true);
-  el.addEventListener("mouseleave",()=>{frozen=false;last=performance.now();});
-});
-
-function resize(){
-  radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
-}
-resize();
-window.addEventListener("resize",resize);
-
-function animate(now){
-  const dt=(now-last)/1000;
-  last=now;
-
-  if(!frozen){
-    const speed=(Math.PI*2)/60;
-    base+=speed*dt;
-    textAngle-=speed*dt*0.35*180/Math.PI;
+aiPanel.onclick=e=>{
+  if(e.target.dataset.q){
+    if(e.target.dataset.q==="Zavřít") aiPanel.style.display="none";
+    else aiContent.innerHTML=answers[e.target.dataset.q];
   }
+};
 
-  items.forEach((el,i)=>{
-    const a=base+i*(Math.PI*2/items.length);
-    el.style.transform=`translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+(function(){
+  const scene=document.getElementById("scene");
+  const items=[...document.querySelectorAll(".orbit-item")];
+  let radius=0,base=0,frozen=false,last=performance.now();
+
+  items.forEach(el=>{
+    el.onmouseenter=()=>frozen=true;
+    el.onmouseleave=()=>{frozen=false;last=performance.now();}
   });
 
-  inner.style.transform=`rotate(${textAngle}deg)`;
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
+  function resize(){
+    radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
+  }
+  resize();
+  window.onresize=resize;
+
+  function anim(now){
+    const dt=(now-last)/1000;
+    last=now;
+    if(!frozen) base+=(Math.PI*2/60)*dt;
+
+    items.forEach((el,i)=>{
+      const a=base+i*(Math.PI*2/items.length);
+      el.style.transform=
+        `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
+    });
+    requestAnimationFrame(anim);
+  }
+  requestAnimationFrame(anim);
+})();
 </script>
 
 </body>
