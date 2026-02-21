@@ -77,15 +77,13 @@ body{
   inset:0;
   display:grid;
   place-items:center;
-  z-index:5;              /* 🔑 OPRAVA */
-  pointer-events:none;
+  z-index:5;
 }
 
 .center-inner{
   display:flex;
   flex-direction:column;
   align-items:center;
-  pointer-events:auto;
   cursor:pointer;
 }
 
@@ -109,14 +107,6 @@ body{
 
 .center-inner:hover .ask-me{
   text-shadow:0 0 10px var(--glow1);
-}
-
-/* INNER TEXT */
-.inner-orbit{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
 }
 
 /* ORBIT */
@@ -174,6 +164,42 @@ body{
   to{transform:rotate(360deg)}
 }
 
+/* AI PANEL */
+#aiPanel{
+  position:fixed;
+  inset:0;
+  background:rgba(10,12,17,.92);
+  backdrop-filter:blur(6px);
+  display:none;
+  z-index:100;
+  padding:32px;
+}
+
+#aiBox{
+  max-width:720px;
+  margin:0 auto;
+  background:#0f1117;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px;
+}
+
+.ai-buttons{
+  margin-top:24px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.ai-buttons button{
+  background:#1b2035;
+  color:white;
+  border:1px solid var(--border);
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
 /* FOOTER */
 .site-footer{
   background:#0a0c11;
@@ -207,8 +233,6 @@ body{
       </div>
     </div>
 
-    <div class="inner-orbit" id="innerOrbit"></div>
-
     <div class="orbit">
       <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
       <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
@@ -223,32 +247,78 @@ body{
 
 <footer class="site-footer"></footer>
 
+<!-- AI PANEL -->
+<div id="aiPanel">
+  <div id="aiBox">
+    <h2>FAIST AI</h2>
+    <div id="aiContent" style="color:var(--muted); line-height:1.6"></div>
+
+    <div class="ai-buttons">
+      <button data-q="Co je FAIST?">Co je FAIST?</button>
+      <button data-q="Divize">Divize</button>
+      <button data-q="Spolupráce">Spolupráce</button>
+      <button data-q="Zavřít">Zavřít</button>
+    </div>
+  </div>
+</div>
+
 <script>
-document.getElementById('centerClick').addEventListener('click',()=>{
-  console.log('Center logo clicked – ready for AI modal');
-});
+/* AI LOGIC */
+const aiPanel=document.getElementById("aiPanel");
+const aiContent=document.getElementById("aiContent");
+
+const answers={
+  "Co je FAIST?":`
+    FAIST je technologický holding zaměřený na AI, výzkum a systémy s reálným dopadem.
+    <br><br><a href="/cs/about.html">Více o FAIST →</a>
+  `,
+  "Divize":`
+    Systems, Lab, Digital, Energy, Security a Edu.
+    <br><br><a href="/cs/divisions/">Přehled divizí →</a>
+  `,
+  "Spolupráce":`
+    Začněte přes digitální nebo systémovou divizi.
+    <br><br><a href="/cs/contact.html">Kontakt →</a>
+  `
+};
+
+function render(q){
+  aiContent.innerHTML=answers[q]||"Tuhle odpověď připravujeme.";
+}
+
+document.getElementById("centerClick").onclick=()=>{
+  aiPanel.style.display="block";
+  render("Co je FAIST?");
+};
+
+aiPanel.onclick=e=>{
+  if(e.target.dataset.q){
+    if(e.target.dataset.q==="Zavřít"){
+      aiPanel.style.display="none";
+    }else{
+      render(e.target.dataset.q);
+    }
+  }
+};
 
 /* ORBIT MOTION */
 (function(){
   const scene=document.getElementById("scene");
   const items=[...document.querySelectorAll(".orbit-item")];
-  let radius=0, base=0, frozen=false, last=performance.now();
+  let radius=0,base=0,frozen=false,last=performance.now();
 
   items.forEach(el=>{
-    el.addEventListener("mouseenter",()=>frozen=true);
-    el.addEventListener("mouseleave",()=>{
-      frozen=false;
-      last=performance.now();
-    });
+    el.onmouseenter=()=>frozen=true;
+    el.onmouseleave=()=>{frozen=false;last=performance.now();}
   });
 
   function resize(){
     radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
   }
   resize();
-  window.addEventListener("resize",resize);
+  window.onresize=resize;
 
-  function animate(now){
+  function anim(now){
     const dt=(now-last)/1000;
     last=now;
     if(!frozen) base+=(Math.PI*2/60)*dt;
@@ -258,10 +328,9 @@ document.getElementById('centerClick').addEventListener('click',()=>{
       el.style.transform=
         `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
     });
-
-    requestAnimationFrame(animate);
+    requestAnimationFrame(anim);
   }
-  requestAnimationFrame(animate);
+  requestAnimationFrame(anim);
 })();
 </script>
 
