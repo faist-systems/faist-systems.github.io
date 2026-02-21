@@ -4,13 +4,11 @@
 <meta charset="UTF-8">
 <title>F.A.I.S.T. Holding</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#000;color:#eee;
-font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+html,body{width:100%;height:100%;background:#000;color:#eee;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
 body{overflow:hidden}
 
 /* HEADER */
@@ -21,14 +19,9 @@ header{
   align-items:center;
   padding:0 4vw;
   position:relative;
-  z-index:20;
+  z-index:10;
 }
-header nav a{
-  margin-left:24px;
-  font-size:.85rem;
-  color:#ccc;
-  text-decoration:none;
-}
+header nav a{margin-left:24px;font-size:.85rem;color:#ccc;text-decoration:none}
 header nav a:hover{color:#fff}
 
 /* FOOTER */
@@ -36,57 +29,35 @@ footer{
   position:absolute;
   bottom:0;
   width:100%;
-  height:40px;
+  height:36px;
   display:flex;
   justify-content:center;
   align-items:center;
   font-size:.75rem;
   opacity:.5;
-  z-index:20;
+  z-index:10;
 }
 
 /* MAIN */
-main{
-  height:calc(100vh - 64px);
-  position:relative;
-}
+main{height:calc(100vh - 64px);position:relative}
 
 /* BACKGROUND */
-.background{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(circle at center, rgba(255,200,120,.02), transparent 60%),
-    linear-gradient(to bottom,#050505,#000 70%);
-}
-.noise{
-  position:absolute;inset:0;
-  background-image:repeating-radial-gradient(circle,
-    rgba(255,255,255,.02) 0 1px, transparent 1px 2px);
-  background-size:2px 2px;
-  opacity:.15;
-  mix-blend-mode:overlay;
-}
+.background{position:absolute;inset:0;
+  background:radial-gradient(circle at center,rgba(255,200,120,.02),transparent 60%),
+  linear-gradient(to bottom,#050505,#000 70%)}
+.noise{position:absolute;inset:0;
+  background-image:repeating-radial-gradient(circle,rgba(255,255,255,.02) 0 1px,transparent 1px 2px);
+  background-size:2px 2px;opacity:.15;mix-blend-mode:overlay}
 
 /* HERO */
-.hero{
-  position:relative;
-  z-index:10;
-  text-align:center;
-  margin-top:6vh;
-}
+.hero{position:relative;z-index:5;text-align:center;margin-top:6vh}
 .hero h1{
   font-family:"Cinzel",serif;
   font-size:clamp(2.6rem,4.6vw,3.6rem);
   letter-spacing:.22em;
-  text-shadow:
-    0 2px 4px rgba(255,215,120,.35),
-    0 0 1px rgba(255,215,120,.5);
+  text-shadow:0 2px 4px rgba(255,215,120,.35),0 0 1px rgba(255,215,120,.5)
 }
-.hero p{
-  margin-top:18px;
-  font-size:.9rem;
-  opacity:.7;
-}
+.hero p{margin-top:18px;font-size:.9rem;opacity:.7}
 
 /* BUS */
 .bus-wrap{
@@ -98,29 +69,22 @@ main{
   max-width:90vw;
   height:2px;
 }
-.bus{
-  width:100%;
-  height:2px;
-  background:rgba(255,215,120,.25);
-}
+.bus{width:100%;height:2px;background:rgba(255,215,120,.25)}
 
 /* HORIZONTAL FLOW */
 .flow{
   position:absolute;
-  top:0;
-  height:3px;
+  top:-1px;
+  height:4px;
   opacity:0;
-  background:linear-gradient(to right,
-    rgba(255,215,120,.9),
-    transparent);
-  transition:width 1.8s ease-out, opacity .3s;
 }
 .flow.left{
   right:50%;
-  transform:scaleX(-1);
+  background:linear-gradient(to left,rgba(255,215,120,.9),transparent)
 }
 .flow.right{
   left:50%;
+  background:linear-gradient(to right,rgba(255,215,120,.9),transparent)
 }
 
 /* BUS DROPS */
@@ -129,38 +93,28 @@ main{
   top:0;
   width:2px;
   height:22px;
-  background:linear-gradient(to bottom,
-    rgba(255,215,120,.5),
-    transparent);
+  background:linear-gradient(to bottom,rgba(255,215,120,.5),transparent)
 }
 
 /* MAIN DROP */
 .pulse{
   position:absolute;
-  top:120px;
   left:50%;
   width:6px;
   height:26px;
-  transform:translate(-50%,-40px);
-  background:linear-gradient(to bottom,
-    transparent,
-    rgba(255,220,150,1),
-    transparent);
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom,transparent,rgba(255,220,150,1),transparent);
   border-radius:4px;
   opacity:0;
-  transition:transform 1.6s ease-in, opacity .3s;
+  transition:top 1.6s ease-in, opacity .3s;
 }
 
 /* BRANCH DROPS */
 .branch-drop{
   position:absolute;
-  top:22px;
   width:4px;
-  height:0;
   transform:translateX(-50%);
-  background:linear-gradient(to bottom,
-    rgba(255,220,150,1),
-    transparent);
+  background:linear-gradient(to bottom,rgba(255,220,150,1),transparent);
   opacity:0;
   transition:height .9s ease-in, opacity .3s;
 }
@@ -177,7 +131,6 @@ main{
   z-index:5;
 }
 .division{width:calc(100%/6)}
-
 .window{
   height:260px;
   padding:18px;
@@ -186,11 +139,9 @@ main{
   border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
-  transition:box-shadow .4s ease;
+  transition:box-shadow .3s ease;
 }
-.window.active{
-  box-shadow:0 0 0 1px var(--accent);
-}
+.window.active{box-shadow:0 0 0 1px var(--accent)}
 .window h3{font-size:.95rem;margin-bottom:6px}
 .window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
 .window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
@@ -210,16 +161,12 @@ main{
 <header>
   <div>FAIST</div>
   <nav>
-    <a href="#">Holding</a>
-    <a href="#">Divize</a>
-    <a href="#">O nás</a>
-    <a href="#">Kontakt</a>
+    <a href="#">Holding</a><a href="#">Divize</a><a href="#">O nás</a><a href="#">Kontakt</a>
   </nav>
 </header>
 
 <main>
-<div class="background"></div>
-<div class="noise"></div>
+<div class="background"></div><div class="noise"></div>
 
 <div class="hero">
   <h1>F.A.I.S.T. HOLDING</h1>
@@ -228,12 +175,12 @@ main{
 
 <div class="pulse" id="pulse"></div>
 
-<div class="bus-wrap">
+<div class="bus-wrap" id="bus">
   <div class="bus"></div>
-
   <div class="flow left" id="flowL"></div>
   <div class="flow right" id="flowR"></div>
 
+  <!-- svody -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -241,6 +188,7 @@ main{
   <div class="bus-drop" style="left:80%"></div>
   <div class="bus-drop" style="left:100%"></div>
 
+  <!-- kapky -->
   <div class="branch-drop" style="left:0%"></div>
   <div class="branch-drop" style="left:20%"></div>
   <div class="branch-drop" style="left:40%"></div>
@@ -257,7 +205,6 @@ main{
   <div class="division"><div class="window security"><h3>Security</h3><p>Ochrana systémů.</p><a href="#">Zjistit více →</a></div></div>
   <div class="division"><div class="window academy"><h3>Academy</h3><p>Přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
 </div>
-
 </main>
 
 <footer>© FAIST Holding</footer>
@@ -265,54 +212,50 @@ main{
 <script>
 window.onload = () => {
   const pulse = document.getElementById("pulse");
+  const bus = document.getElementById("bus");
   const flowL = document.getElementById("flowL");
   const flowR = document.getElementById("flowR");
   const branches = document.querySelectorAll(".branch-drop");
   const windows  = document.querySelectorAll(".window");
 
   function runCycle(){
+    const busRect = bus.getBoundingClientRect();
+    const cardsTop = document.querySelector(".window").getBoundingClientRect().top;
+    const dropLen = cardsTop - busRect.bottom - 6;
+
+    // reset
     pulse.style.opacity = 1;
-    pulse.style.transform = "translate(-50%,-40px)";
-
-    flowL.style.width = "0";
-    flowR.style.width = "0";
-    flowL.style.opacity = 0;
-    flowR.style.opacity = 0;
-
-    branches.forEach(b=>{
-      b.style.height = "0";
-      b.style.opacity = 0;
-    });
+    pulse.style.top = "120px";
+    flowL.style.width = flowR.style.width = "0";
+    flowL.style.opacity = flowR.style.opacity = 0;
+    branches.forEach(b=>{b.style.height="0";b.style.opacity=0});
     windows.forEach(w=>w.classList.remove("active"));
 
-    // pád kapky
+    // pád kapky NA BUS
     setTimeout(()=>{
-      pulse.style.transform = "translate(-50%,180px)"; // ZASTAVÍ SE NA BUSU
+      pulse.style.top = busRect.top + "px";
     },50);
 
-    // pauza v uzlu + rozvod
+    // pauza + rozvod
     setTimeout(()=>{
       pulse.style.opacity = 0;
 
-      flowL.style.opacity = 1;
-      flowR.style.opacity = 1;
-      flowL.style.width = "550px";
-      flowR.style.width = "550px";
+      flowL.style.opacity = flowR.style.opacity = 1;
+      flowL.style.width = flowR.style.width = busRect.width/2 + "px";
 
       branches.forEach((b,i)=>{
         const dist = Math.abs(i - 2.5);
-        const delay = 400 + dist * dist * 350;
+        const delay = 400 + dist*dist*350;
 
         setTimeout(()=>{
           windows.forEach(w=>w.classList.remove("active"));
-
           b.style.opacity = 1;
-          b.style.height = "120px";
+          b.style.height = dropLen + "px";
           windows[i].classList.add("active");
         },delay);
       });
 
-    },2000); // PAUZA – tady se „zastaví“
+    },1800);
   }
 
   runCycle();
