@@ -2,239 +2,62 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8">
-  <title>FAIST Holding – TEST</title>
+  <title>FAIST TEST – MUSÍ SE ZMĚNIT</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --bg:#0b0e13;
-      --panel:rgba(18,23,34,.9);
-      --text:#eaeaea;
-      --muted:#b0b5be;
-      --gold:#c9a44c;
-    }
-
     *{box-sizing:border-box}
 
     body{
       margin:0;
-      font-family:Inter,system-ui,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      overflow:hidden;
+      font-family:Arial, sans-serif;
+      background:#000;
+      color:white;
     }
 
-    /* HEADER */
-    header{
-      height:72px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:0 56px;
-      position:relative;
-      z-index:10;
-    }
-
-    header nav a{
-      color:var(--muted);
-      text-decoration:none;
-      margin-left:28px;
-      font-size:13px;
-    }
-
-    header nav a:hover{
-      color:#fff;
-    }
-
-    /* HERO */
-    .hero{
-      position:relative;
-      height:calc(100vh - 72px);
-
-      /* 🔑 ZDE JE KLÍČ – ŽÁDNÝ GRADIENT, ŽÁDNÉ COVER */
-      background: url("assets/backgrounds/holding.png") center / contain no-repeat;
-      background-color:var(--bg);
-
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-    }
-
-    /* zlatá osa – jen jemný overlay */
-    .hero::before{
-      content:"";
-      position:absolute;
+    /* 🔴 TEST BANNER – MUSÍ BÝT VIDĚT */
+    .test-banner{
+      position:fixed;
       top:0;
-      bottom:0;
-      left:50%;
-      width:1px;
-      background:var(--gold);
-      opacity:.6;
-      pointer-events:none;
-    }
-
-    /* HERO TEXT */
-    .hero-text{
-      text-align:center;
-      margin-top:48px;
-      max-width:760px;
-      position:relative;
-      z-index:2;
-    }
-
-    .hero-text h1{
-      font-size:42px;
-      letter-spacing:2.5px;
-      margin:0 0 10px;
-    }
-
-    .hero-text h2{
-      font-size:17px;
-      font-weight:400;
-      color:var(--muted);
-      margin:0 0 12px;
-    }
-
-    .hero-text p{
+      left:0;
+      z-index:99999;
+      background:red;
+      color:white;
+      padding:8px 12px;
+      font-weight:bold;
       font-size:14px;
-      color:var(--muted);
-      line-height:1.6;
-      margin:0;
     }
 
-    /* DIVISIONS */
-    .divisions{
-      position:absolute;
-      bottom:32px;
-      left:50%;
-      transform:translateX(-50%);
-      width:calc(100% - 112px);
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:20px;
-      z-index:2;
-    }
-
-    .division{
-      background:var(--panel);
-      border-radius:14px;
-      padding:18px;
-      min-height:180px;
+    /* 🟡 HERO – BEZ OVERLAYE, BEZ GRADIENTU */
+    .hero{
+      margin-top:40px;
+      height:80vh;
+      background: url("assets/backgrounds/holding.png") center / contain no-repeat;
+      background-color:#111;
+      border:5px solid yellow; /* MUSÍ BÝT VIDĚT */
       display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      box-shadow:0 10px 30px rgba(0,0,0,.4);
+      align-items:center;
+      justify-content:center;
+      text-align:center;
     }
 
-    .division h3{
-      margin:0 0 6px;
-      font-size:15px;
-      font-weight:600;
-    }
-
-    .division p{
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.4;
-      flex-grow:1;
-    }
-
-    .division a{
-      font-size:12px;
-      color:var(--gold);
-      text-decoration:none;
-      margin-top:10px;
-    }
-
-    .division a:hover{
-      text-decoration:underline;
-    }
-
-    /* RESPONSIVE */
-    @media(max-width:1200px){
-      body{overflow:auto}
-
-      .divisions{
-        position:static;
-        transform:none;
-        padding:32px 56px;
-        grid-template-columns:repeat(3,1fr);
-      }
-
-      .hero{
-        height:auto;
-        padding-bottom:40px;
-      }
+    h1{
+      font-size:48px;
+      background:rgba(0,0,0,0.6);
+      padding:20px 30px;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <strong>FAIST</strong>
-  <nav>
-    <a href="#">About</a>
-    <a href="#">Divisions</a>
-    <a href="#">Careers</a>
-    <a href="#">Blog</a>
-  </nav>
-</header>
+<div class="test-banner">
+  TEST INDEX.HTML – KDYŽ TOHLE NEVIDÍŠ, EDITUJEŠ ŠPATNÝ SOUBOR
+</div>
 
-<section class="hero">
-
-  <div class="hero-text">
-    <h1>FAIST HOLDING</h1>
-    <h2>Sjednocující síla pro technologie, energii a vzdělávání</h2>
-    <p>
-      Mateřská entita propojující infrastrukturu, výzkum, digitální produkty,
-      energetická řešení a vzdělávání do jednoho funkčního celku.
-    </p>
-  </div>
-
-  <div class="divisions">
-
-    <div class="division">
-      <h3>FAIST Systems</h3>
-      <p>Infrastruktura a technické zázemí celého ekosystému.</p>
-      <a href="#">Zjistit více →</a>
-    </div>
-
-    <div class="division">
-      <h3>FAIST Research</h3>
-      <p>Výzkum, experimenty a vývoj nových řešení.</p>
-      <a href="#">Zjistit více →</a>
-    </div>
-
-    <div class="division">
-      <h3>FAIST Digital</h3>
-      <p>Weby, aplikace a digitální produkty.</p>
-      <a href="#">Zjistit více →</a>
-    </div>
-
-    <div class="division">
-      <h3>FAIST Energy</h3>
-      <p>Energetická řešení a efektivita.</p>
-      <a href="#">Zjistit více →</a>
-    </div>
-
-    <div class="division">
-      <h3>FAIST Security</h3>
-      <p>Kybernetická ochrana a dohled.</p>
-      <a href="#">Zjistit více →</a>
-    </div>
-
-    <div class="division">
-      <h3>FAIST Academy</h3>
-      <p>Vzdělávání a rozvoj digitálních dovedností.</p>
-      <a href="#">Zjistit více →</a>
-    </div>
-
-  </div>
-
-</section>
+<div class="hero">
+  <h1>FAIST HOLDING TEST</h1>
+</div>
 
 </body>
 </html>
