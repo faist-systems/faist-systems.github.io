@@ -70,14 +70,13 @@ body{
   max-height:90vmin;
 }
 
-/* ===== VRSTVA 1: ORBIT (NEDOTÝKAT SE) ===== */
+/* ===== VRSTVA 1 – ORBIT ===== */
 .orbit-layer{
   position:absolute;
   inset:0;
   pointer-events:none;
 }
 
-/* CENTER LOGO (VIZUÁLNÍ) */
 .center{
   position:absolute;
   inset:0;
@@ -89,7 +88,6 @@ body{
   max-width:40vmin;
 }
 
-/* INNER TEXT */
 .inner-orbit{
   position:absolute;
   inset:0;
@@ -105,7 +103,6 @@ body{
   color:#e6ebf5;
 }
 
-/* ORBIT */
 .orbit{
   position:absolute;
   inset:0;
@@ -116,13 +113,11 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   text-align:center;
-  color:#fff;
-  text-decoration:none;
 }
 .orbit-item img{
   width:130px;
-  display:block;
   margin:0 auto 6px;
+  display:block;
   animation:spin 20s linear infinite;
 }
 .orbit-item .label{
@@ -135,7 +130,7 @@ body{
   to{transform:rotate(360deg)}
 }
 
-/* ===== VRSTVA 2: AI OVERLAY ===== */
+/* ===== VRSTVA 2 – AI OVERLAY ===== */
 .ai-layer{
   position:absolute;
   inset:0;
@@ -149,11 +144,15 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  pointer-events:auto;
   cursor:pointer;
+  pointer-events:auto;
+}
+.ai-trigger img{
+  width:220px;
+  max-width:40vmin;
 }
 .ai-trigger span{
-  margin-top:8px;
+  margin-top:6px;
   font-size:12px;
   letter-spacing:1px;
   color:var(--muted);
@@ -200,6 +199,30 @@ body{
   cursor:pointer;
   text-align:right;
 }
+
+/* FOOTER */
+.site-footer{
+  background:#0a0c11;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:48px 24px;
+}
+.footer-grid{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:32px;
+}
+.site-footer h3{
+  font-size:14px;
+  letter-spacing:2px;
+}
+.site-footer a{
+  display:block;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:6px;
+}
 </style>
 </head>
 
@@ -218,9 +241,8 @@ body{
 
   <div class="scene" id="scene">
 
-    <!-- VRSTVA 1: ORBIT -->
+    <!-- ORBIT -->
     <div class="orbit-layer">
-
       <div class="center">
         <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
       </div>
@@ -235,12 +257,12 @@ body{
         <div class="orbit-item"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></div>
         <div class="orbit-item"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></div>
       </div>
-
     </div>
 
-    <!-- VRSTVA 2: AI -->
+    <!-- AI OVERLAY -->
     <div class="ai-layer">
       <div class="ai-trigger" id="openAI">
+        <img src="/assets/logos/faist-holding.png" alt="FAIST AI">
         <span>Zeptej se mě</span>
       </div>
     </div>
@@ -248,12 +270,36 @@ body{
   </div>
 </section>
 
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>O nás</h3>
+      <p style="color:var(--muted)">Technologie, které dávají smysl.</p>
+    </div>
+    <div>
+      <h3>Divize</h3>
+      <a href="#">Systems</a>
+      <a href="#">Lab</a>
+      <a href="#">Digital</a>
+      <a href="#">Energy</a>
+      <a href="#">Security</a>
+      <a href="#">Edu</a>
+    </div>
+    <div>
+      <h3>Informace</h3>
+      <a href="#">Slovník</a>
+      <a href="#">FAQ</a>
+      <a href="#">Kontakt</a>
+    </div>
+  </div>
+</footer>
+
 <!-- AI MODAL -->
 <div class="ai-modal" id="aiModal">
   <div class="ai-panel">
     <h2>FAIST AI</h2>
     <p>
-      Jsem centrální inteligence holdingu FAIST.<br>
+      Jsem centrální inteligence holdingu FAIST.
       Brzy se mě budeš moci ptát na naše divize,
       projekty a technologie.
     </p>
@@ -308,7 +354,7 @@ function animate(now){
 }
 requestAnimationFrame(animate);
 
-/* AI MODAL */
+/* AI */
 const openAI=document.getElementById("openAI");
 const closeAI=document.getElementById("closeAI");
 const modal=document.getElementById("aiModal");
