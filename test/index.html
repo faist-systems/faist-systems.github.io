@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8" />
-    <title>FAIST Holding – Light Core</title>
+    <title>FAIST Holding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
@@ -18,19 +18,20 @@
             background: #000;
             overflow: hidden;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #eee;
         }
 
         .scene {
             position: relative;
             width: 100%;
             height: 100%;
-            overflow: hidden;
         }
 
+        /* BACKGROUND */
         .background {
             position: absolute;
             inset: 0;
-            background: url("../assets/bg/faist-bg.jpg") center center / cover no-repeat;
+            background: url("../assets/bg/faist-bg.jpg") center / cover no-repeat;
             z-index: 0;
         }
 
@@ -44,8 +45,7 @@
             pointer-events: none;
         }
 
-        /* ===== LIGHT CORE ===== */
-
+        /* LIGHT CORE */
         .light-atmosphere {
             position: absolute;
             top: 0;
@@ -55,28 +55,15 @@
             transform: translateX(-50%);
             background: radial-gradient(
                 ellipse at center,
-                rgba(255, 180, 90, 0.08) 0%,
-                rgba(255, 180, 90, 0.04) 30%,
-                rgba(0, 0, 0, 0) 70%
+                rgba(255,180,90,0.08) 0%,
+                rgba(255,180,90,0.04) 30%,
+                rgba(0,0,0,0) 70%
             );
             filter: blur(40px);
-            z-index: 4;
-            pointer-events: none;
+            z-index: 3;
         }
 
         .light-core {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 1px;
-            height: 100%;
-            transform: translateX(-50%);
-            z-index: 6;
-            pointer-events: none;
-        }
-
-        .light-core::before {
-            content: "";
             position: absolute;
             top: 0;
             left: 50%;
@@ -85,89 +72,78 @@
             transform: translateX(-50%);
             background: linear-gradient(
                 to bottom,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 248, 220, 0.95) 20%,
-                rgba(255, 215, 120, 1) 50%,
-                rgba(255, 248, 220, 0.95) 80%,
-                rgba(255, 255, 255, 0) 100%
+                rgba(255,255,255,0) 0%,
+                rgba(255,215,120,1) 50%,
+                rgba(255,255,255,0) 100%
             );
+            z-index: 4;
         }
 
-        .light-core::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 120px;
-            height: 100%;
-            transform: translateX(-50%);
-            background: radial-gradient(
-                ellipse at center,
-                rgba(255, 200, 80, 0.35) 0%,
-                rgba(255, 180, 60, 0.18) 25%,
-                rgba(255, 150, 40, 0.08) 45%,
-                rgba(0, 0, 0, 0) 70%
-            );
-            filter: blur(12px);
-        }
-
-        /* ===== HORIZONTAL FEEDS ===== */
-
-        .feeds {
+        /* DIVISIONS LAYOUT */
+        .divisions {
             position: absolute;
             inset: 0;
-            z-index: 5;
-            pointer-events: none;
+            z-index: 6;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(3, 1fr);
+            padding: 8vh 10vw;
+            gap: 4vh 8vw;
         }
 
-        .feed {
-            position: absolute;
-            left: 50%;
-            height: 2px;
-            transform-origin: left center;
+        .division {
+            position: relative;
+            max-width: 340px;
+            align-self: center;
         }
 
-        /* ostré jádro feedu */
-        .feed::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to right,
-                rgba(255, 215, 120, 1) 0%,
-                rgba(255, 200, 100, 0.8) 40%,
-                rgba(255, 180, 80, 0.4) 70%,
-                rgba(255, 180, 80, 0) 100%
-            );
+        /* BUBBLE */
+        .bubble {
+            border-radius: 20px;
+            background: rgba(10,10,10,0.6);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 20px 22px;
+            box-shadow: 0 0 0 rgba(0,0,0,0);
         }
 
-        /* halo feedu */
-        .feed::after {
-            content: "";
-            position: absolute;
-            top: -20px;
-            left: 0;
+        /* IMAGE PLACEHOLDER */
+        .image-slot {
             width: 100%;
-            height: 40px;
+            height: 120px;
+            border-radius: 14px;
             background: linear-gradient(
-                to right,
-                rgba(255, 200, 100, 0.25) 0%,
-                rgba(255, 180, 80, 0.12) 40%,
-                rgba(255, 180, 80, 0) 100%
+                135deg,
+                rgba(255,255,255,0.06),
+                rgba(255,255,255,0.02)
             );
-            filter: blur(14px);
+            border: 1px dashed rgba(255,255,255,0.15);
+            margin-bottom: 14px;
         }
 
-        /* POSITIONING FEEDS */
-        .feed.f1 { top: 62%; width: 32vw; }
-        .feed.f2 { top: 62%; width: 32vw; transform: scaleX(-1); }
+        .bubble h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
 
-        .feed.f3 { top: 72%; width: 38vw; }
-        .feed.f4 { top: 72%; width: 38vw; transform: scaleX(-1); }
+        .bubble p {
+            font-size: 0.9rem;
+            opacity: 0.75;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
 
-        .feed.f5 { top: 82%; width: 44vw; }
-        .feed.f6 { top: 82%; width: 44vw; transform: scaleX(-1); }
+        .bubble a {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: rgb(255,215,120);
+            letter-spacing: 0.03em;
+        }
 
+        .bubble a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -179,13 +155,60 @@
         <div class="light-atmosphere"></div>
         <div class="light-core"></div>
 
-        <div class="feeds">
-            <div class="feed f1"></div>
-            <div class="feed f2"></div>
-            <div class="feed f3"></div>
-            <div class="feed f4"></div>
-            <div class="feed f5"></div>
-            <div class="feed f6"></div>
+        <div class="divisions">
+            <div class="division">
+                <div class="bubble">
+                    <div class="image-slot"></div>
+                    <h3>Systems</h3>
+                    <p>Infrastruktura, architektura a stabilita digitálních řešení.</p>
+                    <a href="#">Zjistit více</a>
+                </div>
+            </div>
+
+            <div class="division">
+                <div class="bubble">
+                    <div class="image-slot"></div>
+                    <h3>Security</h3>
+                    <p>Ochrana, kontrola a důvěra v digitálním prostoru.</p>
+                    <a href="#">Zjistit více</a>
+                </div>
+            </div>
+
+            <div class="division">
+                <div class="bubble">
+                    <div class="image-slot"></div>
+                    <h3>Research</h3>
+                    <p>Výzkum, experimenty a nové směry technologií.</p>
+                    <a href="#">Zjistit více</a>
+                </div>
+            </div>
+
+            <div class="division">
+                <div class="bubble">
+                    <div class="image-slot"></div>
+                    <h3>Digital</h3>
+                    <p>Produktový design, vývoj a digitální zkušenost.</p>
+                    <a href="#">Zjistit více</a>
+                </div>
+            </div>
+
+            <div class="division">
+                <div class="bubble">
+                    <div class="image-slot"></div>
+                    <h3>Energy</h3>
+                    <p>Přenos energie, efektivita a udržitelná řešení.</p>
+                    <a href="#">Zjistit více</a>
+                </div>
+            </div>
+
+            <div class="division">
+                <div class="bubble">
+                    <div class="image-slot"></div>
+                    <h3>Academy</h3>
+                    <p>Vzdělávání, mentoring a přenos know-how.</p>
+                    <a href="#">Zjistit více</a>
+                </div>
+            </div>
         </div>
     </div>
 </body>
