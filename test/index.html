@@ -5,7 +5,7 @@
   <title>FAIST Holding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -23,22 +23,24 @@
       font-family:Inter,system-ui,sans-serif;
       background:var(--bg);
       color:var(--text);
+      overflow:hidden; /* 🔑 žádný scroll na main */
     }
 
     /* HEADER */
     header{
+      height:72px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      padding:28px 56px;
+      padding:0 56px;
     }
 
     header nav a{
       color:var(--muted);
       text-decoration:none;
-      margin-left:32px;
-      font-size:14px;
-      letter-spacing:.5px;
+      margin-left:28px;
+      font-size:13px;
+      letter-spacing:.4px;
     }
 
     header nav a:hover{
@@ -48,12 +50,13 @@
     /* HERO */
     .hero{
       position:relative;
-      min-height:75vh;
+      height:calc(100vh - 72px);
+      background:
+        linear-gradient(rgba(14,17,22,.65), rgba(14,17,22,.85)),
+        url("assets/backgrounds/holding.png") center/cover no-repeat;
       display:flex;
+      flex-direction:column;
       align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:80px 24px;
     }
 
     /* zlatá osa */
@@ -73,109 +76,94 @@
       opacity:.9;
     }
 
-    .hero-content{
-      max-width:900px;
+    /* HERO TEXT */
+    .hero-text{
+      text-align:center;
+      margin-top:56px; /* 🔑 výš */
+      max-width:760px;
       position:relative;
       z-index:2;
     }
 
-    .hero h1{
-      font-size:56px;
-      letter-spacing:3px;
-      margin-bottom:12px;
+    .hero-text h1{
+      font-size:44px; /* 🔑 menší nadpis */
+      letter-spacing:2.5px;
+      margin:0 0 8px;
     }
 
-    .hero h2{
-      font-size:20px;
+    .hero-text h2{
+      font-size:17px;
       font-weight:400;
       color:var(--muted);
-      margin-bottom:24px;
+      margin:0 0 12px;
     }
 
-    .hero p{
-      max-width:640px;
-      margin:0 auto 32px;
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .hero button{
-      background:transparent;
-      border:1px solid var(--gold);
-      color:var(--gold);
-      padding:14px 30px;
+    .hero-text p{
       font-size:14px;
-      cursor:pointer;
+      color:var(--muted);
+      line-height:1.5;
+      margin:0;
     }
 
-    .hero button:hover{
-      background:var(--gold);
-      color:#000;
-    }
-
-    /* DIVISIONS GRID */
+    /* DIVISIONS */
     .divisions{
-      padding:80px 56px;
+      position:absolute;
+      bottom:32px;
+      left:50%;
+      transform:translateX(-50%);
+      width:calc(100% - 112px);
       display:grid;
       grid-template-columns:repeat(6,1fr);
-      gap:24px;
+      gap:20px;
+      z-index:2;
     }
 
     .division{
       background:var(--panel);
-      border-radius:14px;
-      padding:24px;
+      border-radius:12px;
+      padding:18px;
+      min-height:180px; /* 🔑 menší */
       display:flex;
       flex-direction:column;
       justify-content:space-between;
-      min-height:260px;
     }
 
     .division h3{
-      margin:0 0 8px;
-      font-size:18px;
+      margin:0 0 6px;
+      font-size:15px;
+      font-weight:600;
     }
 
     .division p{
-      font-size:14px;
+      font-size:13px;
       color:var(--muted);
-      line-height:1.5;
+      line-height:1.4;
       flex-grow:1;
     }
 
     .division a{
-      margin-top:16px;
-      font-size:13px;
+      font-size:12px;
       color:var(--gold);
       text-decoration:none;
+      margin-top:10px;
     }
 
     .division a:hover{
       text-decoration:underline;
     }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE – na menších už scroll klidně bude */
     @media(max-width:1200px){
+      body{overflow:auto}
       .divisions{
+        position:static;
+        transform:none;
+        padding:32px 56px;
         grid-template-columns:repeat(3,1fr);
       }
+      .hero{height:auto}
     }
 
-    @media(max-width:700px){
-      .divisions{
-        grid-template-columns:1fr;
-      }
-      .hero h1{
-        font-size:40px;
-      }
-    }
-
-    footer{
-      padding:40px;
-      text-align:center;
-      font-size:13px;
-      color:var(--muted);
-    }
   </style>
 </head>
 
@@ -192,60 +180,57 @@
 </header>
 
 <section class="hero">
-  <div class="hero-content">
+
+  <div class="hero-text">
     <h1>FAIST HOLDING</h1>
     <h2>Sjednocující síla pro technologie, energii a vzdělávání</h2>
     <p>
       Mateřská entita propojující infrastrukturu, výzkum, digitální produkty,
       energetická řešení a vzdělávání do jednoho funkčního celku.
     </p>
-    <button>Zjistit více</button>
   </div>
+
+  <div class="divisions">
+
+    <div class="division">
+      <h3>FAIST Systems</h3>
+      <p>Infrastruktura a technické zázemí celého ekosystému.</p>
+      <a href="#">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>FAIST Research</h3>
+      <p>Výzkum, experimenty a vývoj nových řešení.</p>
+      <a href="#">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>FAIST Digital</h3>
+      <p>Weby, aplikace a digitální produkty.</p>
+      <a href="#">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>FAIST Energy</h3>
+      <p>Energetická řešení a efektivita.</p>
+      <a href="#">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>FAIST Security</h3>
+      <p>Kybernetická ochrana a dohled.</p>
+      <a href="#">Zjistit více →</a>
+    </div>
+
+    <div class="division">
+      <h3>FAIST Academy</h3>
+      <p>Vzdělávání a rozvoj digitálních dovedností.</p>
+      <a href="#">Zjistit více →</a>
+    </div>
+
+  </div>
+
 </section>
-
-<section class="divisions">
-
-  <div class="division">
-    <h3>FAIST Systems</h3>
-    <p>Infrastruktura a technické zázemí, na kterém stojí celý ekosystém.</p>
-    <a href="#">Zjistit více →</a>
-  </div>
-
-  <div class="division">
-    <h3>FAIST Research</h3>
-    <p>Výzkum, experimenty a vývoj nových technologických řešení.</p>
-    <a href="#">Zjistit více →</a>
-  </div>
-
-  <div class="division">
-    <h3>FAIST Digital</h3>
-    <p>Vývoj webových aplikací, digitálních produktů a uživatelských rozhraní.</p>
-    <a href="#">Zjistit více →</a>
-  </div>
-
-  <div class="division">
-    <h3>FAIST Energy</h3>
-    <p>Energetická řešení zaměřená na efektivitu a dlouhodobou udržitelnost.</p>
-    <a href="#">Zjistit více →</a>
-  </div>
-
-  <div class="division">
-    <h3>FAIST Security</h3>
-    <p>Kybernetická ochrana, dohled a bezpečný provoz systémů.</p>
-    <a href="#">Zjistit více →</a>
-  </div>
-
-  <div class="division">
-    <h3>FAIST Academy</h3>
-    <p>Vzdělávání a rozvoj digitálních dovedností srozumitelnou formou.</p>
-    <a href="#">Zjistit více →</a>
-  </div>
-
-</section>
-
-<footer>
-  © FAIST Holding
-</footer>
 
 </body>
 </html>
