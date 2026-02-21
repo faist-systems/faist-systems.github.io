@@ -17,10 +17,32 @@ body{overflow:hidden}
 header{
   height:64px;
   display:flex;
+  justify-content:space-between;
   align-items:center;
   padding:0 4vw;
   position:relative;
-  z-index:10;
+  z-index:20;
+}
+header nav a{
+  margin-left:24px;
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+header nav a:hover{color:#fff}
+
+/* FOOTER */
+footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:40px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:.75rem;
+  opacity:.5;
+  z-index:20;
 }
 
 /* MAIN */
@@ -48,7 +70,7 @@ main{
 /* HERO */
 .hero{
   position:relative;
-  z-index:5;
+  z-index:10;
   text-align:center;
   margin-top:6vh;
 }
@@ -59,6 +81,11 @@ main{
   text-shadow:
     0 2px 4px rgba(255,215,120,.35),
     0 0 1px rgba(255,215,120,.5);
+}
+.hero p{
+  margin-top:18px;
+  font-size:.9rem;
+  opacity:.7;
 }
 
 /* BUS */
@@ -82,11 +109,11 @@ main{
   position:absolute;
   top:0;
   height:3px;
+  opacity:0;
   background:linear-gradient(to right,
     rgba(255,215,120,.9),
     transparent);
-  opacity:0;
-  transition:width 1.6s ease-out, opacity .3s;
+  transition:width 1.8s ease-out, opacity .3s;
 }
 .flow.left{
   right:50%;
@@ -121,9 +148,7 @@ main{
     transparent);
   border-radius:4px;
   opacity:0;
-  transition:
-    transform 1.8s ease-in,
-    opacity .3s;
+  transition:transform 1.6s ease-in, opacity .3s;
 }
 
 /* BRANCH DROPS */
@@ -143,12 +168,13 @@ main{
 /* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:5vh;
+  bottom:60px;
   left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
   gap:1.4vw;
+  z-index:5;
 }
 .division{width:calc(100%/6)}
 
@@ -165,6 +191,9 @@ main{
 .window.active{
   box-shadow:0 0 0 1px var(--accent);
 }
+.window h3{font-size:.95rem;margin-bottom:6px}
+.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
+.window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
 
 /* ACCENTS */
 .systems{--accent:rgba(120,180,255,.45)}
@@ -178,17 +207,28 @@ main{
 
 <body>
 
-<header><div>FAIST</div></header>
+<header>
+  <div>FAIST</div>
+  <nav>
+    <a href="#">Holding</a>
+    <a href="#">Divize</a>
+    <a href="#">O nás</a>
+    <a href="#">Kontakt</a>
+  </nav>
+</header>
 
 <main>
 <div class="background"></div>
 <div class="noise"></div>
 
-<div class="hero"><h1>F.A.I.S.T. HOLDING</h1></div>
+<div class="hero">
+  <h1>F.A.I.S.T. HOLDING</h1>
+  <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
+</div>
 
 <div class="pulse" id="pulse"></div>
 
-<div class="bus-wrap" id="bus">
+<div class="bus-wrap">
   <div class="bus"></div>
 
   <div class="flow left" id="flowL"></div>
@@ -210,14 +250,17 @@ main{
 </div>
 
 <div class="divisions">
-  <div class="division"><div class="window systems">Systems</div></div>
-  <div class="division"><div class="window research">Research</div></div>
-  <div class="division"><div class="window digital">Digital</div></div>
-  <div class="division"><div class="window energy">Energy</div></div>
-  <div class="division"><div class="window security">Security</div></div>
-  <div class="division"><div class="window academy">Academy</div></div>
+  <div class="division"><div class="window systems"><h3>Systems</h3><p>Architektura a infrastruktura.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window research"><h3>Research</h3><p>Výzkum a experiment.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window digital"><h3>Digital</h3><p>Digitální produkty.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window energy"><h3>Energy</h3><p>Transformace energie.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window security"><h3>Security</h3><p>Ochrana systémů.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window academy"><h3>Academy</h3><p>Přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
 </div>
+
 </main>
+
+<footer>© FAIST Holding</footer>
 
 <script>
 window.onload = () => {
@@ -244,10 +287,10 @@ window.onload = () => {
 
     // pád kapky
     setTimeout(()=>{
-      pulse.style.transform = "translate(-50%,220px)";
+      pulse.style.transform = "translate(-50%,180px)"; // ZASTAVÍ SE NA BUSU
     },50);
 
-    // rozdělení
+    // pauza v uzlu + rozvod
     setTimeout(()=>{
       pulse.style.opacity = 0;
 
@@ -261,20 +304,19 @@ window.onload = () => {
         const delay = 400 + dist * dist * 350;
 
         setTimeout(()=>{
-          b.style.opacity = 1;
-          b.style.height = "120px"; // KONČÍ NA HORNÍ HRANĚ RÁMEČKU
-
-          // sekvenční svícení
           windows.forEach(w=>w.classList.remove("active"));
+
+          b.style.opacity = 1;
+          b.style.height = "120px";
           windows[i].classList.add("active");
         },delay);
       });
 
-    },1800);
+    },2000); // PAUZA – tady se „zastaví“
   }
 
   runCycle();
-  setInterval(runCycle,12000);
+  setInterval(runCycle,13000);
 };
 </script>
 
