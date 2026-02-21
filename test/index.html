@@ -115,7 +115,7 @@ main{
     transparent);
   border-radius:4px;
   opacity:0;
-  transition:transform 1.6s ease-in, opacity .25s;
+  transition:transform 2s ease-in, opacity .25s;
 }
 
 /* BUS DROPS */
@@ -140,7 +140,7 @@ main{
     rgba(255,220,150,1),
     transparent);
   opacity:0;
-  transition:height .8s ease-in, opacity .25s;
+  transition:height .9s ease-in, opacity .25s;
 }
 
 /* DIVISIONS */
@@ -209,7 +209,6 @@ main{
 <div class="bus-wrap" id="bus">
   <div class="bus"></div>
 
-  <!-- svody + kapky -->
   <div class="bus-drop" style="left:0%"></div>
   <div class="bus-drop" style="left:20%"></div>
   <div class="bus-drop" style="left:40%"></div>
@@ -244,7 +243,6 @@ window.onload = () => {
   const branches = document.querySelectorAll(".branch-drop");
   const windows  = document.querySelectorAll(".window");
 
-  // páry od středu ven
   const sequence = [
     [2,3],
     [1,4],
@@ -264,7 +262,7 @@ window.onload = () => {
     pulse.style.opacity = 0;
     pulse.style.transform = "translate(-50%,-80px)";
     requestAnimationFrame(()=>{
-      pulse.style.transition = "transform 1.6s ease-in, opacity .25s";
+      pulse.style.transition = "transform 2s ease-in, opacity .25s";
     });
   }
 
@@ -272,17 +270,20 @@ window.onload = () => {
     resetAll();
     resetPulse();
 
-    const busRect = bus.getBoundingClientRect();
+    const busRect   = bus.getBoundingClientRect();
+    const pulseRect = pulse.getBoundingClientRect();
+    const deltaY    = busRect.top - pulseRect.top;
+
     const cardTop = document.querySelector(".window").getBoundingClientRect().top;
     const dropLen = cardTop - busRect.bottom - 4;
 
-    // start kapky
     pulse.style.opacity = 1;
+
+    // 🔽 pád přesně DO BUSU
     setTimeout(()=>{
-      pulse.style.transform = "translate(-50%,0)";
+      pulse.style.transform = `translate(-50%, ${deltaY}px)`;
     },50);
 
-    // sekvence po dopadu
     sequence.forEach((pair, step)=>{
       setTimeout(()=>{
         resetAll();
@@ -291,18 +292,17 @@ window.onload = () => {
           branches[i].style.height = dropLen + "px";
           windows[i].classList.add("active");
         });
-      }, 1800 + step * 900);
+      }, 2200 + step * 1000);
     });
 
-    // konec cyklu
     setTimeout(()=>{
       resetAll();
       pulse.style.opacity = 0;
-    }, 1800 + sequence.length * 900 + 300);
+    }, 2200 + sequence.length * 1000 + 300);
   }
 
   runCycle();
-  setInterval(runCycle,13000);
+  setInterval(runCycle,14000);
 };
 </script>
 
