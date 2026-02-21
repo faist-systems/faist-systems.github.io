@@ -1,351 +1,244 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>F.A.I.S.T. Holding</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAIST Holding</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg1:#0b0e16;
-  --bg2:#12172a;
-  --bg3:#080a11;
-  --grid:rgba(255,255,255,.035);
-  --dot:rgba(255,255,255,.06);
-  --text:#fff;
-  --muted:#b6bcc6;
-  --panel:rgba(255,255,255,.05);
-  --border:rgba(255,255,255,.12);
-  --glow1:rgba(255,200,80,.6);
-  --glow2:rgba(255,160,40,.4);
-}
+  <style>
+    :root{
+      --bg:#0e1116;
+      --text:#e6e6e6;
+      --muted:#9aa0a6;
+      --gold:#c9a44c;
+    }
 
-*{box-sizing:border-box}
-html,body{margin:0}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
 
-body{
-  font-family:Inter,system-ui,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(1200px 800px at 20% 20%, var(--bg2), var(--bg1)),
-    radial-gradient(1000px 700px at 80% 80%, #0e1325, var(--bg3));
-  position:relative;
-  overflow-x:hidden;
-}
+    /* HEADER */
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:24px 48px;
+    }
 
-/* TECH GRID */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
-  background-size:80px 80px,80px 80px,40px 40px;
-  opacity:.5;
-  pointer-events:none;
-  z-index:0;
-}
+    header nav a{
+      color:var(--muted);
+      text-decoration:none;
+      margin-left:24px;
+      font-size:14px;
+    }
 
-/* LANGUAGE */
-.lang-switch{
-  position:fixed;
-  top:16px;
-  right:16px;
-  z-index:50;
-}
-.lang-switch img{width:22px}
+    header nav a:hover{
+      color:var(--text);
+    }
 
-/* HERO */
-.hero{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  position:relative;
-  z-index:1;
-}
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height:80vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:80px 24px;
+    }
 
-/* LEFT PANEL */
-.brand-panel{
-  position:absolute;
-  top:24px;
-  left:24px;
-  width:340px;
-  padding:18px 20px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-  z-index:20;
-}
+    .hero::before{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      left:50%;
+      width:1px;
+      background:linear-gradient(
+        to bottom,
+        transparent,
+        var(--gold),
+        transparent
+      );
+    }
 
-/* SCENE */
-.scene{
-  position:relative;
-  width:900px;
-  height:900px;
-  max-width:90vmin;
-  max-height:90vmin;
-}
+    .hero-content{
+      max-width:900px;
+      position:relative;
+      z-index:2;
+    }
 
-/* CENTER */
-.center{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  z-index:5;
-  pointer-events:none;
-}
+    .hero h1{
+      font-size:56px;
+      letter-spacing:2px;
+      margin-bottom:16px;
+    }
 
-.center-inner{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  cursor:pointer;
-  pointer-events:auto;
-}
+    .hero p{
+      font-size:18px;
+      color:var(--muted);
+      margin-bottom:32px;
+    }
 
-.center-inner img{
-  width:220px;
-  transition:.3s ease;
-}
+    .hero button{
+      background:transparent;
+      border:1px solid var(--gold);
+      color:var(--gold);
+      padding:14px 28px;
+      font-size:14px;
+      cursor:pointer;
+    }
 
-.center-inner:hover img{
-  filter:
-    drop-shadow(0 0 18px var(--glow1))
-    drop-shadow(0 0 36px var(--glow2));
-  transform:scale(1.04);
-}
+    .hero button:hover{
+      background:var(--gold);
+      color:#000;
+    }
 
-.ask-me{
-  margin-top:6px;
-  font-size:12px;
-  color:var(--muted);
-}
+    /* DIVISIONS */
+    .divisions{
+      padding:80px 48px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:32px;
+    }
 
-/* ORBIT */
-.orbit{
-  position:absolute;
-  inset:0;
-  z-index:2;
-}
+    .division{
+      position:relative;
+      height:320px;
+      border-radius:12px;
+      overflow:hidden;
+      background:#111;
+      display:flex;
+      align-items:flex-end;
+      padding:24px;
+    }
 
-.orbit-item{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-  color:#fff;
-  text-decoration:none;
-}
+    .division::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      opacity:.9;
+      z-index:0;
+    }
 
-.orbit-item img{
-  width:130px;
-  display:block;
-  margin:0 auto 6px;
-  animation:spin 20s linear infinite;
-}
+    .division-content{
+      position:relative;
+      z-index:1;
+    }
 
-.orbit-item .label{font-size:14px}
+    .division h3{
+      margin:0 0 6px;
+      font-size:18px;
+    }
 
-/* TOOLTIP – OPRAVENO */
-.orbit-item::after{
-  content:attr(data-desc);
-  position:absolute;
-  bottom:110%;
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
-  background:#0a0c11;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:8px 10px;
-  font-size:12px;
-  color:var(--muted);
-  opacity:0;
-  transition:.25s ease;
-  pointer-events:none;
-  white-space:nowrap;
-}
+    .division span{
+      font-size:13px;
+      color:var(--muted);
+    }
 
-.orbit-item:hover::after{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
+    /* BACKGROUNDS – dosadíš své obrázky */
+    .systems::before{
+      background-image:url("assets/systems-bg.jpg");
+    }
+    .research::before{
+      background-image:url("assets/research-bg.jpg");
+    }
+    .digital::before{
+      background-image:url("assets/digital-bg.jpg");
+    }
+    .energy::before{
+      background-image:url("assets/energy-bg.jpg");
+    }
+    .security::before{
+      background-image:url("assets/security-bg.jpg");
+    }
+    .academy::before{
+      background-image:url("assets/academy-bg.jpg");
+    }
 
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
-
-/* AI PANEL */
-#aiPanel{
-  position:fixed;
-  inset:0;
-  background:rgba(10,12,17,.9);
-  backdrop-filter:blur(6px);
-  display:none;
-  z-index:100;
-  padding:32px;
-}
-
-#aiBox{
-  max-width:720px;
-  margin:auto;
-  background:#0f1117;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:24px;
-}
-
-.ai-buttons{
-  margin-top:24px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.ai-buttons button{
-  background:#1b2035;
-  color:white;
-  border:1px solid var(--border);
-  padding:8px 14px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-/* FOOTER */
-.site-footer{
-  background:#0a0c11;
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:48px 24px;
-  text-align:center;
-  color:var(--muted);
-}
-</style>
+    footer{
+      padding:40px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="lang-switch">
-  <a href="/en/index.html"><img src="/assets/flags/gb.png"></a>
-</div>
+<header>
+  <strong>FAIST</strong>
+  <nav>
+    <a href="#">About</a>
+    <a href="#">Divisions</a>
+    <a href="#">Careers</a>
+    <a href="#">Blog</a>
+  </nav>
+</header>
 
 <section class="hero">
-  <div class="brand-panel">
-    <h1>F.A.I.S.T. Holding</h1>
-    <p style="color:var(--muted)">
-      Inteligentní systémy, výzkum a technologie.
-    </p>
-  </div>
-
-  <div class="scene" id="scene">
-
-    <div class="center">
-      <div class="center-inner" id="centerClick">
-        <img src="/assets/logos/faist-holding.png" alt="FAIST">
-        <div class="ask-me">Zeptej se mě</div>
-      </div>
-    </div>
-
-    <div class="orbit">
-      <a class="orbit-item" href="/cs/divisions/systems.html" data-desc="Firemní systémy">
-        <img src="/assets/logos/faist-systems.png"><div class="label">Systems</div>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/lab.html" data-desc="Výzkum a prototypy">
-        <img src="/assets/logos/faist-lab.png"><div class="label">Lab</div>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/digital.html" data-desc="Digitální produkty">
-        <img src="/assets/logos/faist-digital.png"><div class="label">Digital</div>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/energy.html" data-desc="Energetická řešení">
-        <img src="/assets/logos/faist-energy.png"><div class="label">Energy</div>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/security.html" data-desc="Bezpečnost">
-        <img src="/assets/logos/faist-security.png"><div class="label">Security</div>
-      </a>
-      <a class="orbit-item" href="/cs/divisions/edu.html" data-desc="Vzdělávání">
-        <img src="/assets/logos/faist-edu.png"><div class="label">Edu</div>
-      </a>
-    </div>
-
+  <div class="hero-content">
+    <h1>FAIST HOLDING</h1>
+    <p>Sjednocující síla pro technologie, energii a vzdělávání.</p>
+    <button>Zjistit více</button>
   </div>
 </section>
 
-<footer class="site-footer">
-  © 2026 F.A.I.S.T. Holding
-</footer>
-
-<div id="aiPanel">
-  <div id="aiBox">
-    <h2>FAIST AI</h2>
-    <div id="aiContent" style="color:var(--muted)"></div>
-    <div class="ai-buttons">
-      <button data-q="Co je FAIST?">Co je FAIST?</button>
-      <button data-q="Divize">Divize</button>
-      <button data-q="Zavřít">Zavřít</button>
+<section class="divisions">
+  <div class="division systems">
+    <div class="division-content">
+      <h3>FAIST Systems</h3>
+      <span>Infrastruktura & stabilita</span>
     </div>
   </div>
-</div>
 
-<script>
-/* AI */
-const aiPanel=document.getElementById("aiPanel");
-const aiContent=document.getElementById("aiContent");
-const answers={
-  "Co je FAIST?":"FAIST je technologický holding zaměřený na inteligentní systémy.",
-  "Divize":"Systems, Lab, Digital, Energy, Security a Edu."
-};
+  <div class="division research">
+    <div class="division-content">
+      <h3>FAIST Research</h3>
+      <span>Výzkum & inovace</span>
+    </div>
+  </div>
 
-document.getElementById("centerClick").onclick=()=>{
-  aiPanel.style.display="block";
-  aiContent.innerHTML=answers["Co je FAIST?"];
-};
+  <div class="division digital">
+    <div class="division-content">
+      <h3>FAIST Digital</h3>
+      <span>Produkty & aplikace</span>
+    </div>
+  </div>
 
-aiPanel.onclick=e=>{
-  if(e.target.dataset.q){
-    if(e.target.dataset.q==="Zavřít") aiPanel.style.display="none";
-    else aiContent.innerHTML=answers[e.target.dataset.q];
-  }
-};
+  <div class="division energy">
+    <div class="division-content">
+      <h3>FAIST Energy</h3>
+      <span>Zdroj & výkon</span>
+    </div>
+  </div>
 
-/* ORBIT */
-(function(){
-  const scene=document.getElementById("scene");
-  const items=[...document.querySelectorAll(".orbit-item")];
-  let radius=0,base=0,frozen=false,last=performance.now();
+  <div class="division security">
+    <div class="division-content">
+      <h3>FAIST Security</h3>
+      <span>Ochrana & dohled</span>
+    </div>
+  </div>
 
-  items.forEach(el=>{
-    el.onmouseenter=()=>frozen=true;
-    el.onmouseleave=()=>{frozen=false;last=performance.now();}
-  });
+  <div class="division academy">
+    <div class="division-content">
+      <h3>FAIST Academy</h3>
+      <span>Vzdělávání & rozvoj</span>
+    </div>
+  </div>
+</section>
 
-  function resize(){
-    radius=Math.min(scene.clientWidth,scene.clientHeight)*0.34;
-  }
-  resize();
-  window.onresize=resize;
-
-  function anim(now){
-    const dt=(now-last)/1000;
-    last=now;
-    if(!frozen) base+=(Math.PI*2/60)*dt;
-
-    items.forEach((el,i)=>{
-      const a=base+i*(Math.PI*2/items.length);
-      el.style.transform=
-        `translate(-50%,-50%) translate(${Math.cos(a)*radius}px,${Math.sin(a)*radius}px)`;
-    });
-    requestAnimationFrame(anim);
-  }
-  requestAnimationFrame(anim);
-})();
-</script>
+<footer>
+  © FAIST Holding
+</footer>
 
 </body>
 </html>
