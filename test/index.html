@@ -44,7 +44,7 @@ header nav a:hover{color:#fff}
   letter-spacing:.22em;
   color:#fff;
   text-shadow:
-    0 0 8px  rgba(255,215,120,.55),
+    0 0 8px rgba(255,215,120,.55),
     0 0 22px rgba(255,215,120,.45),
     0 0 44px rgba(255,190,90,.35),
     0 0 72px rgba(255,170,60,.25),
@@ -110,18 +110,21 @@ header nav a:hover{color:#fff}
   overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
 
+  display:flex;
+  flex-direction:column;
+
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
 }
 
-/* background images per division */
-.window.systems   {background-image:url("../assets/backgrounds/systems.png")}
-.window.research  {background-image:url("../assets/backgrounds/research.png")}
-.window.digital   {background-image:url("../assets/backgrounds/digital.png")}
-.window.energy    {background-image:url("../assets/backgrounds/energy.png")}
-.window.security  {background-image:url("../assets/backgrounds/security.png")}
-.window.academy   {background-image:url("../assets/backgrounds/academy.png")}
+/* BACKGROUNDS – JEDNOZNAČNĚ */
+.window.systems  {background-image:url("../assets/backgrounds/systems.png")}
+.window.research {background-image:url("../assets/backgrounds/research.png")}
+.window.digital  {background-image:url("../assets/backgrounds/digital.png")}
+.window.energy   {background-image:url("../assets/backgrounds/energy.png")}
+.window.security {background-image:url("../assets/backgrounds/security.png")}
+.window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
 /* TOP IMAGE */
 .image-slot{
@@ -130,6 +133,7 @@ header nav a:hover{color:#fff}
   border-radius:14px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.12);
+  flex-shrink:0;
 }
 .image-slot img{
   width:100%;
@@ -138,28 +142,27 @@ header nav a:hover{color:#fff}
   display:block;
 }
 
-/* TEXT PANEL */
+/* CONTENT – STABILNÍ */
 .content{
   margin:0 18px 18px;
   padding:14px;
   border-radius:14px;
-
-  /* ⬇⬇⬇ HUSTOTA POZADÍ – TADY SI HRAJ ⬇⬇⬇ */
   background:rgba(0,0,0,.55);
-
   backdrop-filter:blur(4px);
-}
 
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
 .content h3{
   font-size:.95rem;
-  margin-bottom:4px;
 }
 .content p{
   font-size:.8rem;
   opacity:.75;
-  margin-bottom:8px;
 }
 .more{
+  margin-top:auto;
   font-size:.8rem;
   color:rgb(255,215,120);
   text-decoration:none;
@@ -207,7 +210,7 @@ footer{
 <div class="divisions">
 
   <div class="division"><div class="window systems">
-    <div class="image-slot"><img src="../assets/divisions/systems.png" alt=""></div>
+    <div class="image-slot"><img src="../assets/divisions/systems.png"></div>
     <div class="content">
       <h3>Systems</h3>
       <p>Architektura a infrastruktura.</p>
@@ -216,7 +219,7 @@ footer{
   </div></div>
 
   <div class="division"><div class="window research">
-    <div class="image-slot"><img src="../assets/divisions/research.png" alt=""></div>
+    <div class="image-slot"><img src="../assets/divisions/research.png"></div>
     <div class="content">
       <h3>Research</h3>
       <p>Výzkum a experiment.</p>
@@ -225,7 +228,7 @@ footer{
   </div></div>
 
   <div class="division"><div class="window digital">
-    <div class="image-slot"><img src="../assets/divisions/digital.png" alt=""></div>
+    <div class="image-slot"><img src="../assets/divisions/digital.png"></div>
     <div class="content">
       <h3>Digital</h3>
       <p>Digitální produkty.</p>
@@ -234,7 +237,7 @@ footer{
   </div></div>
 
   <div class="division"><div class="window energy">
-    <div class="image-slot"><img src="../assets/divisions/energy.png" alt=""></div>
+    <div class="image-slot"><img src="../assets/divisions/energy.png"></div>
     <div class="content">
       <h3>Energy</h3>
       <p>Transformace energie.</p>
@@ -243,7 +246,7 @@ footer{
   </div></div>
 
   <div class="division"><div class="window security">
-    <div class="image-slot"><img src="../assets/divisions/security.png" alt=""></div>
+    <div class="image-slot"><img src="../assets/divisions/security.png"></div>
     <div class="content">
       <h3>Security</h3>
       <p>Ochrana systémů.</p>
@@ -252,7 +255,7 @@ footer{
   </div></div>
 
   <div class="division"><div class="window academy">
-    <div class="image-slot"><img src="../assets/divisions/academy.png" alt=""></div>
+    <div class="image-slot"><img src="../assets/divisions/academy.png"></div>
     <div class="content">
       <h3>Academy</h3>
       <p>Přenos know-how.</p>
