@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>About · F.A.I.S.T. Holding</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);
+}
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+.header-right nav{
+  display:flex;
+  gap:22px;
+}
+.header-right nav a,
+.header-right .contact{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+.header-right nav a:hover,
+.header-right .contact:hover{color:#fff}
+
+/* FLAG */
+.lang-flag{
+  width:26px;height:16px;
+  border-radius:3px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.25);
+  opacity:.75;
+  transition:.25s;
+}
+.lang-flag img{width:100%;height:100%;object-fit:cover;display:block}
+.lang-flag:hover{
+  opacity:1;
+  box-shadow:0 0 0 1px rgba(255,215,120,.9);
+}
+
+/* ================= BACKGROUND ================= */
+.background,.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+.background{
+  background:
+    linear-gradient(to bottom,#0b0b0b,#000 70%);
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.08;
+  mix-blend-mode:overlay;
+}
+
+/* ================= CONTENT ================= */
+main{
+  position:relative;
+  z-index:5;
+  max-width:880px;
+  margin:0 auto;
+  padding:96px 6vw 120px;
+}
+
+h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.2rem,3.6vw,3rem);
+  letter-spacing:.18em;
+  margin-bottom:32px;
+}
+
+section{
+  margin-bottom:48px;
+}
+
+section h2{
+  font-family:"Cinzel",serif;
+  font-size:1.1rem;
+  letter-spacing:.14em;
+  margin-bottom:14px;
+  opacity:.85;
+}
+
+section p{
+  font-size:.95rem;
+  line-height:1.65;
+  opacity:.9;
+  margin-bottom:14px;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:32px 0;
+  font-size:.7rem;
+  opacity:.45;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="header-right">
+    <nav>
+      <a href="/cs/index.html">Holding</a>
+      <a href="/cs/about.html">About</a>
+    </nav>
+    <a href="/cs/contacts.html" class="contact">Kontakt</a>
+    <a href="/en/about.html" class="lang-flag">
+      <img src="/assets/flags/gb.png" alt="EN">
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <h1>ABOUT FAIST</h1>
+
+  <section>
+    <h2>Proč FAIST existuje</h2>
+    <p>
+      FAIST vznikl z potřeby chápat technologii jako celek, nikoli jako soubor izolovaných nástrojů.
+      Neřešíme jen to, co technologie umí, ale především jak zapadá do systému, ve kterém žijeme.
+    </p>
+  </section>
+
+  <section>
+    <h2>Systémové myšlení</h2>
+    <p>
+      Umělá inteligence, energie, bezpečnost i vzdělávání nejsou oddělené světy.
+      FAIST je propojuje do jednoho rámce, kde každá část dává smysl jen ve vztahu k ostatním.
+    </p>
+  </section>
+
+  <section>
+    <h2>Od experimentu k praxi</h2>
+    <p>
+      Výzkum bez aplikace je slepý. Implementace bez porozumění je nebezpečná.
+      FAIST stojí mezi těmito póly a překládá komplexní technologie do srozumitelné reality.
+    </p>
+  </section>
+
+  <section>
+    <h2>Otevřený proces</h2>
+    <p>
+      FAIST není hotový produkt. Je to živý systém, který se vyvíjí spolu s technologiemi,
+      lidmi a otázkami, které si klademe. Tento web je jeho mapou.
+    </p>
+  </section>
+
+</main>
+
+<footer>© 2025 FAIST digital</footer>
+
+</body>
+</html>
