@@ -16,7 +16,6 @@ html,body{
   color:#eee;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-body{overflow:hidden}
 
 /* HEADER */
 header{
@@ -25,8 +24,6 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
-  position:relative;
-  z-index:20;
 }
 header nav a{
   margin-left:24px;
@@ -35,6 +32,107 @@ header nav a{
   text-decoration:none;
 }
 header nav a:hover{color:#fff}
+
+/* HERO */
+.hero{
+  text-align:center;
+  margin-top:6vh;
+}
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.6rem,4.6vw,3.6rem);
+  letter-spacing:.22em;
+}
+.hero p{
+  margin-top:16px;
+  font-size:.9rem;
+  opacity:.7;
+}
+
+/* AI GUIDE */
+.ai-guide{
+  width:min(720px,90vw);
+  margin:4vh auto;
+  padding:22px 26px;
+  border-radius:20px;
+  background:rgba(12,12,12,.7);
+  border:1px solid rgba(255,255,255,.1);
+}
+.ai-guide h4{
+  font-family:"Cinzel",serif;
+  font-size:.95rem;
+  letter-spacing:.14em;
+  margin-bottom:10px;
+}
+.ai-guide input{
+  width:100%;
+  background:#000;
+  border:1px solid rgba(255,215,120,.4);
+  border-radius:18px;
+  padding:8px 14px;
+  color:#eee;
+  font-size:.85rem;
+}
+
+/* DIVISIONS */
+.divisions{
+  position:absolute;
+  bottom:70px;
+  left:0;
+  width:100%;
+  padding:0 6vw;
+  display:flex;
+  gap:1.4vw;
+}
+.division{width:calc(100%/6)}
+
+.window{
+  height:clamp(300px,36vh,380px);
+  padding:18px;
+  border-radius:20px;
+  background:rgba(12,12,12,.75);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+
+/* IMAGE PLACEHOLDER */
+.image-slot{
+  height:150px;
+  border-radius:14px;
+  border:1px dashed rgba(255,255,255,.15);
+  margin-bottom:12px;
+}
+
+/* TEXT */
+.window h3{font-size:.95rem;margin-bottom:6px}
+.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
+
+/* ZJISTIT VÍCE */
+.more{
+  font-size:.8rem;
+  color:rgb(255,215,120);
+  text-decoration:none;
+}
+.more:hover{text-decoration:underline}
+
+/* TOOLTIP */
+.tooltip{
+  position:absolute;
+  bottom:56px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#000;
+  padding:6px 10px;
+  font-size:.7rem;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.15);
+  opacity:0;
+  pointer-events:none;
+  transition:.2s;
+}
+.window:hover .tooltip{opacity:.85}
 
 /* FOOTER */
 footer{
@@ -47,165 +145,7 @@ footer{
   align-items:center;
   font-size:.7rem;
   opacity:.45;
-  z-index:10;
 }
-
-/* MAIN */
-main{
-  height:calc(100vh - 64px);
-  position:relative;
-}
-
-/* BACKGROUND */
-.background{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(circle at center, rgba(255,200,120,.02), transparent 60%),
-    linear-gradient(to bottom,#050505,#000 70%);
-}
-.noise{
-  position:absolute;inset:0;
-  background-image:repeating-radial-gradient(
-    circle,
-    rgba(255,255,255,.02) 0 1px,
-    transparent 1px 2px
-  );
-  background-size:2px 2px;
-  opacity:.15;
-  mix-blend-mode:overlay;
-}
-
-/* HERO */
-.hero{
-  position:relative;
-  z-index:10;
-  text-align:center;
-  margin-top:6vh;
-}
-.hero h1{
-  font-family:"Cinzel",serif;
-  font-size:clamp(2.6rem,4.6vw,3.6rem);
-  letter-spacing:.22em;
-}
-.hero p{
-  margin-top:18px;
-  font-size:.9rem;
-  opacity:.7;
-}
-
-/* BUS */
-.bus-wrap{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(1100px,90vw);
-  top:clamp(22%,26vh,28%);
-}
-.bus{
-  position:relative;
-  height:2px;
-  background:rgba(255,215,120,.35);
-}
-
-/* FLOWS */
-.flow{
-  position:absolute;
-  top:0;
-  height:2px;
-  width:0;
-  opacity:0;
-}
-.flow.left{
-  right:50%;
-  background:linear-gradient(to left,
-    rgba(255,215,120,.9),
-    rgba(255,215,120,.2),
-    transparent
-  );
-}
-.flow.right{
-  left:50%;
-  background:linear-gradient(to right,
-    rgba(255,215,120,.9),
-    rgba(255,215,120,.2),
-    transparent
-  );
-}
-
-/* DROPS */
-.bus-drop{
-  position:absolute;
-  top:0;
-  width:2px;
-  height:18px;
-  background:linear-gradient(to bottom,
-    rgba(255,215,120,.5),
-    transparent);
-}
-.branch-drop{
-  position:absolute;
-  top:18px;
-  width:4px;
-  height:0;
-  opacity:0;
-  transform:translateX(-50%);
-  background:linear-gradient(to bottom,
-    rgba(255,220,150,.9),
-    transparent);
-  transition:height .9s ease, opacity .25s ease;
-}
-
-/* DIVISIONS */
-.divisions{
-  position:absolute;
-  bottom:70px;
-  left:0;
-  width:100%;
-  padding:0 6vw;
-  display:flex;
-  gap:1.4vw;
-  z-index:5;
-}
-.division{width:calc(100%/6)}
-
-.window{
-  height:clamp(300px,36vh,380px);
-  padding:18px;
-  border-radius:20px;
-  background:rgba(12,12,12,.75);
-  border:1px solid rgba(255,255,255,.08);
-  display:flex;
-  flex-direction:column;
-}
-.window.active{
-  box-shadow:0 0 0 1px var(--accent);
-}
-.window h3{font-size:.95rem;margin-bottom:6px}
-.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
-
-/* AI WHISPER – JEN TEXT */
-.ai-whisper{
-  margin-top:10px;
-  font-size:.75rem;
-  line-height:1.45;
-  opacity:.8;
-}
-.ai-whisper a{
-  color:rgb(255,215,120);
-  text-decoration:none;
-  border-bottom:1px dashed rgba(255,215,120,.4);
-}
-.ai-whisper a:hover{
-  border-bottom-color:rgb(255,215,120);
-}
-
-/* ACCENTS */
-.systems{--accent:rgba(120,180,255,.45)}
-.research{--accent:rgba(170,120,255,.45)}
-.digital{--accent:rgba(120,220,255,.45)}
-.energy{--accent:rgba(255,180,90,.45)}
-.security{--accent:rgba(120,255,180,.45)}
-.academy{--accent:rgba(255,220,140,.45)}
 </style>
 </head>
 
@@ -221,144 +161,83 @@ main{
   </nav>
 </header>
 
-<main>
-<div class="background"></div>
-<div class="noise"></div>
-
 <div class="hero">
   <h1>F.A.I.S.T. HOLDING</h1>
   <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<div class="bus-wrap">
-  <div class="bus">
-    <div class="flow left" id="flowL"></div>
-    <div class="flow right" id="flowR"></div>
+<!-- AI -->
+<div class="ai-guide">
+  <h4>FAIST AI průvodce</h4>
+  <input placeholder="Na co se chcete podívat? (např. kamery, AI, školení)">
+</div>
+
+<!-- DIVISIONS -->
+<div class="divisions">
+
+  <div class="division">
+    <div class="window">
+      <div class="image-slot"></div>
+      <h3>Systems</h3>
+      <p>Architektura a infrastruktura.</p>
+      <a class="more" href="/cs/divisions/systems.html">Zjistit více →</a>
+      <div class="tooltip">Stabilní technický základ holdingu</div>
+    </div>
   </div>
 
-  <div class="bus-drop" style="left:0%"></div>
-  <div class="bus-drop" style="left:20%"></div>
-  <div class="bus-drop" style="left:40%"></div>
-  <div class="bus-drop" style="left:60%"></div>
-  <div class="bus-drop" style="left:80%"></div>
-  <div class="bus-drop" style="left:100%"></div>
+  <div class="division">
+    <div class="window">
+      <div class="image-slot"></div>
+      <h3>Research</h3>
+      <p>Výzkum a experiment.</p>
+      <a class="more" href="/cs/divisions/research.html">Zjistit více →</a>
+      <div class="tooltip">Laboratoře, testování, nové směry</div>
+    </div>
+  </div>
 
-  <div class="branch-drop" style="left:0%"></div>
-  <div class="branch-drop" style="left:20%"></div>
-  <div class="branch-drop" style="left:40%"></div>
-  <div class="branch-drop" style="left:60%"></div>
-  <div class="branch-drop" style="left:80%"></div>
-  <div class="branch-drop" style="left:100%"></div>
-</div>
+  <div class="division">
+    <div class="window">
+      <div class="image-slot"></div>
+      <h3>Digital</h3>
+      <p>Digitální produkty.</p>
+      <a class="more" href="/cs/divisions/digital.html">Zjistit více →</a>
+      <div class="tooltip">Software, AI a automatizace</div>
+    </div>
+  </div>
 
-<div class="divisions">
-  <div class="division"><div class="window systems"><h3>Systems</h3><p>Architektura a infrastruktura.</p></div></div>
-  <div class="division"><div class="window research"><h3>Research</h3><p>Výzkum a experiment.</p></div></div>
-  <div class="division"><div class="window digital"><h3>Digital</h3><p>Digitální produkty.</p></div></div>
-  <div class="division"><div class="window energy"><h3>Energy</h3><p>Transformace energie.</p></div></div>
-  <div class="division"><div class="window security"><h3>Security</h3><p>Ochrana systémů.</p></div></div>
-  <div class="division"><div class="window academy"><h3>Academy</h3><p>Přenos know-how.</p></div></div>
+  <div class="division">
+    <div class="window">
+      <div class="image-slot"></div>
+      <h3>Energy</h3>
+      <p>Transformace energie.</p>
+      <a class="more" href="/cs/divisions/energy.html">Zjistit více →</a>
+      <div class="tooltip">Efektivita a udržitelnost</div>
+    </div>
+  </div>
+
+  <div class="division">
+    <div class="window">
+      <div class="image-slot"></div>
+      <h3>Security</h3>
+      <p>Ochrana systémů.</p>
+      <a class="more" href="/cs/divisions/security.html">Zjistit více →</a>
+      <div class="tooltip">Bezpečnost dat a technologií</div>
+    </div>
+  </div>
+
+  <div class="division">
+    <div class="window">
+      <div class="image-slot"></div>
+      <h3>Academy</h3>
+      <p>Přenos know-how.</p>
+      <a class="more" href="/cs/divisions/academy.html">Zjistit více →</a>
+      <div class="tooltip">Školení a vzdělávání</div>
+    </div>
+  </div>
+
 </div>
-</main>
 
 <footer>© 2025 FAIST digital</footer>
-
-<script>
-window.onload = () => {
-  const flowL = document.getElementById("flowL");
-  const flowR = document.getElementById("flowR");
-  const branches = document.querySelectorAll(".branch-drop");
-  const windows = document.querySelectorAll(".window");
-
-  const AI_TEXT = {
-    systems:{
-      html:`Systems tvoří páteř holdingu.<br>
-            <a href="/cs/divisions/systems.html#infrastructure">
-            Chceš vědět víc o infrastruktuře?</a>`
-    },
-    research:{
-      html:`Research je prostor pro experiment.<br>
-            <a href="/cs/divisions/research.html#labs">
-            Zajímá tě výzkum a laboratoře?</a>`
-    },
-    digital:{
-      html:`Digital převádí myšlenky do produktů.<br>
-            <a href="/cs/divisions/digital.html#ai">
-            Chceš vědět víc o AI řešeních?</a>`
-    },
-    energy:{
-      html:`Energy řeší transformaci zdrojů.<br>
-            <a href="/cs/divisions/energy.html#solutions">
-            Podívej se na energetická řešení.</a>`
-    },
-    security:{
-      html:`Security chrání systémy a data.<br>
-            <a href="/cs/divisions/security.html#cameras">
-            Zajímá tě kamerová bezpečnost?</a>`
-    },
-    academy:{
-      html:`Academy přenáší know-how dál.<br>
-            <a href="/cs/divisions/academy.html#training">
-            Chceš vědět víc o školeních?</a>`
-    }
-  };
-
-  const sequence = [[2,3],[1,4],[0,5]];
-  const step = 1500;
-
-  function clearWhisper(){
-    document.querySelectorAll(".ai-whisper").forEach(e=>e.remove());
-  }
-
-  function attachWhisper(){
-    clearWhisper();
-    const active = document.querySelector(".window.active");
-    if(!active) return;
-    const key = [...active.classList].find(c=>AI_TEXT[c]);
-    if(!key) return;
-
-    const div = document.createElement("div");
-    div.className = "ai-whisper";
-    div.innerHTML = AI_TEXT[key].html;
-    active.appendChild(div);
-  }
-
-  function resetAll(){
-    flowL.style.width = flowR.style.width = "0";
-    flowL.style.opacity = flowR.style.opacity = 0;
-    branches.forEach(b=>{b.style.height="0";b.style.opacity=0});
-    windows.forEach(w=>w.classList.remove("active"));
-    clearWhisper();
-  }
-
-  function cycle(){
-    resetAll();
-
-    setTimeout(()=>{
-      flowL.style.width="50%"; flowL.style.opacity=1;
-      flowR.style.width="50%"; flowR.style.opacity=1;
-    },300);
-
-    sequence.forEach((pair,i)=>{
-      setTimeout(()=>{
-        branches.forEach(b=>{b.style.height="0";b.style.opacity=0});
-        windows.forEach(w=>w.classList.remove("active"));
-
-        pair.forEach(idx=>{
-          branches[idx].style.height="110px";
-          branches[idx].style.opacity=1;
-          windows[idx].classList.add("active");
-        });
-
-        attachWhisper();
-      },step + i*step);
-    });
-  }
-
-  cycle();
-  setInterval(cycle, step*sequence.length + 3000);
-};
-</script>
 
 </body>
 </html>
