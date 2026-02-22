@@ -19,7 +19,7 @@ html,body{
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 
-/* ================= GLOBAL BACKGROUND ================= */
+/* ================= BACKGROUND ================= */
 .bg,
 .noise{
   position:fixed;
@@ -117,7 +117,7 @@ header{
 /* ================= HERO ================= */
 .hero{
   text-align:center;
-  padding:9vh 6vw 5vh;
+  padding:9vh 6vw 6vh;
 }
 
 .hero h1{
@@ -140,43 +140,59 @@ header{
   opacity:.95;
 }
 
-/* ================= GRID ================= */
-.grid{
-  width:min(1100px,92vw);
-  margin:0 auto 8vh;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:28px;
-}
+/* ================= GLASS FRAME ================= */
+/* Desktop-first. Mobile handled in later phase. */
+.glass-frame{
+  display:inline-block;
+  max-width:420px;
+  padding:12px 16px;
+  border-radius:14px;
 
-/* ================= CARD ================= */
-.card{
-  padding:22px 24px;
-  border-radius:20px;
-  background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,255,255,.08);
-  text-decoration:none;
-  color:#eee;
-  transition:.35s;
-}
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.45),
+      rgba(0,0,0,.55)
+    );
 
-.card:hover{
+  backdrop-filter: blur(10px) saturate(115%);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+
+  border:1px solid rgba(255,255,255,.18);
+
   box-shadow:
-    0 0 0 1px rgba(255,215,120,.35),
-    0 0 32px rgba(255,215,120,.35);
-}
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 12px 30px rgba(0,0,0,.35);
 
-.card h3{
-  font-family:"Cinzel",serif;
-  font-size:.95rem;
-  letter-spacing:.16em;
-  margin-bottom:10px;
-}
-
-.card p{
+  color:#eee;
   font-size:.85rem;
-  opacity:.9;
-  line-height:1.5;
+  line-height:1.45;
+
+  cursor:pointer;
+  transition:border-color .25s;
+}
+
+.glass-frame:hover{
+  border-color:rgba(255,215,120,.6);
+}
+
+/* fallback */
+@supports not ((backdrop-filter: blur(10px))) {
+  .glass-frame{
+    background:rgba(0,0,0,.65);
+  }
+}
+
+/* ================= FLOATING POINTS ================= */
+.points{
+  position:relative;
+  width:100%;
+  height:60vh;
+}
+
+/* jednotlivé body – desktop absolutně */
+.point{
+  position:absolute;
 }
 
 /* ================= FOOTER ================= */
@@ -184,14 +200,14 @@ footer{
   text-align:center;
   font-size:.7rem;
   opacity:.45;
-  padding:28px 0;
+  padding:32px 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND LAYERS -->
+<!-- BACKGROUND -->
 <div class="bg"></div>
 <div class="noise"></div>
 
@@ -219,43 +235,44 @@ footer{
   <img src="/assets/divisions/academy.png" alt="Academy">
 </section>
 
-<!-- CONTENT -->
-<section class="grid">
+<!-- FLOATING CONTENT -->
+<section class="points">
 
-  <a class="card" href="literacy.html">
-    <h3>Technologická gramotnost</h3>
-    <p>Základy porozumění technologiím a systémům.</p>
-  </a>
+  <div class="point" style="left:10vw; top:10vh;">
+    <div class="glass-frame">
+      Základy porozumění technologiím a systémům.
+    </div>
+  </div>
 
-  <a class="card" href="smart-home.html">
-    <h3>Smart Home & automatizace</h3>
-    <p>Jak přemýšlet o chytré domácnosti jako o celku.</p>
-  </a>
+  <div class="point" style="left:38vw; top:18vh;">
+    <div class="glass-frame">
+      Jak přemýšlet o chytré domácnosti jako o celku.
+    </div>
+  </div>
 
-  <a class="card" href="ai.html">
-    <h3>AI gramotnost</h3>
-    <p>Práce s AI bez magie a falešných očekávání.</p>
-  </a>
+  <div class="point" style="left:65vw; top:12vh;">
+    <a class="glass-frame" href="/cs/divisions/academy/ai.html">
+      Práce s AI bez magie a falešných očekávání.
+    </a>
+  </div>
 
-  <a class="card" href="energy.html">
-    <h3>Energie & infrastruktura</h3>
-    <p>Proč energie rozhoduje o dlouhodobé funkčnosti.</p>
-  </a>
+  <div class="point" style="left:18vw; top:36vh;">
+    <a class="glass-frame" href="/cs/divisions/academy/energy.html">
+      Proč energie rozhoduje o dlouhodobé funkčnosti.
+    </a>
+  </div>
 
-  <a class="card" href="security.html">
-    <h3>Bezpečnost systémů</h3>
-    <p>Ochrana dat, zařízení i fyzického prostoru.</p>
-  </a>
+  <div class="point" style="left:48vw; top:40vh;">
+    <a class="glass-frame" href="/cs/divisions/academy/security.html">
+      Ochrana dat, zařízení i fyzického prostoru.
+    </a>
+  </div>
 
-  <a class="card" href="slovnik.html">
-    <h3>Slovník pojmů</h3>
-    <p>Vysvětlení klíčových pojmů FAIST světa.</p>
-  </a>
-
-  <a class="card" href="resources.html">
-    <h3>Zdroje & nástroje</h3>
-    <p>Kurátorovaný přehled toho podstatného.</p>
-  </a>
+  <div class="point" style="left:72vw; top:38vh;">
+    <a class="glass-frame" href="/cs/divisions/academy/slovnik.html">
+      Vysvětlení klíčových pojmů FAIST světa.
+    </a>
+  </div>
 
 </section>
 
