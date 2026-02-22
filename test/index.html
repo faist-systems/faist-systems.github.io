@@ -9,6 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 html,body{
   width:100%;
   height:100%;
@@ -22,28 +23,30 @@ html,body{
 header{
   height:64px;
   display:flex;
-  justify-content:space-between;
+  justify-content:flex-end;
   align-items:center;
   padding:0 4vw;
+  z-index:20;
 }
 
-/* NAV */
-header nav a{
-  margin-left:24px;
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+
+.header-right nav{
+  display:flex;
+  gap:22px;
+}
+
+.header-right nav a{
   font-size:.85rem;
   color:#ccc;
   text-decoration:none;
 }
-header nav a:hover{color:#fff}
+.header-right nav a:hover{color:#fff}
 
-/* HEADER RIGHT */
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
-/* CONTACT */
 .header-right .contact{
   font-size:.85rem;
   color:#ccc;
@@ -51,7 +54,7 @@ header nav a:hover{color:#fff}
 }
 .header-right .contact:hover{color:#fff}
 
-/* LANG FLAG (GB) */
+/* LANGUAGE FLAG */
 .lang-flag{
   width:26px;
   height:16px;
@@ -72,11 +75,37 @@ header nav a:hover{color:#fff}
   box-shadow:0 0 0 1px rgba(255,215,120,.9);
 }
 
+/* ================= BACKGROUND ================= */
+.background{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at center, rgba(255,200,120,.03), transparent 60%),
+    linear-gradient(to bottom,#050505,#000 70%);
+  z-index:0;
+}
+.noise{
+  position:absolute;
+  inset:0;
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.15;
+  mix-blend-mode:overlay;
+  z-index:1;
+}
+
 /* ================= HERO ================= */
 .hero{
+  position:relative;
+  z-index:5;
   text-align:center;
-  margin-top:.5vh;
+  margin-top:1vh;
 }
+
 .hero h1{
   font-family:"Cinzel",serif;
   font-size:clamp(2.7rem,4.6vw,3.7rem);
@@ -86,12 +115,14 @@ header nav a:hover{color:#fff}
     0 0 16px rgba(255,215,120,.9),
     0 0 48px rgba(255,190,90,.7);
 }
+
 .hero .forge{
   margin-top:6px;
   font-size:.78rem;
   letter-spacing:.14em;
-  opacity:.6;
+  opacity:.65;
 }
+
 .hero .claim{
   margin-top:6px;
   font-size:.95rem;
@@ -100,13 +131,16 @@ header nav a:hover{color:#fff}
 
 /* ================= AI ================= */
 .ai-guide{
+  position:relative;
+  z-index:5;
   width:min(720px,90vw);
-  margin:1.6vh auto 0;
+  margin:1.8vh auto 0;
   padding:18px 22px;
   border-radius:18px;
   background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.12);
 }
+
 .ai-guide h4{
   font-family:"Cinzel",serif;
   font-size:.85rem;
@@ -114,6 +148,7 @@ header nav a:hover{color:#fff}
   margin-bottom:8px;
 }
 .ai-guide h4 span{opacity:.55}
+
 .ai-guide input{
   width:100%;
   background:#000;
@@ -133,7 +168,9 @@ header nav a:hover{color:#fff}
   padding:0 6vw;
   display:flex;
   gap:1.6vw;
+  z-index:4;
 }
+
 .division{width:calc(100%/6)}
 
 .window{
@@ -234,20 +271,23 @@ footer{
   align-items:center;
   font-size:.7rem;
   opacity:.45;
+  z-index:10;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <nav>
-    <a href="#">Holding</a>
-    <a href="#">Divize</a>
-    <a href="#">O nás</a>
-  </nav>
+<div class="background"></div>
+<div class="noise"></div>
 
+<header>
   <div class="header-right">
+    <nav>
+      <a href="#">Holding</a>
+      <a href="#">Divize</a>
+      <a href="#">O nás</a>
+    </nav>
     <a href="cs/header/contacts.html" class="contact">Kontakt</a>
     <a href="/en/index.html" class="lang-flag" title="English">
       <img src="/assets/flags/gb.png" alt="EN">
