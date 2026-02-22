@@ -17,16 +17,15 @@ html,body{
 }
 
 /* BACKGROUND */
-.background,.noise{
+.bg,.noise{
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:-1;
+  z-index:-2;
 }
-.background{
+.bg{
   background:
-    radial-gradient(circle at center, rgba(255,200,120,.04), transparent 60%),
-    linear-gradient(to bottom,#050505,#000 70%),
+    linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.95)),
     url("/assets/backgrounds/academy.png") center/cover no-repeat;
 }
 .noise{
@@ -44,7 +43,7 @@ html,body{
 header{
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:10;
   height:64px;
   display:flex;
   justify-content:flex-end;
@@ -67,106 +66,60 @@ header a:hover{color:#fff}
 /* HERO */
 .hero{
   text-align:center;
-  padding:8vh 6vw 5vh;
+  padding:9vh 6vw 5vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
-  font-size:clamp(2.4rem,4.5vw,3.6rem);
+  font-size:clamp(2.4rem,4.5vw,3.4rem);
   letter-spacing:.22em;
-  text-shadow:
-    0 0 16px rgba(255,215,120,.8),
-    0 0 48px rgba(255,190,90,.6);
+  text-shadow:0 0 24px rgba(255,215,120,.7);
 }
 .hero p{
   margin-top:14px;
   font-size:.95rem;
-  opacity:.85;
-}
-.hero .symbol{
-  width:220px;
-  margin:30px auto 0;
   opacity:.9;
 }
-.hero .symbol img{
-  width:100%;
+.hero img{
+  width:200px;
+  margin:32px auto 0;
+  display:block;
+  opacity:.95;
 }
 
-/* AI GUIDE */
-.ai-guide{
-  width:min(760px,90vw);
-  margin:0 auto 6vh;
-  padding:18px 22px;
-  border-radius:18px;
-  background:rgba(12,12,12,.75);
-  border:1px solid rgba(255,255,255,.12);
-}
-.ai-guide h4{
-  font-family:"Cinzel",serif;
-  font-size:.8rem;
-  letter-spacing:.16em;
-  margin-bottom:8px;
-}
-.ai-guide input{
-  width:100%;
-  background:#000;
-  border:1px solid rgba(255,215,120,.55);
-  border-radius:16px;
-  padding:8px 14px;
-  color:#eee;
-  font-size:.85rem;
+/* GRID */
+.grid{
+  width:min(1100px,92vw);
+  margin:0 auto 8vh;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:28px;
 }
 
-/* SECTIONS */
-.section{
-  width:min(1000px,90vw);
-  margin:0 auto 5vh;
-  padding:26px 28px;
-  border-radius:22px;
+/* CARD */
+.card{
+  padding:22px 24px;
+  border-radius:20px;
   background:rgba(0,0,0,.65);
   border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 0 0 1px rgba(255,215,120,.05);
-}
-.section h2{
-  font-family:"Cinzel",serif;
-  font-size:1.05rem;
-  letter-spacing:.18em;
-  margin-bottom:12px;
-}
-.section p{
-  font-size:.88rem;
-  opacity:.88;
-  line-height:1.6;
-}
-
-/* NEXT DIVISIONS */
-.next{
-  width:100%;
-  margin:8vh 0 4vh;
-  padding:0 6vw;
-}
-.next h3{
-  font-family:"Cinzel",serif;
-  font-size:.85rem;
-  letter-spacing:.18em;
-  opacity:.75;
-  margin-bottom:20px;
-}
-.next-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:22px;
-}
-.next a{
-  padding:18px;
-  border-radius:16px;
-  background:rgba(0,0,0,.6);
-  border:1px solid rgba(255,255,255,.08);
-  color:#eee;
   text-decoration:none;
-  transition:.4s;
+  color:#eee;
+  transition:.35s;
 }
-.next a:hover{
-  box-shadow:0 0 24px rgba(255,215,120,.35);
+.card:hover{
+  box-shadow:
+    0 0 0 1px rgba(255,215,120,.35),
+    0 0 32px rgba(255,215,120,.35);
+}
+.card h3{
+  font-family:"Cinzel",serif;
+  font-size:.95rem;
+  letter-spacing:.16em;
+  margin-bottom:10px;
+}
+.card p{
+  font-size:.85rem;
+  opacity:.85;
+  line-height:1.5;
 }
 
 /* FOOTER */
@@ -174,83 +127,93 @@ footer{
   text-align:center;
   font-size:.7rem;
   opacity:.45;
-  padding:30px 0;
+  padding:28px 0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
+<div class="bg"></div>
 <div class="noise"></div>
 
 <header>
   <nav>
     <a href="/cs/index.html">Holding</a>
-    <a href="/cs/divisions/systems.html">Systems</a>
-    <a href="/cs/divisions/digital.html">Digital</a>
-    <a href="/cs/divisions/security.html">Security</a>
+    <a href="/cs/divisions/academy/">Academy</a>
+    <a href="/cs/about.html">O nás</a>
   </nav>
 </header>
 
 <section class="hero">
   <h1>FAIST ACADEMY</h1>
-  <p>Vzdělávání v technologiích, systémech a myšlení, které je propojuje.</p>
-  <div class="symbol">
-    <img src="/assets/divisions/academy.png" alt="Academy">
-  </div>
-</section>
-
-<div class="ai-guide">
-  <h4>FAIST · inteligentní průvodce Academy</h4>
-  <input placeholder="Zeptej se na technologie, souvislosti, pojmy…">
-</div>
-
-<section class="section">
-  <h2>TECHNOLOGICKÁ GRAMOTNOST</h2>
   <p>
-    Academy učí chápat technologie jako systémy, nikoli jako izolované nástroje.
-    Vysvětlujeme souvislosti mezi AI, automatizací, infrastrukturou a bezpečností.
+    Vzdělávání, porozumění a technologická gramotnost napříč celým FAIST ekosystémem.
   </p>
+  <img src="/assets/divisions/academy.png" alt="Academy">
 </section>
 
-<section class="section">
-  <h2>SMART HOME & AUTOMATIZACE</h2>
-  <p>
-    Inteligentní domácnost není soubor zařízení, ale celek.
-    Academy vysvětluje, jak přemýšlet o automatizaci, komfortu, energii
-    a bezpečnosti v reálném světě.
-  </p>
+<section class="grid">
+
+  <a class="card" href="literacy.html">
+    <h3>Technologická gramotnost</h3>
+    <p>
+      Základy porozumění technologiím, systémům a jejich souvislostem.
+      Jak přemýšlet technologicky, ne nástrojově.
+    </p>
+  </a>
+
+  <a class="card" href="smart-home.html">
+    <h3>Smart Home & automatizace</h3>
+    <p>
+      Inteligence v reálném světě.
+      Jak navrhovat chytrý domov jako celek, ne sbírku zařízení.
+    </p>
+  </a>
+
+  <a class="card" href="ai.html">
+    <h3>AI gramotnost</h3>
+    <p>
+      Co AI je, co není a kde dává smysl.
+      Práce s AI bez magie, hype a slepé důvěry.
+    </p>
+  </a>
+
+  <a class="card" href="energy.html">
+    <h3>Energie & infrastruktura</h3>
+    <p>
+      Zdroje, spotřeba a dlouhodobá efektivita.
+      Proč energie rozhoduje o funkčnosti systémů.
+    </p>
+  </a>
+
+  <a class="card" href="security.html">
+    <h3>Bezpečnost systémů</h3>
+    <p>
+      Ochrana dat, zařízení i fyzického prostoru.
+      Bezpečnost jako základ, ne doplněk.
+    </p>
+  </a>
+
+  <a class="card" href="slovnik.html">
+    <h3>Slovník pojmů</h3>
+    <p>
+      Vysvětlení klíčových pojmů FAIST světa.
+      Lidsky, srozumitelně a v souvislostech.
+    </p>
+  </a>
+
+  <a class="card" href="resources.html">
+    <h3>Zdroje & nástroje</h3>
+    <p>
+      Kurátorovaný přehled nástrojů a zdrojů.
+      Ne seznam všeho, ale mapa toho podstatného.
+    </p>
+  </a>
+
 </section>
 
-<section class="section">
-  <h2>AI GRAMOTNOST</h2>
-  <p>
-    Co AI umí, co neumí a kde dává skutečný smysl.
-    Bez hype, bez magie – s důrazem na správné použití a limity.
-  </p>
-</section>
-
-<section class="section">
-  <h2>SLOVNÍK & ZDROJE</h2>
-  <p>
-    Orientace v pojmech, rozdílech a nástrojích.
-    Kurátorovaný rozcestník místo chaotických seznamů.
-  </p>
-</section>
-
-<div class="next">
-  <h3>DALŠÍ DIVIZE FAIST</h3>
-  <div class="next-grid">
-    <a href="/cs/divisions/systems.html">Systems</a>
-    <a href="/cs/divisions/digital.html">Digital</a>
-    <a href="/cs/divisions/energy.html">Energy</a>
-    <a href="/cs/divisions/security.html">Security</a>
-    <a href="/cs/divisions/research.html">Lab</a>
-  </div>
-</div>
-
-<footer>© 2025 FAIST</footer>
+<footer>© 2025 FAIST Academy</footer>
 
 </body>
 </html>
