@@ -16,7 +16,7 @@ html,body{
   color:#eee;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
-body{overflow:hidden}
+body{overflow-x:hidden;overflow-y:auto}
 
 /* HEADER */
 header{
@@ -25,6 +25,8 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
+  position:relative;
+  z-index:20;
 }
 header nav a{
   margin-left:24px;
@@ -36,6 +38,8 @@ header nav a:hover{color:#fff}
 
 /* HERO */
 .hero{
+  position:relative;
+  z-index:10;
   text-align:center;
   margin-top:6vh;
 }
@@ -45,42 +49,42 @@ header nav a:hover{color:#fff}
   letter-spacing:.22em;
 }
 .hero p{
-  margin-top:16px;
+  margin-top:18px;
   font-size:.9rem;
   opacity:.7;
 }
 
-/* AI INTRO BOX */
+/* AI INTRO */
 .ai-intro{
-  width:min(680px,90vw);
-  margin:6vh auto 0;
+  width:min(720px,90vw);
+  margin:5vh auto 0;
   padding:26px 28px;
-  border-radius:18px;
-  background:rgba(12,12,12,.85);
+  border-radius:20px;
+  background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.12);
 }
 .ai-intro h4{
   font-family:"Cinzel",serif;
-  font-size:1rem;
+  font-size:.95rem;
+  letter-spacing:.14em;
   margin-bottom:10px;
-  letter-spacing:.12em;
 }
 .ai-intro p{
   font-size:.85rem;
   line-height:1.55;
-  opacity:.85;
+  opacity:.8;
 }
 .ai-actions{
   margin-top:18px;
   display:flex;
-  gap:14px;
+  gap:16px;
 }
 .ai-actions button{
   background:none;
-  border:1px solid rgba(255,215,120,.5);
+  border:1px solid rgba(255,215,120,.55);
   color:rgb(255,215,120);
-  padding:6px 16px;
-  border-radius:20px;
+  padding:6px 18px;
+  border-radius:22px;
   font-size:.75rem;
   cursor:pointer;
 }
@@ -88,26 +92,35 @@ header nav a:hover{color:#fff}
   background:rgba(255,215,120,.1);
 }
 
-/* DIVISIONS */
+/* DIVISIONS – VRÁCENO */
 .divisions{
   position:absolute;
-  bottom:60px;
+  bottom:70px;
+  left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
   gap:1.4vw;
+  z-index:5;
 }
 .division{width:calc(100%/6)}
+
 .window{
-  height:260px;
+  height:clamp(300px,36vh,380px);
   padding:18px;
-  border-radius:18px;
-  background:rgba(12,12,12,.7);
+  border-radius:20px;
+  background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  flex-direction:column;
+  transition:box-shadow .35s ease;
   cursor:pointer;
 }
-.window h3{font-size:.9rem;margin-bottom:6px}
-.window p{font-size:.75rem;opacity:.7}
+.window.active{
+  box-shadow:0 0 0 1px rgba(255,215,120,.6);
+}
+.window h3{font-size:.95rem;margin-bottom:6px}
+.window p{font-size:.8rem;opacity:.7}
 
 /* FOOTER */
 footer{
@@ -119,7 +132,7 @@ footer{
   justify-content:center;
   align-items:center;
   font-size:.7rem;
-  opacity:.4;
+  opacity:.45;
 }
 </style>
 </head>
@@ -155,75 +168,30 @@ footer{
 <footer>© 2025 FAIST digital</footer>
 
 <script>
-/* === DIVISION CONFIG === */
 const DIVISIONS = [
-  {
-    key:"systems",
-    name:"Systems",
-    url:"/cs/divisions/systems.html",
-    intro:[
-      "Systems tvoří páteř holdingu.",
-      "Navrhujeme infrastrukturu, na které stojí všechny ostatní divize.",
-      "Bez stability není inovace."
-    ]
-  },
-  {
-    key:"research",
-    name:"Research",
-    intro:[
-      "Research je prostor pro experiment.",
-      "Zkoumáme nové technologie a přístupy.",
-      "Ne vše jde do produkce – ale vše posouvá celek."
-    ],
-    url:"/cs/divisions/research.html"
-  },
-  {
-    key:"digital",
-    name:"Digital",
-    intro:[
-      "Digital převádí myšlenky do funkčních produktů.",
-      "Software, AI a automatizace v praxi.",
-      "Tady se věci dostávají k lidem."
-    ],
-    url:"/cs/divisions/digital.html"
-  },
-  {
-    key:"energy",
-    name:"Energy",
-    intro:[
-      "Energy řeší transformaci zdrojů.",
-      "Efektivita, udržitelnost a technologie.",
-      "Bez energie se nic nehýbe."
-    ],
-    url:"/cs/divisions/energy.html"
-  },
-  {
-    key:"security",
-    name:"Security",
-    intro:[
-      "Security chrání systémy, data i procesy.",
-      "Bezpečnost není doplněk.",
-      "Důvěra vzniká kontrolou."
-    ],
-    url:"/cs/divisions/security.html"
-  },
-  {
-    key:"academy",
-    name:"Academy",
-    intro:[
-      "Academy přenáší know-how dál.",
-      "Školení, mentoring a vzdělávání.",
-      "Znalosti mají hodnotu jen tehdy, když se sdílí."
-    ],
-    url:"/cs/divisions/academy.html"
-  }
+  {key:"systems",name:"Systems",url:"/cs/divisions/systems.html",
+   intro:["Systems tvoří páteř holdingu.","Navrhujeme infrastrukturu, na které stojí vše ostatní.","Bez stability není inovace."]},
+  {key:"research",name:"Research",url:"/cs/divisions/research.html",
+   intro:["Research je prostor pro experiment.","Zkoumáme nové technologie a přístupy.","Ne vše jde do produkce – ale vše posouvá celek."]},
+  {key:"digital",name:"Digital",url:"/cs/divisions/digital.html",
+   intro:["Digital převádí myšlenky do funkčních produktů.","Software, AI a automatizace v praxi.","Tady se věci dostávají k lidem."]},
+  {key:"energy",name:"Energy",url:"/cs/divisions/energy.html",
+   intro:["Energy řeší transformaci zdrojů.","Efektivita, udržitelnost a technologie.","Bez energie se nic nehýbe."]},
+  {key:"security",name:"Security",url:"/cs/divisions/security.html",
+   intro:["Security chrání systémy, data i procesy.","Bezpečnost není doplněk.","Důvěra vzniká kontrolou."]},
+  {key:"academy",name:"Academy",url:"/cs/divisions/academy.html",
+   intro:["Academy přenáší know-how dál.","Školení, mentoring a vzdělávání.","Znalosti mají hodnotu jen tehdy, když se sdílí."]}
 ];
 
-let index = 0;
+let idx = 0;
 const box = document.getElementById("aiIntro");
+const windows = document.querySelectorAll(".window");
 
-function renderIntro(){
-  const d = DIVISIONS[index];
+function render(){
+  windows.forEach(w=>w.classList.remove("active"));
+  const d = DIVISIONS[idx];
+  document.querySelector(`.window.${d.key}`).classList.add("active");
+
   box.innerHTML = `
     <h4>${d.name}</h4>
     <p>${d.intro.join("<br>")}</p>
@@ -234,24 +202,10 @@ function renderIntro(){
   `;
 }
 
-function goYes(){
-  window.location.href = DIVISIONS[index].url;
-}
-function goNext(){
-  index = (index + 1) % DIVISIONS.length;
-  renderIntro();
-}
+function goYes(){ window.location.href = DIVISIONS[idx].url; }
+function goNext(){ idx = (idx+1)%DIVISIONS.length; render(); }
 
-renderIntro();
-
-/* click on windows */
-document.querySelectorAll(".window").forEach(w=>{
-  w.addEventListener("click",()=>{
-    const key = w.classList[1];
-    const d = DIVISIONS.find(x=>x.key===key);
-    if(d) window.location.href = d.url;
-  });
-});
+render();
 </script>
 
 </body>
