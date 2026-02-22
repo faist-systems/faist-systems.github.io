@@ -36,7 +36,7 @@ header nav a:hover{color:#fff}
 /* HERO */
 .hero{
   text-align:center;
-  margin-top:2.6vh;
+  margin-top:2.2vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
@@ -44,32 +44,30 @@ header nav a:hover{color:#fff}
   letter-spacing:.22em;
   color:#fff;
   text-shadow:
-    0 0 8px rgba(255,215,120,.55),
-    0 0 22px rgba(255,215,120,.45),
-    0 0 44px rgba(255,190,90,.35),
-    0 0 72px rgba(255,170,60,.25),
-    0 2px 2px rgba(0,0,0,.85);
+    0 0 10px rgba(255,215,120,.75),
+    0 0 28px rgba(255,200,120,.6),
+    0 0 60px rgba(255,180,80,.45);
 }
 .hero .forge{
-  margin-top:14px;
+  margin-top:12px;
   font-size:.78rem;
   letter-spacing:.14em;
-  opacity:.55;
+  opacity:.6;
 }
 .hero .claim{
   margin-top:6px;
-  font-size:.9rem;
-  opacity:.85;
+  font-size:.95rem;
+  opacity:.9;
 }
 
 /* AI */
 .ai-guide{
   width:min(720px,90vw);
-  margin:2.8vh auto 0;
+  margin:2.6vh auto 0;
   padding:22px 26px;
   border-radius:20px;
-  background:rgba(12,12,12,.7);
-  border:1px solid rgba(255,255,255,.1);
+  background:rgba(12,12,12,.75);
+  border:1px solid rgba(255,255,255,.12);
 }
 .ai-guide h4{
   font-family:"Cinzel",serif;
@@ -84,28 +82,28 @@ header nav a:hover{color:#fff}
 .ai-guide input{
   width:100%;
   background:#000;
-  border:1px solid rgba(255,215,120,.4);
+  border:1px solid rgba(255,215,120,.55);
   border-radius:18px;
-  padding:8px 14px;
+  padding:9px 16px;
   color:#eee;
-  font-size:.85rem;
+  font-size:.9rem;
 }
 
 /* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:42px;
+  bottom:48px;
   left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
-  gap:1.4vw;
+  gap:1.6vw;
 }
 .division{width:calc(100%/6)}
 
 .window{
-  height:clamp(300px,36vh,380px);
-  border-radius:20px;
+  height:clamp(330px,38vh,420px);
+  border-radius:22px;
   position:relative;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
@@ -127,9 +125,9 @@ header nav a:hover{color:#fff}
 .image-slot{
   height:185px;
   margin:18px;
-  border-radius:14px;
+  border-radius:16px;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
   flex-shrink:0;
 }
 .image-slot img{
@@ -141,48 +139,57 @@ header nav a:hover{color:#fff}
 /* CONTENT */
 .content{
   margin:0 18px 18px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(0,0,0,.55);
+  padding:16px 16px 18px;
+  border-radius:16px;
+  background:rgba(0,0,0,.65);
   backdrop-filter:blur(4px);
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:8px;
+  min-height:96px;
 }
-.content h3{font-size:.95rem}
-.content p{font-size:.8rem;opacity:.75}
+.content h3{
+  font-size:1rem;
+  letter-spacing:.02em;
+}
+.content p{
+  font-size:.85rem;
+  opacity:.8;
+}
 .more{
   margin-top:auto;
-  font-size:.8rem;
+  font-size:.85rem;
   color:rgb(255,215,120);
   text-decoration:none;
 }
 .more:hover{text-decoration:underline}
 
-/* === SVĚTELNÝ RÁMEČEK === */
-.window::before{
+/* === SVĚTLO NA HRANÁCH – CELÁ DIVIZE === */
+.window::after{
   content:"";
   position:absolute;
-  inset:10px;
-  border-radius:16px;
+  inset:0;
+  border-radius:22px;
   pointer-events:none;
   opacity:0;
+
   box-shadow:
-    0 0 0 1px rgba(255,215,120,.35),
-    0 0 18px rgba(255,215,120,.25),
-    inset 0 0 18px rgba(255,215,120,.15);
-  transition:opacity 4s ease;
+    0 0 0 2px rgba(255,215,120,.9),
+    0 0 40px rgba(255,200,120,.75),
+    0 0 90px rgba(255,180,80,.6);
+
+  transition:opacity 2.2s ease;
 }
 
-/* aktivní */
-.window.is-active::before{
-  opacity:.75;
+/* aktivní fáze */
+.window.is-lit::after{
+  opacity:1;
 }
 
 /* dohasínání */
-.window.is-fading::before{
-  opacity:.35;
-  transition:opacity 8s ease;
+.window.is-dimming::after{
+  opacity:0;
+  transition:opacity 3.5s ease;
 }
 
 /* FOOTER */
@@ -285,25 +292,28 @@ footer{
 
 <script>
 const cards = document.querySelectorAll(".window");
-let index = 0;
-let prev = null;
+let i = 0;
 
-function step(){
-  if(prev){
-    prev.classList.remove("is-active");
-    prev.classList.add("is-fading");
-  }
+function runWave(){
+  const card = cards[i];
 
-  const current = cards[index];
-  current.classList.remove("is-fading");
-  current.classList.add("is-active");
+  card.classList.add("is-lit");
 
-  prev = current;
-  index = (index + 1) % cards.length;
+  setTimeout(()=>{
+    card.classList.remove("is-lit");
+    card.classList.add("is-dimming");
+
+    setTimeout(()=>{
+      card.classList.remove("is-dimming");
+    },3500);
+
+  },3000);
+
+  i = (i + 1) % cards.length;
 }
 
-step();
-setInterval(step, 4500);
+runWave();
+setInterval(runWave, 3000);
 </script>
 
 </body>
