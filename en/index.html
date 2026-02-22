@@ -1,231 +1,362 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
 <title>F.A.I.S.T. Holding</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#0f1117;
-  --text:#ffffff;
-  --muted:#b6bcc6;
-  --panel:rgba(255,255,255,.04);
-  --border:rgba(255,255,255,.12);
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  overflow:hidden;
 }
 
-*{box-sizing:border-box}
-html,body{margin:0}
+/* HEADER */
+header{
+  position:relative;
+  z-index:30;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+}
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+.header-right nav{
+  display:flex;
+  gap:22px;
+}
+.header-right nav a,
+.header-right .contact{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+.header-right nav a:hover,
+.header-right .contact:hover{color:#fff}
 
-body{
-  font-family:Inter,system-ui,sans-serif;
-  color:var(--text);
+/* FLAG */
+.lang-flag{
+  width:26px;height:16px;
+  border-radius:3px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.25);
+  opacity:.75;
+  transition:.25s;
+}
+.lang-flag img{width:100%;height:100%;object-fit:cover;display:block}
+.lang-flag:hover{
+  opacity:1;
+  box-shadow:0 0 0 1px rgba(255,215,120,.9);
+}
+
+/* BACKGROUND */
+.background,.noise{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.background{
   background:
-    radial-gradient(circle at 20% 20%, #1b2035, var(--bg)),
-    radial-gradient(circle at 80% 80%, #12162a, var(--bg));
+    radial-gradient(circle at center, rgba(255,200,120,.03), transparent 60%),
+    linear-gradient(to bottom,#050505,#000 70%);
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.15;
+  mix-blend-mode:overlay;
 }
 
 /* HERO */
 .hero{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
   position:relative;
-}
-
-/* LEFT PANEL */
-.brand-panel{
-  position:absolute;
-  top:32px;
-  left:32px;
-  width:360px;
-  padding:20px 22px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;
-}
-.brand-panel h1{
-  margin:0 0 12px;
-  font-size:20px;
-  letter-spacing:3px;
-}
-.brand-panel p{
-  margin:0;
-  font-size:14px;
-  line-height:1.6;
-  color:var(--muted);
-}
-
-/* SCENE */
-.scene{
-  position:relative;
-  width:900px;
-  height:900px;
-  max-width:90vmin;
-  max-height:90vmin;
-}
-
-/* CENTER LOGO (CLICKABLE) */
-.center{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
   z-index:5;
+  text-align:center;
+  margin-top:1vh;
 }
-.center-button{
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.7rem,4.6vw,3.7rem);
+  letter-spacing:.22em;
+  text-shadow:
+    0 0 16px rgba(255,215,120,.9),
+    0 0 48px rgba(255,190,90,.7);
+}
+.hero .forge{
+  margin-top:6px;
+  font-size:.78rem;
+  letter-spacing:.14em;
+  opacity:.65;
+}
+.hero .claim{
+  margin-top:6px;
+  font-size:.95rem;
+  opacity:.9;
+}
+
+/* AI */
+.ai-guide{
+  position:relative;
+  z-index:5;
+  width:min(720px,90vw);
+  margin:1.8vh auto 0;
+  padding:18px 22px;
+  border-radius:18px;
+  background:rgba(12,12,12,.75);
+  border:1px solid rgba(255,255,255,.12);
+}
+.ai-guide h4{
+  font-family:"Cinzel",serif;
+  font-size:.85rem;
+  letter-spacing:.16em;
+  margin-bottom:8px;
+}
+.ai-guide h4 span{opacity:.55}
+.ai-guide input{
+  width:100%;
+  background:#000;
+  border:1px solid rgba(255,215,120,.55);
+  border-radius:16px;
+  padding:8px 14px;
+  color:#eee;
+  font-size:.85rem;
+}
+
+/* DIVISIONS */
+.divisions{
+  position:absolute;
+  top:46vh;
+  left:0;
+  width:100%;
+  padding:0 6vw;
+  display:flex;
+  gap:1.6vw;
+  z-index:4;
+}
+.division{width:calc(100%/6)}
+
+.window{
+  height:calc(100vh - 46vh - 32px - 24px);
+  min-height:420px;
+  max-height:500px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
   display:flex;
   flex-direction:column;
-  align-items:center;
-  cursor:pointer;
-}
-.center-button img{
-  width:220px;
-  max-width:40vmin;
-}
-.center-button span{
-  margin-top:8px;
-  font-size:12px;
-  letter-spacing:1px;
-  color:var(--muted);
-  opacity:.7;
-}
-.center-button:hover span{
-  opacity:1;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  transition:box-shadow 1.2s ease;
 }
 
-/* ORBIT */
-.orbit{
+/* LIGHT */
+.window::after{
+  content:"";
   position:absolute;
   inset:0;
+  background:radial-gradient(circle at top,
+    rgba(255,215,120,.25),
+    transparent 70%);
+  opacity:.15;
+  pointer-events:none;
 }
-.orbit-item{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
-  color:#fff;
+.window.is-lit{
+  box-shadow:
+    0 0 0 1px rgba(255,215,120,.35),
+    0 0 32px rgba(255,215,120,.35);
+}
+
+/* BACKGROUNDS */
+.window.systems  {background-image:url("/assets/backgrounds/systems.png")}
+.window.research {background-image:url("/assets/backgrounds/research.png")}
+.window.digital  {background-image:url("/assets/backgrounds/digital.png")}
+.window.energy   {background-image:url("/assets/backgrounds/energy.png")}
+.window.security {background-image:url("/assets/backgrounds/security.png")}
+.window.academy  {background-image:url("/assets/backgrounds/academy.png")}
+
+/* IMAGE */
+.image-slot{
+  height:170px;
+  margin:14px 16px 0;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.18);
+  position:relative;
+  z-index:2;
+}
+.image-slot img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(.75);
+  transition:filter 1.2s ease;
+}
+.window.is-lit .image-slot img{
+  filter:brightness(1.05) saturate(1.1);
+}
+
+/* CONTENT */
+.content{
+  margin:12px 16px 16px;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(0,0,0,.65);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  z-index:2;
+}
+.content h3{font-size:.95rem}
+.content p{font-size:.82rem;opacity:.85}
+.more{
+  margin-top:auto;
+  font-size:.82rem;
+  color:rgb(255,215,120);
   text-decoration:none;
 }
-.orbit-item img{
-  width:130px;
-  display:block;
-  margin:0 auto 6px;
-  animation:spin 20s linear infinite;
-}
-.orbit-item .label{
-  font-size:14px;
-  letter-spacing:1px;
-}
-@keyframes spin{
-  from{transform:rotate(0deg)}
-  to{transform:rotate(360deg)}
-}
 
-/* AI MODAL */
-.ai-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(10,12,17,.65);
-  display:none;
-  align-items:center;
+/* FOOTER */
+footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:32px;
+  display:flex;
   justify-content:center;
-  z-index:100;
-}
-.ai-modal.open{display:flex}
-.ai-panel{
-  width:420px;
-  max-width:90%;
-  background:#0a0c11;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:24px;
-}
-.ai-panel h2{
-  margin:0 0 12px;
-  font-size:16px;
-  letter-spacing:2px;
-}
-.ai-panel p{
-  margin:0;
-  font-size:14px;
-  color:var(--muted);
-  line-height:1.6;
-}
-.ai-close{
-  margin-top:16px;
-  font-size:12px;
-  color:var(--muted);
-  cursor:pointer;
-  text-align:right;
+  align-items:center;
+  font-size:.7rem;
+  opacity:.45;
+  z-index:10;
 }
 </style>
 </head>
 
 <body>
 
-<section class="hero">
+<div class="background"></div>
+<div class="noise"></div>
 
-  <div class="brand-panel">
-    <h1>F.A.I.S.T. Holding</h1>
-    <p>
-      Navrhujeme inteligentní systémy propojující umělou inteligenci,
-      vědu a moderní technologie do praktických a dlouhodobě
-      udržitelných řešení.
-    </p>
+<header>
+  <div class="header-right">
+    <nav>
+      <a href="/en/index.html">Holding</a>
+      <a href="#divisions">Divisions</a>
+      <a href="/en/about.html">About</a>
+    </nav>
+    <a href="https://faist.xyz/contacts.html" class="contact">Contact</a>
+    <a href="/cs/index.html" class="lang-flag">
+      <img src="/assets/flags/cz.png" alt="CZ">
+    </a>
   </div>
+</header>
 
-  <div class="scene" id="scene">
-
-    <!-- CLICKABLE LOGO -->
-    <div class="center">
-      <div class="center-button" id="openAI">
-        <img src="/assets/logos/faist-holding.png" alt="FAIST Holding">
-        <span>Zeptej se mě</span>
-      </div>
-    </div>
-
-    <div class="orbit">
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-systems.png"><div class="label">Systems</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-lab.png"><div class="label">Lab</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-digital.png"><div class="label">Digital</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-energy.png"><div class="label">Energy</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-security.png"><div class="label">Security</div></a>
-      <a class="orbit-item" href="#"><img src="/assets/logos/faist-edu.png"><div class="label">Edu</div></a>
-    </div>
-
-  </div>
-</section>
-
-<!-- AI MODAL -->
-<div class="ai-modal" id="aiModal">
-  <div class="ai-panel">
-    <h2>FAIST AI</h2>
-    <p>
-      Jsem centrální inteligence holdingu FAIST.<br>
-      Brzy se mě budeš moci ptát na naše divize,
-      projekty a technologie.
-    </p>
-    <div class="ai-close" id="closeAI">Zavřít</div>
+<div class="hero">
+  <h1>F.A.I.S.T. HOLDING</h1>
+  <div class="forge">Forge of Artificial Intelligence, Solutions and Technologies</div>
+  <div class="claim">
+    An intelligent system that designs, connects and explains complex structures.
   </div>
 </div>
 
-<script>
-/* AI MODAL LOGIC */
-const openAI=document.getElementById("openAI");
-const closeAI=document.getElementById("closeAI");
-const modal=document.getElementById("aiModal");
+<div class="ai-guide">
+  <h4><strong>FAIST</strong> <span>· intelligent guide</span></h4>
+  <input placeholder="Ask me anything…">
+</div>
 
-openAI.addEventListener("click",()=>modal.classList.add("open"));
-closeAI.addEventListener("click",()=>modal.classList.remove("open"));
-modal.addEventListener("click",e=>{
-  if(e.target===modal) modal.classList.remove("open");
+<div class="divisions" id="divisions">
+
+  <div class="division"><div class="window systems">
+    <div class="image-slot"><img src="/assets/divisions/systems.png"></div>
+    <div class="content">
+      <h3>Systems</h3>
+      <p>Architecture and infrastructure.</p>
+      <a class="more" href="/en/divisions/systems.html">Learn more →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window research">
+    <div class="image-slot"><img src="/assets/divisions/research.png"></div>
+    <div class="content">
+      <h3>Research</h3>
+      <p>Research and experimentation.</p>
+      <a class="more" href="/en/divisions/research.html">Learn more →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window digital">
+    <div class="image-slot"><img src="/assets/divisions/digital.png"></div>
+    <div class="content">
+      <h3>Digital</h3>
+      <p>Digital products and solutions.</p>
+      <a class="more" href="/en/divisions/digital.html">Learn more →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window energy">
+    <div class="image-slot"><img src="/assets/divisions/energy.png"></div>
+    <div class="content">
+      <h3>Energy</h3>
+      <p>Energy transformation and management.</p>
+      <a class="more" href="/en/divisions/energy.html">Learn more →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window security">
+    <div class="image-slot"><img src="/assets/divisions/security.png"></div>
+    <div class="content">
+      <h3>Security</h3>
+      <p>Systems and data protection.</p>
+      <a class="more" href="/en/divisions/security.html">Learn more →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window academy">
+    <div class="image-slot"><img src="/assets/divisions/academy.png"></div>
+    <div class="content">
+      <h3>Academy</h3>
+      <p>Knowledge transfer and education.</p>
+      <a class="more" href="/en/divisions/academy.html">Learn more →</a>
+    </div>
+  </div></div>
+
+</div>
+
+<footer>© 2025 FAIST digital</footer>
+
+<script>
+/* unify content heights */
+window.addEventListener("load",()=>{
+  const blocks=[...document.querySelectorAll(".content")];
+  let max=0;
+  blocks.forEach(b=>max=Math.max(max,b.offsetHeight));
+  blocks.forEach(b=>b.style.minHeight=max+"px");
 });
+
+/* light wave */
+const cards=document.querySelectorAll(".window");
+let i=0;
+setInterval(()=>{
+  cards.forEach(c=>c.classList.remove("is-lit"));
+  cards[i].classList.add("is-lit");
+  i=(i+1)%cards.length;
+},2400);
 </script>
 
 </body>
