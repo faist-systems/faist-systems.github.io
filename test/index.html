@@ -15,6 +15,7 @@ html,body{
   background:#000;
   color:#eee;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  overflow:hidden; /* bezpečné – layout už sedí */
 }
 
 /* HEADER */
@@ -31,7 +32,6 @@ header nav a{
   color:#ccc;
   text-decoration:none;
 }
-header nav a:hover{color:#fff}
 
 /* HERO */
 .hero{
@@ -88,20 +88,19 @@ header nav a:hover{color:#fff}
 /* DIVISIONS – UKOTVENÉ SHORA */
 .divisions{
   position:absolute;
-  top:46vh;              /* ⬅️ HLAVNÍ ŘÍDÍCÍ BOD */
+  top:46vh;
   left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
   gap:1.6vw;
 }
-
 .division{width:calc(100%/6)}
 
 .window{
-  height:44vh;
-  min-height:420px;
-  max-height:520px;
+  height: calc(100vh - 46vh - 32px - 24px);
+  min-height:400px;
+  max-height:500px;
   border-radius:22px;
   position:relative;
   overflow:hidden;
@@ -120,7 +119,7 @@ header nav a:hover{color:#fff}
 .window.security {background-image:url("../assets/backgrounds/security.png")}
 .window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
-/* SVĚTLO – VRSTVY */
+/* SVĚTLO */
 .light-back{
   position:absolute;
   top:0;left:0;right:0;
@@ -131,7 +130,6 @@ header nav a:hover{color:#fff}
     transparent 70%);
   opacity:0;
   transition:opacity 1.6s ease;
-  pointer-events:none;
 }
 .light-front{
   position:absolute;
@@ -143,12 +141,13 @@ header nav a:hover{color:#fff}
     transparent);
   opacity:0;
   transition:opacity 1.6s ease;
-  pointer-events:none;
 }
+
+.window.is-lit .light-back,
+.window.is-lit .light-front{opacity:1}
 
 /* IMAGE */
 .image-slot{
-  position:relative;
   height:170px;
   margin:14px 16px 0;
   border-radius:14px;
@@ -162,12 +161,6 @@ header nav a:hover{color:#fff}
   filter:brightness(.72);
   transition:filter 1.6s ease;
 }
-
-/* AKTIVACE */
-.window.is-lit .light-back,
-.window.is-lit .light-front{
-  opacity:1;
-}
 .window.is-lit .image-slot img{
   filter:brightness(1.05) saturate(1.1);
 }
@@ -175,19 +168,16 @@ header nav a:hover{color:#fff}
 /* CONTENT */
 .content{
   margin:14px 16px 16px;
-  padding:14px 14px;
+  padding:14px;
   border-radius:12px;
   background:rgba(0,0,0,.65);
   display:flex;
   flex-direction:column;
   gap:6px;
-  min-height:105px;
+  min-height:100px;
 }
 .content h3{font-size:.95rem}
-.content p{
-  font-size:.82rem;
-  opacity:.85;
-}
+.content p{font-size:.82rem;opacity:.85}
 .more{
   margin-top:auto;
   font-size:.82rem;
@@ -299,17 +289,16 @@ footer{
 <footer>© 2025 FAIST digital</footer>
 
 <script>
-const cards = document.querySelectorAll(".window");
-let i = 0;
-
+const cards=document.querySelectorAll(".window");
+let i=0;
 function wave(){
-  const c = cards[i];
+  const c=cards[i];
   c.classList.add("is-lit");
-  setTimeout(()=>c.classList.remove("is-lit"), 2250);
-  i = (i + 1) % cards.length;
+  setTimeout(()=>c.classList.remove("is-lit"),2250);
+  i=(i+1)%cards.length;
 }
 wave();
-setInterval(wave, 2250);
+setInterval(wave,2250);
 </script>
 
 </body>
