@@ -25,18 +25,11 @@ header{
   align-items:center;
   padding:0 4vw;
 }
-header nav a{
-  margin-left:24px;
-  font-size:.85rem;
-  color:#ccc;
-  text-decoration:none;
-}
-header nav a:hover{color:#fff}
 
-/* HERO */
+/* HERO – POSUN NAHORU */
 .hero{
   text-align:center;
-  margin-top:2.2vh;
+  margin-top:1.2vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
@@ -44,18 +37,17 @@ header nav a:hover{color:#fff}
   letter-spacing:.22em;
   color:#fff;
   text-shadow:
-    0 0 10px rgba(255,215,120,.75),
-    0 0 28px rgba(255,200,120,.6),
-    0 0 60px rgba(255,180,80,.45);
+    0 0 12px rgba(255,215,120,.8),
+    0 0 40px rgba(255,190,90,.6);
 }
 .hero .forge{
-  margin-top:12px;
+  margin-top:10px;
   font-size:.78rem;
   letter-spacing:.14em;
   opacity:.6;
 }
 .hero .claim{
-  margin-top:6px;
+  margin-top:4px;
   font-size:.95rem;
   opacity:.9;
 }
@@ -63,8 +55,8 @@ header nav a:hover{color:#fff}
 /* AI */
 .ai-guide{
   width:min(720px,90vw);
-  margin:2.6vh auto 0;
-  padding:22px 26px;
+  margin:2vh auto 0;
+  padding:20px 24px;
   border-radius:20px;
   background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.12);
@@ -73,11 +65,7 @@ header nav a:hover{color:#fff}
   font-family:"Cinzel",serif;
   font-size:.9rem;
   letter-spacing:.16em;
-  margin-bottom:10px;
-}
-.ai-guide h4 span{
-  opacity:.6;
-  font-size:.75rem;
+  margin-bottom:8px;
 }
 .ai-guide input{
   width:100%;
@@ -86,13 +74,12 @@ header nav a:hover{color:#fff}
   border-radius:18px;
   padding:9px 16px;
   color:#eee;
-  font-size:.9rem;
 }
 
-/* DIVISIONS */
+/* DIVISIONS – PROTAŽENÉ DOLŮ */
 .divisions{
   position:absolute;
-  bottom:48px;
+  bottom:36px;
   left:0;
   width:100%;
   padding:0 6vw;
@@ -102,7 +89,7 @@ header nav a:hover{color:#fff}
 .division{width:calc(100%/6)}
 
 .window{
-  height:clamp(330px,38vh,420px);
+  height:clamp(380px,44vh,520px);
   border-radius:22px;
   position:relative;
   overflow:hidden;
@@ -121,14 +108,33 @@ header nav a:hover{color:#fff}
 .window.security {background-image:url("../assets/backgrounds/security.png")}
 .window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
-/* TOP IMAGE */
+/* BLOKOVÁ ILUMINACE – BATERKA */
+.window::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,215,120,.35),
+      rgba(255,180,80,.18),
+      transparent 70%);
+  opacity:0;
+  transition:opacity 3s ease;
+  pointer-events:none;
+}
+
+/* aktivní */
+.window.is-lit::before{
+  opacity:1;
+}
+
+/* IMAGE */
 .image-slot{
-  height:185px;
+  height:190px;
   margin:18px;
   border-radius:16px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.18);
-  flex-shrink:0;
 }
 .image-slot img{
   width:100%;
@@ -139,57 +145,21 @@ header nav a:hover{color:#fff}
 /* CONTENT */
 .content{
   margin:0 18px 18px;
-  padding:16px 16px 18px;
+  padding:18px;
   border-radius:16px;
   background:rgba(0,0,0,.65);
-  backdrop-filter:blur(4px);
   display:flex;
   flex-direction:column;
   gap:8px;
-  min-height:96px;
+  min-height:120px;
 }
-.content h3{
-  font-size:1rem;
-  letter-spacing:.02em;
-}
-.content p{
-  font-size:.85rem;
-  opacity:.8;
-}
+.content h3{font-size:1.05rem}
+.content p{font-size:.9rem;opacity:.85}
 .more{
   margin-top:auto;
-  font-size:.85rem;
+  font-size:.9rem;
   color:rgb(255,215,120);
   text-decoration:none;
-}
-.more:hover{text-decoration:underline}
-
-/* === SVĚTLO NA HRANÁCH – CELÁ DIVIZE === */
-.window::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:22px;
-  pointer-events:none;
-  opacity:0;
-
-  box-shadow:
-    0 0 0 2px rgba(255,215,120,.9),
-    0 0 40px rgba(255,200,120,.75),
-    0 0 90px rgba(255,180,80,.6);
-
-  transition:opacity 2.2s ease;
-}
-
-/* aktivní fáze */
-.window.is-lit::after{
-  opacity:1;
-}
-
-/* dohasínání */
-.window.is-dimming::after{
-  opacity:0;
-  transition:opacity 3.5s ease;
 }
 
 /* FOOTER */
@@ -211,12 +181,6 @@ footer{
 
 <header>
   <div>FAIST</div>
-  <nav>
-    <a href="#">Holding</a>
-    <a href="#">Divize</a>
-    <a href="#">O nás</a>
-    <a href="#">Kontakt</a>
-  </nav>
 </header>
 
 <div class="hero">
@@ -226,7 +190,7 @@ footer{
 </div>
 
 <div class="ai-guide">
-  <h4>FAIST <span>· inteligentní průvodce</span></h4>
+  <h4>FAIST · inteligentní průvodce</h4>
   <input placeholder="Ptejte se mě…">
 </div>
 
@@ -292,29 +256,23 @@ footer{
 
 <script>
 const cards = document.querySelectorAll(".window");
-let i = 0;
+let idx = 0;
 
-function runWave(){
-  const card = cards[i];
-
-  card.classList.add("is-lit");
+function wave(){
+  const c = cards[idx];
+  c.classList.add("is-lit");
 
   setTimeout(()=>{
-    card.classList.remove("is-lit");
-    card.classList.add("is-dimming");
-
-    setTimeout(()=>{
-      card.classList.remove("is-dimming");
-    },3500);
-
+    c.classList.remove("is-lit");
   },3000);
 
-  i = (i + 1) % cards.length;
+  idx = (idx + 1) % cards.length;
 }
 
-runWave();
-setInterval(runWave, 3000);
+wave();
+setInterval(wave, 3000);
 </script>
 
 </body>
 </html>
+
