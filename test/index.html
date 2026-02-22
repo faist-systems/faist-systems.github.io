@@ -82,10 +82,7 @@ header{
   border:1px solid rgba(255,255,255,.25);
   opacity:.75;
 }
-.lang-flag img{
-  width:100%;height:100%;
-  object-fit:cover;
-}
+.lang-flag img{width:100%;height:100%;object-fit:cover}
 .lang-flag:hover{
   opacity:1;
   box-shadow:0 0 0 1px rgba(255,215,120,.9);
@@ -111,7 +108,6 @@ header{
   width:200px;
   margin:32px auto 0;
   display:block;
-  opacity:.95;
 }
 
 /* ================= GRID ================= */
@@ -119,18 +115,17 @@ header{
   width:min(1200px,90vw);
   margin:0 auto 12vh;
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:36px;
 }
 
-/* ================= BUBBLE ================= */
+/* ================= BUBBLES ================= */
 .bubble{
   padding:28px 26px 30px;
   border-radius:26px;
   background:
     linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
   backdrop-filter:blur(12px) saturate(115%);
-  -webkit-backdrop-filter:blur(12px) saturate(115%);
   border:1px solid rgba(255,255,255,.18);
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.06),
@@ -139,9 +134,7 @@ header{
   color:#eee;
   transition:.3s;
 }
-.bubble:hover{
-  border-color:rgba(255,215,120,.7);
-}
+.bubble:hover{border-color:rgba(255,215,120,.7)}
 .bubble h3{
   font-family:"Cinzel",serif;
   font-size:1rem;
@@ -159,35 +152,31 @@ header{
   position:fixed;
   right:28px;
   bottom:28px;
-  z-index:20;
+  z-index:30;
+  width:320px;
   font-size:.82rem;
 }
-
-/* collapsed label */
 .ai-label{
   padding:10px 16px;
   border-radius:14px;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
+  background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
   backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,.2);
   cursor:pointer;
   box-shadow:0 10px 30px rgba(0,0,0,.45);
 }
-
-/* panel */
 .ai-panel{
-  width:300px;
+  display:none;
   margin-top:12px;
   padding:16px 18px;
   border-radius:18px;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,.7));
+  background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
   backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,.2);
   box-shadow:0 18px 40px rgba(0,0,0,.6);
-  display:none;
 }
+.ai-guide.open .ai-panel{display:block}
+
 .ai-panel h4{
   font-family:"Cinzel",serif;
   font-size:.8rem;
@@ -198,17 +187,31 @@ header{
   font-size:.8rem;
   line-height:1.45;
   opacity:.9;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
-.ai-panel a{
+
+.ai-panel input{
+  width:100%;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,215,120,.5);
+  background:#000;
+  color:#eee;
+  font-size:.8rem;
+}
+
+.ai-response{
+  margin-top:12px;
+  font-size:.8rem;
+  line-height:1.45;
+  opacity:.9;
+}
+
+.ai-response a{
   color:rgb(255,215,120);
   text-decoration:none;
-  font-size:.78rem;
 }
-.ai-panel a:hover{text-decoration:underline}
-
-/* open state */
-.ai-guide.open .ai-panel{display:block}
+.ai-response a:hover{text-decoration:underline}
 
 /* ================= FOOTER ================= */
 footer{
@@ -240,57 +243,26 @@ footer{
 
 <section class="hero">
   <h1>FAIST ACADEMY</h1>
-  <p>Vzdělávání, porozumění a technologická gramotnost napříč FAIST ekosystémem.</p>
+  <p>Vzdělávání, porozumění a technologická gramotnost.</p>
   <img src="/assets/divisions/academy.png" alt="Academy">
 </section>
 
 <section class="academy-grid">
-
-  <a class="bubble" href="literacy.html">
-    <h3>Technologická gramotnost</h3>
-    <p>Základy myšlení o technologiích a systémech.</p>
-  </a>
-
-  <a class="bubble" href="smart-home.html">
-    <h3>Smart Home</h3>
-    <p>Chytrá domácnost jako celek, ne sbírka zařízení.</p>
-  </a>
-
-  <a class="bubble" href="ai.html">
-    <h3>AI gramotnost</h3>
-    <p>Jak AI chápat, používat a nepřeceňovat.</p>
-  </a>
-
-  <a class="bubble" href="energy.html">
-    <h3>Energie</h3>
-    <p>Proč energie rozhoduje o funkčnosti systémů.</p>
-  </a>
-
-  <a class="bubble" href="security.html">
-    <h3>Bezpečnost</h3>
-    <p>Ochrana dat, zařízení i fyzického prostoru.</p>
-  </a>
-
-  <a class="bubble" href="slovnik.html">
-    <h3>Slovník pojmů</h3>
-    <p>Vysvětlení klíčových pojmů FAIST světa.</p>
-  </a>
-
+  <a class="bubble" href="literacy.html"><h3>Technologická gramotnost</h3><p>Základy myšlení o technologiích.</p></a>
+  <a class="bubble" href="smart-home.html"><h3>Smart Home</h3><p>Domácnost jako celek.</p></a>
+  <a class="bubble" href="ai.html"><h3>AI gramotnost</h3><p>Jak AI chápat a používat.</p></a>
+  <a class="bubble" href="energy.html"><h3>Energie</h3><p>Funkčnost systémů.</p></a>
+  <a class="bubble" href="security.html"><h3>Bezpečnost</h3><p>Ochrana dat a prostoru.</p></a>
+  <a class="bubble" href="slovnik.html"><h3>Slovník pojmů</h3><p>Vysvětlení pojmů FAIST.</p></a>
 </section>
 
-<!-- AI GUIDE -->
 <div class="ai-guide" id="aiGuide">
-  <div class="ai-label" onclick="toggleAI()">
-    FAIST AI · Průvodce
-  </div>
+  <div class="ai-label" onclick="toggleAI()">FAIST AI · Průvodce</div>
   <div class="ai-panel">
-    <h4>O Academy</h4>
-    <p>Academy vysvětluje principy technologií a jejich souvislosti.</p>
-    <p>
-      <a href="ai.html">→ AI gramotnost</a><br>
-      <a href="smart-home.html">→ Smart Home</a><br>
-      <a href="literacy.html">→ Technologická gramotnost</a>
-    </p>
+    <h4>Ahoj 👋</h4>
+    <p>Jak ti mohu pomoci?</p>
+    <input id="aiInput" placeholder="Napiš, co tě zajímá…" onkeydown="handleAI(event)">
+    <div class="ai-response" id="aiResponse"></div>
   </div>
 </div>
 
@@ -299,6 +271,26 @@ footer{
 <script>
 function toggleAI(){
   document.getElementById("aiGuide").classList.toggle("open");
+}
+
+function handleAI(e){
+  if(e.key!=="Enter")return;
+  const q=e.target.value.toLowerCase();
+  let r="";
+
+  if(q.includes("ai")){
+    r='Tohle téma řešíme v <a href="ai.html">AI gramotnosti</a>.';
+  }else if(q.includes("smart")){
+    r='Tohle patří do <a href="smart-home.html">Smart Home</a>.';
+  }else if(q.includes("energie")){
+    r='Podívej se do sekce <a href="energy.html">Energie</a>.';
+  }else if(q.includes("bezpe")){
+    r='Doporučuji <a href="security.html">Bezpečnost</a>.';
+  }else{
+    r='Nejsem si jistý, ale začni u <a href="literacy.html">Technologické gramotnosti</a>.';
+  }
+
+  document.getElementById("aiResponse").innerHTML=r;
 }
 </script>
 
