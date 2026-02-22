@@ -15,13 +15,14 @@ html,body{
   background:#000;
   color:#eee;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  overflow:hidden; /* bezpečné – layout už sedí */
 }
 
 /* HEADER */
 header{
   height:64px;
   display:flex;
-  justify-content:space-between;
+  justify-content:flex-end;
   align-items:center;
   padding:0 4vw;
 }
@@ -31,94 +32,86 @@ header nav a{
   color:#ccc;
   text-decoration:none;
 }
-header nav a:hover{color:#fff}
 
 /* HERO */
 .hero{
   text-align:center;
-  margin-top:2.6vh;
+  margin-top:.5vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
-  font-size:clamp(2.6rem,4.6vw,3.6rem);
+  font-size:clamp(2.7rem,4.6vw,3.7rem);
   letter-spacing:.22em;
   color:#fff;
   text-shadow:
-    0 0 8px rgba(255,215,120,.55),
-    0 0 22px rgba(255,215,120,.45),
-    0 0 44px rgba(255,190,90,.35),
-    0 0 72px rgba(255,170,60,.25),
-    0 2px 2px rgba(0,0,0,.85);
+    0 0 16px rgba(255,215,120,.9),
+    0 0 48px rgba(255,190,90,.7);
 }
 .hero .forge{
-  margin-top:14px;
+  margin-top:6px;
   font-size:.78rem;
   letter-spacing:.14em;
-  opacity:.55;
+  opacity:.6;
 }
 .hero .claim{
   margin-top:6px;
-  font-size:.9rem;
-  opacity:.85;
+  font-size:.95rem;
+  opacity:.9;
 }
 
 /* AI */
 .ai-guide{
   width:min(720px,90vw);
-  margin:2.8vh auto 0;
-  padding:22px 26px;
-  border-radius:20px;
-  background:rgba(12,12,12,.7);
-  border:1px solid rgba(255,255,255,.1);
+  margin:1.6vh auto 0;
+  padding:18px 22px;
+  border-radius:18px;
+  background:rgba(12,12,12,.75);
+  border:1px solid rgba(255,255,255,.12);
 }
 .ai-guide h4{
   font-family:"Cinzel",serif;
-  font-size:.9rem;
+  font-size:.85rem;
   letter-spacing:.16em;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
-.ai-guide h4 span{
-  opacity:.6;
-  font-size:.75rem;
-}
+.ai-guide h4 span{opacity:.55}
 .ai-guide input{
   width:100%;
   background:#000;
-  border:1px solid rgba(255,215,120,.4);
-  border-radius:18px;
+  border:1px solid rgba(255,215,120,.55);
+  border-radius:16px;
   padding:8px 14px;
   color:#eee;
   font-size:.85rem;
 }
 
-/* DIVISIONS */
+/* DIVISIONS – UKOTVENÉ SHORA */
 .divisions{
   position:absolute;
-  bottom:42px;
+  top:46vh;
   left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
-  gap:1.4vw;
+  gap:1.6vw;
 }
 .division{width:calc(100%/6)}
 
 .window{
-  height:clamp(300px,36vh,380px);
-  border-radius:20px;
+  height: calc(100vh - 46vh - 32px - 24px);
+  min-height:400px;
+  max-height:500px;
+  border-radius:22px;
   position:relative;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
-
   display:flex;
   flex-direction:column;
-
   background-size:cover;
   background-position:center;
-  background-repeat:no-repeat;
 }
 
-/* BACKGROUNDS – JEDNOZNAČNĚ */
+/* BACKGROUNDS */
 .window.systems  {background-image:url("../assets/backgrounds/systems.png")}
 .window.research {background-image:url("../assets/backgrounds/research.png")}
 .window.digital  {background-image:url("../assets/backgrounds/digital.png")}
@@ -126,48 +119,71 @@ header nav a:hover{color:#fff}
 .window.security {background-image:url("../assets/backgrounds/security.png")}
 .window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
-/* TOP IMAGE */
+/* SVĚTLO */
+.light-back{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:190px;
+  background:radial-gradient(circle at center,
+    rgba(255,215,120,.75),
+    rgba(255,190,90,.35),
+    transparent 70%);
+  opacity:0;
+  transition:opacity 1.6s ease;
+}
+.light-front{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:160px;
+  background:linear-gradient(to bottom,
+    rgba(255,215,120,.35),
+    rgba(255,215,120,.15),
+    transparent);
+  opacity:0;
+  transition:opacity 1.6s ease;
+}
+
+.window.is-lit .light-back,
+.window.is-lit .light-front{opacity:1}
+
+/* IMAGE */
 .image-slot{
-  height:185px;
-  margin:18px;
+  height:170px;
+  margin:14px 16px 0;
   border-radius:14px;
   overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
-  flex-shrink:0;
+  border:1px solid rgba(255,255,255,.18);
 }
 .image-slot img{
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
+  filter:brightness(.72);
+  transition:filter 1.6s ease;
+}
+.window.is-lit .image-slot img{
+  filter:brightness(1.05) saturate(1.1);
 }
 
-/* CONTENT – STABILNÍ */
+/* CONTENT */
 .content{
-  margin:0 18px 18px;
+  margin:14px 16px 16px;
   padding:14px;
-  border-radius:14px;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(4px);
-
+  border-radius:12px;
+  background:rgba(0,0,0,.65);
   display:flex;
   flex-direction:column;
   gap:6px;
+  min-height:100px;
 }
-.content h3{
-  font-size:.95rem;
-}
-.content p{
-  font-size:.8rem;
-  opacity:.75;
-}
+.content h3{font-size:.95rem}
+.content p{font-size:.82rem;opacity:.85}
 .more{
   margin-top:auto;
-  font-size:.8rem;
+  font-size:.82rem;
   color:rgb(255,215,120);
   text-decoration:none;
 }
-.more:hover{text-decoration:underline}
 
 /* FOOTER */
 footer{
@@ -187,7 +203,6 @@ footer{
 <body>
 
 <header>
-  <div>FAIST</div>
   <nav>
     <a href="#">Holding</a>
     <a href="#">Divize</a>
@@ -203,69 +218,88 @@ footer{
 </div>
 
 <div class="ai-guide">
-  <h4>FAIST <span>· inteligentní průvodce</span></h4>
-  <input placeholder="Ptejte se mě. Např. kamery, AI řešení, školení…">
+  <h4><strong>FAIST</strong> <span>· inteligentní průvodce</span></h4>
+  <input placeholder="Ptejte se mě…">
 </div>
 
 <div class="divisions">
 
   <div class="division"><div class="window systems">
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/systems.png"></div>
     <div class="content">
       <h3>Systems</h3>
       <p>Architektura a infrastruktura.</p>
-      <a class="more" href="/cs/divisions/systems.html">Zjistit více →</a>
+      <a class="more" href="#">Zjistit více →</a>
     </div>
   </div></div>
 
   <div class="division"><div class="window research">
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/research.png"></div>
     <div class="content">
       <h3>Research</h3>
       <p>Výzkum a experiment.</p>
-      <a class="more" href="/cs/divisions/research.html">Zjistit více →</a>
+      <a class="more" href="#">Zjistit více →</a>
     </div>
   </div></div>
 
   <div class="division"><div class="window digital">
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/digital.png"></div>
     <div class="content">
       <h3>Digital</h3>
       <p>Digitální produkty.</p>
-      <a class="more" href="/cs/divisions/digital.html">Zjistit více →</a>
+      <a class="more" href="#">Zjistit více →</a>
     </div>
   </div></div>
 
   <div class="division"><div class="window energy">
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/energy.png"></div>
     <div class="content">
       <h3>Energy</h3>
       <p>Transformace energie.</p>
-      <a class="more" href="/cs/divisions/energy.html">Zjistit více →</a>
+      <a class="more" href="#">Zjistit více →</a>
     </div>
   </div></div>
 
   <div class="division"><div class="window security">
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/security.png"></div>
     <div class="content">
       <h3>Security</h3>
       <p>Ochrana systémů.</p>
-      <a class="more" href="/cs/divisions/security.html">Zjistit více →</a>
+      <a class="more" href="#">Zjistit více →</a>
     </div>
   </div></div>
 
   <div class="division"><div class="window academy">
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/academy.png"></div>
     <div class="content">
       <h3>Academy</h3>
       <p>Přenos know-how.</p>
-      <a class="more" href="/cs/divisions/academy.html">Zjistit více →</a>
+      <a class="more" href="#">Zjistit více →</a>
     </div>
   </div></div>
 
 </div>
 
 <footer>© 2025 FAIST digital</footer>
+
+<script>
+const cards=document.querySelectorAll(".window");
+let i=0;
+function wave(){
+  const c=cards[i];
+  c.classList.add("is-lit");
+  setTimeout(()=>c.classList.remove("is-lit"),2250);
+  i=(i+1)%cards.length;
+}
+wave();
+setInterval(wave,2250);
+</script>
 
 </body>
 </html>
