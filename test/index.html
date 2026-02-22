@@ -17,12 +17,12 @@ html,body{
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 
-/* HEADER – VRÁCENÝ, ČISTÝ */
+/* HEADER */
 header{
   height:64px;
   display:flex;
-  align-items:center;
   justify-content:flex-end;
+  align-items:center;
   padding:0 4vw;
 }
 header nav a{
@@ -31,9 +31,8 @@ header nav a{
   color:#ccc;
   text-decoration:none;
 }
-header nav a:hover{color:#fff}
 
-/* HERO – POSUNUTÝ NAHORU */
+/* HERO */
 .hero{
   text-align:center;
   margin-top:.6vh;
@@ -44,8 +43,8 @@ header nav a:hover{color:#fff}
   letter-spacing:.22em;
   color:#fff;
   text-shadow:
-    0 0 14px rgba(255,215,120,.85),
-    0 0 40px rgba(255,190,90,.6);
+    0 0 16px rgba(255,215,120,.9),
+    0 0 48px rgba(255,190,90,.7);
 }
 .hero .forge{
   margin-top:6px;
@@ -63,31 +62,29 @@ header nav a:hover{color:#fff}
 .ai-guide{
   width:min(720px,90vw);
   margin:1.8vh auto 0;
-  padding:20px 24px;
-  border-radius:20px;
+  padding:18px 22px;
+  border-radius:18px;
   background:rgba(12,12,12,.75);
   border:1px solid rgba(255,255,255,.12);
 }
 .ai-guide h4{
   font-family:"Cinzel",serif;
-  font-size:.9rem;
+  font-size:.85rem;
   letter-spacing:.16em;
   margin-bottom:8px;
 }
-.ai-guide h4 span{
-  opacity:.55;
-}
+.ai-guide h4 span{opacity:.55}
 .ai-guide input{
   width:100%;
   background:#000;
   border:1px solid rgba(255,215,120,.55);
-  border-radius:18px;
-  padding:9px 16px;
+  border-radius:16px;
+  padding:8px 14px;
   color:#eee;
-  font-size:.9rem;
+  font-size:.85rem;
 }
 
-/* DIVISIONS – PROTAŽENÉ DOLŮ */
+/* DIVISIONS */
 .divisions{
   position:absolute;
   bottom:36px;
@@ -100,7 +97,7 @@ header nav a:hover{color:#fff}
 .division{width:calc(100%/6)}
 
 .window{
-  height:clamp(400px,46vh,560px);
+  height:clamp(380px,44vh,520px);
   border-radius:22px;
   position:relative;
   overflow:hidden;
@@ -119,30 +116,39 @@ header nav a:hover{color:#fff}
 .window.security {background-image:url("../assets/backgrounds/security.png")}
 .window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
-/* SVĚTLO ZA OBRÁZKEM – BATERKA */
-.light-layer{
+/* === SVĚTLO 1 – BATERKA ZA OBRÁZKEM === */
+.light-back{
   position:absolute;
-  top:0;
-  left:0;
-  right:0;
+  top:0;left:0;right:0;
   height:260px;
-  background:
-    radial-gradient(circle at center,
-      rgba(255,215,120,.55),
-      rgba(255,190,90,.28),
-      transparent 70%);
+  background:radial-gradient(circle at center,
+    rgba(255,215,120,.75),
+    rgba(255,190,90,.35),
+    transparent 70%);
   opacity:0;
-  transition:opacity 2.2s ease;
+  transition:opacity 2s ease;
   pointer-events:none;
 }
-.window.is-lit .light-layer{
-  opacity:1;
+
+/* === SVĚTLO 2 – ATMOSFÉRA NAD OBRÁZKEM === */
+.light-front{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:220px;
+  background:linear-gradient(to bottom,
+    rgba(255,215,120,.35),
+    rgba(255,215,120,.15),
+    transparent);
+  opacity:0;
+  transition:opacity 2s ease;
+  pointer-events:none;
 }
 
 /* IMAGE */
 .image-slot{
-  height:200px;
-  margin:26px 18px 0;
+  position:relative;
+  height:190px;
+  margin:22px 18px 0;
   border-radius:16px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.18);
@@ -151,25 +157,38 @@ header nav a:hover{color:#fff}
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(.75);
+  filter:brightness(.7);
+  transition:filter 2s ease;
 }
 
-/* CONTENT – POSUNUTÝ NÍŽ */
+/* AKTIVACE SVĚTLA */
+.window.is-lit .light-back,
+.window.is-lit .light-front{
+  opacity:1;
+}
+.window.is-lit .image-slot img{
+  filter:brightness(1.05) saturate(1.1);
+}
+
+/* CONTENT */
 .content{
   margin:22px 18px 18px;
-  padding:18px;
-  border-radius:16px;
+  padding:16px;
+  border-radius:14px;
   background:rgba(0,0,0,.65);
   display:flex;
   flex-direction:column;
-  gap:10px;
-  min-height:140px;
+  gap:8px;
+  min-height:120px;
 }
-.content h3{font-size:1.05rem}
-.content p{font-size:.9rem;opacity:.85}
+.content h3{font-size:1rem}
+.content p{
+  font-size:.85rem;
+  opacity:.85;
+}
 .more{
   margin-top:auto;
-  font-size:.9rem;
+  font-size:.85rem;
   color:rgb(255,215,120);
   text-decoration:none;
 }
@@ -214,7 +233,8 @@ footer{
 <div class="divisions">
 
   <div class="division"><div class="window systems">
-    <div class="light-layer"></div>
+    <div class="light-back"></div>
+    <div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/systems.png"></div>
     <div class="content">
       <h3>Systems</h3>
@@ -224,7 +244,8 @@ footer{
   </div></div>
 
   <div class="division"><div class="window research">
-    <div class="light-layer"></div>
+    <div class="light-back"></div>
+    <div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/research.png"></div>
     <div class="content">
       <h3>Research</h3>
@@ -234,7 +255,8 @@ footer{
   </div></div>
 
   <div class="division"><div class="window digital">
-    <div class="light-layer"></div>
+    <div class="light-back"></div>
+    <div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/digital.png"></div>
     <div class="content">
       <h3>Digital</h3>
@@ -244,7 +266,8 @@ footer{
   </div></div>
 
   <div class="division"><div class="window energy">
-    <div class="light-layer"></div>
+    <div class="light-back"></div>
+    <div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/energy.png"></div>
     <div class="content">
       <h3>Energy</h3>
@@ -254,7 +277,8 @@ footer{
   </div></div>
 
   <div class="division"><div class="window security">
-    <div class="light-layer"></div>
+    <div class="light-back"></div>
+    <div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/security.png"></div>
     <div class="content">
       <h3>Security</h3>
@@ -264,7 +288,8 @@ footer{
   </div></div>
 
   <div class="division"><div class="window academy">
-    <div class="light-layer"></div>
+    <div class="light-back"></div>
+    <div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/academy.png"></div>
     <div class="content">
       <h3>Academy</h3>
