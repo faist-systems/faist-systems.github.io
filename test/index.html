@@ -25,8 +25,6 @@ header{
   justify-content:space-between;
   align-items:center;
   padding:0 4vw;
-  position:relative;
-  z-index:20;
 }
 header nav a{
   margin-left:24px;
@@ -35,6 +33,81 @@ header nav a{
   text-decoration:none;
 }
 header nav a:hover{color:#fff}
+
+/* HERO */
+.hero{
+  text-align:center;
+  margin-top:6vh;
+}
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.6rem,4.6vw,3.6rem);
+  letter-spacing:.22em;
+}
+.hero p{
+  margin-top:16px;
+  font-size:.9rem;
+  opacity:.7;
+}
+
+/* AI INTRO BOX */
+.ai-intro{
+  width:min(680px,90vw);
+  margin:6vh auto 0;
+  padding:26px 28px;
+  border-radius:18px;
+  background:rgba(12,12,12,.85);
+  border:1px solid rgba(255,255,255,.12);
+}
+.ai-intro h4{
+  font-family:"Cinzel",serif;
+  font-size:1rem;
+  margin-bottom:10px;
+  letter-spacing:.12em;
+}
+.ai-intro p{
+  font-size:.85rem;
+  line-height:1.55;
+  opacity:.85;
+}
+.ai-actions{
+  margin-top:18px;
+  display:flex;
+  gap:14px;
+}
+.ai-actions button{
+  background:none;
+  border:1px solid rgba(255,215,120,.5);
+  color:rgb(255,215,120);
+  padding:6px 16px;
+  border-radius:20px;
+  font-size:.75rem;
+  cursor:pointer;
+}
+.ai-actions button:hover{
+  background:rgba(255,215,120,.1);
+}
+
+/* DIVISIONS */
+.divisions{
+  position:absolute;
+  bottom:60px;
+  width:100%;
+  padding:0 6vw;
+  display:flex;
+  gap:1.4vw;
+}
+.division{width:calc(100%/6)}
+.window{
+  height:260px;
+  padding:18px;
+  border-radius:18px;
+  background:rgba(12,12,12,.7);
+  border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;
+}
+.window h3{font-size:.9rem;margin-bottom:6px}
+.window p{font-size:.75rem;opacity:.7}
 
 /* FOOTER */
 footer{
@@ -46,164 +119,8 @@ footer{
   justify-content:center;
   align-items:center;
   font-size:.7rem;
-  opacity:.45;
-  z-index:10;
+  opacity:.4;
 }
-
-/* MAIN */
-main{
-  height:calc(100vh - 64px);
-  position:relative;
-}
-
-/* BACKGROUND */
-.background{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(circle at center, rgba(255,200,120,.02), transparent 60%),
-    linear-gradient(to bottom,#050505,#000 70%);
-}
-.noise{
-  position:absolute;inset:0;
-  background-image:repeating-radial-gradient(
-    circle,
-    rgba(255,255,255,.02) 0 1px,
-    transparent 1px 2px
-  );
-  background-size:2px 2px;
-  opacity:.15;
-  mix-blend-mode:overlay;
-}
-
-/* HERO */
-.hero{
-  position:relative;
-  z-index:10;
-  text-align:center;
-  margin-top:6vh;
-}
-.hero h1{
-  font-family:"Cinzel",serif;
-  font-size:clamp(2.6rem,4.6vw,3.6rem);
-  letter-spacing:.22em;
-  text-shadow:
-    0 2px 4px rgba(255,215,120,.35),
-    0 0 1px rgba(255,215,120,.5);
-}
-.hero p{
-  margin-top:18px;
-  font-size:.9rem;
-  opacity:.7;
-}
-
-/* BUS */
-.bus-wrap{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(1100px,90vw);
-  top:clamp(22%,26vh,28%);
-}
-.bus{
-  position:relative;
-  height:2px;
-  background:rgba(255,215,120,.35);
-}
-
-/* HORIZONTAL FLOWS */
-.flow{
-  position:absolute;
-  top:0;
-  height:2px;
-  width:0;
-  opacity:0;
-}
-.flow.left{
-  right:50%;
-  background:linear-gradient(to left,
-    rgba(255,215,120,.9),
-    rgba(255,215,120,.2),
-    transparent
-  );
-}
-.flow.right{
-  left:50%;
-  background:linear-gradient(to right,
-    rgba(255,215,120,.9),
-    rgba(255,215,120,.2),
-    transparent
-  );
-}
-
-/* BUS DROPS */
-.bus-drop{
-  position:absolute;
-  top:0;
-  width:2px;
-  height:18px;
-  background:linear-gradient(to bottom,
-    rgba(255,215,120,.5),
-    transparent);
-}
-
-/* BRANCH DROPS */
-.branch-drop{
-  position:absolute;
-  top:18px;
-  width:4px;
-  height:0;
-  opacity:0;
-  transform:translateX(-50%);
-  background:linear-gradient(to bottom,
-    rgba(255,220,150,.9),
-    transparent);
-  transition:height .9s ease, opacity .25s ease;
-}
-
-/* DIVISIONS */
-.divisions{
-  position:absolute;
-  bottom:70px; /* finální */
-  left:0;
-  width:100%;
-  padding:0 6vw;
-  display:flex;
-  gap:1.4vw;
-  z-index:5;
-}
-.division{width:calc(100%/6)}
-
-.window{
-  height:clamp(300px,36vh,380px);
-  padding:18px;
-  border-radius:20px;
-  background:rgba(12,12,12,.75);
-  border:1px solid rgba(255,255,255,.08);
-  display:flex;
-  flex-direction:column;
-  transition:box-shadow .35s ease;
-}
-.window.active{
-  box-shadow:0 0 0 1px var(--accent);
-}
-
-.image-slot{
-  height:160px;
-  border-radius:14px;
-  border:1px dashed rgba(255,255,255,.18);
-  margin-bottom:12px;
-}
-.window h3{font-size:.95rem;margin-bottom:6px}
-.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
-.window a{font-size:.8rem;color:rgb(255,215,120);text-decoration:none}
-
-/* ACCENTS */
-.systems{--accent:rgba(120,180,255,.45)}
-.research{--accent:rgba(170,120,255,.45)}
-.digital{--accent:rgba(120,220,255,.45)}
-.energy{--accent:rgba(255,180,90,.45)}
-.security{--accent:rgba(120,255,180,.45)}
-.academy{--accent:rgba(255,220,140,.45)}
 </style>
 </head>
 
@@ -219,106 +136,122 @@ main{
   </nav>
 </header>
 
-<main>
-<div class="background"></div>
-<div class="noise"></div>
-
 <div class="hero">
   <h1>F.A.I.S.T. HOLDING</h1>
   <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<div class="bus-wrap">
-  <div class="bus">
-    <div class="flow left" id="flowL"></div>
-    <div class="flow right" id="flowR"></div>
-  </div>
-
-  <div class="bus-drop" style="left:0%"></div>
-  <div class="bus-drop" style="left:20%"></div>
-  <div class="bus-drop" style="left:40%"></div>
-  <div class="bus-drop" style="left:60%"></div>
-  <div class="bus-drop" style="left:80%"></div>
-  <div class="bus-drop" style="left:100%"></div>
-
-  <div class="branch-drop" style="left:0%"></div>
-  <div class="branch-drop" style="left:20%"></div>
-  <div class="branch-drop" style="left:40%"></div>
-  <div class="branch-drop" style="left:60%"></div>
-  <div class="branch-drop" style="left:80%"></div>
-  <div class="branch-drop" style="left:100%"></div>
-</div>
+<div class="ai-intro" id="aiIntro"></div>
 
 <div class="divisions">
-  <div class="division"><div class="window systems"><div class="image-slot"></div><h3>Systems</h3><p>Architektura a infrastruktura.</p><a href="#">Zjistit více →</a></div></div>
-  <div class="division"><div class="window research"><div class="image-slot"></div><h3>Research</h3><p>Výzkum a experiment.</p><a href="#">Zjistit více →</a></div></div>
-  <div class="division"><div class="window digital"><div class="image-slot"></div><h3>Digital</h3><p>Digitální produkty.</p><a href="#">Zjistit více →</a></div></div>
-  <div class="division"><div class="window energy"><div class="image-slot"></div><h3>Energy</h3><p>Transformace energie.</p><a href="#">Zjistit více →</a></div></div>
-  <div class="division"><div class="window security"><div class="image-slot"></div><h3>Security</h3><p>Ochrana systémů.</p><a href="#">Zjistit více →</a></div></div>
-  <div class="division"><div class="window academy"><div class="image-slot"></div><h3>Academy</h3><p>Přenos know-how.</p><a href="#">Zjistit více →</a></div></div>
+  <div class="division"><div class="window systems"><h3>Systems</h3><p>Architektura a infrastruktura.</p></div></div>
+  <div class="division"><div class="window research"><h3>Research</h3><p>Výzkum a experiment.</p></div></div>
+  <div class="division"><div class="window digital"><h3>Digital</h3><p>Digitální produkty.</p></div></div>
+  <div class="division"><div class="window energy"><h3>Energy</h3><p>Transformace energie.</p></div></div>
+  <div class="division"><div class="window security"><h3>Security</h3><p>Ochrana systémů.</p></div></div>
+  <div class="division"><div class="window academy"><h3>Academy</h3><p>Přenos know-how.</p></div></div>
 </div>
-</main>
 
 <footer>© 2025 FAIST digital</footer>
 
 <script>
-window.onload = () => {
-  const flowL = document.getElementById("flowL");
-  const flowR = document.getElementById("flowR");
-  const branches = document.querySelectorAll(".branch-drop");
-  const windows = document.querySelectorAll(".window");
-
-  const sequence = [[2,3],[1,4],[0,5]];
-  const step = 1500;
-
-  function resetAll(){
-    flowL.style.width = flowR.style.width = "0";
-    flowL.style.opacity = flowR.style.opacity = 0;
-    branches.forEach(b=>{
-      b.style.height = "0";
-      b.style.opacity = 0;
-    });
-    windows.forEach(w=>w.classList.remove("active"));
+/* === DIVISION CONFIG === */
+const DIVISIONS = [
+  {
+    key:"systems",
+    name:"Systems",
+    url:"/cs/divisions/systems.html",
+    intro:[
+      "Systems tvoří páteř holdingu.",
+      "Navrhujeme infrastrukturu, na které stojí všechny ostatní divize.",
+      "Bez stability není inovace."
+    ]
+  },
+  {
+    key:"research",
+    name:"Research",
+    intro:[
+      "Research je prostor pro experiment.",
+      "Zkoumáme nové technologie a přístupy.",
+      "Ne vše jde do produkce – ale vše posouvá celek."
+    ],
+    url:"/cs/divisions/research.html"
+  },
+  {
+    key:"digital",
+    name:"Digital",
+    intro:[
+      "Digital převádí myšlenky do funkčních produktů.",
+      "Software, AI a automatizace v praxi.",
+      "Tady se věci dostávají k lidem."
+    ],
+    url:"/cs/divisions/digital.html"
+  },
+  {
+    key:"energy",
+    name:"Energy",
+    intro:[
+      "Energy řeší transformaci zdrojů.",
+      "Efektivita, udržitelnost a technologie.",
+      "Bez energie se nic nehýbe."
+    ],
+    url:"/cs/divisions/energy.html"
+  },
+  {
+    key:"security",
+    name:"Security",
+    intro:[
+      "Security chrání systémy, data i procesy.",
+      "Bezpečnost není doplněk.",
+      "Důvěra vzniká kontrolou."
+    ],
+    url:"/cs/divisions/security.html"
+  },
+  {
+    key:"academy",
+    name:"Academy",
+    intro:[
+      "Academy přenáší know-how dál.",
+      "Školení, mentoring a vzdělávání.",
+      "Znalosti mají hodnotu jen tehdy, když se sdílí."
+    ],
+    url:"/cs/divisions/academy.html"
   }
+];
 
-  function cycle(){
-    resetAll();
+let index = 0;
+const box = document.getElementById("aiIntro");
 
-    setTimeout(()=>{
-      flowL.style.width = "50%";
-      flowL.style.opacity = 1;
-      flowR.style.width = "50%";
-      flowR.style.opacity = 1;
-    },300);
+function renderIntro(){
+  const d = DIVISIONS[index];
+  box.innerHTML = `
+    <h4>${d.name}</h4>
+    <p>${d.intro.join("<br>")}</p>
+    <div class="ai-actions">
+      <button onclick="goYes()">Ano</button>
+      <button onclick="goNext()">Další</button>
+    </div>
+  `;
+}
 
-    sequence.forEach((pair,i)=>{
-      setTimeout(()=>{
-        branches.forEach(b=>{
-          b.style.height = "0";
-          b.style.opacity = 0;
-        });
-        windows.forEach(w=>w.classList.remove("active"));
+function goYes(){
+  window.location.href = DIVISIONS[index].url;
+}
+function goNext(){
+  index = (index + 1) % DIVISIONS.length;
+  renderIntro();
+}
 
-        pair.forEach(idx=>{
-          branches[idx].style.height = "110px"; // ⬅ zkráceno
-          branches[idx].style.opacity = 1;
-          windows[idx].classList.add("active");
-        });
-      },step + i*step);
-    });
+renderIntro();
 
-    setTimeout(()=>{
-      branches.forEach(b=>{
-        b.style.height = "0";
-        b.style.opacity = 0;
-      });
-      windows.forEach(w=>w.classList.remove("active"));
-    },step + sequence.length*step);
-  }
-
-  cycle();
-  setInterval(cycle, step*sequence.length + 3000);
-};
+/* click on windows */
+document.querySelectorAll(".window").forEach(w=>{
+  w.addEventListener("click",()=>{
+    const key = w.classList[1];
+    const d = DIVISIONS.find(x=>x.key===key);
+    if(d) window.location.href = d.url;
+  });
+});
 </script>
 
 </body>
