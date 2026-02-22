@@ -31,6 +31,7 @@ header nav a{
   color:#ccc;
   text-decoration:none;
 }
+header nav a:hover{color:#fff}
 
 /* HERO */
 .hero{
@@ -116,39 +117,37 @@ header nav a{
 .window.security {background-image:url("../assets/backgrounds/security.png")}
 .window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
-/* === SVĚTLO 1 – BATERKA ZA OBRÁZKEM === */
+/* SVĚTLO – VRSTVY */
 .light-back{
   position:absolute;
   top:0;left:0;right:0;
-  height:260px;
+  height:240px;
   background:radial-gradient(circle at center,
     rgba(255,215,120,.75),
     rgba(255,190,90,.35),
     transparent 70%);
   opacity:0;
-  transition:opacity 2s ease;
+  transition:opacity 1.6s ease;
   pointer-events:none;
 }
-
-/* === SVĚTLO 2 – ATMOSFÉRA NAD OBRÁZKEM === */
 .light-front{
   position:absolute;
   top:0;left:0;right:0;
-  height:220px;
+  height:200px;
   background:linear-gradient(to bottom,
     rgba(255,215,120,.35),
     rgba(255,215,120,.15),
     transparent);
   opacity:0;
-  transition:opacity 2s ease;
+  transition:opacity 1.6s ease;
   pointer-events:none;
 }
 
-/* IMAGE */
+/* IMAGE – MENŠÍ ODSAZENÍ */
 .image-slot{
   position:relative;
-  height:190px;
-  margin:22px 18px 0;
+  height:185px;
+  margin:18px 18px 0; /* ⬅ menší horní mezera */
   border-radius:16px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.18);
@@ -157,8 +156,8 @@ header nav a{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(.7);
-  transition:filter 2s ease;
+  filter:brightness(.72);
+  transition:filter 1.6s ease;
 }
 
 /* AKTIVACE SVĚTLA */
@@ -170,16 +169,16 @@ header nav a{
   filter:brightness(1.05) saturate(1.1);
 }
 
-/* CONTENT */
+/* CONTENT – KOMPAKTNĚJŠÍ */
 .content{
-  margin:22px 18px 18px;
-  padding:16px;
+  margin:16px 18px 18px; /* ⬅ menší mezera od obrázku */
+  padding:14px 16px;
   border-radius:14px;
   background:rgba(0,0,0,.65);
   display:flex;
   flex-direction:column;
-  gap:8px;
-  min-height:120px;
+  gap:6px;
+  min-height:110px;
 }
 .content h3{font-size:1rem}
 .content p{
@@ -232,6 +231,7 @@ footer{
 
 <div class="divisions">
 
+  <!-- SYSTEMS -->
   <div class="division"><div class="window systems">
     <div class="light-back"></div>
     <div class="light-front"></div>
@@ -243,6 +243,7 @@ footer{
     </div>
   </div></div>
 
+  <!-- RESEARCH -->
   <div class="division"><div class="window research">
     <div class="light-back"></div>
     <div class="light-front"></div>
@@ -254,6 +255,7 @@ footer{
     </div>
   </div></div>
 
+  <!-- DIGITAL -->
   <div class="division"><div class="window digital">
     <div class="light-back"></div>
     <div class="light-front"></div>
@@ -265,6 +267,7 @@ footer{
     </div>
   </div></div>
 
+  <!-- ENERGY -->
   <div class="division"><div class="window energy">
     <div class="light-back"></div>
     <div class="light-front"></div>
@@ -276,6 +279,7 @@ footer{
     </div>
   </div></div>
 
+  <!-- SECURITY -->
   <div class="division"><div class="window security">
     <div class="light-back"></div>
     <div class="light-front"></div>
@@ -287,6 +291,7 @@ footer{
     </div>
   </div></div>
 
+  <!-- ACADEMY -->
   <div class="division"><div class="window academy">
     <div class="light-back"></div>
     <div class="light-front"></div>
@@ -312,13 +317,13 @@ function wave(){
 
   setTimeout(()=>{
     c.classList.remove("is-lit");
-  },3000);
+  },2250); // ⬅ cca o 25 % rychlejší
 
   i = (i + 1) % cards.length;
 }
 
 wave();
-setInterval(wave, 3000);
+setInterval(wave, 2250);
 </script>
 
 </body>
