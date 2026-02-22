@@ -91,7 +91,7 @@ header{
 /* ================= HERO ================= */
 .hero{
   text-align:center;
-  padding:9vh 6vw 6vh;
+  padding:9vh 6vw 5vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
@@ -104,16 +104,19 @@ header{
   font-size:.95rem;
   opacity:.95;
 }
-.hero img{
-  width:200px;
-  margin:32px auto 0;
+
+/* SYMBOLICKÝ OBRÁZEK NAD BUBLINAMI */
+.hero-image{
+  width:220px;
+  margin:38px auto 0;
   display:block;
+  opacity:.95;
 }
 
 /* ================= GRID ================= */
 .academy-grid{
   width:min(1200px,90vw);
-  margin:0 auto 12vh;
+  margin:6vh auto 12vh;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:36px;
@@ -147,30 +150,38 @@ header{
   opacity:.9;
 }
 
-/* ================= AI GUIDE ================= */
+/* ================= AI MINI GUIDE ================= */
 .ai-guide{
   position:fixed;
-  right:28px;
-  bottom:28px;
+  right:22px;
+  bottom:22px;
   z-index:30;
-  width:320px;
-  font-size:.82rem;
+  font-size:.78rem;
 }
+
+/* MINI ŠTÍTEK */
 .ai-label{
-  padding:10px 16px;
-  border-radius:14px;
-  background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.2);
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:12px;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);
   cursor:pointer;
-  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  white-space:nowrap;
+  box-shadow:0 8px 24px rgba(0,0,0,.45);
 }
+
+/* PANEL PO ROZKLIKNUTÍ */
 .ai-panel{
   display:none;
-  margin-top:12px;
+  margin-top:10px;
+  width:320px;
   padding:16px 18px;
   border-radius:18px;
-  background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
   backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,.2);
   box-shadow:0 18px 40px rgba(0,0,0,.6);
@@ -181,13 +192,13 @@ header{
   font-family:"Cinzel",serif;
   font-size:.8rem;
   letter-spacing:.14em;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 .ai-panel p{
   font-size:.8rem;
   line-height:1.45;
   opacity:.9;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .ai-panel input{
@@ -201,12 +212,9 @@ header{
 }
 
 .ai-response{
-  margin-top:12px;
+  margin-top:10px;
   font-size:.8rem;
-  line-height:1.45;
-  opacity:.9;
 }
-
 .ai-response a{
   color:rgb(255,215,120);
   text-decoration:none;
@@ -244,7 +252,7 @@ footer{
 <section class="hero">
   <h1>FAIST ACADEMY</h1>
   <p>Vzdělávání, porozumění a technologická gramotnost.</p>
-  <img src="/assets/divisions/academy.png" alt="Academy">
+  <img class="hero-image" src="/assets/divisions/academy.png" alt="Academy">
 </section>
 
 <section class="academy-grid">
@@ -256,6 +264,7 @@ footer{
   <a class="bubble" href="slovnik.html"><h3>Slovník pojmů</h3><p>Vysvětlení pojmů FAIST.</p></a>
 </section>
 
+<!-- AI MINI -->
 <div class="ai-guide" id="aiGuide">
   <div class="ai-label" onclick="toggleAI()">FAIST AI · Průvodce</div>
   <div class="ai-panel">
@@ -277,7 +286,6 @@ function handleAI(e){
   if(e.key!=="Enter")return;
   const q=e.target.value.toLowerCase();
   let r="";
-
   if(q.includes("ai")){
     r='Tohle téma řešíme v <a href="ai.html">AI gramotnosti</a>.';
   }else if(q.includes("smart")){
@@ -287,9 +295,8 @@ function handleAI(e){
   }else if(q.includes("bezpe")){
     r='Doporučuji <a href="security.html">Bezpečnost</a>.';
   }else{
-    r='Nejsem si jistý, ale začni u <a href="literacy.html">Technologické gramotnosti</a>.';
+    r='Začni u <a href="literacy.html">Technologické gramotnosti</a>.';
   }
-
   document.getElementById("aiResponse").innerHTML=r;
 }
 </script>
