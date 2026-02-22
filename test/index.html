@@ -33,10 +33,10 @@ header nav a{
 }
 header nav a:hover{color:#fff}
 
-/* HERO */
+/* HERO – POSUNUTO VÝŠ */
 .hero{
   text-align:center;
-  margin-top:3.8vh;
+  margin-top:2.6vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
@@ -50,17 +50,24 @@ header nav a:hover{color:#fff}
     0 0 72px rgba(255,170,60,.25),
     0 2px 2px rgba(0,0,0,.85);
 }
-.hero p{
+
+/* SUBTEXTY POD H1 */
+.hero .forge{
   margin-top:14px;
+  font-size:.78rem;
+  letter-spacing:.14em;
+  opacity:.55;
+}
+.hero .claim{
+  margin-top:6px;
   font-size:.9rem;
   opacity:.85;
-  line-height:1.45;
 }
 
-/* AI GUIDE */
+/* AI – FAIST */
 .ai-guide{
   width:min(720px,90vw);
-  margin:3.8vh auto 0;
+  margin:2.8vh auto 0; /* ⬅️ zvednuto */
   padding:22px 26px;
   border-radius:20px;
   background:rgba(12,12,12,.7);
@@ -68,9 +75,14 @@ header nav a:hover{color:#fff}
 }
 .ai-guide h4{
   font-family:"Cinzel",serif;
-  font-size:.95rem;
-  letter-spacing:.14em;
+  font-size:.9rem;
+  letter-spacing:.16em;
   margin-bottom:10px;
+}
+.ai-guide h4 span{
+  opacity:.6;
+  font-size:.75rem;
+  letter-spacing:.08em;
 }
 .ai-guide input{
   width:100%;
@@ -179,17 +191,17 @@ footer{
 
 <div class="hero">
   <h1>F.A.I.S.T. HOLDING</h1>
-  <p>
-    Inteligentní systém, který navrhuje, propojuje a vysvětluje komplexní struktury.<br>
-    <span style="opacity:.55;font-size:.75rem;letter-spacing:.08em">
-      Forge of Artificial Intelligence, Solutions and Technologies
-    </span>
-  </p>
+  <div class="forge">
+    Forge of Artificial Intelligence, Solutions and Technologies
+  </div>
+  <div class="claim">
+    Inteligentní systém, který navrhuje, propojuje a vysvětluje komplexní struktury.
+  </div>
 </div>
 
 <div class="ai-guide">
-  <h4>FAIST AI průvodce</h4>
-  <input placeholder="Na co se chcete podívat? (např. kamery, AI, školení)">
+  <h4>FAIST <span>· inteligentní průvodce</span></h4>
+  <input placeholder="Ptejte se mě. Např. kamery, AI řešení, školení…">
 </div>
 
 <div class="divisions">
