@@ -33,10 +33,10 @@ header nav a{
 }
 header nav a:hover{color:#fff}
 
-/* HERO */
+/* HERO – POSUN NAHORU */
 .hero{
   text-align:center;
-  margin-top:6vh;
+  margin-top:3.8vh; /* bylo víc */
 }
 .hero h1{
   font-family:"Cinzel",serif;
@@ -44,15 +44,15 @@ header nav a:hover{color:#fff}
   letter-spacing:.22em;
 }
 .hero p{
-  margin-top:16px;
+  margin-top:14px;
   font-size:.9rem;
   opacity:.7;
 }
 
-/* AI GUIDE */
+/* AI GUIDE – POSUN NAHORU STEJNĚ */
 .ai-guide{
   width:min(720px,90vw);
-  margin:4vh auto;
+  margin:3.8vh auto 0; /* stejné jako hero */
   padding:22px 26px;
   border-radius:20px;
   background:rgba(12,12,12,.7);
@@ -77,7 +77,7 @@ header nav a:hover{color:#fff}
 /* DIVISIONS */
 .divisions{
   position:absolute;
-  bottom:35px;
+  bottom:70px;
   left:0;
   width:100%;
   padding:0 6vw;
@@ -97,17 +97,25 @@ header nav a:hover{color:#fff}
   position:relative;
 }
 
-/* IMAGE PLACEHOLDER */
+/* IMAGE – ZVĚTŠENO */
 .image-slot{
-  height:150px;
+  height:185px; /* bylo ~150 */
   border-radius:14px;
   border:1px dashed rgba(255,255,255,.15);
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-/* TEXT */
-.window h3{font-size:.95rem;margin-bottom:6px}
-.window p{font-size:.8rem;opacity:.7;margin-bottom:auto}
+/* TEXT – POSUN DOLŮ */
+.window h3{
+  font-size:.95rem;
+  margin-top:auto;   /* ⬅️ TLAČÍ TEXT DOLŮ */
+  margin-bottom:4px;
+}
+.window p{
+  font-size:.8rem;
+  opacity:.7;
+  margin-bottom:8px;
+}
 
 /* ZJISTIT VÍCE */
 .more{
@@ -120,7 +128,7 @@ header nav a:hover{color:#fff}
 /* TOOLTIP */
 .tooltip{
   position:absolute;
-  bottom:56px;
+  bottom:58px;
   left:50%;
   transform:translateX(-50%);
   background:#000;
@@ -139,7 +147,7 @@ footer{
   position:absolute;
   bottom:0;
   width:100%;
-  height:30px;
+  height:32px;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -166,13 +174,11 @@ footer{
   <p>Struktura, která propojuje stabilitu, inovace, energii a znalosti.</p>
 </div>
 
-<!-- AI -->
 <div class="ai-guide">
   <h4>FAIST AI průvodce</h4>
   <input placeholder="Na co se chcete podívat? (např. kamery, AI, školení)">
 </div>
 
-<!-- DIVISIONS -->
 <div class="divisions">
 
   <div class="division">
