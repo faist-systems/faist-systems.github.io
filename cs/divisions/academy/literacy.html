@@ -1,1 +1,259 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>FAIST Academy · Technologická gramotnost</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  width:100%;
+  background:transparent;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+.bg,.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+.bg{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.75)),
+    url("/assets/backgrounds/academy.png") center / cover no-repeat;
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.12;
+  mix-blend-mode:overlay;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+}
+.header-right{
+  display:flex;
+  gap:26px;
+}
+.header-right a{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+.header-right a:hover{color:#fff}
+
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:8vh 6vw 4vh;
+}
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.2rem,4vw,3.2rem);
+  letter-spacing:.18em;
+  text-shadow:0 0 20px rgba(255,215,120,.6);
+}
+.hero p{
+  margin-top:14px;
+  font-size:.95rem;
+  opacity:.95;
+}
+
+/* ================= CONTENT ================= */
+.content{
+  width:min(900px,90vw);
+  margin:0 auto 10vh;
+  display:grid;
+  gap:36px;
+}
+
+/* ================= BLOCKS ================= */
+.block{
+  padding:28px 30px;
+  border-radius:26px;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.65));
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+.block h3{
+  font-family:"Cinzel",serif;
+  font-size:1rem;
+  letter-spacing:.14em;
+  margin-bottom:14px;
+}
+.block p{
+  font-size:.9rem;
+  line-height:1.6;
+  opacity:.92;
+}
+.block ul{
+  margin-top:12px;
+  padding-left:18px;
+  font-size:.88rem;
+  opacity:.9;
+}
+.block li{margin-bottom:6px}
+
+/* ================= AI MINI ================= */
+.ai-guide{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:30;
+  font-size:.78rem;
+}
+.ai-label{
+  padding:6px 12px;
+  border-radius:12px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
+  border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.ai-panel{
+  display:none;
+  margin-top:10px;
+  width:320px;
+  padding:16px 18px;
+  border-radius:18px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(12px);
+}
+.ai-guide.open .ai-panel{display:block}
+
+.ai-panel input{
+  width:100%;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,215,120,.5);
+  background:#000;
+  color:#eee;
+  font-size:.8rem;
+}
+.ai-response{
+  margin-top:10px;
+  font-size:.8rem;
+}
+.ai-response a{
+  color:rgb(255,215,120);
+  text-decoration:none;
+}
+.ai-response a:hover{text-decoration:underline}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  font-size:.7rem;
+  opacity:.45;
+  padding:36px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="header-right">
+    <a href="index.html">Academy</a>
+    <a href="/cs/index.html">Holding</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>TECHNOLOGICKÁ GRAMOTNOST</h1>
+  <p>Základy porozumění technologiím, systémům a jejich souvislostem.</p>
+</section>
+
+<section class="content">
+
+  <div class="block">
+    <h3>Co je technologická gramotnost</h3>
+    <p>
+      Technologická gramotnost není o znalosti konkrétních nástrojů,
+      ale o schopnosti chápat, jak systémy fungují, spolupracují
+      a kde mají své limity.
+    </p>
+  </div>
+
+  <div class="block">
+    <h3>Jak přemýšlet systémově</h3>
+    <ul>
+      <li>Každý systém má vstupy, výstupy a omezení</li>
+      <li>Automatizace bez porozumění vede k chaosu</li>
+      <li>Složitost roste rychleji než počet funkcí</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Proč je to základ Academy</h3>
+    <p>
+      Bez technologické gramotnosti nelze smysluplně pracovat
+      s AI, chytrou domácností ani energetikou. Tahle kapitola
+      je výchozím bodem celé Academy.
+    </p>
+  </div>
+
+</section>
+
+<!-- AI MINI -->
+<div class="ai-guide" id="aiGuide">
+  <div class="ai-label" onclick="toggleAI()">FAIST AI · Průvodce</div>
+  <div class="ai-panel">
+    <p>Ahoj 👋<br>Na co se chceš zeptat ohledně základů technologií?</p>
+    <input id="aiInput" placeholder="Např. jak přemýšlet o systémech…" onkeydown="handleAI(event)">
+    <div class="ai-response" id="aiResponse"></div>
+  </div>
+</div>
+
+<footer>© 2025 FAIST Academy</footer>
+
+<script>
+function toggleAI(){
+  document.getElementById("aiGuide").classList.toggle("open");
+}
+
+function handleAI(e){
+  if(e.key!=="Enter")return;
+  const q=e.target.value.toLowerCase();
+  let r="";
+  if(q.includes("ai")){
+    r='Než půjdeš k AI, projdi si <a href="ai.html">AI gramotnost</a>.';
+  }else if(q.includes("energie")){
+    r='Energie je další vrstva – pokračuj na <a href="energy.html">Energie</a>.';
+  }else{
+    r='Držíš se správného základu. Technologická gramotnost je klíč.';
+  }
+  document.getElementById("aiResponse").innerHTML=r;
+}
+</script>
+
+</body>
+</html>
