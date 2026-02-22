@@ -36,7 +36,7 @@ header nav a:hover{color:#fff}
 /* HERO */
 .hero{
   text-align:center;
-  margin-top:.6vh;
+  margin-top:.5vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
@@ -62,7 +62,7 @@ header nav a:hover{color:#fff}
 /* AI */
 .ai-guide{
   width:min(720px,90vw);
-  margin:1.8vh auto 0;
+  margin:1.6vh auto 0;
   padding:18px 22px;
   border-radius:18px;
   background:rgba(12,12,12,.75);
@@ -85,20 +85,23 @@ header nav a:hover{color:#fff}
   font-size:.85rem;
 }
 
-/* DIVISIONS */
+/* DIVISIONS – UKOTVENÉ SHORA */
 .divisions{
   position:absolute;
-  bottom:36px;
+  top:46vh;              /* ⬅️ HLAVNÍ ŘÍDÍCÍ BOD */
   left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
   gap:1.6vw;
 }
+
 .division{width:calc(100%/6)}
 
 .window{
-  height:clamp(380px,44vh,520px);
+  height:44vh;
+  min-height:420px;
+  max-height:520px;
   border-radius:22px;
   position:relative;
   overflow:hidden;
@@ -121,7 +124,7 @@ header nav a:hover{color:#fff}
 .light-back{
   position:absolute;
   top:0;left:0;right:0;
-  height:240px;
+  height:190px;
   background:radial-gradient(circle at center,
     rgba(255,215,120,.75),
     rgba(255,190,90,.35),
@@ -133,7 +136,7 @@ header nav a:hover{color:#fff}
 .light-front{
   position:absolute;
   top:0;left:0;right:0;
-  height:200px;
+  height:160px;
   background:linear-gradient(to bottom,
     rgba(255,215,120,.35),
     rgba(255,215,120,.15),
@@ -143,12 +146,12 @@ header nav a:hover{color:#fff}
   pointer-events:none;
 }
 
-/* IMAGE – MENŠÍ ODSAZENÍ */
+/* IMAGE */
 .image-slot{
   position:relative;
-  height:185px;
-  margin:18px 18px 0; /* ⬅ menší horní mezera */
-  border-radius:16px;
+  height:170px;
+  margin:14px 16px 0;
+  border-radius:14px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.18);
 }
@@ -160,7 +163,7 @@ header nav a:hover{color:#fff}
   transition:filter 1.6s ease;
 }
 
-/* AKTIVACE SVĚTLA */
+/* AKTIVACE */
 .window.is-lit .light-back,
 .window.is-lit .light-front{
   opacity:1;
@@ -169,25 +172,25 @@ header nav a:hover{color:#fff}
   filter:brightness(1.05) saturate(1.1);
 }
 
-/* CONTENT – KOMPAKTNĚJŠÍ */
+/* CONTENT */
 .content{
-  margin:16px 18px 18px; /* ⬅ menší mezera od obrázku */
-  padding:14px 16px;
-  border-radius:14px;
+  margin:14px 16px 16px;
+  padding:14px 14px;
+  border-radius:12px;
   background:rgba(0,0,0,.65);
   display:flex;
   flex-direction:column;
   gap:6px;
-  min-height:110px;
+  min-height:105px;
 }
-.content h3{font-size:1rem}
+.content h3{font-size:.95rem}
 .content p{
-  font-size:.85rem;
+  font-size:.82rem;
   opacity:.85;
 }
 .more{
   margin-top:auto;
-  font-size:.85rem;
+  font-size:.82rem;
   color:rgb(255,215,120);
   text-decoration:none;
 }
@@ -231,10 +234,8 @@ footer{
 
 <div class="divisions">
 
-  <!-- SYSTEMS -->
   <div class="division"><div class="window systems">
-    <div class="light-back"></div>
-    <div class="light-front"></div>
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/systems.png"></div>
     <div class="content">
       <h3>Systems</h3>
@@ -243,10 +244,8 @@ footer{
     </div>
   </div></div>
 
-  <!-- RESEARCH -->
   <div class="division"><div class="window research">
-    <div class="light-back"></div>
-    <div class="light-front"></div>
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/research.png"></div>
     <div class="content">
       <h3>Research</h3>
@@ -255,10 +254,8 @@ footer{
     </div>
   </div></div>
 
-  <!-- DIGITAL -->
   <div class="division"><div class="window digital">
-    <div class="light-back"></div>
-    <div class="light-front"></div>
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/digital.png"></div>
     <div class="content">
       <h3>Digital</h3>
@@ -267,10 +264,8 @@ footer{
     </div>
   </div></div>
 
-  <!-- ENERGY -->
   <div class="division"><div class="window energy">
-    <div class="light-back"></div>
-    <div class="light-front"></div>
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/energy.png"></div>
     <div class="content">
       <h3>Energy</h3>
@@ -279,10 +274,8 @@ footer{
     </div>
   </div></div>
 
-  <!-- SECURITY -->
   <div class="division"><div class="window security">
-    <div class="light-back"></div>
-    <div class="light-front"></div>
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/security.png"></div>
     <div class="content">
       <h3>Security</h3>
@@ -291,10 +284,8 @@ footer{
     </div>
   </div></div>
 
-  <!-- ACADEMY -->
   <div class="division"><div class="window academy">
-    <div class="light-back"></div>
-    <div class="light-front"></div>
+    <div class="light-back"></div><div class="light-front"></div>
     <div class="image-slot"><img src="../assets/divisions/academy.png"></div>
     <div class="content">
       <h3>Academy</h3>
@@ -314,14 +305,9 @@ let i = 0;
 function wave(){
   const c = cards[i];
   c.classList.add("is-lit");
-
-  setTimeout(()=>{
-    c.classList.remove("is-lit");
-  },2250); // ⬅ cca o 25 % rychlejší
-
+  setTimeout(()=>c.classList.remove("is-lit"), 2250);
   i = (i + 1) % cards.length;
 }
-
 wave();
 setInterval(wave, 2250);
 </script>
