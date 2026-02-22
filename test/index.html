@@ -15,23 +15,55 @@ html,body{
   background:#000;
   color:#eee;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-  overflow:hidden; /* bezpečné – layout už sedí */
+  overflow:hidden;
 }
 
 /* HEADER */
 header{
   height:64px;
   display:flex;
-  justify-content:flex-end;
+  justify-content:space-between;
   align-items:center;
   padding:0 4vw;
 }
+
+/* LANG SWITCH – FIXNÍ ROZMĚR */
+.lang-switch{
+  display:flex;
+  gap:10px;
+}
+.lang-switch a{
+  width:26px;              /* ⬅ pevná šířka */
+  height:16px;             /* ⬅ pevná výška */
+  border-radius:3px;
+  overflow:hidden;
+  opacity:.45;
+  border:1px solid rgba(255,255,255,.25);
+  transition:opacity .25s ease, box-shadow .25s ease;
+  flex-shrink:0;
+}
+.lang-switch a img{
+  width:100%;
+  height:100%;
+  display:block;           /* ⬅ odstraní inline mezery */
+  object-fit:cover;        /* ⬅ sjednocení různých poměrů */
+}
+.lang-switch a.active{
+  opacity:1;
+  box-shadow:0 0 0 1px rgba(255,215,120,.9);
+}
+.lang-switch a:hover{
+  opacity:.85;
+}
+
+/* NAV */
 header nav a{
   margin-left:24px;
   font-size:.85rem;
   color:#ccc;
   text-decoration:none;
 }
+header nav a:hover{color:#fff}
 
 /* HERO */
 .hero{
@@ -85,7 +117,7 @@ header nav a{
   font-size:.85rem;
 }
 
-/* DIVISIONS – UKOTVENÉ SHORA */
+/* DIVISIONS */
 .divisions{
   position:absolute;
   top:46vh;
@@ -98,7 +130,7 @@ header nav a{
 .division{width:calc(100%/6)}
 
 .window{
-  height: calc(100vh - 46vh - 32px - 24px);
+  height:calc(100vh - 46vh - 32px - 24px);
   min-height:400px;
   max-height:500px;
   border-radius:22px;
@@ -119,72 +151,6 @@ header nav a{
 .window.security {background-image:url("../assets/backgrounds/security.png")}
 .window.academy  {background-image:url("../assets/backgrounds/academy.png")}
 
-/* SVĚTLO */
-.light-back{
-  position:absolute;
-  top:0;left:0;right:0;
-  height:190px;
-  background:radial-gradient(circle at center,
-    rgba(255,215,120,.75),
-    rgba(255,190,90,.35),
-    transparent 70%);
-  opacity:0;
-  transition:opacity 1.6s ease;
-}
-.light-front{
-  position:absolute;
-  top:0;left:0;right:0;
-  height:160px;
-  background:linear-gradient(to bottom,
-    rgba(255,215,120,.35),
-    rgba(255,215,120,.15),
-    transparent);
-  opacity:0;
-  transition:opacity 1.6s ease;
-}
-
-.window.is-lit .light-back,
-.window.is-lit .light-front{opacity:1}
-
-/* IMAGE */
-.image-slot{
-  height:170px;
-  margin:14px 16px 0;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.18);
-}
-.image-slot img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(.72);
-  transition:filter 1.6s ease;
-}
-.window.is-lit .image-slot img{
-  filter:brightness(1.05) saturate(1.1);
-}
-
-/* CONTENT */
-.content{
-  margin:14px 16px 16px;
-  padding:14px;
-  border-radius:12px;
-  background:rgba(0,0,0,.65);
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  min-height:100px;
-}
-.content h3{font-size:.95rem}
-.content p{font-size:.82rem;opacity:.85}
-.more{
-  margin-top:auto;
-  font-size:.82rem;
-  color:rgb(255,215,120);
-  text-decoration:none;
-}
-
 /* FOOTER */
 footer{
   position:absolute;
@@ -203,6 +169,14 @@ footer{
 <body>
 
 <header>
+  <div class="lang-switch">
+    <a href="/index.html" class="active">
+      <img src="../assets/flags/cs.png" alt="CZ">
+    </a>
+    <a href="/en/index.html">
+      <img src="../assets/flags/en.png" alt="EN">
+    </a>
+  </div>
   <nav>
     <a href="#">Holding</a>
     <a href="#">Divize</a>
@@ -222,84 +196,7 @@ footer{
   <input placeholder="Ptejte se mě…">
 </div>
 
-<div class="divisions">
-
-  <div class="division"><div class="window systems">
-    <div class="light-back"></div><div class="light-front"></div>
-    <div class="image-slot"><img src="../assets/divisions/systems.png"></div>
-    <div class="content">
-      <h3>Systems</h3>
-      <p>Architektura a infrastruktura.</p>
-      <a class="more" href="#">Zjistit více →</a>
-    </div>
-  </div></div>
-
-  <div class="division"><div class="window research">
-    <div class="light-back"></div><div class="light-front"></div>
-    <div class="image-slot"><img src="../assets/divisions/research.png"></div>
-    <div class="content">
-      <h3>Research</h3>
-      <p>Výzkum a experiment.</p>
-      <a class="more" href="#">Zjistit více →</a>
-    </div>
-  </div></div>
-
-  <div class="division"><div class="window digital">
-    <div class="light-back"></div><div class="light-front"></div>
-    <div class="image-slot"><img src="../assets/divisions/digital.png"></div>
-    <div class="content">
-      <h3>Digital</h3>
-      <p>Digitální produkty.</p>
-      <a class="more" href="#">Zjistit více →</a>
-    </div>
-  </div></div>
-
-  <div class="division"><div class="window energy">
-    <div class="light-back"></div><div class="light-front"></div>
-    <div class="image-slot"><img src="../assets/divisions/energy.png"></div>
-    <div class="content">
-      <h3>Energy</h3>
-      <p>Transformace energie.</p>
-      <a class="more" href="#">Zjistit více →</a>
-    </div>
-  </div></div>
-
-  <div class="division"><div class="window security">
-    <div class="light-back"></div><div class="light-front"></div>
-    <div class="image-slot"><img src="../assets/divisions/security.png"></div>
-    <div class="content">
-      <h3>Security</h3>
-      <p>Ochrana systémů.</p>
-      <a class="more" href="#">Zjistit více →</a>
-    </div>
-  </div></div>
-
-  <div class="division"><div class="window academy">
-    <div class="light-back"></div><div class="light-front"></div>
-    <div class="image-slot"><img src="../assets/divisions/academy.png"></div>
-    <div class="content">
-      <h3>Academy</h3>
-      <p>Přenos know-how.</p>
-      <a class="more" href="#">Zjistit více →</a>
-    </div>
-  </div></div>
-
-</div>
-
 <footer>© 2025 FAIST digital</footer>
-
-<script>
-const cards=document.querySelectorAll(".window");
-let i=0;
-function wave(){
-  const c=cards[i];
-  c.classList.add("is-lit");
-  setTimeout(()=>c.classList.remove("is-lit"),2250);
-  i=(i+1)%cards.length;
-}
-wave();
-setInterval(wave,2250);
-</script>
 
 </body>
 </html>
