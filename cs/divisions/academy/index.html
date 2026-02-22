@@ -16,8 +16,9 @@ html,body{
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 
-/* BACKGROUND */
-.bg,.noise{
+/* ================= BACKGROUND ================= */
+.bg,
+.noise{
   position:fixed;
   inset:0;
   pointer-events:none;
@@ -25,10 +26,15 @@ html,body{
 }
 .bg{
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.95)),
-    url("/assets/backgrounds/academy.png") center/cover no-repeat;
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.35),
+      rgba(0,0,0,.65)
+    ),
+    url("/assets/backgrounds/academy.png") center / cover no-repeat;
 }
 .noise{
+  z-index:-1;
   background-image:repeating-radial-gradient(
     circle,
     rgba(255,255,255,.02) 0 1px,
@@ -39,7 +45,7 @@ html,body{
   mix-blend-mode:overlay;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 header{
   position:sticky;
   top:0;
@@ -52,18 +58,45 @@ header{
   background:rgba(0,0,0,.55);
   backdrop-filter:blur(6px);
 }
-header nav{
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+.header-right nav{
   display:flex;
   gap:22px;
 }
-header a{
+.header-right nav a,
+.header-right .contact{
   font-size:.85rem;
   color:#ccc;
   text-decoration:none;
 }
-header a:hover{color:#fff}
+.header-right nav a:hover,
+.header-right .contact:hover{color:#fff}
 
-/* HERO */
+/* FLAG */
+.lang-flag{
+  width:26px;height:16px;
+  border-radius:3px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.25);
+  opacity:.75;
+  transition:.25s;
+}
+.lang-flag img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.lang-flag:hover{
+  opacity:1;
+  box-shadow:0 0 0 1px rgba(255,215,120,.9);
+}
+
+/* ================= HERO ================= */
 .hero{
   text-align:center;
   padding:9vh 6vw 5vh;
@@ -77,7 +110,7 @@ header a:hover{color:#fff}
 .hero p{
   margin-top:14px;
   font-size:.95rem;
-  opacity:.9;
+  opacity:.95;
 }
 .hero img{
   width:200px;
@@ -86,7 +119,7 @@ header a:hover{color:#fff}
   opacity:.95;
 }
 
-/* GRID */
+/* ================= GRID ================= */
 .grid{
   width:min(1100px,92vw);
   margin:0 auto 8vh;
@@ -95,11 +128,11 @@ header a:hover{color:#fff}
   gap:28px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
 .card{
   padding:22px 24px;
   border-radius:20px;
-  background:rgba(0,0,0,.65);
+  background:rgba(0,0,0,.55);
   border:1px solid rgba(255,255,255,.08);
   text-decoration:none;
   color:#eee;
@@ -118,11 +151,11 @@ header a:hover{color:#fff}
 }
 .card p{
   font-size:.85rem;
-  opacity:.85;
+  opacity:.9;
   line-height:1.5;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer{
   text-align:center;
   font-size:.7rem;
@@ -138,17 +171,23 @@ footer{
 <div class="noise"></div>
 
 <header>
-  <nav>
-    <a href="/cs/index.html">Holding</a>
-    <a href="/cs/divisions/academy/">Academy</a>
-    <a href="/cs/about.html">O nás</a>
-  </nav>
+  <div class="header-right">
+    <nav>
+      <a href="/cs/index.html">Holding</a>
+      <a href="/cs/about.html">O nás</a>
+    </nav>
+    <a href="/contacts.html" class="contact">Kontakt</a>
+    <a href="/en/divisions/academy/" class="lang-flag">
+      <img src="/assets/flags/gb.png" alt="EN">
+    </a>
+  </div>
 </header>
 
 <section class="hero">
   <h1>FAIST ACADEMY</h1>
   <p>
-    Vzdělávání, porozumění a technologická gramotnost napříč celým FAIST ekosystémem.
+    Vzdělávání, porozumění a technologická gramotnost
+    napříč celým FAIST ekosystémem.
   </p>
   <img src="/assets/divisions/academy.png" alt="Academy">
 </section>
@@ -157,58 +196,37 @@ footer{
 
   <a class="card" href="literacy.html">
     <h3>Technologická gramotnost</h3>
-    <p>
-      Základy porozumění technologiím, systémům a jejich souvislostem.
-      Jak přemýšlet technologicky, ne nástrojově.
-    </p>
+    <p>Základy porozumění technologiím a systémům.</p>
   </a>
 
   <a class="card" href="smart-home.html">
     <h3>Smart Home & automatizace</h3>
-    <p>
-      Inteligence v reálném světě.
-      Jak navrhovat chytrý domov jako celek, ne sbírku zařízení.
-    </p>
+    <p>Jak přemýšlet o chytré domácnosti jako o celku.</p>
   </a>
 
   <a class="card" href="ai.html">
     <h3>AI gramotnost</h3>
-    <p>
-      Co AI je, co není a kde dává smysl.
-      Práce s AI bez magie, hype a slepé důvěry.
-    </p>
+    <p>Práce s AI bez magie a falešných očekávání.</p>
   </a>
 
   <a class="card" href="energy.html">
     <h3>Energie & infrastruktura</h3>
-    <p>
-      Zdroje, spotřeba a dlouhodobá efektivita.
-      Proč energie rozhoduje o funkčnosti systémů.
-    </p>
+    <p>Proč energie rozhoduje o dlouhodobé funkčnosti.</p>
   </a>
 
   <a class="card" href="security.html">
     <h3>Bezpečnost systémů</h3>
-    <p>
-      Ochrana dat, zařízení i fyzického prostoru.
-      Bezpečnost jako základ, ne doplněk.
-    </p>
+    <p>Ochrana dat, zařízení i fyzického prostoru.</p>
   </a>
 
   <a class="card" href="slovnik.html">
     <h3>Slovník pojmů</h3>
-    <p>
-      Vysvětlení klíčových pojmů FAIST světa.
-      Lidsky, srozumitelně a v souvislostech.
-    </p>
+    <p>Vysvětlení klíčových pojmů FAIST světa.</p>
   </a>
 
   <a class="card" href="resources.html">
     <h3>Zdroje & nástroje</h3>
-    <p>
-      Kurátorovaný přehled nástrojů a zdrojů.
-      Ne seznam všeho, ale mapa toho podstatného.
-    </p>
+    <p>Kurátorovaný přehled toho podstatného.</p>
   </a>
 
 </section>
