@@ -1,1 +1,258 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>FAIST Academy · Energie</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  width:100%;
+  background:transparent;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+.bg,.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+.bg{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.75)),
+    url("/assets/backgrounds/academy.png") center / cover no-repeat;
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.12;
+  mix-blend-mode:overlay;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+}
+.header-right{
+  display:flex;
+  gap:26px;
+}
+.header-right a{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+.header-right a:hover{color:#fff}
+
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:8vh 6vw 4vh;
+}
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.2rem,4vw,3.2rem);
+  letter-spacing:.18em;
+  text-shadow:0 0 20px rgba(255,215,120,.6);
+}
+.hero p{
+  margin-top:14px;
+  font-size:.95rem;
+  opacity:.95;
+}
+
+/* ================= CONTENT ================= */
+.content{
+  width:min(900px,90vw);
+  margin:0 auto 10vh;
+  display:grid;
+  gap:36px;
+}
+
+/* ================= BLOCKS ================= */
+.block{
+  padding:28px 30px;
+  border-radius:26px;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.65));
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+.block h3{
+  font-family:"Cinzel",serif;
+  font-size:1rem;
+  letter-spacing:.14em;
+  margin-bottom:14px;
+}
+.block p{
+  font-size:.9rem;
+  line-height:1.6;
+  opacity:.92;
+}
+.block ul{
+  margin-top:12px;
+  padding-left:18px;
+  font-size:.88rem;
+  opacity:.9;
+}
+.block li{margin-bottom:6px}
+
+/* ================= AI MINI ================= */
+.ai-guide{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:30;
+  font-size:.78rem;
+}
+.ai-label{
+  padding:6px 12px;
+  border-radius:12px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
+  border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.ai-panel{
+  display:none;
+  margin-top:10px;
+  width:320px;
+  padding:16px 18px;
+  border-radius:18px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(12px);
+}
+.ai-guide.open .ai-panel{display:block}
+
+.ai-panel input{
+  width:100%;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,215,120,.5);
+  background:#000;
+  color:#eee;
+  font-size:.8rem;
+}
+.ai-response{
+  margin-top:10px;
+  font-size:.8rem;
+}
+.ai-response a{
+  color:rgb(255,215,120);
+  text-decoration:none;
+}
+.ai-response a:hover{text-decoration:underline}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  font-size:.7rem;
+  opacity:.45;
+  padding:36px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="header-right">
+    <a href="index.html">Academy</a>
+    <a href="/cs/index.html">Holding</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>ENERGIE</h1>
+  <p>Základ každého funkčního systému – fyzického i digitálního.</p>
+</section>
+
+<section class="content">
+
+  <div class="block">
+    <h3>Proč je energie klíčová</h3>
+    <p>
+      Bez energie nefunguje žádný systém. Nejen technologie,
+      ale ani bezpečnost, automatizace nebo AI. Energie není detail,
+      je to základní vrstva celé infrastruktury.
+    </p>
+  </div>
+
+  <div class="block">
+    <h3>Jak o energii přemýšlet</h3>
+    <ul>
+      <li>Energie jako tok, ne jako číslo na faktuře</li>
+      <li>Stabilita je důležitější než maximální výkon</li>
+      <li>Optimalizace začíná pochopením spotřeby</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Kam pokračovat</h3>
+    <p>
+      Pokud tě zajímá praktická implementace energetických systémů,
+      monitoring nebo chytré řízení, FAIST tě navede dál.
+    </p>
+  </div>
+
+</section>
+
+<!-- AI MINI -->
+<div class="ai-guide" id="aiGuide">
+  <div class="ai-label" onclick="toggleAI()">FAIST AI · Průvodce</div>
+  <div class="ai-panel">
+    <p>Ahoj 👋<br>Na co se chceš zeptat ohledně energie?</p>
+    <input id="aiInput" placeholder="Např. spotřeba, soláry, optimalizace…" onkeydown="handleAI(event)">
+    <div class="ai-response" id="aiResponse"></div>
+  </div>
+</div>
+
+<footer>© 2025 FAIST Academy</footer>
+
+<script>
+function toggleAI(){
+  document.getElementById("aiGuide").classList.toggle("open");
+}
+
+function handleAI(e){
+  if(e.key!=="Enter")return;
+  const q=e.target.value.toLowerCase();
+  let r="";
+  if(q.includes("sol")){
+    r='Tohle téma spadá do <a href="/cs/divisions/energy/index.html">FAIST Energy</a>.';
+  }else if(q.includes("smart")){
+    r='Chytré řízení energie souvisí se <a href="smart-home.html">Smart Home</a>.';
+  }else{
+    r='Začni u pochopení principů – energie je základ všech systémů.';
+  }
+  document.getElementById("aiResponse").innerHTML=r;
+}
+</script>
+
+</body>
+</html>
