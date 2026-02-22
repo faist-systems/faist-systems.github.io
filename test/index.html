@@ -105,21 +105,31 @@ header nav a:hover{color:#fff}
 
 .window{
   height:clamp(300px,36vh,380px);
-  padding:18px;
   border-radius:20px;
-  background:rgba(12,12,12,.75);
+  position:relative;
+  overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
-  display:flex;
-  flex-direction:column;
+
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
 }
 
-/* IMAGE SLOT */
+/* background images per division */
+.window.systems   {background-image:url("../assets/backgrounds/systems.png")}
+.window.research  {background-image:url("../assets/backgrounds/research.png")}
+.window.digital   {background-image:url("../assets/backgrounds/digital.png")}
+.window.energy    {background-image:url("../assets/backgrounds/energy.png")}
+.window.security  {background-image:url("../assets/backgrounds/security.png")}
+.window.academy   {background-image:url("../assets/backgrounds/academy.png")}
+
+/* TOP IMAGE */
 .image-slot{
   height:185px;
+  margin:18px;
   border-radius:14px;
   overflow:hidden;
-  margin-bottom:10px;
-  border:1px solid rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
 }
 .image-slot img{
   width:100%;
@@ -128,19 +138,27 @@ header nav a:hover{color:#fff}
   display:block;
 }
 
-/* TEXT */
-.window h3{
-  font-size:.95rem;
-  margin-top:auto;
-  margin-bottom:4px;
-}
-.window p{
-  font-size:.8rem;
-  opacity:.7;
-  margin-bottom:8px;
+/* TEXT PANEL */
+.content{
+  margin:0 18px 18px;
+  padding:14px;
+  border-radius:14px;
+
+  /* ⬇⬇⬇ HUSTOTA POZADÍ – TADY SI HRAJ ⬇⬇⬇ */
+  background:rgba(0,0,0,.55);
+
+  backdrop-filter:blur(4px);
 }
 
-/* LINK */
+.content h3{
+  font-size:.95rem;
+  margin-bottom:4px;
+}
+.content p{
+  font-size:.8rem;
+  opacity:.75;
+  margin-bottom:8px;
+}
 .more{
   font-size:.8rem;
   color:rgb(255,215,120);
@@ -188,40 +206,58 @@ footer{
 
 <div class="divisions">
 
-  <div class="division"><div class="window">
-    <div class="image-slot"><img src="../assets/divisions/systems.png" alt="Systems"></div>
-    <h3>Systems</h3><p>Architektura a infrastruktura.</p>
-    <a class="more" href="/cs/divisions/systems.html">Zjistit více →</a>
+  <div class="division"><div class="window systems">
+    <div class="image-slot"><img src="../assets/divisions/systems.png" alt=""></div>
+    <div class="content">
+      <h3>Systems</h3>
+      <p>Architektura a infrastruktura.</p>
+      <a class="more" href="/cs/divisions/systems.html">Zjistit více →</a>
+    </div>
   </div></div>
 
-  <div class="division"><div class="window">
-    <div class="image-slot"><img src="../assets/divisions/research.png" alt="Research"></div>
-    <h3>Research</h3><p>Výzkum a experiment.</p>
-    <a class="more" href="/cs/divisions/research.html">Zjistit více →</a>
+  <div class="division"><div class="window research">
+    <div class="image-slot"><img src="../assets/divisions/research.png" alt=""></div>
+    <div class="content">
+      <h3>Research</h3>
+      <p>Výzkum a experiment.</p>
+      <a class="more" href="/cs/divisions/research.html">Zjistit více →</a>
+    </div>
   </div></div>
 
-  <div class="division"><div class="window">
-    <div class="image-slot"><img src="../assets/divisions/digital.png" alt="Digital"></div>
-    <h3>Digital</h3><p>Digitální produkty.</p>
-    <a class="more" href="/cs/divisions/digital.html">Zjistit více →</a>
+  <div class="division"><div class="window digital">
+    <div class="image-slot"><img src="../assets/divisions/digital.png" alt=""></div>
+    <div class="content">
+      <h3>Digital</h3>
+      <p>Digitální produkty.</p>
+      <a class="more" href="/cs/divisions/digital.html">Zjistit více →</a>
+    </div>
   </div></div>
 
-  <div class="division"><div class="window">
-    <div class="image-slot"><img src="../assets/divisions/energy.png" alt="Energy"></div>
-    <h3>Energy</h3><p>Transformace energie.</p>
-    <a class="more" href="/cs/divisions/energy.html">Zjistit více →</a>
+  <div class="division"><div class="window energy">
+    <div class="image-slot"><img src="../assets/divisions/energy.png" alt=""></div>
+    <div class="content">
+      <h3>Energy</h3>
+      <p>Transformace energie.</p>
+      <a class="more" href="/cs/divisions/energy.html">Zjistit více →</a>
+    </div>
   </div></div>
 
-  <div class="division"><div class="window">
-    <div class="image-slot"><img src="../assets/divisions/security.png" alt="Security"></div>
-    <h3>Security</h3><p>Ochrana systémů.</p>
-    <a class="more" href="/cs/divisions/security.html">Zjistit více →</a>
+  <div class="division"><div class="window security">
+    <div class="image-slot"><img src="../assets/divisions/security.png" alt=""></div>
+    <div class="content">
+      <h3>Security</h3>
+      <p>Ochrana systémů.</p>
+      <a class="more" href="/cs/divisions/security.html">Zjistit více →</a>
+    </div>
   </div></div>
 
-  <div class="division"><div class="window">
-    <div class="image-slot"><img src="../assets/divisions/academy.png" alt="Academy"></div>
-    <h3>Academy</h3><p>Přenos know-how.</p>
-    <a class="more" href="/cs/divisions/academy.html">Zjistit více →</a>
+  <div class="division"><div class="window academy">
+    <div class="image-slot"><img src="../assets/divisions/academy.png" alt=""></div>
+    <div class="content">
+      <h3>Academy</h3>
+      <p>Přenos know-how.</p>
+      <a class="more" href="/cs/divisions/academy.html">Zjistit více →</a>
+    </div>
   </div></div>
 
 </div>
