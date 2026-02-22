@@ -1,0 +1,296 @@
+<!-- AUTO-COPIED FROM CS | NOT TRANSLATED YET -->
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>FAIST Academy · Zdroje</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  width:100%;
+  background:transparent;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+.bg,.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+.bg{
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.75)),
+    url("/assets/backgrounds/academy.png") center / cover no-repeat;
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.12;
+  mix-blend-mode:overlay;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+}
+.header-right{
+  display:flex;
+  gap:26px;
+}
+.header-right a{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+.header-right a:hover{color:#fff}
+
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:8vh 6vw 4vh;
+}
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.2rem,4vw,3.2rem);
+  letter-spacing:.18em;
+  text-shadow:0 0 20px rgba(255,215,120,.6);
+}
+.hero p{
+  margin-top:14px;
+  font-size:.95rem;
+  opacity:.95;
+}
+
+/* ================= CONTENT ================= */
+.content{
+  width:min(1000px,90vw);
+  margin:0 auto 10vh;
+  display:grid;
+  gap:36px;
+}
+
+/* ================= BLOCK ================= */
+.block{
+  padding:28px 30px;
+  border-radius:26px;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.65));
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+.block h3{
+  font-family:"Cinzel",serif;
+  font-size:1rem;
+  letter-spacing:.14em;
+  margin-bottom:16px;
+}
+.block p{
+  font-size:.9rem;
+  line-height:1.6;
+  opacity:.92;
+  margin-bottom:14px;
+}
+
+/* ================= RESOURCE LIST ================= */
+.resource-list{
+  display:grid;
+  gap:14px;
+}
+.resource{
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.15);
+}
+.resource strong{
+  font-size:.85rem;
+}
+.resource span{
+  display:block;
+  font-size:.8rem;
+  opacity:.85;
+}
+.resource a{
+  color:rgb(255,215,120);
+  text-decoration:none;
+  font-size:.78rem;
+}
+.resource a:hover{text-decoration:underline}
+
+/* ================= AI MINI ================= */
+.ai-guide{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:30;
+  font-size:.78rem;
+}
+.ai-label{
+  padding:6px 12px;
+  border-radius:12px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
+  border:1px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+  white-space:nowrap;
+}
+.ai-panel{
+  display:none;
+  margin-top:10px;
+  width:320px;
+  padding:16px 18px;
+  border-radius:18px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
+  border:1px solid rgba(255,255,255,.2);
+  backdrop-filter:blur(12px);
+}
+.ai-guide.open .ai-panel{display:block}
+
+.ai-panel input{
+  width:100%;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,215,120,.5);
+  background:#000;
+  color:#eee;
+  font-size:.8rem;
+}
+.ai-response{
+  margin-top:10px;
+  font-size:.8rem;
+}
+.ai-response a{
+  color:rgb(255,215,120);
+  text-decoration:none;
+}
+.ai-response a:hover{text-decoration:underline}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  font-size:.7rem;
+  opacity:.45;
+  padding:36px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="header-right">
+    <a href="index.html">Academy</a>
+    <a href="/cs/index.html">Holding</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>ZDROJE</h1>
+  <p>Ověřené nástroje, odkazy a místa, kde má smysl se učit.</p>
+</section>
+
+<section class="content">
+
+  <div class="block">
+    <h3>AI & práce s informacemi</h3>
+    <div class="resource-list">
+      <div class="resource">
+        <strong>OpenAI</strong>
+        <span>Základy práce s jazykovými modely a AI.</span>
+        <a href="https://openai.com" target="_blank">openai.com</a>
+      </div>
+      <div class="resource">
+        <strong>Hugging Face</strong>
+        <span>Modely, datasety a experimenty.</span>
+        <a href="https://huggingface.co" target="_blank">huggingface.co</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Technologie & systémy</h3>
+    <div class="resource-list">
+      <div class="resource">
+        <strong>MDN Web Docs</strong>
+        <span>Referenční dokumentace webových technologií.</span>
+        <a href="https://developer.mozilla.org" target="_blank">developer.mozilla.org</a>
+      </div>
+      <div class="resource">
+        <strong>Stack Overflow</strong>
+        <span>Řešení konkrétních technických problémů.</span>
+        <a href="https://stackoverflow.com" target="_blank">stackoverflow.com</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Energie & infrastruktura</h3>
+    <div class="resource-list">
+      <div class="resource">
+        <strong>IEA</strong>
+        <span>Data a analýzy energetických systémů.</span>
+        <a href="https://www.iea.org" target="_blank">iea.org</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- AI MINI -->
+<div class="ai-guide" id="aiGuide">
+  <div class="ai-label" onclick="toggleAI()">FAIST AI · Průvodce</div>
+  <div class="ai-panel">
+    <p>Ahoj 👋<br>Hledáš zdroj nebo nástroj?</p>
+    <input id="aiInput" placeholder="Např. AI nástroje, energie, učení…" onkeydown="handleAI(event)">
+    <div class="ai-response" id="aiResponse"></div>
+  </div>
+</div>
+
+<footer>© 2025 FAIST Academy</footer>
+
+<script>
+function toggleAI(){
+  document.getElementById("aiGuide").classList.toggle("open");
+}
+
+function handleAI(e){
+  if(e.key!=="Enter")return;
+  const q=e.target.value.toLowerCase();
+  let r="";
+  if(q.includes("ai")){
+    r='Začni v <a href="ai.html">AI gramotnosti</a> a pak se vrať ke zdrojům.';
+  }else if(q.includes("energie")){
+    r='Pro pochopení kontextu pokračuj do <a href="energy.html">Energie</a>.';
+  }else{
+    r='Zdroje jsou doplněk. Nejdřív porozumění, pak nástroje.';
+  }
+  document.getElementById("aiResponse").innerHTML=r;
+}
+</script>
+
+</body>
+</html>
