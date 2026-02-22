@@ -6,6 +6,9 @@ on:
       - main
       - master
 
+permissions:
+  contents: write   # ⬅️ KRITICKÉ – bez toho nejde push
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -26,13 +29,9 @@ jobs:
               continue
             fi
 
-            # Vytvoř cílovou složku
             mkdir -p "$(dirname "$target")"
-
-            # Zkopíruj CS soubor do EN
             cp "$file" "$target"
 
-            # Přidej hlavičku jako info (jen pokud je HTML)
             if [[ "$target" == *.html ]]; then
               sed -i '1i<!-- AUTO-COPIED FROM CS | NOT TRANSLATED YET -->' "$target"
             fi
