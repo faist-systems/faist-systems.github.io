@@ -33,7 +33,7 @@ header nav a{
 }
 header nav a:hover{color:#fff}
 
-/* HERO – POSUNUTO VÝŠ */
+/* HERO */
 .hero{
   text-align:center;
   margin-top:2.6vh;
@@ -51,7 +51,6 @@ header nav a:hover{color:#fff}
     0 2px 2px rgba(0,0,0,.85);
 }
 
-/* SUBTEXTY POD H1 */
 .hero .forge{
   margin-top:14px;
   font-size:.78rem;
@@ -67,7 +66,7 @@ header nav a:hover{color:#fff}
 /* AI – FAIST */
 .ai-guide{
   width:min(720px,90vw);
-  margin:2.8vh auto 0; /* ⬅️ zvednuto */
+  margin:2.8vh auto 0;
   padding:22px 26px;
   border-radius:20px;
   background:rgba(12,12,12,.7);
@@ -117,12 +116,17 @@ header nav a:hover{color:#fff}
   position:relative;
 }
 
-/* IMAGE */
+/* IMAGE SLOT – AUTO IMAGE */
 .image-slot{
   height:185px;
   border-radius:14px;
-  border:1px dashed rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.08);
   margin-bottom:10px;
+
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  opacity:.92;
 }
 
 /* TEXT */
@@ -208,7 +212,7 @@ footer{
 
   <div class="division">
     <div class="window">
-      <div class="image-slot"></div>
+      <div class="image-slot" data-division="systems"></div>
       <h3>Systems</h3>
       <p>Architektura a infrastruktura.</p>
       <a class="more" href="/cs/divisions/systems.html">Zjistit více →</a>
@@ -218,7 +222,7 @@ footer{
 
   <div class="division">
     <div class="window">
-      <div class="image-slot"></div>
+      <div class="image-slot" data-division="research"></div>
       <h3>Research</h3>
       <p>Výzkum a experiment.</p>
       <a class="more" href="/cs/divisions/research.html">Zjistit více →</a>
@@ -228,7 +232,7 @@ footer{
 
   <div class="division">
     <div class="window">
-      <div class="image-slot"></div>
+      <div class="image-slot" data-division="digital"></div>
       <h3>Digital</h3>
       <p>Digitální produkty.</p>
       <a class="more" href="/cs/divisions/digital.html">Zjistit více →</a>
@@ -238,7 +242,7 @@ footer{
 
   <div class="division">
     <div class="window">
-      <div class="image-slot"></div>
+      <div class="image-slot" data-division="energy"></div>
       <h3>Energy</h3>
       <p>Transformace energie.</p>
       <a class="more" href="/cs/divisions/energy.html">Zjistit více →</a>
@@ -248,7 +252,7 @@ footer{
 
   <div class="division">
     <div class="window">
-      <div class="image-slot"></div>
+      <div class="image-slot" data-division="security"></div>
       <h3>Security</h3>
       <p>Ochrana systémů.</p>
       <a class="more" href="/cs/divisions/security.html">Zjistit více →</a>
@@ -258,7 +262,7 @@ footer{
 
   <div class="division">
     <div class="window">
-      <div class="image-slot"></div>
+      <div class="image-slot" data-division="academy"></div>
       <h3>Academy</h3>
       <p>Přenos know-how.</p>
       <a class="more" href="/cs/divisions/academy.html">Zjistit více →</a>
@@ -269,6 +273,15 @@ footer{
 </div>
 
 <footer>© 2025 FAIST digital</footer>
+
+<script>
+document.querySelectorAll(".image-slot").forEach(slot=>{
+  const name = slot.dataset.division;
+  if(!name) return;
+  slot.style.backgroundImage =
+    `url('assets/divisions/${name}.png')`;
+});
+</script>
 
 </body>
 </html>
