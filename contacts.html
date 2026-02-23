@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact · F.A.I.S.T. Holding</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(10px);
+}
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+.header-right nav{
+  display:flex;
+  gap:22px;
+}
+.header-right nav a{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+.header-right nav a:hover{color:#fff}
+
+/* ================= BACKGROUND ================= */
+.background,.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+.background{
+  background:linear-gradient(to bottom,#0b0b0b,#000 70%);
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.08;
+  mix-blend-mode:overlay;
+}
+
+/* ================= CONTENT ================= */
+main{
+  position:relative;
+  z-index:5;
+  max-width:720px;
+  margin:0 auto;
+  padding:96px 6vw 120px;
+  text-align:center;
+}
+
+h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2rem,3.4vw,2.8rem);
+  letter-spacing:.18em;
+  margin-bottom:48px;
+}
+
+.contact-item{
+  margin-bottom:32px;
+}
+
+.label{
+  display:block;
+  font-size:.75rem;
+  opacity:.6;
+  margin-bottom:6px;
+}
+
+.contact-item a{
+  display:inline-block;
+  font-size:1.05rem;
+  color:rgb(255,215,120);
+  text-decoration:none;
+  letter-spacing:.05em;
+}
+.contact-item a:hover{
+  text-decoration:underline;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:32px 0;
+  font-size:.7rem;
+  opacity:.45;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="header-right">
+    <nav>
+      <a href="/index.html">Holding</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>CONTACT</h1>
+
+  <div class="contact-item">
+    <span class="label">Email</span>
+    <a href="mailto:tadeas.hora@faist.xyz">tadeas.hora@faist.xyz</a>
+  </div>
+
+  <div class="contact-item">
+    <span class="label">Phone</span>
+    <a href="tel:+420732487874">+420&nbsp;732&nbsp;487&nbsp;874</a>
+  </div>
+</main>
+
+<footer>© 2025 FAIST digital</footer>
+
+</body>
+</html>
