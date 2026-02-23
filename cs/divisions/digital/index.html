@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>FAIST Digital</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+
+/* ================= ROOT ================= */
+html,body{
+  width:100%;
+  background:transparent;
+  color:#eee;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ================= BACKGROUND ================= */
+.bg,.noise{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+.bg{
+  z-index:0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.35),
+      rgba(0,0,0,.75)
+    ),
+    url("/assets/backgrounds/digital.png") center / cover no-repeat;
+}
+
+.noise{
+  z-index:1;
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.1;
+  mix-blend-mode:overlay;
+}
+
+/* ================= PAGE LAYER ================= */
+body{
+  position:relative;
+  z-index:2;
+}
+
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:64px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  padding:0 4vw;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(8px);
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+
+.header-right nav{
+  display:flex;
+  gap:22px;
+}
+
+.header-right nav a,
+.header-right .contact{
+  font-size:.85rem;
+  color:#ccc;
+  text-decoration:none;
+}
+
+.header-right nav a:hover,
+.header-right .contact:hover{color:#fff}
+
+.lang-flag{
+  width:26px;
+  height:16px;
+  border-radius:3px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.25);
+  opacity:.75;
+  transition:.25s;
+}
+
+.lang-flag img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.lang-flag:hover{
+  opacity:1;
+  box-shadow:0 0 0 1px rgba(120,200,255,.9);
+}
+
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:9vh 6vw 4vh;
+}
+
+.hero h1{
+  font-family:"Cinzel",serif;
+  font-size:clamp(2.4rem,4.5vw,3.4rem);
+  letter-spacing:.22em;
+  text-shadow:0 0 26px rgba(120,200,255,.6);
+}
+
+.hero p{
+  margin-top:14px;
+  font-size:.95rem;
+  opacity:.9;
+}
+
+/* ================= SYMBOL ================= */
+.symbol{
+  width:220px;
+  margin:36px auto 48px;
+  opacity:.95;
+}
+
+.symbol img{
+  width:100%;
+  display:block;
+}
+
+/* ================= CONTENT ================= */
+main{
+  max-width:1100px;
+  margin:0 auto 12vh;
+  padding:0 6vw;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+
+.card{
+  padding:24px 22px 26px;
+  border-radius:22px;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.4),
+      rgba(0,0,0,.6)
+    );
+  backdrop-filter:blur(12px) saturate(115%);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    0 18px 40px rgba(0,0,0,.45);
+}
+
+.card h3{
+  font-family:"Cinzel",serif;
+  font-size:.9rem;
+  letter-spacing:.14em;
+  margin-bottom:10px;
+}
+
+.card p{
+  font-size:.85rem;
+  line-height:1.55;
+  opacity:.9;
+}
+
+/* ================= AI MINI ================= */
+.ai-mini{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:20;
+}
+
+.ai-mini button{
+  background:#000;
+  border:1px solid rgba(120,200,255,.6);
+  color:rgb(120,200,255);
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:.8rem;
+  cursor:pointer;
+}
+
+.ai-panel{
+  position:fixed;
+  right:18px;
+  bottom:70px;
+  width:320px;
+  background:rgba(0,0,0,.88);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;
+  padding:14px;
+  display:none;
+}
+
+.ai-panel h4{
+  font-family:"Cinzel",serif;
+  font-size:.8rem;
+  letter-spacing:.14em;
+  margin-bottom:8px;
+}
+
+.ai-panel p{
+  font-size:.8rem;
+  opacity:.85;
+}
+
+.ai-panel a{
+  color:rgb(120,200,255);
+  font-size:.8rem;
+  text-decoration:none;
+}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  font-size:.7rem;
+  opacity:.45;
+  padding:36px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="noise"></div>
+
+<header>
+  <div class="header-right">
+    <nav>
+      <a href="/cs/index.html">Holding</a>
+      <a href="/cs/divisions/academy/index.html">Academy</a>
+    </nav>
+    <a href="/contacts.html" class="contact">Kontakt</a>
+    <a href="/en/divisions/digital/index.html" class="lang-flag">
+      <img src="/assets/flags/gb.png" alt="EN">
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>FAIST DIGITAL</h1>
+  <p>
+    Návrh, vývoj a provoz digitálních řešení
+    napříč celým FAIST ekosystémem.
+  </p>
+</section>
+
+<div class="symbol">
+  <img src="/assets/divisions/digital.png" alt="Digital">
+</div>
+
+<main>
+  <div class="grid">
+    <div class="card">
+      <h3>Software & aplikace</h3>
+      <p>Návrh a vývoj aplikací, backendů a nástrojů pro reálný provoz.</p>
+    </div>
+    <div class="card">
+      <h3>AI integrace</h3>
+      <p>Zapojení umělé inteligence do procesů, automatizace a rozhodování.</p>
+    </div>
+    <div class="card">
+      <h3>Rozhraní & UX</h3>
+      <p>Přehledná rozhraní propojující člověka se složitými systémy.</p>
+    </div>
+    <div class="card">
+      <h3>Data & toky</h3>
+      <p>Sběr, zpracování a propojení dat napříč systémy.</p>
+    </div>
+    <div class="card">
+      <h3>Automatizace</h3>
+      <p>Scénáře, reakce a procesy, které šetří čas i energii.</p>
+    </div>
+    <div class="card">
+      <h3>Nasazení & provoz</h3>
+      <p>Stabilní běh, údržba a dlouhodobá udržitelnost řešení.</p>
+    </div>
+  </div>
+</main>
+
+<div class="ai-mini">
+  <button onclick="toggleAI()">FAIST AI</button>
+</div>
+
+<div class="ai-panel" id="aiPanel">
+  <h4>FAIST · průvodce</h4>
+  <p>
+    Zajímá tě vývoj aplikací, AI nebo automatizace?
+  </p>
+  <a href="/cs/divisions/academy/ai.html">→ Jak pracovat s AI</a>
+</div>
+
+<footer>© 2025 FAIST Digital</footer>
+
+<script>
+function toggleAI(){
+  const p=document.getElementById("aiPanel");
+  p.style.display = p.style.display==="block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
