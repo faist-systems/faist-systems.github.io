@@ -2,60 +2,31 @@
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
-<title>FAIST Academy</title>
+<title>F.A.I.S.T. Holding</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-/* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box}
-
-/* ================= ROOT ================= */
 html,body{
   width:100%;
-  background:transparent;
+  height:100%;
+  background:#000;
   color:#eee;
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  overflow:hidden;
 }
 
-/* ================= BACKGROUND ================= */
-.bg,.noise{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
-.bg{
-  z-index:0;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.65)),
-    url("/assets/backgrounds/academy.png") center / cover no-repeat;
-}
-.noise{
-  z-index:1;
-  background-image:repeating-radial-gradient(
-    circle,
-    rgba(255,255,255,.02) 0 1px,
-    transparent 1px 2px
-  );
-  background-size:2px 2px;
-  opacity:.12;
-  mix-blend-mode:overlay;
-}
-body{position:relative;z-index:2}
-
-/* ================= HEADER ================= */
+/* HEADER */
 header{
-  position:sticky;
-  top:0;
-  z-index:10;
+  position:relative;
+  z-index:30;
   height:64px;
   display:flex;
   justify-content:flex-end;
   align-items:center;
   padding:0 4vw;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(6px);
 }
 .header-right{
   display:flex;
@@ -75,230 +46,376 @@ header{
 .header-right nav a:hover,
 .header-right .contact:hover{color:#fff}
 
+/* FLAG */
 .lang-flag{
   width:26px;height:16px;
   border-radius:3px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.25);
   opacity:.75;
+  transition:.25s;
 }
-.lang-flag img{width:100%;height:100%;object-fit:cover}
+.lang-flag img{width:100%;height:100%;object-fit:cover;display:block}
 .lang-flag:hover{
   opacity:1;
   box-shadow:0 0 0 1px rgba(255,215,120,.9);
 }
 
-/* ================= HERO ================= */
+/* BACKGROUND */
+.background,.noise{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.background{
+  background:
+    radial-gradient(circle at center, rgba(255,200,120,.03), transparent 60%),
+    linear-gradient(to bottom,#050505,#000 70%);
+}
+.noise{
+  background-image:repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,.02) 0 1px,
+    transparent 1px 2px
+  );
+  background-size:2px 2px;
+  opacity:.15;
+  mix-blend-mode:overlay;
+}
+
+/* HERO */
 .hero{
+  position:relative;
+  z-index:5;
   text-align:center;
-  padding:9vh 6vw 5vh;
+  margin-top:1vh;
 }
 .hero h1{
   font-family:"Cinzel",serif;
-  font-size:clamp(2.4rem,4.5vw,3.4rem);
+  font-size:clamp(2.7rem,4.6vw,3.7rem);
   letter-spacing:.22em;
-  text-shadow:0 0 24px rgba(255,215,120,.7);
+  text-shadow:
+    0 0 16px rgba(255,215,120,.9),
+    0 0 48px rgba(255,190,90,.7);
 }
-.hero p{
-  margin-top:14px;
-  font-size:.95rem;
-  opacity:.95;
-}
-
-/* SYMBOLICKÝ OBRÁZEK NAD BUBLINAMI */
-.hero-image{
-  width:220px;
-  margin:38px auto 0;
-  display:block;
-  opacity:.95;
-}
-
-/* ================= GRID ================= */
-.academy-grid{
-  width:min(1200px,90vw);
-  margin:6vh auto 12vh;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:36px;
-}
-
-/* ================= BUBBLES ================= */
-.bubble{
-  padding:28px 26px 30px;
-  border-radius:26px;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
-  backdrop-filter:blur(12px) saturate(115%);
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.06),
-    0 18px 40px rgba(0,0,0,.45);
-  text-decoration:none;
-  color:#eee;
-  transition:.3s;
-}
-.bubble:hover{border-color:rgba(255,215,120,.7)}
-.bubble h3{
-  font-family:"Cinzel",serif;
-  font-size:1rem;
-  letter-spacing:.14em;
-  margin-bottom:12px;
-}
-.bubble p{
-  font-size:.88rem;
-  line-height:1.55;
-  opacity:.9;
-}
-
-/* ================= AI MINI GUIDE ================= */
-.ai-guide{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:30;
+.hero .forge{
+  margin-top:6px;
   font-size:.78rem;
-}
-
-/* MINI ŠTÍTEK */
-.ai-label{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:12px;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.6));
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,.25);
-  cursor:pointer;
-  white-space:nowrap;
-  box-shadow:0 8px 24px rgba(0,0,0,.45);
-}
-
-/* PANEL PO ROZKLIKNUTÍ */
-.ai-panel{
-  display:none;
-  margin-top:10px;
-  width:320px;
-  padding:16px 18px;
-  border-radius:18px;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,.75));
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.2);
-  box-shadow:0 18px 40px rgba(0,0,0,.6);
-}
-.ai-guide.open .ai-panel{display:block}
-
-.ai-panel h4{
-  font-family:"Cinzel",serif;
-  font-size:.8rem;
   letter-spacing:.14em;
-  margin-bottom:8px;
+  opacity:.65;
 }
-.ai-panel p{
-  font-size:.8rem;
-  line-height:1.45;
+.hero .claim{
+  margin-top:6px;
+  font-size:.95rem;
   opacity:.9;
+}
+
+/* AI */
+.ai-guide{
+  position:relative;
+  z-index:5;
+  width:min(720px,90vw);
+  margin:1.8vh auto 0;
+  padding:18px 22px;
+  border-radius:18px;
+  background:rgba(12,12,12,.75);
+  border:1px solid rgba(255,255,255,.12);
+}
+.ai-guide h4{
+  font-family:"Cinzel",serif;
+  font-size:.85rem;
+  letter-spacing:.16em;
   margin-bottom:8px;
 }
-
-.ai-panel input{
+.ai-guide h4 span{opacity:.55}
+.ai-guide input{
   width:100%;
-  padding:8px 10px;
-  border-radius:10px;
-  border:1px solid rgba(255,215,120,.5);
   background:#000;
+  border:1px solid rgba(255,215,120,.55);
+  border-radius:16px;
+  padding:8px 14px;
   color:#eee;
-  font-size:.8rem;
+  font-size:.85rem;
 }
 
-.ai-response{
-  margin-top:10px;
-  font-size:.8rem;
+/* DIVISIONS */
+.divisions{
+  position:absolute;
+  top:46vh;
+  left:0;
+  width:100%;
+  padding:0 6vw;
+  display:flex;
+  gap:1.6vw;
+  z-index:4;
 }
-.ai-response a{
+.division{width:calc(100%/6)}
+
+.window{
+  height:calc(100vh - 46vh - 32px - 24px);
+  min-height:420px;
+  max-height:500px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  flex-direction:column;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  transition:box-shadow 1.2s ease;
+}
+
+/* LIGHT */
+.window::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top,
+    rgba(255,215,120,.25),
+    transparent 70%);
+  opacity:.15;
+  pointer-events:none;
+}
+.window.is-lit{
+  box-shadow:
+    0 0 0 1px rgba(255,215,120,.35),
+    0 0 32px rgba(255,215,120,.35);
+}
+
+/* BACKGROUNDS */
+.window.systems  {background-image:url("/assets/backgrounds/systems.png")}
+.window.research {background-image:url("/assets/backgrounds/research.png")}
+.window.digital  {background-image:url("/assets/backgrounds/digital.png")}
+.window.energy   {background-image:url("/assets/backgrounds/energy.png")}
+.window.security {background-image:url("/assets/backgrounds/security.png")}
+.window.academy  {background-image:url("/assets/backgrounds/academy.png")}
+
+/* IMAGE */
+.image-slot{
+  height:170px;
+  margin:14px 16px 0;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.18);
+  position:relative;
+  z-index:2;
+}
+.image-slot img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(.75);
+  transition:filter 1.2s ease;
+}
+.window.is-lit .image-slot img{
+  filter:brightness(1.05) saturate(1.1);
+}
+
+/* CONTENT */
+.content{
+  margin:12px 16px 16px;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(0,0,0,.65);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  z-index:2;
+}
+.content h3{font-size:.95rem}
+.content p{font-size:.82rem;opacity:.85}
+.more{
+  margin-top:auto;
+  font-size:.82rem;
   color:rgb(255,215,120);
   text-decoration:none;
 }
-.ai-response a:hover{text-decoration:underline}
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 footer{
-  text-align:center;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:32px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   font-size:.7rem;
   opacity:.45;
-  padding:36px 0;
+  z-index:10;
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="background"></div>
 <div class="noise"></div>
 
 <header>
   <div class="header-right">
     <nav>
       <a href="/cs/index.html">Holding</a>
+      <a href="#divisions">Divize</a>
       <a href="/cs/about.html">O nás</a>
     </nav>
     <a href="/contacts.html" class="contact">Kontakt</a>
-    <a href="/en/divisions/academy/" class="lang-flag">
+    <a href="/en/index.html" class="lang-flag">
       <img src="/assets/flags/gb.png" alt="EN">
     </a>
   </div>
 </header>
 
-<section class="hero">
-  <h1>FAIST ACADEMY</h1>
-  <p>Vzdělávání, porozumění a technologická gramotnost.</p>
-  <img class="hero-image" src="/assets/divisions/academy.png" alt="Academy">
-</section>
-
-<section class="academy-grid">
-  <a class="bubble" href="literacy.html"><h3>Technologická gramotnost</h3><p>Základy myšlení o technologiích.</p></a>
-  <a class="bubble" href="smart-home.html"><h3>Smart Home</h3><p>Domácnost jako celek.</p></a>
-  <a class="bubble" href="ai.html"><h3>AI gramotnost</h3><p>Jak AI chápat a používat.</p></a>
-  <a class="bubble" href="energy.html"><h3>Energie</h3><p>Funkčnost systémů.</p></a>
-  <a class="bubble" href="security.html"><h3>Bezpečnost</h3><p>Ochrana dat a prostoru.</p></a>
-  <a class="bubble" href="slovnik.html"><h3>Slovník pojmů</h3><p>Vysvětlení pojmů FAIST.</p></a>
-</section>
-
-<!-- AI MINI -->
-<div class="ai-guide" id="aiGuide">
-  <div class="ai-label" onclick="toggleAI()">FAIST AI · Průvodce</div>
-  <div class="ai-panel">
-    <h4>Ahoj 👋</h4>
-    <p>Jak ti mohu pomoci?</p>
-    <input id="aiInput" placeholder="Napiš, co tě zajímá…" onkeydown="handleAI(event)">
-    <div class="ai-response" id="aiResponse"></div>
+<div class="hero">
+  <h1>F.A.I.S.T. HOLDING</h1>
+  <div class="forge">Forge of Artificial Intelligence, Solutions and Technologies</div>
+  <div class="claim">
+    Inteligentní systém, který navrhuje, propojuje a vysvětluje komplexní struktury.
   </div>
 </div>
 
-<footer>© 2025 FAIST Academy</footer>
+<div class="ai-guide">
+  <h4><strong>FAIST</strong> <span>· inteligentní průvodce</span></h4>
+  <input placeholder="Ptejte se mě…">
+</div>
+
+<div class="divisions" id="divisions">
+
+  <div class="division"><div class="window systems">
+    <div class="image-slot"><img src="/assets/divisions/systems.png"></div>
+    <div class="content">
+      <h3>Systems</h3>
+      <p>Architektura a infrastruktura.</p>
+      <a class="more" href="/cs/divisions/systems/index.html">Zjistit více →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window research">
+    <div class="image-slot"><img src="/assets/divisions/research.png"></div>
+    <div class="content">
+      <h3>Research</h3>
+      <p>Výzkum a experiment.</p>
+      <a class="more" href="/cs/divisions/research/index.html">Zjistit více →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window digital">
+    <div class="image-slot"><img src="/assets/divisions/digital.png"></div>
+    <div class="content">
+      <h3>Digital</h3>
+      <p>Digitální produkty a řešení.</p>
+      <a class="more" href="/cs/divisions/digital/index.html">Zjistit více →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window energy">
+    <div class="image-slot"><img src="/assets/divisions/energy.png"></div>
+    <div class="content">
+      <h3>Energy</h3>
+      <p>Transformace a řízení energie.</p>
+      <a class="more" href="/cs/divisions/energy/index.html">Zjistit více →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window security">
+    <div class="image-slot"><img src="/assets/divisions/security.png"></div>
+    <div class="content">
+      <h3>Security</h3>
+      <p>Ochrana systémů a dat.</p>
+      <a class="more" href="/cs/divisions/security/index.html">Zjistit více →</a>
+    </div>
+  </div></div>
+
+  <div class="division"><div class="window academy">
+    <div class="image-slot"><img src="/assets/divisions/academy.png"></div>
+    <div class="content">
+      <h3>Academy</h3>
+      <p>Přenos know-how a vzdělávání.</p>
+      <a class="more" href="/cs/divisions/academy/index.html">Zjistit více →</a>
+    </div>
+  </div></div>
+
+</div>
+
+<footer>© 2025 FAIST digital</footer>
 
 <script>
-function toggleAI(){
-  document.getElementById("aiGuide").classList.toggle("open");
+/* ===============================
+   FAIST STATE – jediný zdroj pravdy
+================================= */
+const state = {
+  v: 1,
+  lang: document.documentElement.lang || "cs",
+  page: "home",
+  mode: "orientation",
+  focus: null
+};
+
+/* ===============================
+   URL ↔ STATE
+================================= */
+function readURL() {
+  const p = new URLSearchParams(location.search);
+  state.focus = p.get("focus");
+}
+function writeURL() {
+  const p = new URLSearchParams();
+  if (state.focus) p.set("focus", state.focus);
+  history.pushState({}, "", "?" + p.toString());
 }
 
-function handleAI(e){
-  if(e.key!=="Enter")return;
-  const q=e.target.value.toLowerCase();
-  let r="";
-  if(q.includes("ai")){
-    r='Tohle téma řešíme v <a href="ai.html">AI gramotnosti</a>.';
-  }else if(q.includes("smart")){
-    r='Tohle patří do <a href="smart-home.html">Smart Home</a>.';
-  }else if(q.includes("energie")){
-    r='Podívej se do sekce <a href="energy.html">Energie</a>.';
-  }else if(q.includes("bezpe")){
-    r='Doporučuji <a href="security.html">Bezpečnost</a>.';
-  }else{
-    r='Začni u <a href="literacy.html">Technologické gramotnosti</a>.';
-  }
-  document.getElementById("aiResponse").innerHTML=r;
+/* ===============================
+   RENDER (deterministický)
+================================= */
+const cards = [...document.querySelectorAll(".window")];
+
+function render() {
+  cards.forEach(c => c.classList.remove("is-lit"));
+  if (!state.focus) return;
+  const t = document.querySelector(".window." + state.focus);
+  if (t) t.classList.add("is-lit");
 }
+
+/* ===============================
+   INTERAKCE (UI jen mění stav)
+================================= */
+cards.forEach(win => {
+  win.addEventListener("click", () => {
+    const cls = [...win.classList].find(c =>
+      ["systems","research","digital","energy","security","academy"].includes(c)
+    );
+    if (!cls) return;
+    state.focus = cls;
+    writeURL();
+    render();
+  });
+});
+
+/* ===============================
+   SVĚTELNÁ VLNA (jen když není focus)
+================================= */
+let wave = 0;
+setInterval(() => {
+  if (state.focus) return;
+  cards.forEach(c => c.classList.remove("is-lit"));
+  cards[wave].classList.add("is-lit");
+  wave = (wave + 1) % cards.length;
+}, 2400);
+
+/* ===============================
+   INIT
+================================= */
+readURL();
+render();
+
+/* sjednocení výšky content */
+window.addEventListener("load",()=>{
+  const blocks=[...document.querySelectorAll(".content")];
+  let max=0;
+  blocks.forEach(b=>max=Math.max(max,b.offsetHeight));
+  blocks.forEach(b=>b.style.minHeight=max+"px");
+});
 </script>
 
 </body>
