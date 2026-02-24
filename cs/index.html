@@ -341,6 +341,74 @@ footer{
 <footer>© 2025 FAIST digital</footer>
 
 <script>
+/* ===============================
+   FAIST STATE – jediný zdroj pravdy
+================================= */
+const state = {
+  v: 1,
+  lang: document.documentElement.lang || "cs",
+  page: "home",
+  mode: "orientation",
+  focus: null
+};
+
+/* ===============================
+   URL ↔ STATE
+================================= */
+function readURL() {
+  const p = new URLSearchParams(location.search);
+  state.focus = p.get("focus");
+}
+function writeURL() {
+  const p = new URLSearchParams();
+  if (state.focus) p.set("focus", state.focus);
+  history.pushState({}, "", "?" + p.toString());
+}
+
+/* ===============================
+   RENDER (deterministický)
+================================= */
+const cards = [...document.querySelectorAll(".window")];
+
+function render() {
+  cards.forEach(c => c.classList.remove("is-lit"));
+  if (!state.focus) return;
+  const t = document.querySelector(".window." + state.focus);
+  if (t) t.classList.add("is-lit");
+}
+
+/* ===============================
+   INTERAKCE (UI jen mění stav)
+================================= */
+cards.forEach(win => {
+  win.addEventListener("click", () => {
+    const cls = [...win.classList].find(c =>
+      ["systems","research","digital","energy","security","academy"].includes(c)
+    );
+    if (!cls) return;
+    state.focus = cls;
+    writeURL();
+    render();
+  });
+});
+
+/* ===============================
+   SVĚTELNÁ VLNA (jen když není focus)
+================================= */
+let wave = 0;
+setInterval(() => {
+  if (state.focus) return;
+  cards.forEach(c => c.classList.remove("is-lit"));
+  cards[wave].classList.add("is-lit");
+  wave = (wave + 1) % cards.length;
+}, 2400);
+
+/* ===============================
+   INIT
+================================= */
+readURL();
+render();
+
 /* sjednocení výšky content */
 window.addEventListener("load",()=>{
   const blocks=[...document.querySelectorAll(".content")];
@@ -348,15 +416,6 @@ window.addEventListener("load",()=>{
   blocks.forEach(b=>max=Math.max(max,b.offsetHeight));
   blocks.forEach(b=>b.style.minHeight=max+"px");
 });
-
-/* světelná vlna */
-const cards=document.querySelectorAll(".window");
-let i=0;
-setInterval(()=>{
-  cards.forEach(c=>c.classList.remove("is-lit"));
-  cards[i].classList.add("is-lit");
-  i=(i+1)%cards.length;
-},2400);
 </script>
 
 </body>
