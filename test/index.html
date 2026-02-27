@@ -5,16 +5,11 @@
 <title>F.A.I.S.T. Innovations & Technologies</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- SPACE GROTESK – OFICIÁLNÍ FONT FAIST -->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* =========================
-   BRAND PROMĚNNÉ FAIST
-========================= */
 :root{
-  --faist-black:#000000;
-  --faist-graphite:#0b0b0b;
+  --faist-black:#000;
   --faist-white:#f2f2f2;
   --faist-gray:#bdbdbd;
   --faist-gold:rgb(255,215,120);
@@ -31,9 +26,7 @@ html,body{
   overflow:hidden;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
+/* BACKGROUND */
 .background,.noise{
   position:absolute;
   inset:0;
@@ -54,17 +47,13 @@ html,body{
   opacity:.15;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 header{
   height:64px;
   display:flex;
   justify-content:flex-end;
   align-items:center;
   padding:0 4vw;
-  z-index:10;
-  position:relative;
 }
 header nav{
   display:flex;
@@ -77,34 +66,24 @@ header nav a{
 }
 header nav a:hover{color:var(--faist-white)}
 
-/* =========================
-   HERO / BRAND
-========================= */
+/* HERO */
 .hero{
   text-align:center;
   margin-top:3vh;
-  position:relative;
-  z-index:5;
 }
 
-.brand{
-  line-height:1.15;
-}
 .brand-main{
-  display:block;
-  font-weight:600; /* Semibold */
+  font-weight:600;
   font-size:clamp(2.4rem,4.2vw,3.4rem);
   letter-spacing:.22em;
 }
 .brand-sub{
-  display:block;
   margin-top:6px;
-  font-weight:400; /* Regular */
+  font-weight:400;
   font-size:clamp(.9rem,1.4vw,1.05rem);
   letter-spacing:.28em;
   opacity:.9;
 }
-
 .hero-text{
   margin-top:14px;
   font-size:.9rem;
@@ -112,34 +91,22 @@ header nav a:hover{color:var(--faist-white)}
   opacity:.8;
 }
 
-/* =========================
-   DIVISIONS LAYOUT
-========================= */
+/* DIVISIONS – PEVNĚ UKOTVENÉ */
 .divisions{
   position:absolute;
   top:46vh;
-  bottom:6vh;
   left:0;
   width:100%;
+  height:420px;        /* 🔒 KONEČNÁ VÝŠKA */
   padding:0 6vw;
   display:flex;
   gap:1.6vw;
-  align-items:flex-start;
-  z-index:4;
 }
 
-.division{
-  flex:1;
-  display:flex;
-  justify-content:center;
-}
-
-/* =========================
-   DIVISION CARD – JEDNOTNÁ VELIKOST
-========================= */
+/* CARD */
+.division{flex:1}
 .window{
-  width:100%;
-  height:420px;               /* REFERENČNÍ VÝŠKA (SYSTEMS) */
+  height:100%;
   border-radius:22px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
@@ -147,28 +114,23 @@ header nav a:hover{color:var(--faist-white)}
   flex-direction:column;
   background-size:cover;
   background-position:center;
-  position:relative;
-  transition:opacity .5s ease, box-shadow .5s ease;
+  transition:opacity .4s ease, box-shadow .4s ease;
 }
-
 .window::after{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at top,
-    rgba(255,215,120,.22),
-    transparent 70%);
+  background:radial-gradient(circle at top, rgba(255,215,120,.22), transparent 70%);
   opacity:.12;
-  pointer-events:none;
 }
 
-/* BACKGROUNDS */
-.window.systems  {background-image:url("/assets/backgrounds/systems.png")}
-.window.research {background-image:url("/assets/backgrounds/research.png")}
-.window.digital  {background-image:url("/assets/backgrounds/digital.png")}
-.window.energy   {background-image:url("/assets/backgrounds/energy.png")}
-.window.security {background-image:url("/assets/backgrounds/security.png")}
-.window.academy  {background-image:url("/assets/backgrounds/academy.png")}
+/* BG */
+.window.systems{background-image:url("/assets/backgrounds/systems.png")}
+.window.research{background-image:url("/assets/backgrounds/research.png")}
+.window.digital{background-image:url("/assets/backgrounds/digital.png")}
+.window.energy{background-image:url("/assets/backgrounds/energy.png")}
+.window.security{background-image:url("/assets/backgrounds/security.png")}
+.window.academy{background-image:url("/assets/backgrounds/academy.png")}
 
 /* IMAGE */
 .image-slot{
@@ -195,18 +157,12 @@ header nav a:hover{color:var(--faist-white)}
   flex-direction:column;
   flex:1;
 }
-
-.content h3{
-  font-size:.95rem;
-  font-weight:600;
-}
 .content p{
   font-size:.8rem;
   opacity:.8;
-  max-height:3.6em; /* sjednocení výšek */
+  max-height:3.6em;
   overflow:hidden;
 }
-
 .more{
   margin-top:auto;
   font-size:.78rem;
@@ -214,36 +170,22 @@ header nav a:hover{color:var(--faist-white)}
   text-decoration:none;
 }
 
-/* =========================
-   HOVER LOGIKA (KLID + DŮRAZ)
-========================= */
-.divisions:hover .window{
-  opacity:.35;
-}
+/* HOVER */
+.divisions:hover .window{opacity:.35}
 .division:hover .window{
   opacity:1;
-  box-shadow:
-    0 0 0 1px rgba(255,215,120,.35),
-    0 0 28px rgba(255,215,120,.35);
+  box-shadow:0 0 28px rgba(255,215,120,.35);
 }
 
-/* =========================
-   AI DOCK
-========================= */
+/* AI */
 .ai-dock{
   position:fixed;
   right:22px;
   bottom:22px;
   padding:10px 16px;
   border-radius:18px;
-  background:rgba(12,12,12,.85);
   border:1px solid rgba(255,215,120,.45);
   font-size:.75rem;
-  cursor:pointer;
-  z-index:20;
-}
-.ai-dock:hover{
-  box-shadow:0 0 18px rgba(255,215,120,.35);
 }
 </style>
 </head>
@@ -255,19 +197,13 @@ header nav a:hover{color:var(--faist-white)}
 
 <header>
   <nav>
-    <a href="#">Holding</a>
-    <a href="#">Divize</a>
-    <a href="#">O nás</a>
-    <a href="#">Kontakt</a>
+    <a>Holding</a><a>Divize</a><a>O nás</a><a>Kontakt</a>
   </nav>
 </header>
 
 <div class="hero">
-  <h1 class="brand">
-    <span class="brand-main">F.A.I.S.T.</span>
-    <span class="brand-sub">Innovations & Technologies</span>
-  </h1>
-
+  <div class="brand-main">F.A.I.S.T.</div>
+  <div class="brand-sub">Innovations & Technologies</div>
   <p class="hero-text">
     FAIST je systém, ne seznam.<br>
     Všechny divize FAISTu spolu tvoří jeden celek.<br>
@@ -276,73 +212,12 @@ header nav a:hover{color:var(--faist-white)}
 </div>
 
 <div class="divisions">
-
-  <div class="division">
-    <div class="window systems">
-      <div class="image-slot"><img src="/assets/divisions/systems.png"></div>
-      <div class="content">
-        <h3>Systems</h3>
-        <p>Architektura a infrastruktura.</p>
-        <a class="more" href="#">Zjistit více →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="division">
-    <div class="window research">
-      <div class="image-slot"><img src="/assets/divisions/research.png"></div>
-      <div class="content">
-        <h3>Research</h3>
-        <p>Výzkum a experiment.</p>
-        <a class="more" href="#">Zjistit více →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="division">
-    <div class="window digital">
-      <div class="image-slot"><img src="/assets/divisions/digital.png"></div>
-      <div class="content">
-        <h3>Digital</h3>
-        <p>Digitální produkty a řešení.</p>
-        <a class="more" href="#">Zjistit více →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="division">
-    <div class="window energy">
-      <div class="image-slot"><img src="/assets/divisions/energy.png"></div>
-      <div class="content">
-        <h3>Energy</h3>
-        <p>Transformace a řízení energie.</p>
-        <a class="more" href="#">Zjistit více →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="division">
-    <div class="window security">
-      <div class="image-slot"><img src="/assets/divisions/security.png"></div>
-      <div class="content">
-        <h3>Security</h3>
-        <p>Ochrana systémů a dat.</p>
-        <a class="more" href="#">Zjistit více →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="division">
-    <div class="window academy">
-      <div class="image-slot"><img src="/assets/divisions/academy.png"></div>
-      <div class="content">
-        <h3>Academy</h3>
-        <p>Přenos know-how a vzdělávání.</p>
-        <a class="more" href="#">Zjistit více →</a>
-      </div>
-    </div>
-  </div>
-
+  <div class="division"><div class="window systems"><div class="image-slot"><img src="/assets/divisions/systems.png"></div><div class="content"><h3>Systems</h3><p>Architektura a infrastruktura.</p><a class="more">Zjistit více →</a></div></div></div>
+  <div class="division"><div class="window research"><div class="image-slot"><img src="/assets/divisions/research.png"></div><div class="content"><h3>Research</h3><p>Výzkum a experiment.</p><a class="more">Zjistit více →</a></div></div></div>
+  <div class="division"><div class="window digital"><div class="image-slot"><img src="/assets/divisions/digital.png"></div><div class="content"><h3>Digital</h3><p>Digitální produkty a řešení.</p><a class="more">Zjistit více →</a></div></div></div>
+  <div class="division"><div class="window energy"><div class="image-slot"><img src="/assets/divisions/energy.png"></div><div class="content"><h3>Energy</h3><p>Transformace a řízení energie.</p><a class="more">Zjistit více →</a></div></div></div>
+  <div class="division"><div class="window security"><div class="image-slot"><img src="/assets/divisions/security.png"></div><div class="content"><h3>Security</h3><p>Ochrana systémů a dat.</p><a class="more">Zjistit více →</a></div></div></div>
+  <div class="division"><div class="window academy"><div class="image-slot"><img src="/assets/divisions/academy.png"></div><div class="content"><h3>Academy</h3><p>Přenos know-how a vzdělávání.</p><a class="more">Zjistit více →</a></div></div></div>
 </div>
 
 <div class="ai-dock">FAIST AI</div>
