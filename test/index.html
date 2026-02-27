@@ -10,6 +10,7 @@
 <style>
 :root{
   --faist-black:#000;
+  --faist-graphite:#0b0b0b;
   --faist-white:#f2f2f2;
   --faist-gray:#bdbdbd;
   --faist-gold:rgb(255,215,120);
@@ -49,6 +50,8 @@ html,body{
 
 /* HEADER */
 header{
+  position:relative;
+  z-index:30;
   height:64px;
   display:flex;
   justify-content:flex-end;
@@ -68,10 +71,11 @@ header nav a:hover{color:var(--faist-white)}
 
 /* HERO */
 .hero{
+  position:relative;
+  z-index:20;
   text-align:center;
   margin-top:3vh;
 }
-
 .brand-main{
   font-weight:600;
   font-size:clamp(2.4rem,4.2vw,3.4rem);
@@ -91,13 +95,18 @@ header nav a:hover{color:var(--faist-white)}
   opacity:.8;
 }
 
-/* DIVISIONS – PEVNĚ UKOTVENÉ */
-.divisions{
+/* DIVISIONS WRAPPER – OŘEZ */
+.divisions-wrap{
   position:absolute;
   top:46vh;
-  left:0;
+  height:420px;
   width:100%;
-  height:420px;        /* 🔒 KONEČNÁ VÝŠKA */
+  overflow:hidden;
+  z-index:10;
+}
+
+.divisions{
+  height:100%;
   padding:0 6vw;
   display:flex;
   gap:1.6vw;
@@ -105,6 +114,7 @@ header nav a:hover{color:var(--faist-white)}
 
 /* CARD */
 .division{flex:1}
+
 .window{
   height:100%;
   border-radius:22px;
@@ -114,17 +124,23 @@ header nav a:hover{color:var(--faist-white)}
   flex-direction:column;
   background-size:cover;
   background-position:center;
-  transition:opacity .4s ease, box-shadow .4s ease;
+  position:relative;
+  opacity:.55;
+  transition:opacity .35s ease, box-shadow .35s ease;
 }
+
 .window::after{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at top, rgba(255,215,120,.22), transparent 70%);
+  background:radial-gradient(circle at top,
+    rgba(255,215,120,.22),
+    transparent 70%);
   opacity:.12;
+  pointer-events:none;
 }
 
-/* BG */
+/* BACKGROUNDS */
 .window.systems{background-image:url("/assets/backgrounds/systems.png")}
 .window.research{background-image:url("/assets/backgrounds/research.png")}
 .window.digital{background-image:url("/assets/backgrounds/digital.png")}
@@ -157,6 +173,10 @@ header nav a:hover{color:var(--faist-white)}
   flex-direction:column;
   flex:1;
 }
+.content h3{
+  font-size:.95rem;
+  font-weight:600;
+}
 .content p{
   font-size:.8rem;
   opacity:.8;
@@ -171,21 +191,42 @@ header nav a:hover{color:var(--faist-white)}
 }
 
 /* HOVER */
-.divisions:hover .window{opacity:.35}
 .division:hover .window{
   opacity:1;
-  box-shadow:0 0 28px rgba(255,215,120,.35);
+  box-shadow:
+    0 0 0 1px rgba(255,215,120,.35),
+    0 0 28px rgba(255,215,120,.35);
 }
 
-/* AI */
+/* FOOTER */
+footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:32px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:.7rem;
+  opacity:.45;
+  z-index:15;
+}
+
+/* AI DOCK */
 .ai-dock{
   position:fixed;
   right:22px;
   bottom:22px;
   padding:10px 16px;
   border-radius:18px;
+  background:rgba(12,12,12,.85);
   border:1px solid rgba(255,215,120,.45);
   font-size:.75rem;
+  cursor:pointer;
+  z-index:40;
+}
+.ai-dock:hover{
+  box-shadow:0 0 18px rgba(255,215,120,.35);
 }
 </style>
 </head>
@@ -197,7 +238,10 @@ header nav a:hover{color:var(--faist-white)}
 
 <header>
   <nav>
-    <a>Holding</a><a>Divize</a><a>O nás</a><a>Kontakt</a>
+    <a href="#">Holding</a>
+    <a href="#">Divize</a>
+    <a href="#">O nás</a>
+    <a href="#">Kontakt</a>
   </nav>
 </header>
 
@@ -211,14 +255,79 @@ header nav a:hover{color:var(--faist-white)}
   </p>
 </div>
 
-<div class="divisions">
-  <div class="division"><div class="window systems"><div class="image-slot"><img src="/assets/divisions/systems.png"></div><div class="content"><h3>Systems</h3><p>Architektura a infrastruktura.</p><a class="more">Zjistit více →</a></div></div></div>
-  <div class="division"><div class="window research"><div class="image-slot"><img src="/assets/divisions/research.png"></div><div class="content"><h3>Research</h3><p>Výzkum a experiment.</p><a class="more">Zjistit více →</a></div></div></div>
-  <div class="division"><div class="window digital"><div class="image-slot"><img src="/assets/divisions/digital.png"></div><div class="content"><h3>Digital</h3><p>Digitální produkty a řešení.</p><a class="more">Zjistit více →</a></div></div></div>
-  <div class="division"><div class="window energy"><div class="image-slot"><img src="/assets/divisions/energy.png"></div><div class="content"><h3>Energy</h3><p>Transformace a řízení energie.</p><a class="more">Zjistit více →</a></div></div></div>
-  <div class="division"><div class="window security"><div class="image-slot"><img src="/assets/divisions/security.png"></div><div class="content"><h3>Security</h3><p>Ochrana systémů a dat.</p><a class="more">Zjistit více →</a></div></div></div>
-  <div class="division"><div class="window academy"><div class="image-slot"><img src="/assets/divisions/academy.png"></div><div class="content"><h3>Academy</h3><p>Přenos know-how a vzdělávání.</p><a class="more">Zjistit více →</a></div></div></div>
+<div class="divisions-wrap">
+  <div class="divisions">
+
+    <div class="division">
+      <div class="window systems">
+        <div class="image-slot"><img src="/assets/divisions/systems.png"></div>
+        <div class="content">
+          <h3>Systems</h3>
+          <p>Architektura a infrastruktura.</p>
+          <a class="more">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="division">
+      <div class="window research">
+        <div class="image-slot"><img src="/assets/divisions/research.png"></div>
+        <div class="content">
+          <h3>Research</h3>
+          <p>Výzkum a experiment.</p>
+          <a class="more">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="division">
+      <div class="window digital">
+        <div class="image-slot"><img src="/assets/divisions/digital.png"></div>
+        <div class="content">
+          <h3>Digital</h3>
+          <p>Digitální produkty a řešení.</p>
+          <a class="more">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="division">
+      <div class="window energy">
+        <div class="image-slot"><img src="/assets/divisions/energy.png"></div>
+        <div class="content">
+          <h3>Energy</h3>
+          <p>Transformace a řízení energie.</p>
+          <a class="more">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="division">
+      <div class="window security">
+        <div class="image-slot"><img src="/assets/divisions/security.png"></div>
+        <div class="content">
+          <h3>Security</h3>
+          <p>Ochrana systémů a dat.</p>
+          <a class="more">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="division">
+      <div class="window academy">
+        <div class="image-slot"><img src="/assets/divisions/academy.png"></div>
+        <div class="content">
+          <h3>Academy</h3>
+          <p>Přenos know-how a vzdělávání.</p>
+          <a class="more">Zjistit více →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<footer>© 2025 F.A.I.S.T. digital</footer>
 
 <div class="ai-dock">FAIST AI</div>
 
