@@ -5,20 +5,35 @@
 <title>F.A.I.S.T. Innovations & Technologies</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+<!-- SPACE GROTESK – OFICIÁLNÍ FONT FAIST -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
+/* =========================
+   BRAND PROMĚNNÉ FAIST
+========================= */
+:root{
+  --faist-black:#000000;
+  --faist-graphite:#0b0b0b;
+  --faist-white:#f2f2f2;
+  --faist-gray:#bdbdbd;
+  --faist-gold:rgb(255,215,120);
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
+
 html,body{
   width:100%;
   height:100%;
-  background:#000;
-  color:#eee;
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--faist-black);
+  color:var(--faist-white);
+  font-family:"Space Grotesk",system-ui,sans-serif;
   overflow:hidden;
 }
 
-/* BACKGROUND */
+/* =========================
+   BACKGROUND
+========================= */
 .background,.noise{
   position:absolute;
   inset:0;
@@ -26,7 +41,7 @@ html,body{
 }
 .background{
   background:
-    radial-gradient(circle at center, rgba(255,200,120,.03), transparent 60%),
+    radial-gradient(circle at center, rgba(255,215,120,.03), transparent 60%),
     linear-gradient(to bottom,#050505,#000 70%);
 }
 .noise{
@@ -37,18 +52,19 @@ html,body{
   );
   background-size:2px 2px;
   opacity:.15;
-  mix-blend-mode:overlay;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 header{
-  position:relative;
-  z-index:20;
   height:64px;
   display:flex;
   justify-content:flex-end;
   align-items:center;
   padding:0 4vw;
+  z-index:10;
+  position:relative;
 }
 header nav{
   display:flex;
@@ -56,70 +72,74 @@ header nav{
 }
 header nav a{
   font-size:.85rem;
-  color:#ccc;
+  color:var(--faist-gray);
   text-decoration:none;
 }
-header nav a:hover{color:#fff}
+header nav a:hover{color:var(--faist-white)}
 
-/* HERO */
+/* =========================
+   HERO / BRAND
+========================= */
 .hero{
-  position:relative;
-  z-index:5;
   text-align:center;
   margin-top:3vh;
+  position:relative;
+  z-index:5;
 }
-.hero h1{
-  font-family:"Cinzel",serif;
+
+.brand{
+  line-height:1.15;
+}
+.brand-main{
+  display:block;
+  font-weight:600; /* Semibold */
   font-size:clamp(2.4rem,4.2vw,3.4rem);
   letter-spacing:.22em;
-  text-shadow:
-    0 0 16px rgba(255,215,120,.9),
-    0 0 48px rgba(255,190,90,.6);
 }
-.hero .forge{
+.brand-sub{
+  display:block;
   margin-top:6px;
-  font-size:.75rem;
-  letter-spacing:.14em;
-  opacity:.65;
+  font-weight:400; /* Regular */
+  font-size:clamp(.9rem,1.4vw,1.05rem);
+  letter-spacing:.28em;
+  opacity:.9;
 }
-.hero .claim{
-  margin-top:10px;
+
+.hero-text{
+  margin-top:14px;
   font-size:.9rem;
-  opacity:.85;
+  line-height:1.6;
+  opacity:.8;
 }
 
-/* CONTEXT */
-.context{
-  text-align:center;
-  margin-top:8px;
-  font-size:.78rem;
-  opacity:.6;
-}
-
-/* DIVISIONS WRAPPER */
+/* =========================
+   DIVISIONS LAYOUT
+========================= */
 .divisions{
   position:absolute;
   top:46vh;
-  bottom:6vh;            /* spodní rezerva */
+  bottom:6vh;
   left:0;
   width:100%;
   padding:0 6vw;
   display:flex;
   gap:1.6vw;
-  align-items:center;    /* vertikální vycentrování */
+  align-items:center;
   z-index:4;
 }
+
 .division{
   flex:1;
   display:flex;
   justify-content:center;
 }
 
-/* CARD */
+/* =========================
+   DIVISION CARD – JEDNOTNÁ VELIKOST
+========================= */
 .window{
   width:100%;
-  height:100%;           /* všechny stejně vysoké */
-  max-height:420px;      /* tvrdý strop */
+  height:420px;               /* REFERENČNÍ VÝŠKA (SYSTEMS) */
   border-radius:22px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
@@ -128,16 +148,15 @@ header nav a:hover{color:#fff}
   background-size:cover;
   background-position:center;
   position:relative;
-  transition:opacity .5s ease, box-shadow .5s ease, filter .5s ease;
+  transition:opacity .5s ease, box-shadow .5s ease;
 }
 
-/* LIGHT OVERLAY */
 .window::after{
   content:"";
   position:absolute;
   inset:0;
   background:radial-gradient(circle at top,
-    rgba(255,215,120,.25),
+    rgba(255,215,120,.22),
     transparent 70%);
   opacity:.12;
   pointer-events:none;
@@ -174,34 +193,43 @@ header nav a:hover{color:#fff}
   background:rgba(0,0,0,.65);
   display:flex;
   flex-direction:column;
-  flex:1;                /* vyrovnání výšky */
+  flex:1;
 }
-.content h3{font-size:.95rem}
+
+.content h3{
+  font-size:.95rem;
+  font-weight:600;
+}
 .content p{
   font-size:.8rem;
   opacity:.8;
+  max-height:3.6em; /* sjednocení výšek */
+  overflow:hidden;
 }
+
 .more{
   margin-top:auto;
   font-size:.78rem;
-  color:rgb(255,215,120);
+  color:var(--faist-gold);
   text-decoration:none;
 }
 
-/* HOVER RELATIONSHIP */
+/* =========================
+   HOVER LOGIKA (KLID + DŮRAZ)
+========================= */
 .divisions:hover .window{
   opacity:.35;
-  filter:grayscale(.2);
 }
 .division:hover .window{
   opacity:1;
-  filter:none;
   box-shadow:
     0 0 0 1px rgba(255,215,120,.35),
     0 0 28px rgba(255,215,120,.35);
 }
 
-/* AI DOCK */
+/* =========================
+   AI DOCK
+========================= */
 .ai-dock{
   position:fixed;
   right:22px;
@@ -212,7 +240,7 @@ header nav a:hover{color:#fff}
   border:1px solid rgba(255,215,120,.45);
   font-size:.75rem;
   cursor:pointer;
-  z-index:40;
+  z-index:20;
 }
 .ai-dock:hover{
   box-shadow:0 0 18px rgba(255,215,120,.35);
@@ -235,13 +263,16 @@ header nav a:hover{color:#fff}
 </header>
 
 <div class="hero">
-  <h1>F.A.I.S.T.</h1>
-  <div class="forge">Innovations & Technologies</div>
-  <div class="claim">FAIST je systém, ne seznam. Jednotlivé části spolu souvisí.</div>
-</div>
+  <h1 class="brand">
+    <span class="brand-main">F.A.I.S.T.</span>
+    <span class="brand-sub">Innovations & Technologies</span>
+  </h1>
 
-<div class="context">
-  Pokud si nejsi jistý cestou, FAIST AI tě navede.
+  <p class="hero-text">
+    FAIST je systém, ne seznam.<br>
+    Všechny divize FAISTu spolu tvoří jeden celek.<br>
+    Pokud si nejsi jistý cestou, FAIST AI tě navede.
+  </p>
 </div>
 
 <div class="divisions">
