@@ -9,7 +9,7 @@ const STORAGE_KEY = "faist_dollhouse_world";
 const FLOOR_HEIGHT_RATIO = 0.35;
 
 // jak dlouho trvá „dosednutí“ (ms)
-const DROP_DURATION = 220;
+const DROP_DURATION = 3000;
 
 let world = null;
 let drag = null;
