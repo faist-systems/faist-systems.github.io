@@ -1,1 +1,145 @@
+/* ======================================
+   FAIST – Dollhouse
+   Scene styles v0.1
+====================================== */
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(#ffd6e8, #fff);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+#app {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Nadpisy */
+h1 {
+  margin: 0 0 4px 0;
+  font-size: 28px;
+  color: #c2185b;
+}
+
+p {
+  margin: 0 0 12px 0;
+  color: #7a2e4d;
+}
+
+/* ======================================
+   MÍSTNOST (SCÉNA)
+====================================== */
+
+.room {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+
+  /* Stěna + podlaha */
+  background:
+    linear-gradient(
+      to bottom,
+      #ffb6d5 0%,
+      #ffb6d5 65%,
+      #f3caa7 65%,
+      #e0a96d 100%
+    );
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Jemná linka mezi stěnou a podlahou */
+.room::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 65%;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ======================================
+   NÁBYTEK
+====================================== */
+
+.furniture {
+  position: absolute;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  color: #fff;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.furniture:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+/* Konkrétní typy */
+.furniture.sofa {
+  background: #ff5fa2;
+  width: 140px;
+  text-align: center;
+}
+
+.furniture.table {
+  background: #c47aff;
+  width: 100px;
+  text-align: center;
+}
+
+.furniture.fridge {
+  background: #5fdde5;
+  width: 90px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.furniture.stove {
+  background: #ffffff;
+  color: #333;
+  width: 90px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #ff8fab;
+}
+
+/* ======================================
+   PET
+====================================== */
+
+.pet {
+  position: absolute;
+  padding: 10px 14px;
+  background: #ffcc4d;
+  border-radius: 50%;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
