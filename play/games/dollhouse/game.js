@@ -1,6 +1,6 @@
 // ======================================
 // FAIST – Dollhouse
-// HOLD + TAP + MOVE + COLLISIONS + ROLLBACK
+// HOLD + TAP + MOVE + COLLISIONS + GRAVITY
 // ======================================
 
 // ----- CONFIG -----
@@ -10,6 +10,8 @@ const STORAGE_KEY = "faist_dollhouse_world_v1";
 const HOLD_TIME_MS = 2000;
 const MOVE_THRESHOLD_PX = 6;
 const TAP_TIME_MS = 250;
+
+const GRAVITY_STEP = 4; // px per step
 
 // ----- GAME MODES -----
 const MODE_NORMAL = "NORMAL";
@@ -47,7 +49,6 @@ function createDefaultWorld() {
     player: { name: { vocative: "Lauro" } },
     house: {
       rooms: [{
-        id: "room-1",
         bounds: { width: 800, height: 500 },
         furniture: [
           { id: "f1", type: "sofa",   position: { x: 80,  y: 320 } },
@@ -94,35 +95,9 @@ function renderWorld() {
     ring.className = "hold-ring";
     el.appendChild(ring);
 
-    const panel = createObjectPanel(item);
-    el.appendChild(panel);
-
     enableGestures(el, item, room, roomData.furniture);
-
     room.appendChild(el);
   });
-}
-
-// ======================================
-// OBJECT PANEL (PLACEHOLDER)
-// ======================================
-function createObjectPanel(item) {
-  const panel = document.createElement("div");
-  panel.className = "object-panel";
-  panel.style.display = "none";
-
-  panel.innerHTML = `
-    <strong>${item.type}</strong><br>
-    <small>(obsah přijde později)</small><br><br>
-    <button>Zavřít</button>
-  `;
-
-  panel.querySelector("button").onclick = e => {
-    e.stopPropagation();
-    closeInteraction();
-  };
-
-  return panel;
 }
 
 // ======================================
@@ -132,101 +107,99 @@ function enableGestures(el, item, room, allItems) {
   el.addEventListener("pointerdown", e => {
     if (gameMode !== MODE_NORMAL) return;
 
-    const startX = e.clientX;
-    const startY = e.clientY;
-    const startTime = performance.now();
-
-    el.style.setProperty("--hold-progress", "0deg");
-
-    function animateHold(now) {
-      if (!gesture || gesture.moved) return;
-
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / HOLD_TIME_MS, 1);
-      el.style.setProperty("--hold-progress", `${progress * 360}deg`);
-
-      if (progress < 1) {
-        requestAnimationFrame(animateHold);
-      } else {
-        openInteraction(el);
-      }
-    }
-
     gesture = {
       el,
       item,
       room,
       allItems,
-      startX,
-      startY,
-      startTime,
+      startX: e.clientX,
+      startY: e.clientY,
       baseX: item.position.x,
       baseY: item.position.y,
-
-      // ⭐ KLÍČOVÉ:
       lastValidX: item.position.x,
       lastValidY: item.position.y,
-
       moved: false
     };
 
     el.setPointerCapture(e.pointerId);
-    requestAnimationFrame(animateHold);
   });
 
   el.addEventListener("pointermove", e => {
-    if (!gesture || gameMode !== MODE_NORMAL) return;
+    if (!gesture) return;
 
     const dx = e.clientX - gesture.startX;
     const dy = e.clientY - gesture.startY;
 
     if (Math.abs(dx) > MOVE_THRESHOLD_PX || Math.abs(dy) > MOVE_THRESHOLD_PX) {
       gesture.moved = true;
-      el.style.setProperty("--hold-progress", "0deg");
 
-      const nextX = gesture.baseX + dx;
-      const nextY = gesture.baseY + dy;
+      const nx = gesture.baseX + dx;
+      const ny = gesture.baseY + dy;
 
-      if (!collides(nextX, nextY, el, item, gesture.allItems)) {
-        el.style.left = nextX + "px";
-        el.style.top  = nextY + "px";
-
-        // ⭐ ukládáme POSLEDNÍ PLATNOU POZICI
-        gesture.lastValidX = nextX;
-        gesture.lastValidY = nextY;
+      if (!collides(nx, ny, el, item, gesture.allItems)) {
+        el.style.left = nx + "px";
+        el.style.top  = ny + "px";
+        gesture.lastValidX = nx;
+        gesture.lastValidY = ny;
       }
     }
   });
 
   el.addEventListener("pointerup", e => {
     if (!gesture) return;
-
     el.releasePointerCapture(e.pointerId);
-    el.style.setProperty("--hold-progress", "0deg");
-
-    const elapsed = performance.now() - gesture.startTime;
 
     if (gesture.moved) {
-      // ⭐ návrat na poslední validní místo
-      el.style.left = gesture.lastValidX + "px";
-      el.style.top  = gesture.lastValidY + "px";
-
-      applyConstraints(el, item, room);
-
-      item.position.x = gesture.lastValidX;
-      item.position.y = gesture.lastValidY;
-
+      applyGravity(el, item, room, gesture);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(worldState));
-      gesture = null;
-      return;
-    }
-
-    if (elapsed <= TAP_TIME_MS && gameMode === MODE_NORMAL) {
-      markSelected(el);
     }
 
     gesture = null;
   });
+}
+
+// ======================================
+// GRAVITY WITH COLLISION
+// ======================================
+function applyGravity(el, item, room, gesture) {
+  const roomHeight = room.offsetHeight;
+  const floorTop = roomHeight * (1 - FLOOR_HEIGHT_RATIO);
+
+  let x = gesture.lastValidX;
+  let y = gesture.lastValidY;
+
+  let nextY = y;
+
+  while (true) {
+    nextY += GRAVITY_STEP;
+
+    const bottom = nextY + el.offsetHeight;
+
+    // podlaha
+    if (bottom > roomHeight) {
+      nextY = roomHeight - el.offsetHeight;
+      break;
+    }
+
+    // kolize při pádu
+    if (collides(x, nextY, el, item, gesture.allItems)) {
+      break;
+    }
+
+    // zeď vzadu
+    if (bottom < floorTop) {
+      nextY = floorTop - el.offsetHeight;
+      break;
+    }
+
+    y = nextY;
+  }
+
+  el.style.left = x + "px";
+  el.style.top  = y + "px";
+
+  item.position.x = x;
+  item.position.y = y;
 }
 
 // ======================================
@@ -258,57 +231,15 @@ function collides(x, y, el, currentItem, allItems) {
       bottom: oy + otherEl.offsetHeight
     };
 
-    const overlap =
+    if (
       rectA.left < rectB.right &&
       rectA.right > rectB.left &&
       rectA.top < rectB.bottom &&
-      rectA.bottom > rectB.top;
-
-    if (overlap) return true;
+      rectA.bottom > rectB.top
+    ) {
+      return true;
+    }
   }
 
   return false;
-}
-
-// ======================================
-// INTERACTION MODE
-// ======================================
-function openInteraction(el) {
-  gameMode = MODE_INTERACTING;
-  el.querySelector(".object-panel").style.display = "block";
-}
-
-function closeInteraction() {
-  document.querySelectorAll(".object-panel")
-    .forEach(p => p.style.display = "none");
-  gameMode = MODE_NORMAL;
-}
-
-// ======================================
-// CONSTRAINTS
-// ======================================
-function applyConstraints(el, item, room) {
-  const roomHeight = room.offsetHeight;
-  const floorTop = roomHeight * (1 - FLOOR_HEIGHT_RATIO);
-  const floorBottom = roomHeight;
-
-  let y = parseInt(el.style.top);
-  const bottom = y + el.offsetHeight;
-
-  if (bottom < floorTop) y = floorTop - el.offsetHeight;
-  if (y > floorBottom - el.offsetHeight) y = floorBottom - el.offsetHeight;
-
-  el.style.top = y + "px";
-  item.position.y = y;
-}
-
-// ======================================
-// FAST TAP SELECT
-// ======================================
-function markSelected(el) {
-  document.querySelectorAll(".furniture.selected")
-    .forEach(e => e.classList.remove("selected"));
-
-  el.classList.add("selected");
-  setTimeout(() => el.classList.remove("selected"), 600);
 }
