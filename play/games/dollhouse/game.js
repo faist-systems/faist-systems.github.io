@@ -1,9 +1,12 @@
 // ======================================
 // FAIST – Dollhouse
-// World Loader + Drag & Drop (FIXED)
+// World Loader + Drag & Drop + Gravity v0.1
 // ======================================
 
 const STORAGE_KEY = "faist_dollhouse_world";
+
+// kde začíná podlaha (65 % místnosti)
+const FLOOR_RATIO = 0.65;
 
 let currentWorld = null;
 let dragState = null;
@@ -90,27 +93,25 @@ function renderWorld() {
 }
 
 // ======================================
-// DRAG & DROP – POINTER EVENTS
+// DRAG & DROP + GRAVITY
 // ======================================
 
 function enableDrag(element, item, room, roomEl) {
-  element.style.touchAction = "none"; // KRITICKÉ
-
   element.addEventListener("pointerdown", e => {
     e.preventDefault();
-
-    const rect = roomEl.getBoundingClientRect();
+    e.stopPropagation();
 
     dragState = {
       element,
       item,
-      room,
-      offsetX: e.clientX - rect.left - item.position.x,
-      offsetY: e.clientY - rect.top - item.position.y
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: item.position.x,
+      originY: item.position.y
     };
 
     element.setPointerCapture(e.pointerId);
-    element.style.zIndex = 1000;
+    element.style.zIndex = 9999;
   });
 
   element.addEventListener("pointermove", e => {
@@ -118,8 +119,8 @@ function enableDrag(element, item, room, roomEl) {
 
     const rect = roomEl.getBoundingClientRect();
 
-    let x = e.clientX - rect.left - dragState.offsetX;
-    let y = e.clientY - rect.top - dragState.offsetY;
+    let x = dragState.originX + (e.clientX - dragState.startX);
+    let y = dragState.originY + (e.clientY - dragState.startY);
 
     // hranice místnosti
     x = Math.max(0, Math.min(x, rect.width - element.offsetWidth));
@@ -129,17 +130,39 @@ function enableDrag(element, item, room, roomEl) {
     element.style.top = y + "px";
   });
 
-  element.addEventListener("pointerup", () => {
+  element.addEventListener("pointerup", e => {
     if (!dragState) return;
 
-    dragState.item.position.x =
-      parseInt(dragState.element.style.left);
-    dragState.item.position.y =
-      parseInt(dragState.element.style.top);
+    applyGravity(element, roomEl);
+
+    item.position.x = parseInt(element.style.left);
+    item.position.y = parseInt(element.style.top);
 
     saveWorld(currentWorld);
 
-    dragState.element.style.zIndex = "";
+    element.releasePointerCapture(e.pointerId);
+    element.style.zIndex = "";
     dragState = null;
   });
+}
+
+// ======================================
+// GRAVITY
+// ======================================
+
+function applyGravity(element, roomEl) {
+  const roomHeight = roomEl.offsetHeight;
+  const floorY = roomHeight * FLOOR_RATIO;
+
+  const targetY =
+    floorY - element.offsetHeight;
+
+  // jemná animace „spadnutí“
+  element.style.transition = "top 0.2s ease-out";
+  element.style.top = targetY + "px";
+
+  // po animaci vrátíme kontrolu
+  setTimeout(() => {
+    element.style.transition = "";
+  }, 200);
 }
