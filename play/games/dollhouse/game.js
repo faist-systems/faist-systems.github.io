@@ -1,23 +1,20 @@
 // ======================================
 // FAIST – Dollhouse
-// World Loader + Interactions v0.1
+// World Loader + Drag & Drop (FIXED)
 // ======================================
 
 const STORAGE_KEY = "faist_dollhouse_world";
 
 let currentWorld = null;
-let draggedItem = null;
-let dragOffset = { x: 0, y: 0 };
+let dragState = null;
 
 // ======================================
 // INIT
 // ======================================
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadWorld().then(world => {
-    currentWorld = world;
-    renderWorld();
-  });
+document.addEventListener("DOMContentLoaded", async () => {
+  currentWorld = await loadWorld();
+  renderWorld();
 });
 
 // ======================================
@@ -67,24 +64,21 @@ function renderWorld() {
   roomEl.className = "room";
   roomEl.style.width = room.bounds.width + "px";
   roomEl.style.height = room.bounds.height + "px";
-  roomEl.dataset.roomId = room.id;
   app.appendChild(roomEl);
 
-  // Nábytek
   room.furniture.forEach(item => {
     const el = document.createElement("div");
     el.className = `furniture ${item.type}`;
+    el.textContent = item.type;
     el.style.left = item.position.x + "px";
     el.style.top = item.position.y + "px";
-    el.textContent = item.type;
     el.dataset.id = item.id;
 
-    enableDrag(el, item, room);
+    enableDrag(el, item, room, roomEl);
 
     roomEl.appendChild(el);
   });
 
-  // Pet
   const pet = currentWorld.pet;
   const petEl = document.createElement("div");
   petEl.className = "pet";
@@ -96,46 +90,56 @@ function renderWorld() {
 }
 
 // ======================================
-// DRAG & DROP
+// DRAG & DROP – POINTER EVENTS
 // ======================================
 
-function enableDrag(element, item, room) {
-  element.addEventListener("mousedown", e => {
-    draggedItem = { element, item, room };
-    dragOffset.x = e.offsetX;
-    dragOffset.y = e.offsetY;
+function enableDrag(element, item, room, roomEl) {
+  element.style.touchAction = "none"; // KRITICKÉ
+
+  element.addEventListener("pointerdown", e => {
+    e.preventDefault();
+
+    const rect = roomEl.getBoundingClientRect();
+
+    dragState = {
+      element,
+      item,
+      room,
+      offsetX: e.clientX - rect.left - item.position.x,
+      offsetY: e.clientY - rect.top - item.position.y
+    };
+
+    element.setPointerCapture(e.pointerId);
     element.style.zIndex = 1000;
   });
+
+  element.addEventListener("pointermove", e => {
+    if (!dragState) return;
+
+    const rect = roomEl.getBoundingClientRect();
+
+    let x = e.clientX - rect.left - dragState.offsetX;
+    let y = e.clientY - rect.top - dragState.offsetY;
+
+    // hranice místnosti
+    x = Math.max(0, Math.min(x, rect.width - element.offsetWidth));
+    y = Math.max(0, Math.min(y, rect.height - element.offsetHeight));
+
+    element.style.left = x + "px";
+    element.style.top = y + "px";
+  });
+
+  element.addEventListener("pointerup", () => {
+    if (!dragState) return;
+
+    dragState.item.position.x =
+      parseInt(dragState.element.style.left);
+    dragState.item.position.y =
+      parseInt(dragState.element.style.top);
+
+    saveWorld(currentWorld);
+
+    dragState.element.style.zIndex = "";
+    dragState = null;
+  });
 }
-
-document.addEventListener("mousemove", e => {
-  if (!draggedItem) return;
-
-  const roomEl = document.querySelector(".room");
-  const rect = roomEl.getBoundingClientRect();
-
-  let x = e.clientX - rect.left - dragOffset.x;
-  let y = e.clientY - rect.top - dragOffset.y;
-
-  // hranice místnosti
-  x = Math.max(0, Math.min(x, rect.width - draggedItem.element.offsetWidth));
-  y = Math.max(0, Math.min(y, rect.height - draggedItem.element.offsetHeight));
-
-  draggedItem.element.style.left = x + "px";
-  draggedItem.element.style.top = y + "px";
-});
-
-document.addEventListener("mouseup", () => {
-  if (!draggedItem) return;
-
-  // uložíme pozici
-  draggedItem.item.position.x =
-    parseInt(draggedItem.element.style.left);
-  draggedItem.item.position.y =
-    parseInt(draggedItem.element.style.top);
-
-  saveWorld(currentWorld);
-
-  draggedItem.element.style.zIndex = "";
-  draggedItem = null;
-});
