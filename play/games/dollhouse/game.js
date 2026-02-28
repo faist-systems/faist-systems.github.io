@@ -1,189 +1,143 @@
 // ======================================
-// FAIST – Dollhouse Game Core
-// STEP 1: World axes + avatar movement
+// FAIST – Dollhouse Renderer
+// STEP 2: Floor-based 2.5D projection
 // ======================================
 
-import { renderRoom } from "./renderer.js";
-import { processPhysics } from "./physicsEngine.js";
+// --------------------------------------------------
+// ROOM VISUAL CONSTANTS
+// --------------------------------------------------
 
-// ======================================
-// WORLD STATE
-// ======================================
+const ROOM_WIDTH = 800;
+const ROOM_HEIGHT = 360;
 
-const world = {
-  activeRoomId: "kitchen",
-  rooms: {}
-};
+const FLOOR_HEIGHT = 120;        // vizuální výška podlahy
+const WALL_HEIGHT = ROOM_HEIGHT - FLOOR_HEIGHT;
 
-// ======================================
-// INPUT STATE
-// ======================================
+// jemná perspektiva (NE výška!)
+const DEPTH_PERSPECTIVE = 0.1;
 
-const input = {
-  left: false,
-  right: false,
-  up: false,
-  down: false
-};
+// --------------------------------------------------
+// ROOT
+// --------------------------------------------------
 
-// ======================================
-// ROOM + ENTITIES SETUP
-// ======================================
+const gameRoot = document.getElementById("game");
 
-function createKitchenRoom() {
-  return {
-    id: "kitchen",
-    bounds: {
-      width: 800,
-      depth: 300,
-      floorY: 0
-    },
-    entities: [
-      // AVATAR
-      {
-        id: "avatar",
-        kind: "avatar",
-        transform: {
-          x: 200,
-          z: 120,
-          y: 0 // VŽDY výška nad podlahou
-        },
-        size: {
-          width: 40,
-          height: 60,
-          depth: 20
-        },
-        physics: {
-          solid: true,
-          canSupport: false
-        }
-      },
+// --------------------------------------------------
+// MAIN RENDER
+// --------------------------------------------------
 
-      // TABLE
-      {
-        id: "table",
-        kind: "furniture",
-        transform: {
-          x: 300,
-          z: 160,
-          y: 0
-        },
-        size: {
-          width: 80,
-          height: 40,
-          depth: 40
-        },
-        physics: {
-          solid: true,
-          canSupport: true
-        }
-      },
+export function renderRoom(room) {
+  if (!room) return;
 
-      // FRIDGE
-      {
-        id: "fridge",
-        kind: "furniture",
-        transform: {
-          x: 500,
-          z: 140,
-          y: 0
-        },
-        size: {
-          width: 50,
-          height: 90,
-          depth: 40
-        },
-        physics: {
-          solid: true,
-          canSupport: false
-        }
-      }
-    ]
-  };
-}
+  gameRoot.innerHTML = "";
 
-// ======================================
-// INITIALIZE WORLD
-// ======================================
+  // ==============================
+  // ROOM CONTAINER (KAMERA ZAMČENÁ)
+  // ==============================
 
-world.rooms["kitchen"] = createKitchenRoom();
+  const roomEl = document.createElement("div");
+  roomEl.style.position = "absolute";
+  roomEl.style.width = `${ROOM_WIDTH}px`;
+  roomEl.style.height = `${ROOM_HEIGHT}px`;
+  roomEl.style.left = "50%";
+  roomEl.style.top = "50%";
+  roomEl.style.transform = "translate(-50%, -50%)";
+  roomEl.style.background = "#ffc1dd";
+  roomEl.style.borderRadius = "24px";
+  roomEl.style.boxShadow = "0 24px 60px rgba(0,0,0,0.25)";
+  roomEl.style.overflow = "hidden";
 
-// ======================================
-// INPUT HANDLERS
-// ======================================
+  // ==============================
+  // WALL (ZADNÍ ZEĎ)
+  // ==============================
 
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") input.left = true;
-  if (e.key === "ArrowRight") input.right = true;
-  if (e.key === "ArrowUp") input.up = true;
-  if (e.key === "ArrowDown") input.down = true;
-});
+  const wall = document.createElement("div");
+  wall.style.position = "absolute";
+  wall.style.left = "0";
+  wall.style.top = "0";
+  wall.style.width = "100%";
+  wall.style.height = `${WALL_HEIGHT}px`;
+  wall.style.background = "#ffd9eb";
+  roomEl.appendChild(wall);
 
-window.addEventListener("keyup", (e) => {
-  if (e.key === "ArrowLeft") input.left = false;
-  if (e.key === "ArrowRight") input.right = false;
-  if (e.key === "ArrowUp") input.up = false;
-  if (e.key === "ArrowDown") input.down = false;
-});
+  // ==============================
+  // FLOOR
+  // ==============================
 
-// ======================================
-// AVATAR MOVEMENT (FLOOR-BASED)
-// ======================================
+  const floor = document.createElement("div");
+  floor.style.position = "absolute";
+  floor.style.left = "0";
+  floor.style.bottom = "0";
+  floor.style.width = "100%";
+  floor.style.height = `${FLOOR_HEIGHT}px`;
+  floor.style.background = "#f2c89b";
+  roomEl.appendChild(floor);
 
-const AVATAR_SPEED = 4;
+  // ==============================
+  // ENTITIES (SORT BY Z)
+  // ==============================
 
-function updateAvatar(room) {
-  const avatar = room.entities.find(e => e.kind === "avatar");
-  if (!avatar) return;
-
-  if (input.left)  avatar.transform.x -= AVATAR_SPEED;
-  if (input.right) avatar.transform.x += AVATAR_SPEED;
-
-  if (input.up)    avatar.transform.z += AVATAR_SPEED;
-  if (input.down)  avatar.transform.z -= AVATAR_SPEED;
-
-  // ❗ ZÁKON SVĚTA
-  avatar.transform.y = 0;
-
-  // room bounds (X/Z only)
-  avatar.transform.x = Math.max(
-    0,
-    Math.min(room.bounds.width - avatar.size.width, avatar.transform.x)
+  const sorted = [...room.entities].sort(
+    (a, b) => a.transform.z - b.transform.z
   );
 
-  avatar.transform.z = Math.max(
-    0,
-    Math.min(room.bounds.depth - avatar.size.depth, avatar.transform.z)
-  );
-}
-
-// ======================================
-// GAME LOOP
-// ======================================
-
-function gameLoop() {
-  const room = world.rooms[world.activeRoomId];
-
-  // 1️⃣ pohyb avatara po podlaze
-  updateAvatar(room);
-
-  // 2️⃣ fyzika ostatních entit (zatím jen placeholder)
-  for (const entity of room.entities) {
-    processPhysics({
-      room,
-      entity,
-      action: { type: "STEP" }
-    });
+  for (const entity of sorted) {
+    renderEntity(roomEl, entity);
   }
 
-  // 3️⃣ render
-  renderRoom(room);
-
-  requestAnimationFrame(gameLoop);
+  gameRoot.appendChild(roomEl);
 }
 
-// ======================================
-// START
-// ======================================
+// --------------------------------------------------
+// ENTITY RENDER
+// --------------------------------------------------
 
-gameLoop();
+function renderEntity(roomEl, entity) {
+  const el = document.createElement("div");
+
+  const { x, z, y } = entity.transform;
+  const { width, height } = entity.size;
+
+  // ==============================
+  // FLOOR-BASED PROJECTION
+  // ==============================
+
+  const floorTop = ROOM_HEIGHT - FLOOR_HEIGHT;
+
+  const screenX = x;
+  const screenY =
+    floorTop -           // horní hrana podlahy
+    height -             // stojí NA podlaze
+    y -                  // výška nad podlahou (většinou 0)
+    z * DEPTH_PERSPECTIVE; // jen optická hloubka
+
+  el.style.position = "absolute";
+  el.style.left = `${screenX}px`;
+  el.style.top = `${screenY}px`;
+  el.style.width = `${width}px`;
+  el.style.height = `${height}px`;
+
+  // čím blíž (menší z), tím víc vepředu
+  el.style.zIndex = Math.floor(1000 - z);
+
+  // ==============================
+  // DOČASNÝ VZHLED
+  // ==============================
+
+  if (entity.kind === "avatar") {
+    el.style.background = "#6dd3ff";
+    el.style.borderRadius = "12px";
+    el.style.display = "flex";
+    el.style.alignItems = "center";
+    el.style.justifyContent = "center";
+    el.style.fontSize = "24px";
+    el.textContent = "🙂";
+  } else {
+    el.style.background = entity.physics.canSupport
+      ? "#ffd27f"
+      : "#d0d0d0";
+    el.style.borderRadius = "10px";
+  }
+
+  roomEl.appendChild(el);
+}
