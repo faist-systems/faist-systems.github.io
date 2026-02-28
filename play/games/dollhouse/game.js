@@ -1,6 +1,6 @@
 // ======================================
 // FAIST – Dollhouse
-// Interaction modes + object panels
+// Modes + HOLD + TAP + MOVE + COLLISIONS
 // ======================================
 
 // ----- CONFIG -----
@@ -19,7 +19,6 @@ const MODE_INTERACTING = "INTERACTING";
 let worldState = null;
 let gesture = null;
 let gameMode = MODE_NORMAL;
-let activeObjectId = null;
 
 // ======================================
 // INIT
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ======================================
-// WORLD LOAD
+// WORLD
 // ======================================
 function loadWorld() {
   const saved = localStorage.getItem(STORAGE_KEY);
@@ -101,7 +100,7 @@ function renderWorld() {
     const panel = createObjectPanel(item);
     el.appendChild(panel);
 
-    enableGestures(el, item, room);
+    enableGestures(el, item, room, roomData.furniture);
 
     room.appendChild(el);
   });
@@ -132,7 +131,7 @@ function createObjectPanel(item) {
 // ======================================
 // GESTURES
 // ======================================
-function enableGestures(el, item, room) {
+function enableGestures(el, item, room, allItems) {
   el.addEventListener("pointerdown", e => {
     if (gameMode !== MODE_NORMAL) return;
 
@@ -152,7 +151,7 @@ function enableGestures(el, item, room) {
       if (progress < 1) {
         requestAnimationFrame(animateHold);
       } else {
-        openInteraction(el, item);
+        openInteraction(el);
       }
     }
 
@@ -160,6 +159,7 @@ function enableGestures(el, item, room) {
       el,
       item,
       room,
+      allItems,
       startX,
       startY,
       startTime,
@@ -182,8 +182,13 @@ function enableGestures(el, item, room) {
       gesture.moved = true;
       el.style.setProperty("--hold-progress", "0deg");
 
-      el.style.left = gesture.baseX + dx + "px";
-      el.style.top  = gesture.baseY + dy + "px";
+      const nextX = gesture.baseX + dx;
+      const nextY = gesture.baseY + dy;
+
+      if (!collides(nextX, nextY, el, item, gesture.allItems)) {
+        el.style.left = nextX + "px";
+        el.style.top  = nextY + "px";
+      }
     }
   });
 
@@ -211,22 +216,58 @@ function enableGestures(el, item, room) {
 }
 
 // ======================================
+// COLLISIONS
+// ======================================
+function collides(x, y, el, currentItem, allItems) {
+  const rectA = {
+    left: x,
+    top: y,
+    right: x + el.offsetWidth,
+    bottom: y + el.offsetHeight
+  };
+
+  for (const other of allItems) {
+    if (other.id === currentItem.id) continue;
+
+    const otherEl = document.querySelector(
+      `.furniture[data-id="${other.id}"]`
+    );
+    if (!otherEl) continue;
+
+    const ox = other.position.x;
+    const oy = other.position.y;
+
+    const rectB = {
+      left: ox,
+      top: oy,
+      right: ox + otherEl.offsetWidth,
+      bottom: oy + otherEl.offsetHeight
+    };
+
+    const overlap =
+      rectA.left < rectB.right &&
+      rectA.right > rectB.left &&
+      rectA.top < rectB.bottom &&
+      rectA.bottom > rectB.top;
+
+    if (overlap) return true;
+  }
+
+  return false;
+}
+
+// ======================================
 // INTERACTION MODE
 // ======================================
-function openInteraction(el, item) {
+function openInteraction(el) {
   gameMode = MODE_INTERACTING;
-  activeObjectId = item.id;
-
-  const panel = el.querySelector(".object-panel");
-  if (panel) panel.style.display = "block";
+  el.querySelector(".object-panel").style.display = "block";
 }
 
 function closeInteraction() {
   document.querySelectorAll(".object-panel")
     .forEach(p => p.style.display = "none");
-
   gameMode = MODE_NORMAL;
-  activeObjectId = null;
 }
 
 // ======================================
