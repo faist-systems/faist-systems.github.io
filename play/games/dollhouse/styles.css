@@ -16,6 +16,10 @@ body {
   justify-content: center;
   align-items: flex-start;
   touch-action: none;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+
 }
 
 #app {
