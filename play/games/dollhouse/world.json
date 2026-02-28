@@ -1,1 +1,111 @@
-klk
+{
+  "meta": {
+    "version": "0.1",
+    "createdAt": "2026-02-28",
+    "language": "cs"
+  },
+
+  "player": {
+    "name": {
+      "base": "Laura",
+      "gender": "female",
+      "forms": {
+        "nominative": "Laura",
+        "vocative": "Lauro",
+        "possessiveMasc": "Lauřin",
+        "possessiveFem": "Lauřina",
+        "locative": "Lauře"
+      }
+    },
+
+    "avatar": {
+      "type": "girl",
+      "face": "face_01",
+      "hair": {
+        "style": "hair_01",
+        "color": "brown"
+      },
+      "outfit": {
+        "top": "pink_shirt",
+        "bottom": "blue_skirt",
+        "shoes": "white_shoes"
+      }
+    }
+  },
+
+  "time": {
+    "cycle": "day",
+    "phase": "day"
+  },
+
+  "house": {
+    "id": "main_house",
+    "name": "Lauřin dům",
+    "rooms": [
+      {
+        "id": "room_01",
+        "type": "living_kitchen",
+        "level": 1,
+        "style": {
+          "wall": "pink_wall_01",
+          "floor": "wood_light_01",
+          "light": "warm"
+        },
+        "bounds": {
+          "width": 800,
+          "height": 500
+        },
+        "furniture": [
+          {
+            "id": "sofa_01",
+            "type": "sofa",
+            "style": "cute",
+            "color": "pink",
+            "position": { "x": 120, "y": 320 },
+            "layer": "furniture"
+          },
+          {
+            "id": "table_01",
+            "type": "table",
+            "style": "simple",
+            "color": "white",
+            "position": { "x": 300, "y": 350 },
+            "layer": "furniture"
+          },
+          {
+            "id": "fridge_01",
+            "type": "fridge",
+            "style": "basic",
+            "color": "mint",
+            "position": { "x": 600, "y": 260 },
+            "layer": "furniture"
+          },
+          {
+            "id": "stove_01",
+            "type": "stove",
+            "style": "basic",
+            "color": "white",
+            "position": { "x": 520, "y": 280 },
+            "layer": "furniture"
+          }
+        ]
+      }
+    ]
+  },
+
+  "pet": {
+    "id": "pet_01",
+    "type": "cat",
+    "name": "Micka",
+    "state": {
+      "hunger": 0.2,
+      "happiness": 0.8,
+      "energy": 0.6
+    },
+    "position": {
+      "roomId": "room_01",
+      "x": 420,
+      "y": 360
+    }
+  }
+}
