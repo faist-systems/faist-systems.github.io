@@ -3,27 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <title>FAIST – Dollhouse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <div id="game">
-    <div class="room theme-default">
-      
-      <div class="floor"></div>
+<div id="game">
+  <div class="room theme-default">
 
-      <!-- AVATAR -->
-      <div class="entity avatar" style="left:200px; bottom:120px;">🙂</div>
+    <div class="floor"></div>
 
-      <!-- FURNITURE -->
-      <div class="entity furniture" style="left:320px; bottom:120px; width:80px; height:40px;"></div>
-      <div class="entity furniture" style="left:460px; bottom:120px; width:50px; height:90px;"></div>
+    <!-- AVATAR -->
+    <div id="avatar" class="entity avatar">🙂</div>
 
-    </div>
+    <!-- FURNITURE -->
+    <div class="entity furniture" style="left:320px; bottom:0; width:80px; height:40px;"></div>
+    <div class="entity furniture" style="left:460px; bottom:0; width:50px; height:90px;"></div>
+
   </div>
+</div>
 
-  <!-- 🔑 TADY BYLA CHYBA – CHYBĚL SCRIPT -->
-  <script src="game.js"></script>
+<!-- VIRTUAL JOYSTICK (MOBILE ONLY) -->
+<div id="joystick">
+  <div id="joystick-base">
+    <div id="joystick-knob"></div>
+  </div>
+</div>
 
+<script src="game.js"></script>
 </body>
 </html>
