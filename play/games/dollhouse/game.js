@@ -1,30 +1,20 @@
 // ======================================
 // FAIST – Dollhouse
-// Floor Zone + Wall Stop + Soft Drop
+// Back Wall Alignment (FINAL)
 // ======================================
 
 const STORAGE_KEY = "faist_dollhouse_world";
-
-// kolik spodku místnosti tvoří podlaha
 const FLOOR_HEIGHT_RATIO = 0.35;
-
-// jak dlouho trvá „dosednutí“ (ms)
-const DROP_DURATION = 3000;
+const SNAP_DURATION = 220;
 
 let world = null;
 let drag = null;
-
-// --------------------------------------
-// INIT
-// --------------------------------------
 
 document.addEventListener("DOMContentLoaded", async () => {
   world = await loadWorld();
   render();
 });
 
-// --------------------------------------
-// LOAD / SAVE WORLD
 // --------------------------------------
 
 async function loadWorld() {
@@ -42,16 +32,14 @@ function saveWorld() {
 }
 
 // --------------------------------------
-// RENDER
-// --------------------------------------
 
 function render() {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
-  const title = document.createElement("h1");
-  title.textContent = `Ahoj ${world.player.name.forms.vocative}!`;
-  app.appendChild(title);
+  const h1 = document.createElement("h1");
+  h1.textContent = `Ahoj ${world.player.name.forms.vocative}!`;
+  app.appendChild(h1);
 
   const roomData = world.house.rooms[0];
 
@@ -61,7 +49,6 @@ function render() {
   room.style.height = roomData.bounds.height + "px";
   app.appendChild(room);
 
-  // PODLAHOVÁ ZÓNA (vizuální)
   const floor = document.createElement("div");
   floor.className = "floor-guide";
   room.appendChild(floor);
@@ -79,8 +66,6 @@ function render() {
 }
 
 // --------------------------------------
-// DRAG LOGIC
-// --------------------------------------
 
 function makeDraggable(el, item, room) {
   el.addEventListener("pointerdown", e => {
@@ -92,8 +77,7 @@ function makeDraggable(el, item, room) {
       baseX: item.position.x,
       baseY: item.position.y
     };
-
-    el.style.transition = ""; // během tahu žádná animace
+    el.style.transition = "";
     el.setPointerCapture(e.pointerId);
   });
 
@@ -112,7 +96,7 @@ function makeDraggable(el, item, room) {
 
     el.releasePointerCapture(e.pointerId);
 
-    applyFloorConstraints(el, item, room);
+    alignToFloor(el, item, room);
 
     saveWorld();
     drag = null;
@@ -120,37 +104,43 @@ function makeDraggable(el, item, room) {
 }
 
 // --------------------------------------
-// FLOOR + WALL CONSTRAINTS WITH SOFT DROP
+// CORE LOGIC – BACK WALL ALIGNMENT
 // --------------------------------------
 
-function applyFloorConstraints(el, item, room) {
+function alignToFloor(el, item, room) {
   const roomHeight = room.offsetHeight;
-
   const floorTop = roomHeight * (1 - FLOOR_HEIGHT_RATIO);
   const floorBottom = roomHeight;
 
   let finalX = parseInt(el.style.left);
   let finalY = parseInt(el.style.top);
 
-  // ⛔ NESMÍ PROJÍT „ZDÍ“ (spodní hrana nábytku)
   const furnitureBottom = finalY + el.offsetHeight;
+
+  let snapped = false;
+
+  // 🔴 ZA ZDÍ → VRÁTIT NA ČERVENOU ČÁRU
   if (furnitureBottom < floorTop) {
     finalY = floorTop - el.offsetHeight;
+    snapped = true;
   }
 
-  // ⛔ NESMÍ VEN DOLE
-  finalY = Math.min(finalY, floorBottom - el.offsetHeight);
+  // 🔴 MIMO PODLAHU DOLE
+  if (finalY > floorBottom - el.offsetHeight) {
+    finalY = floorBottom - el.offsetHeight;
+    snapped = true;
+  }
 
-  // 💾 uložíme do DAT
   item.position.x = finalX;
   item.position.y = finalY;
 
-  // 🎞️ JEMNÉ DOSEDNUTÍ
-  el.style.transition = `top ${DROP_DURATION}ms cubic-bezier(0.25, 0.8, 0.25, 1)`;
+  if (snapped) {
+    el.style.transition = `top ${SNAP_DURATION}ms cubic-bezier(0.25, 0.8, 0.25, 1)`;
+  }
+
   el.style.top = finalY + "px";
 
-  // po animaci transition vypneme
   setTimeout(() => {
     el.style.transition = "";
-  }, DROP_DURATION);
+  }, SNAP_DURATION);
 }
