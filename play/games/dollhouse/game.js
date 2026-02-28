@@ -1,135 +1,118 @@
 // ======================================
 // FAIST – Dollhouse Game Loop
-// STEP A: Unified Input Layer
+// STEP B: Virtual Joystick
 // ======================================
 
-// ---------- WORLD SETUP ----------
+// ---------- ROOM ----------
 const room = {
   width: 800,
-  depth: 300,
   floorZMin: 0,
-  floorZMax: 300
+  floorZMax: 180
 };
 
 // ---------- AVATAR ----------
 const avatar = {
   x: 200,
-  z: 120,          // Z = hloubka (podlaha)
+  z: 80,
   width: 40,
   height: 60,
   speed: 2
 };
 
-// ---------- INPUT STATE (CENTRAL) ----------
+// ---------- INPUT (CENTRAL) ----------
 const input = {
-  moveX: 0,        // -1 .. 1
-  moveZ: 0         // -1 .. 1
+  moveX: 0,
+  moveZ: 0
 };
 
-// ---------- KEYBOARD MAP ----------
-const keys = {
-  left: false,
-  right: false,
-  up: false,
-  down: false
-};
+// ---------- KEYBOARD ----------
+const keys = { left:false, right:false, up:false, down:false };
 
-// ---------- KEYBOARD LISTENERS ----------
-window.addEventListener("keydown", (e) => {
-  switch (e.key) {
-    case "ArrowLeft":
-    case "a":
-      keys.left = true;
-      break;
-    case "ArrowRight":
-    case "d":
-      keys.right = true;
-      break;
-    case "ArrowUp":
-    case "w":
-      keys.up = true;
-      break;
-    case "ArrowDown":
-    case "s":
-      keys.down = true;
-      break;
-  }
+window.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") keys.left = true;
+  if (e.key === "ArrowRight") keys.right = true;
+  if (e.key === "ArrowUp") keys.up = true;
+  if (e.key === "ArrowDown") keys.down = true;
 });
 
-window.addEventListener("keyup", (e) => {
-  switch (e.key) {
-    case "ArrowLeft":
-    case "a":
-      keys.left = false;
-      break;
-    case "ArrowRight":
-    case "d":
-      keys.right = false;
-      break;
-    case "ArrowUp":
-    case "w":
-      keys.up = false;
-      break;
-    case "ArrowDown":
-    case "s":
-      keys.down = false;
-      break;
-  }
+window.addEventListener("keyup", e => {
+  if (e.key === "ArrowLeft") keys.left = false;
+  if (e.key === "ArrowRight") keys.right = false;
+  if (e.key === "ArrowUp") keys.up = false;
+  if (e.key === "ArrowDown") keys.down = false;
+});
+
+// ---------- JOYSTICK ----------
+const base = document.getElementById("joystick-base");
+const knob = document.getElementById("joystick-knob");
+let joyActive = false;
+let joyCenter = { x:0, y:0 };
+
+base?.addEventListener("touchstart", e => {
+  joyActive = true;
+  const r = base.getBoundingClientRect();
+  joyCenter.x = r.left + r.width / 2;
+  joyCenter.y = r.top + r.height / 2;
+});
+
+window.addEventListener("touchmove", e => {
+  if (!joyActive) return;
+  const t = e.touches[0];
+  let dx = t.clientX - joyCenter.x;
+  let dy = t.clientY - joyCenter.y;
+
+  const dist = Math.min(40, Math.hypot(dx, dy));
+  const angle = Math.atan2(dy, dx);
+
+  dx = Math.cos(angle) * dist;
+  dy = Math.sin(angle) * dist;
+
+  knob.style.left = 30 + dx + "px";
+  knob.style.top  = 30 + dy + "px";
+
+  input.moveX = dx / 40;
+  input.moveZ = dy / 40;
+});
+
+window.addEventListener("touchend", () => {
+  joyActive = false;
+  input.moveX = 0;
+  input.moveZ = 0;
+  knob.style.left = "30px";
+  knob.style.top  = "30px";
 });
 
 // ---------- INPUT RESOLUTION ----------
 function updateInput() {
-  input.moveX = 0;
-  input.moveZ = 0;
-
-  if (keys.left) input.moveX -= 1;
-  if (keys.right) input.moveX += 1;
-  if (keys.up) input.moveZ -= 1;     // ↑ = ke zdi (menší Z)
-  if (keys.down) input.moveZ += 1;   // ↓ = k hráči (větší Z)
-
-  // normalizace diagonály
-  if (input.moveX !== 0 && input.moveZ !== 0) {
-    input.moveX *= 0.7;
-    input.moveZ *= 0.7;
+  if (!joyActive) {
+    input.moveX = (keys.left ? -1 : 0) + (keys.right ? 1 : 0);
+    input.moveZ = (keys.up ? -1 : 0) + (keys.down ? 1 : 0);
   }
 }
 
-// ---------- AVATAR MOVEMENT ----------
+// ---------- UPDATE ----------
 function updateAvatar() {
   avatar.x += input.moveX * avatar.speed;
   avatar.z += input.moveZ * avatar.speed;
 
-  // X bounds
   avatar.x = Math.max(0, Math.min(room.width - avatar.width, avatar.x));
-
-  // Z bounds (PODLAHA – CELÁ PLOCHA)
-  avatar.z = Math.max(
-    room.floorZMin,
-    Math.min(room.floorZMax - avatar.height, avatar.z)
-  );
+  avatar.z = Math.max(room.floorZMin, Math.min(room.floorZMax, avatar.z));
 }
 
 // ---------- RENDER ----------
 function renderAvatar() {
   const el = document.getElementById("avatar");
-  if (!el) return;
-
-  el.style.left = `${avatar.x}px`;
-  el.style.bottom = `${avatar.z}px`;
-
-  // hloubka = z-index
+  el.style.left = avatar.x + "px";
+  el.style.bottom = avatar.z + "px";
   el.style.zIndex = Math.floor(avatar.z);
 }
 
-// ---------- GAME LOOP ----------
-function gameLoop() {
+// ---------- LOOP ----------
+function loop() {
   updateInput();
   updateAvatar();
   renderAvatar();
-  requestAnimationFrame(gameLoop);
+  requestAnimationFrame(loop);
 }
 
-// ---------- START ----------
-window.addEventListener("DOMContentLoaded", () => {
-  gameLoop();
-});
+loop();
