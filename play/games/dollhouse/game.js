@@ -1,11 +1,9 @@
 // ======================================
 // FAIST – Dollhouse
-// Drag & Drop + FLOOR GRAVITY v0.1
+// Floor ZONE logic (no gravity)
 // ======================================
 
 const STORAGE_KEY = "faist_dollhouse_world";
-
-// kolik % místnosti tvoří podlaha
 const FLOOR_HEIGHT_RATIO = 0.35;
 
 let world = null;
@@ -46,7 +44,7 @@ function render() {
   room.style.height = roomData.bounds.height + "px";
   app.appendChild(room);
 
-  // 👇 vizuální podlaha
+  // podlahová ZÓNA
   const floor = document.createElement("div");
   floor.className = "floor-guide";
   room.appendChild(floor);
@@ -93,15 +91,21 @@ function makeDraggable(el, item, room) {
 
     el.releasePointerCapture(e.pointerId);
 
-    // 👇 GRAVITY NA PODLAHU
     const roomHeight = room.offsetHeight;
-    const floorTop =
-      roomHeight * (1 - FLOOR_HEIGHT_RATIO);
+    const floorTop = roomHeight * (1 - FLOOR_HEIGHT_RATIO);
+    const floorBottom = roomHeight;
 
-    const finalY =
-      floorTop - el.offsetHeight;
+    // 🔒 OMEZENÍ DO ZÓNY
+    let finalX = parseInt(el.style.left);
+    let finalY = parseInt(el.style.top);
 
-    item.position.x = parseInt(el.style.left);
+    finalY = Math.max(
+      floorTop,
+      Math.min(finalY, floorBottom - el.offsetHeight)
+    );
+
+    // uložíme
+    item.position.x = finalX;
     item.position.y = finalY;
 
     el.style.top = finalY + "px";
