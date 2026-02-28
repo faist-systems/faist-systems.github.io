@@ -39,7 +39,7 @@ h1 {
   overflow: hidden;
 }
 
-/* ===== FLOOR ZONE ===== */
+/* ===== FLOOR ===== */
 .floor-guide {
   position: absolute;
   bottom: 0;
@@ -59,88 +59,37 @@ h1 {
   color: white;
   cursor: grab;
   touch-action: none;
-
-  /* lehký 3D pocit */
-  box-shadow:
-    0 6px 0 rgba(0,0,0,0.12),
-    0 12px 20px rgba(0,0,0,0.15);
 }
 
 .furniture:active {
   cursor: grabbing;
 }
 
-/* ===== STÍN POD NÁBYTKEM ===== */
-.furniture::after {
-  content: "";
+/* ===== FAST TAP SELECT ===== */
+.furniture.selected {
+  outline: 3px solid rgba(255,255,255,0.9);
+  outline-offset: -6px;
+}
+
+/* ===== HOLD HALO ===== */
+.furniture .hold-ring {
   position: absolute;
-
-  left: 50%;
-  bottom: -12px;
-
-  width: 80%;
-  height: 12px;
-
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0,0,0,0.35),
-    rgba(0,0,0,0)
-  );
-
-  transform: translateX(-50%);
+  inset: -10px;
+  border-radius: 50%;
   pointer-events: none;
-  opacity: 0.45;
+
+  background:
+    conic-gradient(
+      #ffffff 0deg,
+      #ffffff var(--hold-progress, 0deg),
+      rgba(255,255,255,0.15) var(--hold-progress, 0deg)
+    );
+
+  mask: radial-gradient(circle, transparent 62%, black 64%);
+  opacity: 0.9;
 }
 
-.furniture:active {
-  cursor: grabbing;
-}
-
-/* TYPES */
+/* ===== TYPES ===== */
 .furniture.sofa { background: #ff5fa2; width: 140px; }
 .furniture.table { background: #b388ff; width: 100px; }
 .furniture.fridge { background: #5fdde5; width: 90px; height: 120px; }
-
-/* ===== OVERLAY (AKCE) ===== */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.modal {
-  background: #fff;
-  border-radius: 20px;
-  padding: 20px 24px;
-  width: 280px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  text-align: center;
-}
-
-.modal h2 {
-  margin: 0 0 10px;
-  color: #c2185b;
-}
-
-.modal p {
-  margin: 0 0 16px;
-  color: #444;
-}
-
-.modal button {
-  background: #ff5fa2;
-  color: #fff;
-  border: none;
-  border-radius: 14px;
-  padding: 10px 14px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.modal button:hover {
-  background: #ff3d8a;
-}
