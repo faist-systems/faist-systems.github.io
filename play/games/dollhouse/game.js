@@ -1,11 +1,16 @@
 // ======================================
 // FAIST – Dollhouse
-// Stable single-source world state
+// Drag vs Hold vs Fast Tap (STABLE)
 // ======================================
 
 // ----- CONFIG -----
 const FLOOR_HEIGHT_RATIO = 0.35;
 const STORAGE_KEY = "faist_dollhouse_world_v1";
+
+// gesture tuning (dětsky přívětivé)
+const HOLD_TIME_MS = 2000;     // 2 sekundy = otevře menu
+const MOVE_THRESHOLD_PX = 6;  // kolik px pohybu ruší hold
+const TAP_TIME_MS = 250;      // rychlý klik = označení
 
 // ----- STATE -----
 let worldState = null;
@@ -21,18 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ======================================
 // WORLD LOAD / SAVE
-// (tahle část se později nahradí serverem)
 // ======================================
 function loadWorld() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
-    try {
-      return JSON.parse(saved);
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
+    try { return JSON.parse(saved); }
+    catch { localStorage.removeItem(STORAGE_KEY); }
   }
-
   const fresh = createDefaultWorld();
   saveWorld(fresh);
   return fresh;
@@ -43,25 +43,21 @@ function saveWorld(world) {
 }
 
 // ======================================
-// DEFAULT WORLD (jen při prvním spuštění)
+// DEFAULT WORLD
 // ======================================
 function createDefaultWorld() {
   return {
-    player: {
-      name: { vocative: "Lauro" }
-    },
+    player: { name: { vocative: "Lauro" } },
     house: {
-      rooms: [
-        {
-          id: "room-1",
-          bounds: { width: 800, height: 500 },
-          furniture: [
-            { id: "f1", type: "sofa", position: { x: 80, y: 320 } },
-            { id: "f2", type: "table", position: { x: 300, y: 360 } },
-            { id: "f3", type: "fridge", position: { x: 550, y: 300 } }
-          ]
-        }
-      ]
+      rooms: [{
+        id: "room-1",
+        bounds: { width: 800, height: 500 },
+        furniture: [
+          { id: "f1", type: "sofa",   position: { x: 80,  y: 320 } },
+          { id: "f2", type: "table",  position: { x: 300, y: 360 } },
+          { id: "f3", type: "fridge", position: { x: 550, y: 300 } }
+        ]
+      }]
     }
   };
 }
@@ -94,28 +90,42 @@ function renderWorld() {
     el.className = "furniture " + item.type;
     el.textContent = item.type;
     el.style.left = item.position.x + "px";
-    el.style.top = item.position.y + "px";
+    el.style.top  = item.position.y + "px";
 
-    enableDrag(el, item, room, roomData.furniture);
-    enableClick(el, item);
-
+    enableGestures(el, item, room, roomData.furniture);
     room.appendChild(el);
   });
 }
 
 // ======================================
-// DRAG
+// GESTURES: TAP / HOLD / DRAG
 // ======================================
-function enableDrag(el, item, room, allItems) {
+function enableGestures(el, item, room, allItems) {
   el.addEventListener("pointerdown", e => {
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startTime = Date.now();
+
+    let moved = false;
+    let holdFired = false;
+
+    // fast tap / hold timer
+    const holdTimer = setTimeout(() => {
+      if (!moved) {
+        holdFired = true;
+        openAction(item.type);
+      }
+    }, HOLD_TIME_MS);
+
     dragState = {
-      el,
-      item,
-      startX: e.clientX,
-      startY: e.clientY,
+      el, item, room, allItems,
+      startX, startY, startTime,
       baseX: item.position.x,
-      baseY: item.position.y
+      baseY: item.position.y,
+      moved: false,
+      holdTimer
     };
+
     el.setPointerCapture(e.pointerId);
   });
 
@@ -125,22 +135,45 @@ function enableDrag(el, item, room, allItems) {
     const dx = e.clientX - dragState.startX;
     const dy = e.clientY - dragState.startY;
 
-    const nextX = dragState.baseX + dx;
-    const nextY = dragState.baseY + dy;
+    if (Math.abs(dx) > MOVE_THRESHOLD_PX || Math.abs(dy) > MOVE_THRESHOLD_PX) {
+      // přechod do DRAG
+      dragState.moved = true;
+      clearTimeout(dragState.holdTimer);
 
-    if (!collides(nextX, nextY, el, item, allItems)) {
-      el.style.left = nextX + "px";
-      el.style.top = nextY + "px";
+      const nextX = dragState.baseX + dx;
+      const nextY = dragState.baseY + dy;
+
+      if (!collides(nextX, nextY, dragState.el, dragState.item, dragState.allItems)) {
+        dragState.el.style.left = nextX + "px";
+        dragState.el.style.top  = nextY + "px";
+      }
     }
   });
 
   el.addEventListener("pointerup", e => {
     if (!dragState) return;
+
     el.releasePointerCapture(e.pointerId);
+    clearTimeout(dragState.holdTimer);
 
-    applyConstraints(el, item, room);
-    saveWorld(worldState);
+    const elapsed = Date.now() - dragState.startTime;
 
+    // 1) DRAG dokončení
+    if (dragState.moved) {
+      applyConstraints(dragState.el, dragState.item, dragState.room);
+      saveWorld(worldState);
+      dragState = null;
+      return;
+    }
+
+    // 2) FAST TAP = jen označení
+    if (elapsed <= TAP_TIME_MS) {
+      markSelected(dragState.el);
+      dragState = null;
+      return;
+    }
+
+    // 3) HOLD už mohl otevřít menu (nic dalšího)
     dragState = null;
   });
 }
@@ -150,8 +183,7 @@ function enableDrag(el, item, room, allItems) {
 // ======================================
 function collides(x, y, el, currentItem, allItems) {
   const rectA = {
-    left: x,
-    top: y,
+    left: x, top: y,
     right: x + el.offsetWidth,
     bottom: y + el.offsetHeight
   };
@@ -159,17 +191,14 @@ function collides(x, y, el, currentItem, allItems) {
   for (const other of allItems) {
     if (other.id === currentItem.id) continue;
 
-    const otherEl = document.querySelector(
-      `.furniture.${other.type}`
-    );
+    const otherEl = document.querySelector(`.furniture.${other.type}`);
     if (!otherEl) continue;
 
     const ox = other.position.x;
     const oy = other.position.y;
 
     const rectB = {
-      left: ox,
-      top: oy,
+      left: ox, top: oy,
       right: ox + otherEl.offsetWidth,
       bottom: oy + otherEl.offsetHeight
     };
@@ -182,7 +211,6 @@ function collides(x, y, el, currentItem, allItems) {
 
     if (overlap) return true;
   }
-
   return false;
 }
 
@@ -199,32 +227,36 @@ function applyConstraints(el, item, room) {
 
   const bottom = y + el.offsetHeight;
 
-  // zadní zeď
   if (bottom < floorTop) {
     y = floorTop - el.offsetHeight;
   }
-
-  // dno místnosti
   if (y > floorBottom - el.offsetHeight) {
     y = floorBottom - el.offsetHeight;
   }
 
   item.position.x = x;
   item.position.y = y;
-
   el.style.top = y + "px";
 }
 
 // ======================================
-// CLICK ACTIONS
+// FAST TAP VISUAL SELECT
 // ======================================
-function enableClick(el, item) {
-  el.addEventListener("click", () => {
-    if (dragState) return;
-    openAction(item.type);
-  });
+function markSelected(el) {
+  document.querySelectorAll(".furniture.selected")
+    .forEach(e => e.classList.remove("selected"));
+
+  el.classList.add("selected");
+
+  // krátké zvýraznění
+  setTimeout(() => {
+    el.classList.remove("selected");
+  }, 600);
 }
 
+// ======================================
+// ACTION MENU (HOLD)
+// ======================================
 function openAction(type) {
   let title = "";
   let text = "";
@@ -255,7 +287,6 @@ function showModal(title, text) {
 
   const modal = document.createElement("div");
   modal.className = "modal";
-
   modal.innerHTML = `
     <h2>${title}</h2>
     <p>${text}</p>
