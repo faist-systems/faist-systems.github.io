@@ -58,7 +58,7 @@ function render() {
     el.style.left = item.position.x + "px";
     el.style.top = item.position.y + "px";
 
-    enableDrag(el, item, room);
+    enableDrag(el, item, room, roomData.furniture);
     enableClick(el, item);
 
     room.appendChild(el);
@@ -66,7 +66,7 @@ function render() {
 }
 
 // ===== DRAG =====
-function enableDrag(el, item, room) {
+function enableDrag(el, item, room, allItems) {
   el.addEventListener("pointerdown", e => {
     drag = {
       el,
@@ -85,8 +85,14 @@ function enableDrag(el, item, room) {
     const dx = e.clientX - drag.startX;
     const dy = e.clientY - drag.startY;
 
-    el.style.left = drag.baseX + dx + "px";
-    el.style.top = drag.baseY + dy + "px";
+    const nextX = drag.baseX + dx;
+    const nextY = drag.baseY + dy;
+
+    // 👉 kontrola kolize
+    if (!collides(nextX, nextY, el, item, allItems)) {
+      el.style.left = nextX + "px";
+      el.style.top = nextY + "px";
+    }
   });
 
   el.addEventListener("pointerup", e => {
@@ -96,6 +102,45 @@ function enableDrag(el, item, room) {
     applyConstraints(el, item, room);
     drag = null;
   });
+}
+
+// ===== COLLISION CHECK =====
+function collides(x, y, el, currentItem, allItems) {
+  const rectA = {
+    left: x,
+    top: y,
+    right: x + el.offsetWidth,
+    bottom: y + el.offsetHeight
+  };
+
+  for (const other of allItems) {
+    if (other.id === currentItem.id) continue;
+
+    const otherEl = document.querySelector(
+      `.furniture.${other.type}`
+    );
+    if (!otherEl) continue;
+
+    const ox = other.position.x;
+    const oy = other.position.y;
+
+    const rectB = {
+      left: ox,
+      top: oy,
+      right: ox + otherEl.offsetWidth,
+      bottom: oy + otherEl.offsetHeight
+    };
+
+    const overlap =
+      rectA.left < rectB.right &&
+      rectA.right > rectB.left &&
+      rectA.top < rectB.bottom &&
+      rectA.bottom > rectB.top;
+
+    if (overlap) return true;
+  }
+
+  return false;
 }
 
 // ===== CONSTRAINTS =====
@@ -109,9 +154,12 @@ function applyConstraints(el, item, room) {
 
   const bottom = y + el.offsetHeight;
 
+  // zeď vzadu
   if (bottom < floorTop) {
     y = floorTop - el.offsetHeight;
   }
+
+  // dno místnosti
   if (y > floorBottom - el.offsetHeight) {
     y = floorBottom - el.offsetHeight;
   }
@@ -124,10 +172,8 @@ function applyConstraints(el, item, room) {
 
 // ===== CLICK ACTIONS =====
 function enableClick(el, item) {
-  el.addEventListener("click", e => {
-    // když se právě táhlo, ignoruj klik
+  el.addEventListener("click", () => {
     if (drag) return;
-
     openAction(item.type);
   });
 }
@@ -160,17 +206,13 @@ function showModal(title, text) {
 
   const modal = document.createElement("div");
   modal.className = "modal";
-
   modal.innerHTML = `
     <h2>${title}</h2>
     <p>${text}</p>
     <button>Zavřít</button>
   `;
 
-  modal.querySelector("button").onclick = () => {
-    overlay.remove();
-  };
-
+  modal.querySelector("button").onclick = () => overlay.remove();
   overlay.onclick = e => {
     if (e.target === overlay) overlay.remove();
   };
