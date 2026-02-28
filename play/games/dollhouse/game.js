@@ -1,160 +1,189 @@
 // ======================================
-// FAIST – Game Layer (World + Control)
+// FAIST – Dollhouse Game Core
+// STEP 1: World axes + avatar movement
 // ======================================
 
-import { processPhysics } from "./physicsEngine.js";
 import { renderRoom } from "./renderer.js";
+import { processPhysics } from "./physicsEngine.js";
 
 // ======================================
-// ROOM: KITCHEN (REFERENCE)
+// WORLD STATE
 // ======================================
 
-const kitchen = {
-  id: "kitchen",
-  bounds: {
-    width: 800,
-    depth: 400,
-    floorY: 0
-  },
-  entities: []
+const world = {
+  activeRoomId: "kitchen",
+  rooms: {}
 };
 
 // ======================================
-// FURNITURE ENTITIES
+// INPUT STATE
 // ======================================
 
-const counter = {
-  id: "counter",
-  kind: "furniture",
-  transform: { x: 100, y: 0, z: 250 },
-  size: { width: 300, height: 60, depth: 60 },
-  physics: {
-    solid: true,
-    canSupport: true
-  },
-  state: "IDLE"
-};
-
-const fridge = {
-  id: "fridge",
-  kind: "furniture",
-  transform: { x: 450, y: 0, z: 260 },
-  size: { width: 80, height: 160, depth: 80 },
-  physics: {
-    solid: true,
-    canSupport: false
-  },
-  state: "IDLE"
-};
-
-const microwave = {
-  id: "microwave",
-  kind: "furniture",
-  transform: { x: 120, y: 60, z: 260 },
-  size: { width: 60, height: 40, depth: 40 },
-  physics: {
-    solid: true,
-    canSupport: false
-  },
-  state: "IDLE"
-};
-
-const kettle = {
-  id: "kettle",
-  kind: "furniture",
-  transform: { x: 200, y: 60, z: 260 },
-  size: { width: 30, height: 40, depth: 30 },
-  physics: {
-    solid: true,
-    canSupport: false
-  },
-  state: "IDLE"
+const input = {
+  left: false,
+  right: false,
+  up: false,
+  down: false
 };
 
 // ======================================
-// AVATAR ENTITY
+// ROOM + ENTITIES SETUP
 // ======================================
 
-const avatar = {
-  id: "avatar",
-  kind: "avatar",
-  transform: { x: 200, y: 0, z: 80 },
-  size: { width: 30, height: 60, depth: 20 },
-  physics: {
-    solid: true,
-    canSupport: false
-  },
-  state: "IDLE"
-};
+function createKitchenRoom() {
+  return {
+    id: "kitchen",
+    bounds: {
+      width: 800,
+      depth: 300,
+      floorY: 0
+    },
+    entities: [
+      // AVATAR
+      {
+        id: "avatar",
+        kind: "avatar",
+        transform: {
+          x: 200,
+          z: 120,
+          y: 0 // VŽDY výška nad podlahou
+        },
+        size: {
+          width: 40,
+          height: 60,
+          depth: 20
+        },
+        physics: {
+          solid: true,
+          canSupport: false
+        }
+      },
 
-// ======================================
-// ADD ENTITIES TO ROOM
-// ======================================
+      // TABLE
+      {
+        id: "table",
+        kind: "furniture",
+        transform: {
+          x: 300,
+          z: 160,
+          y: 0
+        },
+        size: {
+          width: 80,
+          height: 40,
+          depth: 40
+        },
+        physics: {
+          solid: true,
+          canSupport: true
+        }
+      },
 
-kitchen.entities.push(
-  counter,
-  fridge,
-  microwave,
-  kettle,
-  avatar
-);
-
-// ======================================
-// ACTIVE ROOM
-// ======================================
-
-let activeRoom = kitchen;
-
-// ======================================
-// INPUT → AVATAR MOVEMENT
-// ======================================
-
-const STEP_SIZE = 10;
-
-document.addEventListener("keydown", (e) => {
-  let dx = 0;
-  let dz = 0;
-
-  switch (e.key) {
-    case "ArrowLeft":
-      dx = -STEP_SIZE;
-      break;
-    case "ArrowRight":
-      dx = STEP_SIZE;
-      break;
-    case "ArrowUp":
-      dz = STEP_SIZE;
-      break;
-    case "ArrowDown":
-      dz = -STEP_SIZE;
-      break;
-    default:
-      return;
-  }
-
-  processPhysics({
-    room: activeRoom,
-    entity: avatar,
-    action: {
-      type: "STEP",
-      dx,
-      dz
-    }
-  });
-
-  render();
-});
-
-// ======================================
-// RENDER
-// ======================================
-
-function render() {
-  renderRoom(activeRoom);
+      // FRIDGE
+      {
+        id: "fridge",
+        kind: "furniture",
+        transform: {
+          x: 500,
+          z: 140,
+          y: 0
+        },
+        size: {
+          width: 50,
+          height: 90,
+          depth: 40
+        },
+        physics: {
+          solid: true,
+          canSupport: false
+        }
+      }
+    ]
+  };
 }
 
 // ======================================
-// INITIAL RENDER
+// INITIALIZE WORLD
 // ======================================
 
-render();
+world.rooms["kitchen"] = createKitchenRoom();
+
+// ======================================
+// INPUT HANDLERS
+// ======================================
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") input.left = true;
+  if (e.key === "ArrowRight") input.right = true;
+  if (e.key === "ArrowUp") input.up = true;
+  if (e.key === "ArrowDown") input.down = true;
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft") input.left = false;
+  if (e.key === "ArrowRight") input.right = false;
+  if (e.key === "ArrowUp") input.up = false;
+  if (e.key === "ArrowDown") input.down = false;
+});
+
+// ======================================
+// AVATAR MOVEMENT (FLOOR-BASED)
+// ======================================
+
+const AVATAR_SPEED = 4;
+
+function updateAvatar(room) {
+  const avatar = room.entities.find(e => e.kind === "avatar");
+  if (!avatar) return;
+
+  if (input.left)  avatar.transform.x -= AVATAR_SPEED;
+  if (input.right) avatar.transform.x += AVATAR_SPEED;
+
+  if (input.up)    avatar.transform.z += AVATAR_SPEED;
+  if (input.down)  avatar.transform.z -= AVATAR_SPEED;
+
+  // ❗ ZÁKON SVĚTA
+  avatar.transform.y = 0;
+
+  // room bounds (X/Z only)
+  avatar.transform.x = Math.max(
+    0,
+    Math.min(room.bounds.width - avatar.size.width, avatar.transform.x)
+  );
+
+  avatar.transform.z = Math.max(
+    0,
+    Math.min(room.bounds.depth - avatar.size.depth, avatar.transform.z)
+  );
+}
+
+// ======================================
+// GAME LOOP
+// ======================================
+
+function gameLoop() {
+  const room = world.rooms[world.activeRoomId];
+
+  // 1️⃣ pohyb avatara po podlaze
+  updateAvatar(room);
+
+  // 2️⃣ fyzika ostatních entit (zatím jen placeholder)
+  for (const entity of room.entities) {
+    processPhysics({
+      room,
+      entity,
+      action: { type: "STEP" }
+    });
+  }
+
+  // 3️⃣ render
+  renderRoom(room);
+
+  requestAnimationFrame(gameLoop);
+}
+
+// ======================================
+// START
+// ======================================
+
+gameLoop();
