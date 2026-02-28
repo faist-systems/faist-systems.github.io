@@ -1,12 +1,10 @@
 // ======================================
 // FAIST – Dollhouse
-// World Loader + Drag & Drop + Gravity v0.1
+// World Loader + Drag & Drop + Gravity (FIX)
 // ======================================
 
 const STORAGE_KEY = "faist_dollhouse_world";
-
-// kde začíná podlaha (65 % místnosti)
-const FLOOR_RATIO = 0.65;
+const FLOOR_RATIO = 0.65; // kde začíná podlaha (65 % výšky místnosti)
 
 let currentWorld = null;
 let dragState = null;
@@ -26,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function loadWorld() {
   const saved = localStorage.getItem(STORAGE_KEY);
-
   if (saved) {
     try {
       return JSON.parse(saved);
@@ -75,31 +72,19 @@ function renderWorld() {
     el.textContent = item.type;
     el.style.left = item.position.x + "px";
     el.style.top = item.position.y + "px";
-    el.dataset.id = item.id;
 
     enableDrag(el, item, room, roomEl);
-
     roomEl.appendChild(el);
   });
-
-  const pet = currentWorld.pet;
-  const petEl = document.createElement("div");
-  petEl.className = "pet";
-  petEl.textContent = pet.name;
-  petEl.style.left = pet.position.x + "px";
-  petEl.style.top = pet.position.y + "px";
-
-  roomEl.appendChild(petEl);
 }
 
 // ======================================
-// DRAG & DROP + GRAVITY
+// DRAG & DROP
 // ======================================
 
 function enableDrag(element, item, room, roomEl) {
   element.addEventListener("pointerdown", e => {
     e.preventDefault();
-    e.stopPropagation();
 
     dragState = {
       element,
@@ -111,7 +96,7 @@ function enableDrag(element, item, room, roomEl) {
     };
 
     element.setPointerCapture(e.pointerId);
-    element.style.zIndex = 9999;
+    element.style.zIndex = 1000;
   });
 
   element.addEventListener("pointermove", e => {
@@ -122,7 +107,6 @@ function enableDrag(element, item, room, roomEl) {
     let x = dragState.originX + (e.clientX - dragState.startX);
     let y = dragState.originY + (e.clientY - dragState.startY);
 
-    // hranice místnosti
     x = Math.max(0, Math.min(x, rect.width - element.offsetWidth));
     y = Math.max(0, Math.min(y, rect.height - element.offsetHeight));
 
@@ -133,36 +117,35 @@ function enableDrag(element, item, room, roomEl) {
   element.addEventListener("pointerup", e => {
     if (!dragState) return;
 
-    applyGravity(element, roomEl);
-
-    item.position.x = parseInt(element.style.left);
-    item.position.y = parseInt(element.style.top);
-
-    saveWorld(currentWorld);
-
     element.releasePointerCapture(e.pointerId);
     element.style.zIndex = "";
+
+    // 1️⃣ spočítáme gravitaci DO DAT
+    applyGravityToItem(item, element, roomEl);
+
+    // 2️⃣ uložíme svět
+    saveWorld(currentWorld);
+
+    // 3️⃣ znovu vykreslíme (pravda je v datech)
+    renderWorld();
+
     dragState = null;
   });
 }
 
 // ======================================
-// GRAVITY
+// GRAVITY – DATA FIRST
 // ======================================
 
-function applyGravity(element, roomEl) {
+function applyGravityToItem(item, element, roomEl) {
   const roomHeight = roomEl.offsetHeight;
-  const floorY = roomHeight * FLOOR_RATIO;
+  const floorY = Math.floor(roomHeight * FLOOR_RATIO);
 
-  const targetY =
-    floorY - element.offsetHeight;
+  const targetY = floorY - element.offsetHeight;
 
-  // jemná animace „spadnutí“
-  element.style.transition = "top 0.2s ease-out";
-  element.style.top = targetY + "px";
+  // uložíme PŘÍMO DO SVĚTA
+  item.position.y = Math.max(0, targetY);
 
-  // po animaci vrátíme kontrolu
-  setTimeout(() => {
-    element.style.transition = "";
-  }, 200);
+  // x zůstává tak, jak ho dítě pustilo
+  item.position.x = parseInt(element.style.left);
 }
