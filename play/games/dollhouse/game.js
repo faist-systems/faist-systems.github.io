@@ -1,45 +1,83 @@
-// ===== CONFIG =====
+// ======================================
+// FAIST – Dollhouse
+// Stable single-source world state
+// ======================================
+
+// ----- CONFIG -----
 const FLOOR_HEIGHT_RATIO = 0.35;
+const STORAGE_KEY = "faist_dollhouse_world_v1";
 
-// ===== STATE =====
-let world = null;
-let drag = null;
+// ----- STATE -----
+let worldState = null;
+let dragState = null;
 
-// ===== INIT =====
+// ======================================
+// INIT
+// ======================================
 document.addEventListener("DOMContentLoaded", () => {
-  world = getDefaultWorld();
-  render();
+  worldState = loadWorld();
+  renderWorld();
 });
 
-// ===== WORLD =====
-function getDefaultWorld() {
+// ======================================
+// WORLD LOAD / SAVE
+// (tahle část se později nahradí serverem)
+// ======================================
+function loadWorld() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  }
+
+  const fresh = createDefaultWorld();
+  saveWorld(fresh);
+  return fresh;
+}
+
+function saveWorld(world) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(world));
+}
+
+// ======================================
+// DEFAULT WORLD (jen při prvním spuštění)
+// ======================================
+function createDefaultWorld() {
   return {
     player: {
       name: { vocative: "Lauro" }
     },
     house: {
-      rooms: [{
-        bounds: { width: 800, height: 500 },
-        furniture: [
-          { id: 1, type: "sofa", position: { x: 80, y: 320 } },
-          { id: 2, type: "table", position: { x: 300, y: 360 } },
-          { id: 3, type: "fridge", position: { x: 550, y: 300 } }
-        ]
-      }]
+      rooms: [
+        {
+          id: "room-1",
+          bounds: { width: 800, height: 500 },
+          furniture: [
+            { id: "f1", type: "sofa", position: { x: 80, y: 320 } },
+            { id: "f2", type: "table", position: { x: 300, y: 360 } },
+            { id: "f3", type: "fridge", position: { x: 550, y: 300 } }
+          ]
+        }
+      ]
     }
   };
 }
 
-// ===== RENDER =====
-function render() {
+// ======================================
+// RENDER
+// ======================================
+function renderWorld() {
   const app = document.getElementById("app");
   app.innerHTML = "";
 
-  const h1 = document.createElement("h1");
-  h1.textContent = "Ahoj Lauro!";
-  app.appendChild(h1);
+  const title = document.createElement("h1");
+  title.textContent = `Ahoj ${worldState.player.name.vocative}!`;
+  app.appendChild(title);
 
-  const roomData = world.house.rooms[0];
+  const roomData = worldState.house.rooms[0];
 
   const room = document.createElement("div");
   room.className = "room";
@@ -65,10 +103,12 @@ function render() {
   });
 }
 
-// ===== DRAG =====
+// ======================================
+// DRAG
+// ======================================
 function enableDrag(el, item, room, allItems) {
   el.addEventListener("pointerdown", e => {
-    drag = {
+    dragState = {
       el,
       item,
       startX: e.clientX,
@@ -80,15 +120,14 @@ function enableDrag(el, item, room, allItems) {
   });
 
   el.addEventListener("pointermove", e => {
-    if (!drag) return;
+    if (!dragState) return;
 
-    const dx = e.clientX - drag.startX;
-    const dy = e.clientY - drag.startY;
+    const dx = e.clientX - dragState.startX;
+    const dy = e.clientY - dragState.startY;
 
-    const nextX = drag.baseX + dx;
-    const nextY = drag.baseY + dy;
+    const nextX = dragState.baseX + dx;
+    const nextY = dragState.baseY + dy;
 
-    // 👉 kontrola kolize
     if (!collides(nextX, nextY, el, item, allItems)) {
       el.style.left = nextX + "px";
       el.style.top = nextY + "px";
@@ -96,15 +135,19 @@ function enableDrag(el, item, room, allItems) {
   });
 
   el.addEventListener("pointerup", e => {
-    if (!drag) return;
+    if (!dragState) return;
     el.releasePointerCapture(e.pointerId);
 
     applyConstraints(el, item, room);
-    drag = null;
+    saveWorld(worldState);
+
+    dragState = null;
   });
 }
 
-// ===== COLLISION CHECK =====
+// ======================================
+// COLLISIONS
+// ======================================
 function collides(x, y, el, currentItem, allItems) {
   const rectA = {
     left: x,
@@ -143,7 +186,9 @@ function collides(x, y, el, currentItem, allItems) {
   return false;
 }
 
-// ===== CONSTRAINTS =====
+// ======================================
+// FLOOR + WALL CONSTRAINTS
+// ======================================
 function applyConstraints(el, item, room) {
   const roomHeight = room.offsetHeight;
   const floorTop = roomHeight * (1 - FLOOR_HEIGHT_RATIO);
@@ -154,7 +199,7 @@ function applyConstraints(el, item, room) {
 
   const bottom = y + el.offsetHeight;
 
-  // zeď vzadu
+  // zadní zeď
   if (bottom < floorTop) {
     y = floorTop - el.offsetHeight;
   }
@@ -170,10 +215,12 @@ function applyConstraints(el, item, room) {
   el.style.top = y + "px";
 }
 
-// ===== CLICK ACTIONS =====
+// ======================================
+// CLICK ACTIONS
+// ======================================
 function enableClick(el, item) {
   el.addEventListener("click", () => {
-    if (drag) return;
+    if (dragState) return;
     openAction(item.type);
   });
 }
@@ -199,13 +246,16 @@ function openAction(type) {
   showModal(title, text);
 }
 
-// ===== MODAL =====
+// ======================================
+// MODAL
+// ======================================
 function showModal(title, text) {
   const overlay = document.createElement("div");
   overlay.className = "overlay";
 
   const modal = document.createElement("div");
   modal.className = "modal";
+
   modal.innerHTML = `
     <h2>${title}</h2>
     <p>${text}</p>
