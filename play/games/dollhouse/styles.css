@@ -1,28 +1,43 @@
 /* ======================================
    FAIST – Dollhouse
-   Scene styles v0.1
+   styles.css (stable base)
 ====================================== */
 
 * {
   box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* KRITICKÉ PRO DRAG NA MOBILU */
+body {
+  touch-action: none;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(#ffd6e8, #fff);
+  background: linear-gradient(#ffd1e8, #fff);
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  min-height: 100vh;
 }
+
+/* ======================================
+   APP KONTEJNER
+====================================== */
 
 #app {
   margin-top: 20px;
   text-align: center;
 }
 
-/* Nadpisy */
+/* ======================================
+   TEXTY
+====================================== */
+
 h1 {
   margin: 0 0 4px 0;
   font-size: 28px;
@@ -32,6 +47,7 @@ h1 {
 p {
   margin: 0 0 12px 0;
   color: #7a2e4d;
+  font-size: 16px;
 }
 
 /* ======================================
@@ -41,24 +57,31 @@ p {
 .room {
   position: relative;
   margin: 0 auto;
+
+  width: auto;
+  height: auto;
+
   border-radius: 24px;
   overflow: hidden;
 
-  /* Stěna + podlaha */
+  /* STĚNA + PODLAHA */
   background:
     linear-gradient(
       to bottom,
-      #ffb6d5 0%,
-      #ffb6d5 65%,
-      #f3caa7 65%,
-      #e0a96d 100%
+      #ff9fcb 0%,
+      #ff9fcb 65%,
+      #f6d3a3 65%,
+      #e8b97a 100%
     );
 
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.15);
+
+  /* 🔴 NUTNÉ PRO POINTER EVENTS */
+  touch-action: none;
 }
 
-/* Jemná linka mezi stěnou a podlahou */
+/* oddělení stěny a podlahy */
 .room::after {
   content: "";
   position: absolute;
@@ -66,7 +89,8 @@ p {
   top: 65%;
   width: 100%;
   height: 4px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.06);
+  pointer-events: none;
 }
 
 /* ======================================
@@ -75,51 +99,57 @@ p {
 
 .furniture {
   position: absolute;
+  pointer-events: auto;
+  touch-action: none;     /* 🔴 KLÍČOVÉ */
+
   padding: 10px 14px;
-  border-radius: 14px;
+  border-radius: 16px;
+
   font-size: 14px;
+  font-weight: 600;
   color: #fff;
+  text-align: center;
+
   cursor: grab;
-  user-select: none;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .furniture:active {
   cursor: grabbing;
   transform: scale(1.05);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
 }
 
-/* Konkrétní typy */
+/* --- KONKRÉTNÍ TYPY --- */
+
 .furniture.sofa {
-  background: #ff5fa2;
   width: 140px;
-  text-align: center;
+  background: #ff5fa2;
 }
 
 .furniture.table {
-  background: #c47aff;
   width: 100px;
-  text-align: center;
+  background: #b388ff;
 }
 
 .furniture.fridge {
-  background: #5fdde5;
   width: 90px;
   height: 120px;
+  background: #5fdde5;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .furniture.stove {
-  background: #ffffff;
-  color: #333;
   width: 90px;
   height: 80px;
+  background: #ffffff;
+  color: #333;
+  border: 3px solid #ff8fab;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #ff8fab;
 }
 
 /* ======================================
@@ -128,16 +158,22 @@ p {
 
 .pet {
   position: absolute;
-  padding: 10px 14px;
+  pointer-events: auto;
+  touch-action: none;
+
+  padding: 12px 16px;
   background: #ffcc4d;
   border-radius: 50%;
+
   font-size: 13px;
+  font-weight: bold;
+
   cursor: pointer;
-  user-select: none;
 
   animation: breathe 3s ease-in-out infinite;
 }
 
+/* jemné „dýchání“ */
 @keyframes breathe {
   0%   { transform: translateY(0); }
   50%  { transform: translateY(-4px); }
