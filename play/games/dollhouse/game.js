@@ -59,6 +59,8 @@ function render() {
     el.style.top = item.position.y + "px";
 
     enableDrag(el, item, room);
+    enableClick(el, item);
+
     room.appendChild(el);
   });
 }
@@ -107,12 +109,9 @@ function applyConstraints(el, item, room) {
 
   const bottom = y + el.offsetHeight;
 
-  // zeď vzadu
   if (bottom < floorTop) {
     y = floorTop - el.offsetHeight;
   }
-
-  // dno místnosti
   if (y > floorBottom - el.offsetHeight) {
     y = floorBottom - el.offsetHeight;
   }
@@ -121,4 +120,61 @@ function applyConstraints(el, item, room) {
   item.position.y = y;
 
   el.style.top = y + "px";
+}
+
+// ===== CLICK ACTIONS =====
+function enableClick(el, item) {
+  el.addEventListener("click", e => {
+    // když se právě táhlo, ignoruj klik
+    if (drag) return;
+
+    openAction(item.type);
+  });
+}
+
+function openAction(type) {
+  let title = "";
+  let text = "";
+
+  if (type === "fridge") {
+    title = "Lednice";
+    text = "Co si dáme dobrého?";
+  } else if (type === "table") {
+    title = "Stůl";
+    text = "Tady se jí nebo maluje.";
+  } else if (type === "sofa") {
+    title = "Sedačka";
+    text = "Chvilka odpočinku.";
+  } else {
+    title = "Předmět";
+    text = "Něco se tady dá dělat.";
+  }
+
+  showModal(title, text);
+}
+
+// ===== MODAL =====
+function showModal(title, text) {
+  const overlay = document.createElement("div");
+  overlay.className = "overlay";
+
+  const modal = document.createElement("div");
+  modal.className = "modal";
+
+  modal.innerHTML = `
+    <h2>${title}</h2>
+    <p>${text}</p>
+    <button>Zavřít</button>
+  `;
+
+  modal.querySelector("button").onclick = () => {
+    overlay.remove();
+  };
+
+  overlay.onclick = e => {
+    if (e.target === overlay) overlay.remove();
+  };
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
 }
