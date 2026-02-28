@@ -1,95 +1,102 @@
-/* ===== RESET ===== */
-* {
-  box-sizing: border-box;
-  user-select: none;
-}
+/* ======================================
+   FAIST – Dollhouse Base Styles
+   Vintage / Kitchen / Calm
+   ====================================== */
 
-body {
+html, body {
   margin: 0;
   padding: 0;
-  background: #ffd6e8;
-  font-family: system-ui, sans-serif;
+  width: 100%;
+  height: 100%;
+  background: #e5e5e3; /* neutrální šedobílá, ne studená */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* ===== APP ===== */
-#app {
-  padding: 20px;
-  text-align: center;
+#game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-h1 {
-  margin-bottom: 10px;
-  color: #c2185b;
-}
-
-/* ===== ROOM ===== */
+/* =========================
+   MÍSTNOST (ZEĎ)
+   ========================= */
 .room {
-  position: relative;
   width: 800px;
-  height: 500px;
-  margin: 0 auto;
-  border-radius: 20px;
+  height: 360px;
+  position: relative;
+  overflow: hidden;
+
+  /* velmi světlá vintage „bílá“ */
   background: linear-gradient(
     to bottom,
-    #ff9fcb 0%,
-    #ff9fcb 65%,
-    #f2c18d 65%,
-    #e0a96d 100%
+    #f7f6f2,  /* horní – téměř bílá */
+    #f1efe9   /* spodní – lehce teplejší */
   );
-  overflow: hidden;
+
+  border-radius: 24px;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.18),
+    inset 0 0 0 1px rgba(255,255,255,0.6);
 }
 
-/* ===== FLOOR ===== */
-.floor-guide {
+/* =========================
+   PODLAHA – SVĚTLÉ DŘEVO
+   ========================= */
+.floor {
   position: absolute;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
-  height: 35%;
-  background: rgba(255, 200, 220, 0.25);
-  pointer-events: none;
+  height: 120px;
+
+  background: linear-gradient(
+    to bottom,
+    #e8d7b6,
+    #d8c19a
+  );
+
+  box-shadow:
+    inset 0 4px 6px rgba(255,255,255,0.4);
 }
 
-/* ===== FURNITURE ===== */
+/* =========================
+   AVATAR (placeholder)
+   ========================= */
+.avatar {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+
+  background: #8fc1e3; /* klidná modrá */
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   NÁBYTEK (placeholder)
+   ========================= */
 .furniture {
   position: absolute;
-  padding: 10px 16px;
-  border-radius: 14px;
-  font-weight: bold;
-  color: white;
-  cursor: grab;
-  touch-action: none;
+
+  background: linear-gradient(
+    to bottom,
+    #d6d6d3,
+    #c6c6c3
+  );
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 6px 10px rgba(0,0,0,0.2),
+    inset 0 0 0 1px rgba(255,255,255,0.5);
 }
-
-.furniture:active {
-  cursor: grabbing;
-}
-
-/* ===== FAST TAP SELECT ===== */
-.furniture.selected {
-  outline: 3px solid rgba(255,255,255,0.9);
-  outline-offset: -6px;
-}
-
-/* ===== HOLD HALO ===== */
-.furniture .hold-ring {
-  position: absolute;
-  inset: -10px;
-  border-radius: 50%;
-  pointer-events: none;
-
-  background:
-    conic-gradient(
-      #ffffff 0deg,
-      #ffffff var(--hold-progress, 0deg),
-      rgba(255,255,255,0.15) var(--hold-progress, 0deg)
-    );
-
-  mask: radial-gradient(circle, transparent 62%, black 64%);
-  opacity: 0.9;
-}
-
-/* ===== TYPES ===== */
-.furniture.sofa { background: #ff5fa2; width: 140px; }
-.furniture.table { background: #b388ff; width: 100px; }
-.furniture.fridge { background: #5fdde5; width: 90px; height: 120px; }
