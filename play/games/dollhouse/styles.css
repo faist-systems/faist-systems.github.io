@@ -1,15 +1,10 @@
-/* ======================================
-   FAIST – Dollhouse Base Styles
-   + Virtual Joystick
-   ====================================== */
-
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   background: #e5e5e3;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, sans-serif;
   touch-action: none;
 }
 
@@ -17,37 +12,30 @@ html, body {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
-/* =========================
-   ROOM
-   ========================= */
 .room {
   width: 800px;
   height: 360px;
   position: relative;
+  background: linear-gradient(to bottom, #f6f5f1 0%, #f1efe9 100%);
+  border-radius: 20px;
   overflow: hidden;
-  background: linear-gradient(to bottom, #f6f5f1, #f1efe9);
-  border-radius: 24px;
 }
 
-/* =========================
-   FLOOR
-   ========================= */
+/* PODLAHA = HLAVNÍ PROSTOR */
 .floor {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 180px;
+  height: 200px;
   background: linear-gradient(to bottom, #ead7b3, #d6bb8a);
 }
 
-/* =========================
-   AVATAR
-   ========================= */
+/* AVATAR */
 .avatar {
   position: absolute;
   width: 40px;
@@ -55,30 +43,28 @@ html, body {
   background: #8fc1e3;
   border-radius: 12px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   font-size: 24px;
   z-index: 10;
 }
 
-/* =========================
-   FURNITURE
-   ========================= */
+/* NÁBYTEK */
 .furniture {
   position: absolute;
   background: #cfcfcf;
-  border-radius: 10px;
+  border-radius: 8px;
+  bottom: 0;
+  z-index: 1;
 }
 
-/* =========================
-   VIRTUAL JOYSTICK
-   ========================= */
+/* JOYSTICK */
 #joystick {
   position: fixed;
-  bottom: 20px;
   left: 20px;
-  z-index: 1000;
+  bottom: 20px;
   display: none;
+  z-index: 1000;
 }
 
 #joystick-base {
@@ -87,7 +73,6 @@ html, body {
   background: rgba(255,255,255,0.25);
   border-radius: 50%;
   position: relative;
-  backdrop-filter: blur(6px);
 }
 
 #joystick-knob {
@@ -100,7 +85,6 @@ html, body {
   top: 30px;
 }
 
-/* mobile only */
 @media (pointer: coarse) {
   #joystick {
     display: block;
