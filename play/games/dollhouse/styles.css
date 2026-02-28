@@ -179,3 +179,22 @@ p {
   50%  { transform: translateY(-4px); }
   100% { transform: translateY(0); }
 }
+/* ======================================
+   PODLAHA – GRAVITAČNÍ ZÓNA
+====================================== */
+
+.floor-guide {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  bottom: 0;
+
+  background: linear-gradient(
+    to top,
+    rgba(255, 190, 220, 0.35),
+    rgba(255, 190, 220, 0.05)
+  );
+
+  pointer-events: none;
+}
