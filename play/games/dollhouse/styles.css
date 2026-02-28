@@ -1,92 +1,117 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: #e5e5e3;
-  font-family: system-ui, sans-serif;
-  touch-action: none;
+// ======================================
+// FAIST – Dollhouse Game Loop
+// STEP D: Furniture in X/Z + collisions
+// ======================================
+
+const ROOM_WIDTH = 800;
+const FLOOR_DEPTH = 200; // stejná jako výška podlahy
+
+// ---------- AVATAR ----------
+const avatar = {
+  x: 200,
+  z: 120,
+  width: 40,
+  depth: 20,
+  speed: 2
+};
+
+// ---------- FURNITURE (SVĚTOVÉ POZICE) ----------
+const furniture = [
+  {
+    el: document.querySelectorAll(".furniture")[0],
+    x: 300,
+    z: 80,
+    width: 80,
+    depth: 40
+  },
+  {
+    el: document.querySelectorAll(".furniture")[1],
+    x: 450,
+    z: 140,
+    width: 60,
+    depth: 60
+  }
+];
+
+// ---------- INPUT ----------
+const input = { moveX: 0, moveZ: 0 };
+const keys = { left:false, right:false, up:false, down:false };
+
+window.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") keys.left = true;
+  if (e.key === "ArrowRight") keys.right = true;
+  if (e.key === "ArrowUp") keys.up = true;
+  if (e.key === "ArrowDown") keys.down = true;
+});
+
+window.addEventListener("keyup", e => {
+  if (e.key === "ArrowLeft") keys.left = false;
+  if (e.key === "ArrowRight") keys.right = false;
+  if (e.key === "ArrowUp") keys.up = false;
+  if (e.key === "ArrowDown") keys.down = false;
+});
+
+// ---------- INPUT RESOLUTION ----------
+function updateInput() {
+  input.moveX = (keys.left ? -1 : 0) + (keys.right ? 1 : 0);
+  input.moveZ = (keys.up ? -1 : 0) + (keys.down ? 1 : 0);
 }
 
-#game {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// ---------- COLLISION (AABB v X/Z) ----------
+function collides(a, b) {
+  return (
+    a.x < b.x + b.width &&
+    a.x + a.width > b.x &&
+    a.z < b.z + b.depth &&
+    a.z + a.depth > b.z
+  );
 }
 
-.room {
-  width: 800px;
-  height: 360px;
-  position: relative;
-  background: linear-gradient(to bottom, #f6f5f1 0%, #f1efe9 100%);
-  border-radius: 20px;
-  overflow: hidden;
+// ---------- UPDATE AVATAR ----------
+function updateAvatar() {
+  const next = {
+    x: avatar.x + input.moveX * avatar.speed,
+    z: avatar.z + input.moveZ * avatar.speed,
+    width: avatar.width,
+    depth: avatar.depth
+  };
+
+  // room bounds
+  next.x = Math.max(0, Math.min(ROOM_WIDTH - avatar.width, next.x));
+  next.z = Math.max(0, Math.min(FLOOR_DEPTH - avatar.depth, next.z));
+
+  // collision with furniture
+  for (const item of furniture) {
+    if (collides(next, item)) {
+      return; // STOP – narazil
+    }
+  }
+
+  avatar.x = next.x;
+  avatar.z = next.z;
 }
 
-/* PODLAHA = HLAVNÍ PROSTOR */
-.floor {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(to bottom, #ead7b3, #d6bb8a);
-}
+// ---------- RENDER ----------
+function render() {
+  const avatarEl = document.getElementById("avatar");
 
-/* AVATAR */
-.avatar {
-  position: absolute;
-  width: 40px;
-  height: 60px;
-  background: #8fc1e3;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  z-index: 10;
-}
+  avatarEl.style.left = avatar.x + "px";
+  avatarEl.style.bottom = (FLOOR_DEPTH - avatar.z) + "px";
+  avatarEl.style.zIndex = Math.floor(avatar.z) + 10;
 
-/* NÁBYTEK */
-.furniture {
-  position: absolute;
-  background: #cfcfcf;
-  border-radius: 8px;
-  bottom: 0;
-  z-index: 1;
-}
-
-/* JOYSTICK */
-#joystick {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  display: none;
-  z-index: 1000;
-}
-
-#joystick-base {
-  width: 100px;
-  height: 100px;
-  background: rgba(255,255,255,0.25);
-  border-radius: 50%;
-  position: relative;
-}
-
-#joystick-knob {
-  width: 40px;
-  height: 40px;
-  background: rgba(255,255,255,0.8);
-  border-radius: 50%;
-  position: absolute;
-  left: 30px;
-  top: 30px;
-}
-
-@media (pointer: coarse) {
-  #joystick {
-    display: block;
+  for (const item of furniture) {
+    item.el.style.left = item.x + "px";
+    item.el.style.bottom = (FLOOR_DEPTH - item.z) + "px";
+    item.el.style.zIndex = Math.floor(item.z);
   }
 }
+
+// ---------- LOOP ----------
+function loop() {
+  updateInput();
+  updateAvatar();
+  render();
+  requestAnimationFrame(loop);
+}
+
+loop();
