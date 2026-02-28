@@ -27,13 +27,10 @@ function aabbOverlap(a, b) {
 // ======================================
 // CORE PHYSICS LOOP
 // ======================================
-export function processPhysics({
-  room,
-  entity,
-  action
-}) {
-  switch (action.type) {
+export function processPhysics({ room, entity, action }) {
+  if (!room || !entity || !action) return;
 
+  switch (action.type) {
     case "DRAG":
       return handleDrag(room, entity, action);
 
@@ -41,7 +38,7 @@ export function processPhysics({
       return handleDrop(room, entity);
 
     case "STEP":
-      return handleStep(room, entity);
+      return handleStep(room, entity, action);
 
     default:
       return;
@@ -63,13 +60,9 @@ function handleDrag(room, entity, action) {
     depth: entity.size.depth
   };
 
-  // test room bounds
   if (!insideRoom(room, proposed)) return;
-
-  // test body collisions
   if (collides(room, entity, proposed)) return;
 
-  // apply & store last valid
   entity.transform = { ...entity.transform, ...action };
   entity.lastValidTransform = { ...entity.transform };
 }
@@ -80,11 +73,9 @@ function handleDrag(room, entity, action) {
 function handleDrop(room, entity) {
   entity.state = STATE_FALLING;
 
-  const startY = entity.transform.y;
   const valid = attemptFall(room, entity);
 
-  if (!valid) {
-    // FAIL-FAST rollback
+  if (!valid && entity.lastValidTransform) {
     entity.transform = { ...entity.lastValidTransform };
   }
 
@@ -138,12 +129,38 @@ function attemptFall(room, entity) {
 }
 
 // ======================================
+// AVATAR STEP (SAFE)
+// ======================================
+function handleStep(room, entity, action) {
+  // 🛑 DEFENSIVE GUARDS (KRITICKÉ)
+  const dx = typeof action.dx === "number" ? action.dx : 0;
+  const dz = typeof action.dz === "number" ? action.dz : 0;
+
+  entity.state = STATE_IDLE;
+
+  const proposed = {
+    x: entity.transform.x + dx,
+    y: entity.transform.y,
+    z: entity.transform.z + dz,
+    width: entity.size.width,
+    height: entity.size.height,
+    depth: entity.size.depth
+  };
+
+  if (!insideRoom(room, proposed)) return;
+  if (collides(room, entity, proposed)) return;
+
+  entity.transform.x = proposed.x;
+  entity.transform.z = proposed.z;
+}
+
+// ======================================
 // SUPPORT TEST
 // ======================================
 function findSupport(room, entity, testBox) {
   for (const other of room.entities) {
     if (other.id === entity.id) continue;
-    if (!other.physics.canSupport) continue;
+    if (!other.physics?.canSupport) continue;
 
     const surfaceY = other.transform.y + other.size.height;
 
@@ -170,7 +187,7 @@ function findSupport(room, entity, testBox) {
 function collides(room, entity, testBox) {
   for (const other of room.entities) {
     if (other.id === entity.id) continue;
-    if (!other.physics.solid) continue;
+    if (!other.physics?.solid) continue;
 
     const otherBox = {
       x: other.transform.x,
@@ -198,30 +215,4 @@ function insideRoom(room, box) {
     box.x + box.width <= room.bounds.width &&
     box.z + box.depth <= room.bounds.depth
   );
-}
-// ======================================
-// AVATAR STEP (X / Z movement)
-// ======================================
-function handleStep(room, entity, action) {
-  // Avatar nikdy nepadá při chůzi
-  entity.state = STATE_IDLE;
-
-  const proposed = {
-    x: entity.transform.x + (action.dx || 0),
-    y: entity.transform.y,
-    z: entity.transform.z + (action.dz || 0),
-    width: entity.size.width,
-    height: entity.size.height,
-    depth: entity.size.depth
-  };
-
-  // test room bounds
-  if (!insideRoom(room, proposed)) return;
-
-  // test body collisions
-  if (collides(room, entity, proposed)) return;
-
-  // apply move
-  entity.transform.x = proposed.x;
-  entity.transform.z = proposed.z;
 }
