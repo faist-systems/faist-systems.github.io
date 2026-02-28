@@ -3,6 +3,7 @@
 // ======================================
 
 import { processPhysics } from "./physicsEngine.js";
+import { renderRoom } from "./renderer.js";
 
 // ======================================
 // ROOM: KITCHEN (REFERENCE)
@@ -145,23 +146,11 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ======================================
-// SIMPLE RENDER (PLACEHOLDER)
+// RENDER
 // ======================================
 
 function render() {
-  console.clear();
-
-  console.log("=== ACTIVE ROOM:", activeRoom.id, "===");
-
-  for (const e of activeRoom.entities) {
-    console.log(
-      e.id,
-      "→",
-      `x:${e.transform.x}`,
-      `y:${e.transform.y}`,
-      `z:${e.transform.z}`
-    );
-  }
+  renderRoom(activeRoom);
 }
 
 // ======================================
