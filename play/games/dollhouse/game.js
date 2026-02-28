@@ -1,6 +1,6 @@
 // ======================================
 // FAIST – Dollhouse
-// Modes + HOLD + TAP + MOVE + COLLISIONS
+// HOLD + TAP + MOVE + COLLISIONS + ROLLBACK
 // ======================================
 
 // ----- CONFIG -----
@@ -34,11 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadWorld() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
-    try {
-      return JSON.parse(saved);
-    } catch {
-      localStorage.removeItem(STORAGE_KEY);
-    }
+    try { return JSON.parse(saved); }
+    catch { localStorage.removeItem(STORAGE_KEY); }
   }
   const fresh = createDefaultWorld();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh));
@@ -165,6 +162,11 @@ function enableGestures(el, item, room, allItems) {
       startTime,
       baseX: item.position.x,
       baseY: item.position.y,
+
+      // ⭐ KLÍČOVÉ:
+      lastValidX: item.position.x,
+      lastValidY: item.position.y,
+
       moved: false
     };
 
@@ -188,6 +190,10 @@ function enableGestures(el, item, room, allItems) {
       if (!collides(nextX, nextY, el, item, gesture.allItems)) {
         el.style.left = nextX + "px";
         el.style.top  = nextY + "px";
+
+        // ⭐ ukládáme POSLEDNÍ PLATNOU POZICI
+        gesture.lastValidX = nextX;
+        gesture.lastValidY = nextY;
       }
     }
   });
@@ -201,7 +207,15 @@ function enableGestures(el, item, room, allItems) {
     const elapsed = performance.now() - gesture.startTime;
 
     if (gesture.moved) {
+      // ⭐ návrat na poslední validní místo
+      el.style.left = gesture.lastValidX + "px";
+      el.style.top  = gesture.lastValidY + "px";
+
       applyConstraints(el, item, room);
+
+      item.position.x = gesture.lastValidX;
+      item.position.y = gesture.lastValidY;
+
       localStorage.setItem(STORAGE_KEY, JSON.stringify(worldState));
       gesture = null;
       return;
@@ -278,17 +292,14 @@ function applyConstraints(el, item, room) {
   const floorTop = roomHeight * (1 - FLOOR_HEIGHT_RATIO);
   const floorBottom = roomHeight;
 
-  let x = parseInt(el.style.left);
   let y = parseInt(el.style.top);
-
   const bottom = y + el.offsetHeight;
 
   if (bottom < floorTop) y = floorTop - el.offsetHeight;
   if (y > floorBottom - el.offsetHeight) y = floorBottom - el.offsetHeight;
 
-  item.position.x = x;
-  item.position.y = y;
   el.style.top = y + "px";
+  item.position.y = y;
 }
 
 // ======================================
