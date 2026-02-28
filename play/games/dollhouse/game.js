@@ -5,7 +5,7 @@
 
 const STORAGE_KEY = "faist_dollhouse_world";
 const FLOOR_HEIGHT_RATIO = 0.35;
-const SNAP_DURATION = 220;
+const SNAP_DURATION = 180;
 
 let world = null;
 let drag = null;
