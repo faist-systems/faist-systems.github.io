@@ -1,218 +1,95 @@
 // ======================================
-// FAIST – Physics Engine (Reference)
+// FAIST – Renderer (Room-Locked Camera)
 // ======================================
 
-// ----- CONSTANTS -----
-const GRAVITY_STEP = 4;
+// pevné nastavení místnosti
+const ROOM_WIDTH = 800;
+const ROOM_DEPTH = 400;
 
-// ----- ENTITY STATES -----
-const STATE_IDLE = "IDLE";
-const STATE_DRAGGING = "DRAGGING";
-const STATE_FALLING = "FALLING";
+// vizuální projekce
+const DEPTH_FACTOR = 0.25;
+const FLOOR_SCREEN_Y = 420;
+
+// root
+const gameRoot = document.getElementById("game");
 
 // ======================================
-// COLLISION HELPERS (AABB in XYZ)
+// RENDER ROOM (KAMERA UZAMČENÁ)
 // ======================================
-function aabbOverlap(a, b) {
-  return (
-    a.x < b.x + b.width &&
-    a.x + a.width > b.x &&
-    a.y < b.y + b.height &&
-    a.y + a.height > b.y &&
-    a.z < b.z + b.depth &&
-    a.z + a.depth > b.z
+export function renderRoom(room) {
+  gameRoot.innerHTML = "";
+
+  // === ROOM BACKDROP ===
+  const roomEl = document.createElement("div");
+  roomEl.className = "room";
+  roomEl.style.position = "absolute";
+  roomEl.style.width = `${ROOM_WIDTH}px`;
+  roomEl.style.height = `300px`;
+  roomEl.style.left = "50%";
+  roomEl.style.top = "50%";
+  roomEl.style.transform = "translate(-50%, -50%)";
+  roomEl.style.background = "#ffb3d9";
+  roomEl.style.borderRadius = "24px";
+  roomEl.style.boxShadow = "0 20px 60px rgba(0,0,0,0.2)";
+  roomEl.style.overflow = "hidden";
+
+  // === FLOOR ===
+  const floor = document.createElement("div");
+  floor.style.position = "absolute";
+  floor.style.left = "0";
+  floor.style.right = "0";
+  floor.style.bottom = "0";
+  floor.style.height = "120px";
+  floor.style.background = "#f4c49a";
+  roomEl.appendChild(floor);
+
+  // sort by Z (hloubka)
+  const sorted = [...room.entities].sort(
+    (a, b) => a.transform.z - b.transform.z
   );
-}
 
-// ======================================
-// CORE PHYSICS LOOP
-// ======================================
-export function processPhysics({ room, entity, action }) {
-  if (!room || !entity || !action) return;
-
-  switch (action.type) {
-    case "DRAG":
-      return handleDrag(room, entity, action);
-
-    case "DROP":
-      return handleDrop(room, entity);
-
-    case "STEP":
-      return handleStep(room, entity, action);
-
-    default:
-      return;
-  }
-}
-
-// ======================================
-// DRAG LOGIC
-// ======================================
-function handleDrag(room, entity, action) {
-  entity.state = STATE_DRAGGING;
-
-  const proposed = {
-    x: action.x,
-    y: action.y,
-    z: action.z,
-    width: entity.size.width,
-    height: entity.size.height,
-    depth: entity.size.depth
-  };
-
-  if (!insideRoom(room, proposed)) return;
-  if (collides(room, entity, proposed)) return;
-
-  entity.transform = { ...entity.transform, ...action };
-  entity.lastValidTransform = { ...entity.transform };
-}
-
-// ======================================
-// DROP → FALLING
-// ======================================
-function handleDrop(room, entity) {
-  entity.state = STATE_FALLING;
-
-  const valid = attemptFall(room, entity);
-
-  if (!valid && entity.lastValidTransform) {
-    entity.transform = { ...entity.lastValidTransform };
+  for (const entity of sorted) {
+    renderEntity(roomEl, entity);
   }
 
-  entity.state = STATE_IDLE;
+  gameRoot.appendChild(roomEl);
 }
 
 // ======================================
-// FALLING LOOP
+// RENDER ENTITY (RELATIVNĚ K MÍSTNOSTI)
 // ======================================
-function attemptFall(room, entity) {
-  let y = entity.transform.y;
-  let firstStep = true;
+function renderEntity(roomEl, entity) {
+  const el = document.createElement("div");
+  el.className = `entity ${entity.kind}`;
 
-  while (true) {
-    const nextY = y - GRAVITY_STEP;
+  const { x, y, z } = entity.transform;
+  const { width, height } = entity.size;
 
-    const testBox = {
-      x: entity.transform.x,
-      y: nextY,
-      z: entity.transform.z,
-      width: entity.size.width,
-      height: entity.size.height,
-      depth: entity.size.depth
-    };
+  const screenX = x;
+  const screenY = FLOOR_SCREEN_Y - z * DEPTH_FACTOR - y;
 
-    // A) FLOOR
-    if (nextY <= room.bounds.floorY) {
-      entity.transform.y = room.bounds.floorY;
-      return true;
-    }
+  el.style.position = "absolute";
+  el.style.left = `${screenX}px`;
+  el.style.bottom = `${screenY}px`;
+  el.style.width = `${width}px`;
+  el.style.height = `${height}px`;
+  el.style.zIndex = Math.floor(1000 - z);
 
-    // B) SUPPORT SURFACE
-    const support = findSupport(room, entity, testBox);
-    if (support) {
-      entity.transform.y = support.transform.y + support.size.height;
-      return true;
-    }
-
-    // C) BODY COLLISION
-    if (collides(room, entity, testBox)) {
-      if (firstStep) return false;
-      entity.transform.y = y;
-      return true;
-    }
-
-    // D) APPLY STEP
-    y = nextY;
-    entity.transform.y = y;
-    firstStep = false;
+  // dočasný vizuál
+  if (entity.kind === "avatar") {
+    el.style.background = "#6dd3ff";
+    el.style.borderRadius = "12px";
+    el.textContent = "🙂";
+    el.style.display = "flex";
+    el.style.alignItems = "center";
+    el.style.justifyContent = "center";
+  } else if (entity.physics.canSupport) {
+    el.style.background = "#ffd27f";
+    el.style.borderRadius = "10px";
+  } else {
+    el.style.background = "#d0d0d0";
+    el.style.borderRadius = "10px";
   }
-}
 
-// ======================================
-// AVATAR STEP (SAFE)
-// ======================================
-function handleStep(room, entity, action) {
-  // 🛑 DEFENSIVE GUARDS (KRITICKÉ)
-  const dx = typeof action.dx === "number" ? action.dx : 0;
-  const dz = typeof action.dz === "number" ? action.dz : 0;
-
-  entity.state = STATE_IDLE;
-
-  const proposed = {
-    x: entity.transform.x + dx,
-    y: entity.transform.y,
-    z: entity.transform.z + dz,
-    width: entity.size.width,
-    height: entity.size.height,
-    depth: entity.size.depth
-  };
-
-  if (!insideRoom(room, proposed)) return;
-  if (collides(room, entity, proposed)) return;
-
-  entity.transform.x = proposed.x;
-  entity.transform.z = proposed.z;
-}
-
-// ======================================
-// SUPPORT TEST
-// ======================================
-function findSupport(room, entity, testBox) {
-  for (const other of room.entities) {
-    if (other.id === entity.id) continue;
-    if (!other.physics?.canSupport) continue;
-
-    const surfaceY = other.transform.y + other.size.height;
-
-    const overlapsXZ =
-      testBox.x < other.transform.x + other.size.width &&
-      testBox.x + testBox.width > other.transform.x &&
-      testBox.z < other.transform.z + other.size.depth &&
-      testBox.z + testBox.depth > other.transform.z;
-
-    const touchingFromAbove =
-      testBox.y <= surfaceY &&
-      entity.transform.y >= surfaceY;
-
-    if (overlapsXZ && touchingFromAbove) {
-      return other;
-    }
-  }
-  return null;
-}
-
-// ======================================
-// COLLISION TEST
-// ======================================
-function collides(room, entity, testBox) {
-  for (const other of room.entities) {
-    if (other.id === entity.id) continue;
-    if (!other.physics?.solid) continue;
-
-    const otherBox = {
-      x: other.transform.x,
-      y: other.transform.y,
-      z: other.transform.z,
-      width: other.size.width,
-      height: other.size.height,
-      depth: other.size.depth
-    };
-
-    if (aabbOverlap(testBox, otherBox)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-// ======================================
-// ROOM BOUNDS
-// ======================================
-function insideRoom(room, box) {
-  return (
-    box.x >= 0 &&
-    box.z >= 0 &&
-    box.x + box.width <= room.bounds.width &&
-    box.z + box.depth <= room.bounds.depth
-  );
+  roomEl.appendChild(el);
 }
