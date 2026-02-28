@@ -1,9 +1,12 @@
 // ======================================
 // FAIST – Dollhouse
-// Drag & Drop + HARD GRAVITY DEBUG
+// Drag & Drop + FLOOR GRAVITY v0.1
 // ======================================
 
 const STORAGE_KEY = "faist_dollhouse_world";
+
+// kolik % místnosti tvoří podlaha
+const FLOOR_HEIGHT_RATIO = 0.35;
 
 let world = null;
 let drag = null;
@@ -43,6 +46,11 @@ function render() {
   room.style.height = roomData.bounds.height + "px";
   app.appendChild(room);
 
+  // 👇 vizuální podlaha
+  const floor = document.createElement("div");
+  floor.className = "floor-guide";
+  room.appendChild(floor);
+
   roomData.furniture.forEach(item => {
     const el = document.createElement("div");
     el.className = `furniture ${item.type}`;
@@ -51,7 +59,6 @@ function render() {
     el.style.top = item.position.y + "px";
 
     makeDraggable(el, item, room);
-
     room.appendChild(el);
   });
 }
@@ -77,11 +84,8 @@ function makeDraggable(el, item, room) {
     const dx = e.clientX - drag.startX;
     const dy = e.clientY - drag.startY;
 
-    const x = drag.baseX + dx;
-    const y = drag.baseY + dy;
-
-    el.style.left = x + "px";
-    el.style.top = y + "px";
+    el.style.left = drag.baseX + dx + "px";
+    el.style.top = drag.baseY + dy + "px";
   });
 
   el.addEventListener("pointerup", e => {
@@ -89,22 +93,23 @@ function makeDraggable(el, item, room) {
 
     el.releasePointerCapture(e.pointerId);
 
-    // 🔥 HARD GRAVITY
+    // 👇 GRAVITY NA PODLAHU
     const roomHeight = room.offsetHeight;
-    const elementHeight = el.offsetHeight;
+    const floorTop =
+      roomHeight * (1 - FLOOR_HEIGHT_RATIO);
 
-    const finalY = roomHeight - elementHeight;
+    const finalY =
+      floorTop - el.offsetHeight;
 
-    console.log("GRAVITY:", finalY);
-
-    // uložíme DO DAT
     item.position.x = parseInt(el.style.left);
     item.position.y = finalY;
 
-    // vykreslíme DO DOM
     el.style.top = finalY + "px";
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(world));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(world)
+    );
 
     drag = null;
   });
