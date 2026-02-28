@@ -100,3 +100,47 @@ h1 {
 .furniture.sofa { background: #ff5fa2; width: 140px; }
 .furniture.table { background: #b388ff; width: 100px; }
 .furniture.fridge { background: #5fdde5; width: 90px; height: 120px; }
+
+/* ===== OVERLAY (AKCE) ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px 24px;
+  width: 280px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.modal h2 {
+  margin: 0 0 10px;
+  color: #c2185b;
+}
+
+.modal p {
+  margin: 0 0 16px;
+  color: #444;
+}
+
+.modal button {
+  background: #ff5fa2;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background: #ff3d8a;
+}
