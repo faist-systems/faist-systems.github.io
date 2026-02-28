@@ -1,36 +1,31 @@
 // ======================================
-// FAIST – Renderer (Room-Locked Camera)
+// FAIST – Renderer (Room-Locked, Floor-Based)
 // ======================================
 
-// pevné nastavení místnosti
 const ROOM_WIDTH = 800;
-const ROOM_DEPTH = 400;
+const ROOM_HEIGHT = 360;
+const FLOOR_HEIGHT = 120;
 
-// vizuální projekce
-const DEPTH_FACTOR = 0.25;
-const FLOOR_SCREEN_Y = 420;
+// jemná hloubka (schválně MALÁ)
+const DEPTH_FACTOR = 0.15;
 
 // root
 const gameRoot = document.getElementById("game");
 
-// ======================================
-// RENDER ROOM (KAMERA UZAMČENÁ)
-// ======================================
 export function renderRoom(room) {
   gameRoot.innerHTML = "";
 
-  // === ROOM BACKDROP ===
+  // === ROOM ===
   const roomEl = document.createElement("div");
-  roomEl.className = "room";
   roomEl.style.position = "absolute";
   roomEl.style.width = `${ROOM_WIDTH}px`;
-  roomEl.style.height = `300px`;
+  roomEl.style.height = `${ROOM_HEIGHT}px`;
   roomEl.style.left = "50%";
   roomEl.style.top = "50%";
   roomEl.style.transform = "translate(-50%, -50%)";
   roomEl.style.background = "#ffb3d9";
   roomEl.style.borderRadius = "24px";
-  roomEl.style.boxShadow = "0 20px 60px rgba(0,0,0,0.2)";
+  roomEl.style.boxShadow = "0 20px 60px rgba(0,0,0,0.25)";
   roomEl.style.overflow = "hidden";
 
   // === FLOOR ===
@@ -39,11 +34,11 @@ export function renderRoom(room) {
   floor.style.left = "0";
   floor.style.right = "0";
   floor.style.bottom = "0";
-  floor.style.height = "120px";
+  floor.style.height = `${FLOOR_HEIGHT}px`;
   floor.style.background = "#f4c49a";
   roomEl.appendChild(floor);
 
-  // sort by Z (hloubka)
+  // === ENTITIES ===
   const sorted = [...room.entities].sort(
     (a, b) => a.transform.z - b.transform.z
   );
@@ -55,27 +50,30 @@ export function renderRoom(room) {
   gameRoot.appendChild(roomEl);
 }
 
-// ======================================
-// RENDER ENTITY (RELATIVNĚ K MÍSTNOSTI)
-// ======================================
 function renderEntity(roomEl, entity) {
   const el = document.createElement("div");
-  el.className = `entity ${entity.kind}`;
 
   const { x, y, z } = entity.transform;
   const { width, height } = entity.size;
 
+  // 🔑 KLÍČ: podlaha jako reference
+  const floorTop = ROOM_HEIGHT - FLOOR_HEIGHT;
+
   const screenX = x;
-  const screenY = FLOOR_SCREEN_Y - z * DEPTH_FACTOR - y;
+  const screenY =
+    floorTop -
+    height -          // stojí NA podlaze
+    z * DEPTH_FACTOR - // jemný posun dozadu
+    y;                 // vertikální posun (stohování)
 
   el.style.position = "absolute";
   el.style.left = `${screenX}px`;
-  el.style.bottom = `${screenY}px`;
+  el.style.top = `${screenY}px`;
   el.style.width = `${width}px`;
   el.style.height = `${height}px`;
   el.style.zIndex = Math.floor(1000 - z);
 
-  // dočasný vizuál
+  // dočasný vzhled
   if (entity.kind === "avatar") {
     el.style.background = "#6dd3ff";
     el.style.borderRadius = "12px";
