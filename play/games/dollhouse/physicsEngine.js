@@ -199,3 +199,29 @@ function insideRoom(room, box) {
     box.z + box.depth <= room.bounds.depth
   );
 }
+// ======================================
+// AVATAR STEP (X / Z movement)
+// ======================================
+function handleStep(room, entity, action) {
+  // Avatar nikdy nepadá při chůzi
+  entity.state = STATE_IDLE;
+
+  const proposed = {
+    x: entity.transform.x + (action.dx || 0),
+    y: entity.transform.y,
+    z: entity.transform.z + (action.dz || 0),
+    width: entity.size.width,
+    height: entity.size.height,
+    depth: entity.size.depth
+  };
+
+  // test room bounds
+  if (!insideRoom(room, proposed)) return;
+
+  // test body collisions
+  if (collides(room, entity, proposed)) return;
+
+  // apply move
+  entity.transform.x = proposed.x;
+  entity.transform.z = proposed.z;
+}
