@@ -1,6 +1,6 @@
 // ======================================
 // FAIST – Dollhouse
-// HOLD halo + MOVE + FAST TAP
+// Interaction modes + object panels
 // ======================================
 
 // ----- CONFIG -----
@@ -11,9 +11,15 @@ const HOLD_TIME_MS = 2000;
 const MOVE_THRESHOLD_PX = 6;
 const TAP_TIME_MS = 250;
 
+// ----- GAME MODES -----
+const MODE_NORMAL = "NORMAL";
+const MODE_INTERACTING = "INTERACTING";
+
 // ----- STATE -----
 let worldState = null;
 let gesture = null;
+let gameMode = MODE_NORMAL;
+let activeObjectId = null;
 
 // ======================================
 // INIT
@@ -24,13 +30,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ======================================
-// WORLD
+// WORLD LOAD
 // ======================================
 function loadWorld() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
-    try { return JSON.parse(saved); }
-    catch { localStorage.removeItem(STORAGE_KEY); }
+    try {
+      return JSON.parse(saved);
+    } catch {
+      localStorage.removeItem(STORAGE_KEY);
+    }
   }
   const fresh = createDefaultWorld();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(fresh));
@@ -42,6 +51,7 @@ function createDefaultWorld() {
     player: { name: { vocative: "Lauro" } },
     house: {
       rooms: [{
+        id: "room-1",
         bounds: { width: 800, height: 500 },
         furniture: [
           { id: "f1", type: "sofa",   position: { x: 80,  y: 320 } },
@@ -79,6 +89,7 @@ function renderWorld() {
   roomData.furniture.forEach(item => {
     const el = document.createElement("div");
     el.className = "furniture " + item.type;
+    el.dataset.id = item.id;
     el.textContent = item.type;
     el.style.left = item.position.x + "px";
     el.style.top  = item.position.y + "px";
@@ -87,9 +98,35 @@ function renderWorld() {
     ring.className = "hold-ring";
     el.appendChild(ring);
 
+    const panel = createObjectPanel(item);
+    el.appendChild(panel);
+
     enableGestures(el, item, room);
+
     room.appendChild(el);
   });
+}
+
+// ======================================
+// OBJECT PANEL (PLACEHOLDER)
+// ======================================
+function createObjectPanel(item) {
+  const panel = document.createElement("div");
+  panel.className = "object-panel";
+  panel.style.display = "none";
+
+  panel.innerHTML = `
+    <strong>${item.type}</strong><br>
+    <small>(obsah přijde později)</small><br><br>
+    <button>Zavřít</button>
+  `;
+
+  panel.querySelector("button").onclick = e => {
+    e.stopPropagation();
+    closeInteraction();
+  };
+
+  return panel;
 }
 
 // ======================================
@@ -97,17 +134,17 @@ function renderWorld() {
 // ======================================
 function enableGestures(el, item, room) {
   el.addEventListener("pointerdown", e => {
+    if (gameMode !== MODE_NORMAL) return;
+
     const startX = e.clientX;
     const startY = e.clientY;
     const startTime = performance.now();
 
-    let moved = false;
-    let holdDone = false;
-
     el.style.setProperty("--hold-progress", "0deg");
 
     function animateHold(now) {
-      if (!gesture || moved) return;
+      if (!gesture || gesture.moved) return;
+
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / HOLD_TIME_MS, 1);
       el.style.setProperty("--hold-progress", `${progress * 360}deg`);
@@ -115,18 +152,20 @@ function enableGestures(el, item, room) {
       if (progress < 1) {
         requestAnimationFrame(animateHold);
       } else {
-        holdDone = true;
-        openAction(item.type);
+        openInteraction(el, item);
       }
     }
 
     gesture = {
-      el, item, room,
-      startX, startY, startTime,
+      el,
+      item,
+      room,
+      startX,
+      startY,
+      startTime,
       baseX: item.position.x,
       baseY: item.position.y,
-      moved,
-      holdDone
+      moved: false
     };
 
     el.setPointerCapture(e.pointerId);
@@ -134,7 +173,7 @@ function enableGestures(el, item, room) {
   });
 
   el.addEventListener("pointermove", e => {
-    if (!gesture) return;
+    if (!gesture || gameMode !== MODE_NORMAL) return;
 
     const dx = e.clientX - gesture.startX;
     const dy = e.clientY - gesture.startY;
@@ -163,12 +202,31 @@ function enableGestures(el, item, room) {
       return;
     }
 
-    if (!gesture.holdDone && elapsed <= TAP_TIME_MS) {
+    if (elapsed <= TAP_TIME_MS && gameMode === MODE_NORMAL) {
       markSelected(el);
     }
 
     gesture = null;
   });
+}
+
+// ======================================
+// INTERACTION MODE
+// ======================================
+function openInteraction(el, item) {
+  gameMode = MODE_INTERACTING;
+  activeObjectId = item.id;
+
+  const panel = el.querySelector(".object-panel");
+  if (panel) panel.style.display = "block";
+}
+
+function closeInteraction() {
+  document.querySelectorAll(".object-panel")
+    .forEach(p => p.style.display = "none");
+
+  gameMode = MODE_NORMAL;
+  activeObjectId = null;
 }
 
 // ======================================
@@ -201,13 +259,4 @@ function markSelected(el) {
 
   el.classList.add("selected");
   setTimeout(() => el.classList.remove("selected"), 600);
-}
-
-// ======================================
-// ACTION (HOLD)
-// ======================================
-function openAction(type) {
-  alert(type === "fridge"
-    ? "Lednice – co si dáme?"
-    : "Akce objektu");
 }
