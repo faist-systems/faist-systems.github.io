@@ -1,6 +1,6 @@
 /* ======================================
    FAIST – Dollhouse Game Logic
-   KROK 4: Avatar X + Z movement (2.5D)
+   KROK 4 (FIX): Z pohyb PO PODLAZE
    ====================================== */
 
 // ===============================
@@ -18,8 +18,8 @@ const avatarEl = document.querySelector(".avatar");
 const ROOM_WIDTH = 800;
 const FLOOR_HEIGHT = 120;
 
-// hloubka podlahy (kolik prostoru má Z)
-const FLOOR_DEPTH = 160;
+// skutečná hloubka podlahy (od zdi ke kraji)
+const FLOOR_DEPTH = 120;
 
 // ===============================
 // AVATAR CONSTANTS
@@ -33,7 +33,7 @@ const AVATAR_SPEED = 3;
 
 const avatar = {
   x: 200,   // doleva / doprava
-  z: 0      // hloubka po podlaze (0 = u zdi)
+  z: 0      // 0 = u zdi, max = u spodního okraje podlahy
 };
 
 // ===============================
@@ -70,9 +70,9 @@ function updateAvatar() {
   if (input.left) avatar.x -= AVATAR_SPEED;
   if (input.right) avatar.x += AVATAR_SPEED;
 
-  // Z movement (hloubka)
-  if (input.forward) avatar.z += AVATAR_SPEED;
-  if (input.backward) avatar.z -= AVATAR_SPEED;
+  // Z movement (po podlaze)
+  if (input.forward) avatar.z -= AVATAR_SPEED;   // ke zdi
+  if (input.backward) avatar.z += AVATAR_SPEED;  // k sobě
 
   // X bounds
   avatar.x = Math.max(
@@ -80,7 +80,7 @@ function updateAvatar() {
     Math.min(ROOM_WIDTH - avatarEl.offsetWidth, avatar.x)
   );
 
-  // Z bounds (po podlaze)
+  // Z bounds (jen v podlaze)
   avatar.z = Math.max(
     0,
     Math.min(FLOOR_DEPTH - avatarEl.offsetHeight, avatar.z)
@@ -89,11 +89,13 @@ function updateAvatar() {
   // ===============================
   // MAP WORLD → SCREEN
   // ===============================
-  // X → left
+
   avatarEl.style.left = avatar.x + "px";
 
-  // Z → bottom (podlaha + hloubka)
-  avatarEl.style.bottom = (FLOOR_HEIGHT + avatar.z) + "px";
+  // KLÍČOVÁ OPRAVA:
+  // avatar je vždy NA PODLAZE
+  avatarEl.style.bottom =
+    (FLOOR_HEIGHT - avatar.z) + "px";
 }
 
 // ===============================
