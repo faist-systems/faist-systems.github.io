@@ -1,113 +1,135 @@
-/* ======================================
-   FAIST – Dollhouse Game Logic
-   KROK 4 FINAL: Z pohyb po CELÉ podlaze
-   ====================================== */
+// ======================================
+// FAIST – Dollhouse Game Loop
+// STEP A: Unified Input Layer
+// ======================================
 
-// ===============================
-// DOM REFERENCES
-// ===============================
-
-const roomEl = document.querySelector(".room");
-const floorEl = document.querySelector(".floor");
-const avatarEl = document.querySelector(".avatar");
-
-// ===============================
-// ROOM CONSTANTS
-// ===============================
-
-const ROOM_WIDTH = 800;
-const FLOOR_HEIGHT = floorEl.offsetHeight;
-
-// skutečná hloubka podlahy (celá plocha)
-const FLOOR_DEPTH = FLOOR_HEIGHT;
-
-// ===============================
-// AVATAR CONSTANTS
-// ===============================
-
-const AVATAR_SPEED = 3;
-
-// ===============================
-// AVATAR STATE (WORLD COORDS)
-// ===============================
-
-const avatar = {
-  x: 200,   // doleva / doprava
-  z: 0      // 0 = chodidla u zdi
+// ---------- WORLD SETUP ----------
+const room = {
+  width: 800,
+  depth: 300,
+  floorZMin: 0,
+  floorZMax: 300
 };
 
-// ===============================
-// INPUT
-// ===============================
+// ---------- AVATAR ----------
+const avatar = {
+  x: 200,
+  z: 120,          // Z = hloubka (podlaha)
+  width: 40,
+  height: 60,
+  speed: 2
+};
 
+// ---------- INPUT STATE (CENTRAL) ----------
 const input = {
+  moveX: 0,        // -1 .. 1
+  moveZ: 0         // -1 .. 1
+};
+
+// ---------- KEYBOARD MAP ----------
+const keys = {
   left: false,
   right: false,
-  forward: false,
-  backward: false
+  up: false,
+  down: false
 };
 
+// ---------- KEYBOARD LISTENERS ----------
 window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") input.left = true;
-  if (e.key === "ArrowRight") input.right = true;
-  if (e.key === "ArrowUp") input.forward = true;
-  if (e.key === "ArrowDown") input.backward = true;
+  switch (e.key) {
+    case "ArrowLeft":
+    case "a":
+      keys.left = true;
+      break;
+    case "ArrowRight":
+    case "d":
+      keys.right = true;
+      break;
+    case "ArrowUp":
+    case "w":
+      keys.up = true;
+      break;
+    case "ArrowDown":
+    case "s":
+      keys.down = true;
+      break;
+  }
 });
 
 window.addEventListener("keyup", (e) => {
-  if (e.key === "ArrowLeft") input.left = false;
-  if (e.key === "ArrowRight") input.right = false;
-  if (e.key === "ArrowUp") input.forward = false;
-  if (e.key === "ArrowDown") input.backward = false;
+  switch (e.key) {
+    case "ArrowLeft":
+    case "a":
+      keys.left = false;
+      break;
+    case "ArrowRight":
+    case "d":
+      keys.right = false;
+      break;
+    case "ArrowUp":
+    case "w":
+      keys.up = false;
+      break;
+    case "ArrowDown":
+    case "s":
+      keys.down = false;
+      break;
+  }
 });
 
-// ===============================
-// UPDATE AVATAR
-// ===============================
+// ---------- INPUT RESOLUTION ----------
+function updateInput() {
+  input.moveX = 0;
+  input.moveZ = 0;
 
-function updateAvatar() {
-  // X movement
-  if (input.left) avatar.x -= AVATAR_SPEED;
-  if (input.right) avatar.x += AVATAR_SPEED;
+  if (keys.left) input.moveX -= 1;
+  if (keys.right) input.moveX += 1;
+  if (keys.up) input.moveZ -= 1;     // ↑ = ke zdi (menší Z)
+  if (keys.down) input.moveZ += 1;   // ↓ = k hráči (větší Z)
 
-  // Z movement (po podlaze)
-  if (input.forward) avatar.z -= AVATAR_SPEED;   // ke zdi
-  if (input.backward) avatar.z += AVATAR_SPEED;  // k sobě
-
-  // X bounds (šířka místnosti)
-  avatar.x = Math.max(
-    0,
-    Math.min(ROOM_WIDTH - avatarEl.offsetWidth, avatar.x)
-  );
-
-  // Z bounds (CELÁ podlaha, podle CHODIDEL)
-  avatar.z = Math.max(
-    0,
-    Math.min(FLOOR_DEPTH, avatar.z)
-  );
-
-  // ===============================
-  // MAP WORLD → SCREEN
-  // ===============================
-
-  avatarEl.style.left = avatar.x + "px";
-
-  // chodidla jsou vždy NA PODLAZE
-  avatarEl.style.bottom =
-    (FLOOR_HEIGHT - avatar.z) + "px";
+  // normalizace diagonály
+  if (input.moveX !== 0 && input.moveZ !== 0) {
+    input.moveX *= 0.7;
+    input.moveZ *= 0.7;
+  }
 }
 
-// ===============================
-// GAME LOOP
-// ===============================
+// ---------- AVATAR MOVEMENT ----------
+function updateAvatar() {
+  avatar.x += input.moveX * avatar.speed;
+  avatar.z += input.moveZ * avatar.speed;
 
+  // X bounds
+  avatar.x = Math.max(0, Math.min(room.width - avatar.width, avatar.x));
+
+  // Z bounds (PODLAHA – CELÁ PLOCHA)
+  avatar.z = Math.max(
+    room.floorZMin,
+    Math.min(room.floorZMax - avatar.height, avatar.z)
+  );
+}
+
+// ---------- RENDER ----------
+function renderAvatar() {
+  const el = document.getElementById("avatar");
+  if (!el) return;
+
+  el.style.left = `${avatar.x}px`;
+  el.style.bottom = `${avatar.z}px`;
+
+  // hloubka = z-index
+  el.style.zIndex = Math.floor(avatar.z);
+}
+
+// ---------- GAME LOOP ----------
 function gameLoop() {
+  updateInput();
   updateAvatar();
+  renderAvatar();
   requestAnimationFrame(gameLoop);
 }
 
-// ===============================
-// START
-// ===============================
-
-gameLoop();
+// ---------- START ----------
+window.addEventListener("DOMContentLoaded", () => {
+  gameLoop();
+});
