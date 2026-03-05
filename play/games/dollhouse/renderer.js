@@ -1,5 +1,5 @@
 // ======================================
-// FAIST – Renderer
+// FAIST – Renderer + Depth Engine
 // ======================================
 
 import { FLOOR_DEPTH } from "./world.js";
@@ -38,6 +38,28 @@ function initRoom(room){
   initialized = true;
 }
 
+
+// ======================================
+// DEPTH SORTING ENGINE
+// ======================================
+
+function sortEntitiesByDepth(entities){
+
+  return [...entities].sort((a,b)=>{
+
+    const aDepth = a.transform.z + a.size.depth;
+    const bDepth = b.transform.z + b.size.depth;
+
+    return aDepth - bDepth;
+  });
+
+}
+
+
+// ======================================
+// RENDER ENTITY
+// ======================================
+
 function renderEntity(entity){
 
   const el = document.getElementById(entity.id);
@@ -45,10 +67,9 @@ function renderEntity(entity){
 
   el.style.left = entity.transform.x + "px";
 
-  // základní projekce
   let bottom = FLOOR_DEPTH - entity.transform.z - entity.size.depth;
 
-  // ⭐ offset pouze pro avatar (pivot na nohách)
+  // avatar má pivot na nohách
   if(entity.kind === "avatar"){
 
     const visualOffset = entity.size.height - entity.size.depth;
@@ -58,8 +79,12 @@ function renderEntity(entity){
 
   el.style.bottom = bottom + "px";
 
-  el.style.zIndex = Math.floor(entity.transform.z);
 }
+
+
+// ======================================
+// MAIN RENDER
+// ======================================
 
 export function renderRoom(room){
 
@@ -67,8 +92,19 @@ export function renderRoom(room){
     initRoom(room);
   }
 
-  for(const entity of room.entities){
+  const sorted = sortEntitiesByDepth(room.entities);
+
+  let zIndex = 1;
+
+  for(const entity of sorted){
+
     renderEntity(entity);
+
+    const el = document.getElementById(entity.id);
+
+    el.style.zIndex = zIndex;
+
+    zIndex++;
   }
 
 }
