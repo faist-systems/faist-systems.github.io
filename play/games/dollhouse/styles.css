@@ -17,6 +17,7 @@ html, body {
 }
 
 /* REFERENČNÍ MÍSTNOST */
+
 .room {
   width: 800px;
   height: 360px;
@@ -24,9 +25,16 @@ html, body {
   background: linear-gradient(to bottom, #f6f5f1, #f1efe9);
   border-radius: 20px;
   overflow: hidden;
+
+  /* DEBUG GRID – pomáhá vidět X/Z prostor */
+  background-image:
+    linear-gradient(#00000010 1px, transparent 1px),
+    linear-gradient(90deg, #00000010 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 /* PODLAHA */
+
 .floor {
   position: absolute;
   bottom: 0;
@@ -37,27 +45,39 @@ html, body {
 }
 
 /* AVATAR */
+
 .avatar {
   position: absolute;
   width: 40px;
   height: 60px;
   background: #8fc1e3;
   border-radius: 12px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 24px;
+
+  /* avatar není klikací UI */
+  pointer-events: none;
 }
 
 /* NÁBYTEK */
+
 .furniture {
   position: absolute;
   bottom: 0;
+
+  width: 60px;
+  height: 40px;
+
   background: #cfcfcf;
   border-radius: 8px;
 }
 
-/* JOYSTICK */
+/* JOYSTICK (zatím jen připravený) */
+
 #joystick {
   position: fixed;
   left: 20px;
@@ -82,6 +102,8 @@ html, body {
   left: 30px;
   top: 30px;
 }
+
+/* mobil */
 
 @media (pointer: coarse) {
   #joystick {
