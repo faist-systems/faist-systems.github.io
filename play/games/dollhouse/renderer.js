@@ -2,7 +2,7 @@
 // FAIST – Renderer
 // ======================================
 
-const FLOOR_DEPTH = 240;
+import { FLOOR_DEPTH } from "./world.js";
 
 let initialized = false;
 
@@ -45,11 +45,11 @@ function renderEntity(entity){
 
   el.style.left = entity.transform.x + "px";
 
-  // ⭐ správný pivot na podlaze
+  // stabilní pivot
   el.style.bottom =
     (FLOOR_DEPTH - entity.transform.z - entity.size.depth) + "px";
 
-  el.style.zIndex = entity.transform.z;
+  el.style.zIndex = Math.floor(entity.transform.z);
 }
 
 export function renderRoom(room){
