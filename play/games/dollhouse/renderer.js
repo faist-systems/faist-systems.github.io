@@ -1,3 +1,7 @@
+// ======================================
+// FAIST – Renderer
+// ======================================
+
 const FLOOR_DEPTH = 240;
 
 let initialized = false;
@@ -41,7 +45,9 @@ function renderEntity(entity){
 
   el.style.left = entity.transform.x + "px";
 
-  el.style.bottom = (FLOOR_DEPTH - entity.transform.z) + "px";
+  // ⭐ správný pivot na podlaze
+  el.style.bottom =
+    (FLOOR_DEPTH - entity.transform.z - entity.size.depth) + "px";
 
   el.style.zIndex = entity.transform.z;
 }
