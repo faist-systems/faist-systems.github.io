@@ -1,5 +1,10 @@
+// ======================================
+// FAIST – Game Core
+// ======================================
+
 import { renderRoom } from "./renderer.js";
 import { processPhysics } from "./physicsEngine.js";
+import { ROOM_WIDTH, FLOOR_DEPTH, AVATAR_SPEED } from "./world.js";
 
 const world = {
   activeRoomId: "kitchen",
@@ -15,8 +20,8 @@ function createRoom(){
     id:"kitchen",
 
     bounds:{
-      width:800,
-      depth:240
+      width:ROOM_WIDTH,
+      depth:FLOOR_DEPTH
     },
 
     entities:[
@@ -65,8 +70,6 @@ window.addEventListener("keyup",e=>{
   if(e.key==="ArrowDown") input.down=false;
 });
 
-const SPEED = 4;
-
 function updateAvatar(room){
 
   const avatar = room.entities.find(e=>e.kind==="avatar");
@@ -74,11 +77,11 @@ function updateAvatar(room){
   let dx = 0;
   let dz = 0;
 
-  if(input.left) dx -= SPEED;
-  if(input.right) dx += SPEED;
+  if(input.left) dx -= AVATAR_SPEED;
+  if(input.right) dx += AVATAR_SPEED;
 
-  if(input.up) dz -= SPEED;
-  if(input.down) dz += SPEED;
+  if(input.up) dz -= AVATAR_SPEED;
+  if(input.down) dz += AVATAR_SPEED;
 
   processPhysics({
     room,
