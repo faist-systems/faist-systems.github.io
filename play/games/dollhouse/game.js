@@ -30,10 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const furniture = Array.from(document.querySelectorAll(".furniture")).map(el => ({
     el,
-    x: parseInt(el.style.left, 10),
+    x: parseInt(el.style.left || 0, 10),
     z: 0,
-    width: el.offsetWidth,
-    depth: el.offsetHeight
+    width: 60,
+    depth: 40
   }));
 
   function updateInput() {
@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateAvatar() {
+
     const next = {
       x: avatar.x + input.moveX * avatar.speed,
       z: avatar.z + input.moveZ * avatar.speed,
@@ -70,16 +71,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function render() {
+
     const el = document.getElementById("avatar");
+
     el.style.left = avatar.x + "px";
     el.style.bottom = (FLOOR_DEPTH - avatar.z) + "px";
     el.style.zIndex = avatar.z + 10;
 
     for (const item of furniture) {
+
       item.el.style.left = item.x + "px";
       item.el.style.bottom = (FLOOR_DEPTH - item.depth) + "px";
-      item.el.style.zIndex = 1;
+      item.el.style.width = item.width + "px";
+      item.el.style.height = item.depth + "px";
+      item.el.style.zIndex = item.z + 5;
+
     }
+
   }
 
   function loop() {
@@ -90,4 +98,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loop();
+
 });
