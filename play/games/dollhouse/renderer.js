@@ -1,34 +1,26 @@
-// ======================================
-// FAIST – Renderer
-// ======================================
-
 const FLOOR_DEPTH = 240;
 
 let initialized = false;
-let roomElement = null;
 
+function initRoom(room){
 
-// INIT ROOM
+  const roomElement = document.querySelector(".room");
 
-function initRoom(room) {
-
-  roomElement = document.querySelector(".room");
-
-  for (const entity of room.entities) {
+  for(const entity of room.entities){
 
     let el = document.getElementById(entity.id);
 
-    if (!el) {
+    if(!el){
 
       el = document.createElement("div");
       el.id = entity.id;
 
-      if (entity.kind === "avatar") {
+      if(entity.kind === "avatar"){
         el.className = "avatar";
         el.textContent = "🙂";
       }
 
-      if (entity.kind === "furniture") {
+      if(entity.kind === "furniture"){
         el.className = "furniture";
       }
 
@@ -42,46 +34,25 @@ function initRoom(room) {
   initialized = true;
 }
 
-
-// SORT BY DEPTH
-
-function sortByDepth(entities) {
-
-  return [...entities].sort((a, b) => {
-
-    const za = a.transform.z + a.size.depth;
-    const zb = b.transform.z + b.size.depth;
-
-    return za - zb;
-  });
-}
-
-
-// RENDER ENTITY
-
-function renderEntity(entity) {
+function renderEntity(entity){
 
   const el = document.getElementById(entity.id);
-  if (!el) return;
+  if(!el) return;
 
   el.style.left = entity.transform.x + "px";
 
-  el.style.bottom =
-    FLOOR_DEPTH - (entity.transform.z + entity.size.depth) + "px";
+  el.style.bottom = (FLOOR_DEPTH - entity.transform.z) + "px";
 
-  el.style.zIndex = Math.floor(entity.transform.z);
+  el.style.zIndex = entity.transform.z;
 }
 
+export function renderRoom(room){
 
-// MAIN RENDER
+  if(!initialized){
+    initRoom(room);
+  }
 
-export function renderRoom(room) {
-
-  if (!initialized) initRoom(room);
-
-  const ordered = sortByDepth(room.entities);
-
-  for (const entity of ordered) {
+  for(const entity of room.entities){
     renderEntity(entity);
   }
 
