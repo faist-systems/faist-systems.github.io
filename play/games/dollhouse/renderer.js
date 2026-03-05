@@ -2,24 +2,17 @@
 // FAIST – Renderer
 // ======================================
 
-const FLOOR_DEPTH = 200;
+const FLOOR_DEPTH = 240;
 
 let initialized = false;
 let roomElement = null;
 
 
-// ======================================
 // INIT ROOM
-// ======================================
 
 function initRoom(room) {
 
   roomElement = document.querySelector(".room");
-
-  if (!roomElement) {
-    console.error("Renderer: .room element not found");
-    return;
-  }
 
   for (const entity of room.entities) {
 
@@ -50,9 +43,7 @@ function initRoom(room) {
 }
 
 
-// ======================================
-// DEPTH SORT
-// ======================================
+// SORT BY DEPTH
 
 function sortByDepth(entities) {
 
@@ -62,15 +53,11 @@ function sortByDepth(entities) {
     const zb = b.transform.z + b.size.depth;
 
     return za - zb;
-
   });
-
 }
 
 
-// ======================================
 // RENDER ENTITY
-// ======================================
 
 function renderEntity(entity) {
 
@@ -79,22 +66,18 @@ function renderEntity(entity) {
 
   el.style.left = entity.transform.x + "px";
 
-  // ⭐ SPRÁVNÁ PROJEKCE
-  el.style.bottom = (FLOOR_DEPTH - (entity.transform.z + entity.size.depth)) + "px";
+  el.style.bottom =
+    FLOOR_DEPTH - (entity.transform.z + entity.size.depth) + "px";
 
   el.style.zIndex = Math.floor(entity.transform.z);
 }
 
 
-// ======================================
 // MAIN RENDER
-// ======================================
 
 export function renderRoom(room) {
 
-  if (!initialized) {
-    initRoom(room);
-  }
+  if (!initialized) initRoom(room);
 
   const ordered = sortByDepth(room.entities);
 
