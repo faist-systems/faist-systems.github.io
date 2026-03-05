@@ -45,9 +45,11 @@ function renderEntity(entity){
 
   el.style.left = entity.transform.x + "px";
 
-  // stabilní pivot
+  // ⭐ pivot na "chodidlech"
+  const visualOffset = entity.size.height - entity.size.depth;
+
   el.style.bottom =
-    (FLOOR_DEPTH - entity.transform.z - entity.size.depth) + "px";
+    (FLOOR_DEPTH - entity.transform.z - entity.size.depth + visualOffset) + "px";
 
   el.style.zIndex = Math.floor(entity.transform.z);
 }
