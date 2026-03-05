@@ -1,5 +1,5 @@
 // ======================================
-// FAIST – Renderer + Depth Engine + Perspective
+// FAIST Renderer
 // ======================================
 
 import { FLOOR_DEPTH } from "./world.js";
@@ -34,17 +34,12 @@ function initRoom(room){
     el.style.width = entity.size.width + "px";
     el.style.height = entity.size.height + "px";
 
-    // důležité pro scaling
     el.style.transformOrigin = "bottom center";
   }
 
   initialized = true;
 }
 
-
-// ======================================
-// DEPTH SORTING
-// ======================================
 
 function sortEntitiesByDepth(entities){
 
@@ -59,25 +54,6 @@ function sortEntitiesByDepth(entities){
 }
 
 
-// ======================================
-// PERSPECTIVE SCALE
-// ======================================
-
-function computeScale(z){
-
-  const minScale = 0.85;
-  const maxScale = 1.15;
-
-  const t = z / FLOOR_DEPTH;
-
-  return minScale + (maxScale - minScale) * t;
-}
-
-
-// ======================================
-// RENDER ENTITY
-// ======================================
-
 function renderEntity(entity){
 
   const el = document.getElementById(entity.id);
@@ -85,28 +61,12 @@ function renderEntity(entity){
 
   el.style.left = entity.transform.x + "px";
 
-  let bottom = FLOOR_DEPTH - entity.transform.z - entity.size.depth;
-
-  // avatar pivot na nohách
-  if(entity.kind === "avatar"){
-
-    const visualOffset = entity.size.height - entity.size.depth;
-
-    bottom += visualOffset;
-  }
+  const bottom = FLOOR_DEPTH - entity.transform.z - entity.size.depth;
 
   el.style.bottom = bottom + "px";
 
-  // perspektivní scale
-  const scale = computeScale(entity.transform.z);
-
-  el.style.transform = `scale(${scale})`;
 }
 
-
-// ======================================
-// MAIN RENDER
-// ======================================
 
 export function renderRoom(room){
 
@@ -116,7 +76,7 @@ export function renderRoom(room){
 
   const sorted = sortEntitiesByDepth(room.entities);
 
-  let zIndex = 1;
+  let z = 1;
 
   for(const entity of sorted){
 
@@ -124,9 +84,8 @@ export function renderRoom(room){
 
     const el = document.getElementById(entity.id);
 
-    el.style.zIndex = zIndex;
+    el.style.zIndex = z++;
 
-    zIndex++;
   }
 
 }
