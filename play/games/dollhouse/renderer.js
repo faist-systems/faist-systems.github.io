@@ -45,11 +45,18 @@ function renderEntity(entity){
 
   el.style.left = entity.transform.x + "px";
 
-  // ⭐ pivot na "chodidlech"
-  const visualOffset = entity.size.height - entity.size.depth;
+  // základní projekce
+  let bottom = FLOOR_DEPTH - entity.transform.z - entity.size.depth;
 
-  el.style.bottom =
-    (FLOOR_DEPTH - entity.transform.z - entity.size.depth + visualOffset) + "px";
+  // ⭐ offset pouze pro avatar (pivot na nohách)
+  if(entity.kind === "avatar"){
+
+    const visualOffset = entity.size.height - entity.size.depth;
+
+    bottom += visualOffset;
+  }
+
+  el.style.bottom = bottom + "px";
 
   el.style.zIndex = Math.floor(entity.transform.z);
 }
