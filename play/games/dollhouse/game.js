@@ -1,102 +1,159 @@
-document.addEventListener("DOMContentLoaded", () => {
+// ======================================
+// FAIST – Dollhouse Game Core
+// ======================================
 
-  const ROOM_WIDTH = 800;
-  const FLOOR_DEPTH = 200;
+import { renderRoom } from "./renderer.js";
+import { processPhysics } from "./physicsEngine.js";
 
-  const avatar = {
-    x: 200,
-    z: 120,
-    width: 40,
-    depth: 20,
-    speed: 2
+const world = {
+  activeRoomId: "kitchen",
+  rooms: {}
+};
+
+const input = { left:false, right:false, up:false, down:false };
+
+let dragged = null;
+let dragOrigin = { x:0, z:0 };
+let mouseOrigin = { x:0, y:0 };
+
+function createKitchenRoom(){
+  return {
+    id:"kitchen",
+    bounds:{ width:800, depth:200, floorY:0 },
+    entities:[
+      {
+        id:"avatar",
+        kind:"avatar",
+        transform:{ x:200, z:80, y:0 },
+        size:{ width:40, height:60, depth:20 },
+        physics:{ solid:true, canSupport:false }
+      },
+      {
+        id:"table",
+        kind:"furniture",
+        transform:{ x:300, z:20, y:0 },
+        size:{ width:80, height:40, depth:40 },
+        physics:{ solid:true, canSupport:true }
+      },
+      {
+        id:"fridge",
+        kind:"furniture",
+        transform:{ x:500, z:20, y:0 },
+        size:{ width:50, height:90, depth:40 },
+        physics:{ solid:true, canSupport:false }
+      }
+    ]
   };
+}
 
-  const input = { moveX: 0, moveZ: 0 };
-  const keys = { left:false, right:false, up:false, down:false };
+world.rooms.kitchen = createKitchenRoom();
 
-  window.addEventListener("keydown", e => {
-    if (e.key === "ArrowLeft") keys.left = true;
-    if (e.key === "ArrowRight") keys.right = true;
-    if (e.key === "ArrowUp") keys.up = true;
-    if (e.key === "ArrowDown") keys.down = true;
-  });
 
-  window.addEventListener("keyup", e => {
-    if (e.key === "ArrowLeft") keys.left = false;
-    if (e.key === "ArrowRight") keys.right = false;
-    if (e.key === "ArrowUp") keys.up = false;
-    if (e.key === "ArrowDown") keys.down = false;
-  });
+// ================= INPUT =================
 
-  const furniture = Array.from(document.querySelectorAll(".furniture")).map(el => ({
-    el,
-    x: parseInt(el.style.left || 0, 10),
-    z: 0,
-    width: 60,
-    depth: 40
-  }));
-
-  function updateInput() {
-    input.moveX = (keys.left ? -1 : 0) + (keys.right ? 1 : 0);
-    input.moveZ = (keys.up ? -1 : 0) + (keys.down ? 1 : 0);
-  }
-
-  function collides(a, b) {
-    return (
-      a.x < b.x + b.width &&
-      a.x + a.width > b.x &&
-      a.z < b.z + b.depth &&
-      a.z + a.depth > b.z
-    );
-  }
-
-  function updateAvatar() {
-
-    const next = {
-      x: avatar.x + input.moveX * avatar.speed,
-      z: avatar.z + input.moveZ * avatar.speed,
-      width: avatar.width,
-      depth: avatar.depth
-    };
-
-    next.x = Math.max(0, Math.min(ROOM_WIDTH - avatar.width, next.x));
-    next.z = Math.max(0, Math.min(FLOOR_DEPTH, next.z));
-
-    for (const item of furniture) {
-      if (collides(next, item)) return;
-    }
-
-    avatar.x = next.x;
-    avatar.z = next.z;
-  }
-
-  function render() {
-
-    const el = document.getElementById("avatar");
-
-    el.style.left = avatar.x + "px";
-    el.style.bottom = (FLOOR_DEPTH - avatar.z - avatar.depth) + "px";
-    el.style.zIndex = avatar.z + 10;
-
-    for (const item of furniture) {
-
-      item.el.style.left = item.x + "px";
-      item.el.style.bottom = (FLOOR_DEPTH - item.z - item.depth) + "px";
-      item.el.style.width = item.width + "px";
-      item.el.style.height = item.depth + "px";
-      item.el.style.zIndex = item.z + 5;
-
-    }
-
-  }
-
-  function loop() {
-    updateInput();
-    updateAvatar();
-    render();
-    requestAnimationFrame(loop);
-  }
-
-  loop();
-
+window.addEventListener("keydown", e=>{
+  if(e.key==="ArrowLeft") input.left=true;
+  if(e.key==="ArrowRight") input.right=true;
+  if(e.key==="ArrowUp") input.up=true;
+  if(e.key==="ArrowDown") input.down=true;
 });
+
+window.addEventListener("keyup", e=>{
+  if(e.key==="ArrowLeft") input.left=false;
+  if(e.key==="ArrowRight") input.right=false;
+  if(e.key==="ArrowUp") input.up=false;
+  if(e.key==="ArrowDown") input.down=false;
+});
+
+
+// ================= DRAG =================
+
+window.addEventListener("mousedown", e=>{
+  const room = world.rooms[world.activeRoomId];
+
+  dragged = room.entities.find(ent=>ent.kind==="furniture");
+  if(!dragged) return;
+
+  mouseOrigin.x = e.clientX;
+  mouseOrigin.y = e.clientY;
+
+  dragOrigin.x = dragged.transform.x;
+  dragOrigin.z = dragged.transform.z;
+});
+
+window.addEventListener("mousemove", e=>{
+  if(!dragged) return;
+
+  const dx = e.clientX - mouseOrigin.x;
+  const dz = e.clientY - mouseOrigin.y;
+
+  processPhysics({
+    room:world.rooms[world.activeRoomId],
+    entity:dragged,
+    action:{
+      type:"DRAG",
+      x: dragOrigin.x + dx,
+      z: dragOrigin.z + dz,
+      y:0
+    }
+  });
+});
+
+window.addEventListener("mouseup", ()=>{
+  if(!dragged) return;
+
+  processPhysics({
+    room:world.rooms[world.activeRoomId],
+    entity:dragged,
+    action:{ type:"DROP" }
+  });
+
+  dragged=null;
+});
+
+
+// ================= AVATAR =================
+
+const SPEED = 4;
+
+function updateAvatar(room){
+
+  const avatar = room.entities.find(e=>e.kind==="avatar");
+  if(!avatar) return;
+
+  let dx=0;
+  let dz=0;
+
+  if(input.left) dx-=SPEED;
+  if(input.right) dx+=SPEED;
+  if(input.up) dz+=SPEED;
+  if(input.down) dz-=SPEED;
+
+  if(dx!==0 || dz!==0){
+    processPhysics({
+      room,
+      entity:avatar,
+      action:{
+        type:"STEP",
+        dx,
+        dz
+      }
+    });
+  }
+}
+
+
+// ================= LOOP =================
+
+function gameLoop(){
+
+  const room = world.rooms[world.activeRoomId];
+
+  updateAvatar(room);
+
+  renderRoom(room);
+
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
