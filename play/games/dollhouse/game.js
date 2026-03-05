@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     next.x = Math.max(0, Math.min(ROOM_WIDTH - avatar.width, next.x));
-    next.z = Math.max(0, Math.min(FLOOR_DEPTH - avatar.depth, next.z));
+    next.z = Math.max(0, Math.min(FLOOR_DEPTH, next.z));
 
     for (const item of furniture) {
       if (collides(next, item)) return;
@@ -75,13 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const el = document.getElementById("avatar");
 
     el.style.left = avatar.x + "px";
-    el.style.bottom = (FLOOR_DEPTH - avatar.z) + "px";
+    el.style.bottom = (FLOOR_DEPTH - avatar.z - avatar.depth) + "px";
     el.style.zIndex = avatar.z + 10;
 
     for (const item of furniture) {
 
       item.el.style.left = item.x + "px";
-      item.el.style.bottom = (FLOOR_DEPTH - item.depth) + "px";
+      item.el.style.bottom = (FLOOR_DEPTH - item.z - item.depth) + "px";
       item.el.style.width = item.width + "px";
       item.el.style.height = item.depth + "px";
       item.el.style.zIndex = item.z + 5;
