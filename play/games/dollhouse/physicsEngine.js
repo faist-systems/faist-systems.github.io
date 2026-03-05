@@ -1,3 +1,9 @@
+// ======================================
+// FAIST – Physics Engine
+// ======================================
+
+import { ROOM_WIDTH, FLOOR_DEPTH } from "./world.js";
+
 function aabbOverlap(a,b){
 
   return(
@@ -22,7 +28,7 @@ export function processPhysics({room,entity,action}){
       depth: entity.size.depth
     };
 
-    if(!insideRoom(room,next)) return;
+    if(!insideRoom(next)) return;
 
     if(collides(room,entity,next)) return;
 
@@ -54,12 +60,12 @@ function collides(room,entity,testBox){
   return false;
 }
 
-function insideRoom(room,box){
+function insideRoom(box){
 
   return(
     box.x >= 0 &&
     box.z >= 0 &&
-    box.x + box.width <= room.bounds.width &&
-    box.z + box.depth <= room.bounds.depth
+    box.x + box.width <= ROOM_WIDTH &&
+    box.z <= FLOOR_DEPTH
   );
 }
