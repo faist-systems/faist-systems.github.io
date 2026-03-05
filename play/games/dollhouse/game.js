@@ -1,7 +1,3 @@
-// ======================================
-// FAIST – Game Core
-// ======================================
-
 import { renderRoom } from "./renderer.js";
 import { processPhysics } from "./physicsEngine.js";
 
@@ -14,7 +10,7 @@ const input = { left:false, right:false, up:false, down:false };
 
 function createRoom(){
 
-  return {
+  return{
 
     id:"kitchen",
 
@@ -55,25 +51,19 @@ function createRoom(){
 
 world.rooms.kitchen = createRoom();
 
-
-// INPUT
-
-window.addEventListener("keydown", e=>{
+window.addEventListener("keydown",e=>{
   if(e.key==="ArrowLeft") input.left=true;
   if(e.key==="ArrowRight") input.right=true;
   if(e.key==="ArrowUp") input.up=true;
   if(e.key==="ArrowDown") input.down=true;
 });
 
-window.addEventListener("keyup", e=>{
+window.addEventListener("keyup",e=>{
   if(e.key==="ArrowLeft") input.left=false;
   if(e.key==="ArrowRight") input.right=false;
   if(e.key==="ArrowUp") input.up=false;
   if(e.key==="ArrowDown") input.down=false;
 });
-
-
-// AVATAR
 
 const SPEED = 4;
 
@@ -101,9 +91,6 @@ function updateAvatar(room){
   });
 
 }
-
-
-// LOOP
 
 function gameLoop(){
 
