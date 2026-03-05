@@ -63,3 +63,27 @@ html, body {
   background: #cfcfcf;
   border-radius: 8px;
 }
+/* ======================================
+DEBUG GRID – Z DEPTH
+====================================== */
+
+.floor {
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 240px;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.08) 0px,
+      rgba(0,0,0,0.08) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    linear-gradient(#ead7b3,#d6bb8a);
+
+}
