@@ -1,5 +1,5 @@
 // ======================================
-// FAIST – Renderer + Depth Engine
+// FAIST – Renderer + Depth Engine + Perspective
 // ======================================
 
 import { FLOOR_DEPTH } from "./world.js";
@@ -33,6 +33,9 @@ function initRoom(room){
 
     el.style.width = entity.size.width + "px";
     el.style.height = entity.size.height + "px";
+
+    // důležité pro scaling
+    el.style.transformOrigin = "bottom center";
   }
 
   initialized = true;
@@ -40,7 +43,7 @@ function initRoom(room){
 
 
 // ======================================
-// DEPTH SORTING ENGINE
+// DEPTH SORTING
 // ======================================
 
 function sortEntitiesByDepth(entities){
@@ -57,6 +60,21 @@ function sortEntitiesByDepth(entities){
 
 
 // ======================================
+// PERSPECTIVE SCALE
+// ======================================
+
+function computeScale(z){
+
+  const minScale = 0.85;
+  const maxScale = 1.15;
+
+  const t = z / FLOOR_DEPTH;
+
+  return minScale + (maxScale - minScale) * t;
+}
+
+
+// ======================================
 // RENDER ENTITY
 // ======================================
 
@@ -69,7 +87,7 @@ function renderEntity(entity){
 
   let bottom = FLOOR_DEPTH - entity.transform.z - entity.size.depth;
 
-  // avatar má pivot na nohách
+  // avatar pivot na nohách
   if(entity.kind === "avatar"){
 
     const visualOffset = entity.size.height - entity.size.depth;
@@ -79,6 +97,10 @@ function renderEntity(entity){
 
   el.style.bottom = bottom + "px";
 
+  // perspektivní scale
+  const scale = computeScale(entity.transform.z);
+
+  el.style.transform = `scale(${scale})`;
 }
 
 
