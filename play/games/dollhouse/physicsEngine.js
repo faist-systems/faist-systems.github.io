@@ -1,10 +1,6 @@
-// ======================================
-// FAIST – Physics Engine
-// ======================================
+function aabbOverlap(a,b){
 
-function aabbOverlap(a, b) {
-
-  return (
+  return(
     a.x < b.x + b.width &&
     a.x + a.width > b.x &&
     a.z < b.z + b.depth &&
@@ -12,9 +8,9 @@ function aabbOverlap(a, b) {
   );
 }
 
-export function processPhysics({ room, entity, action }) {
+export function processPhysics({room,entity,action}){
 
-  if (action.type === "STEP") {
+  if(action.type === "STEP"){
 
     const dx = action.dx || 0;
     const dz = action.dz || 0;
@@ -26,39 +22,22 @@ export function processPhysics({ room, entity, action }) {
       depth: entity.size.depth
     };
 
-    if (!insideRoom(room, next)) return;
+    if(!insideRoom(room,next)) return;
 
-    if (collides(room, entity, next)) return;
+    if(collides(room,entity,next)) return;
 
     entity.transform.x = next.x;
     entity.transform.z = next.z;
   }
 
-  if (action.type === "DRAG") {
-
-    const next = {
-      x: action.x,
-      z: action.z,
-      width: entity.size.width,
-      depth: entity.size.depth
-    };
-
-    if (!insideRoom(room, next)) return;
-
-    entity.transform.x = action.x;
-    entity.transform.z = action.z;
-  }
-
 }
 
+function collides(room,entity,testBox){
 
-function collides(room, entity, testBox) {
+  for(const other of room.entities){
 
-  for (const other of room.entities) {
-
-    if (other.id === entity.id) continue;
-
-    if (!other.physics?.solid) continue;
+    if(other.id === entity.id) continue;
+    if(!other.physics?.solid) continue;
 
     const otherBox = {
       x: other.transform.x,
@@ -67,16 +46,17 @@ function collides(room, entity, testBox) {
       depth: other.size.depth
     };
 
-    if (aabbOverlap(testBox, otherBox)) return true;
+    if(aabbOverlap(testBox,otherBox)){
+      return true;
+    }
   }
 
   return false;
 }
 
+function insideRoom(room,box){
 
-function insideRoom(room, box) {
-
-  return (
+  return(
     box.x >= 0 &&
     box.z >= 0 &&
     box.x + box.width <= room.bounds.width &&
